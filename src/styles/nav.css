@@ -291,6 +291,89 @@
   .mm-aside { display: none; }
 }
 
+/* ── Locations map panel ──────────────────────────────────────── */
+.nav-item-map { position: static; }
+.nav-panel-map {
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  width: min(880px, calc(100vw - 48px));
+  padding: 0;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.nav-item.open > .nav-panel-map { transform: translateX(-50%); }
+.lm { display: grid; grid-template-columns: 1fr 300px; }
+.lm-map {
+  position: relative;
+  background: radial-gradient(120% 90% at 50% 0%, #fff 38%, var(--nb-lightest, #F3F8FF) 100%);
+  padding: 22px 20px 14px;
+}
+.lm-map svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+.st { cursor: pointer; }
+.st-shape { fill: var(--fb-lightest, #E8E8F1); stroke: #fff; stroke-width: 2; transition: fill .22s var(--ease-out); }
+.st:hover .st-shape, .st.on .st-shape { fill: var(--freedom-blue, #1E1E77); }
+.st-label {
+  font-family: var(--font-body); font-weight: 700; font-size: 14px;
+  fill: var(--freedom-blue, #1E1E77); text-anchor: middle; pointer-events: none;
+  transition: fill .22s var(--ease-out); letter-spacing: .02em;
+}
+.st:hover .st-label, .st.on .st-label { fill: #fff; }
+.lm-gulf-label {
+  font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: 15px;
+  fill: var(--neighborly-blue, #8DBDFF); text-anchor: middle; letter-spacing: .04em;
+}
+.pin { pointer-events: none; }
+.pin-dot { fill: var(--landscaping-green, #4ACF6C); stroke: #fff; stroke-width: 2.5; }
+.pin-hq { fill: #fff; stroke: var(--landscaping-green, #4ACF6C); stroke-width: 3; }
+.pin-pulse { fill: var(--landscaping-green, #4ACF6C); opacity: 0; }
+.pin.on .pin-pulse { animation: lm-pulse 1.6s var(--ease-out) infinite; }
+@keyframes lm-pulse { 0% { opacity: .5; r: 5; } 100% { opacity: 0; r: 18; } }
+@media (prefers-reduced-motion: reduce) { .pin.on .pin-pulse { animation: none; } }
+
+.lm-rail {
+  background: var(--freedom-blue, #1E1E77); color: #fff;
+  padding: 26px 26px 24px; display: flex; flex-direction: column;
+}
+.lm-rail-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--landscaping-green, #4ACF6C); margin: 0 0 12px;
+}
+.lm-rail-state {
+  font-family: var(--font-display); font-weight: 700; font-size: 27px; line-height: 1.06;
+  margin: 0 0 10px; text-wrap: balance;
+}
+.lm-rail-d { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.8); margin: 0 0 16px; }
+.lm-chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 20px; }
+.lm-chip {
+  font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,.92);
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px; padding: 5px 11px;
+}
+.lm-actions { margin-top: auto; display: flex; flex-direction: column; gap: 9px; }
+.lm-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  font-size: 14px; font-weight: 700; text-decoration: none; border-radius: 10px;
+  padding: 13px 16px; transition: background .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.lm-btn .arr { transition: transform .2s var(--ease-out); }
+.lm-btn:hover .arr { transform: translateX(3px); }
+.lm-btn-primary { background: var(--landscaping-green, #4ACF6C); color: var(--freedom-blue, #1E1E77); }
+.lm-btn-primary:hover { background: #3fc061; }
+.lm-btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.28); }
+.lm-btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.5); }
+.lm-rail-hint {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: rgba(255,255,255,.65); padding: 4px 0;
+}
+.lm-hq-dot { width: 9px; height: 9px; border-radius: 50%; border: 2.5px solid var(--landscaping-green, #4ACF6C); flex: none; }
+
+@media (max-width: 980px) {
+  .nav-panel-map { width: min(560px, calc(100vw - 48px)); }
+  .lm { grid-template-columns: 1fr; }
+  .lm-rail { display: none; }
+}
+
 .nav-burger {
   display: none;
   background: transparent; border: 0; cursor: pointer;
