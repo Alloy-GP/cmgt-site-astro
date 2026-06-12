@@ -116,7 +116,7 @@ button { font-family: inherit; cursor: pointer; }
 .site-footer { background: var(--freedom-blue-deep); color: rgba(255,255,255,.65); padding: 54px 0 84px; }
 .site-footer .ft-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .site-footer img { height: 26px; }
-.ft-tagline { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; }
+.ft-tagline { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: #fff; }
 .ft-tagline .dot { color: var(--landscaping-green); }
 .ft-copy { font-size: 13px; }
 
