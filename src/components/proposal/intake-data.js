@@ -7,9 +7,9 @@
 export const DESTINATIONS = {
   email: {
     id: "email",
-    name: "Team email",
+    name: "Your CMGT team",
     sub: "Smart routing by intent + community",
-    icon: "mail",
+    icon: "users",
     color: "var(--brand)",
   },
   mailchimp: {
@@ -54,7 +54,7 @@ export const INTENTS = [
       { key: "timeline", label: "Decision timeline", type: "radio", required: true, options: ["ASAP", "1–3 months", "Just researching"], col: 2 },
     ],
     routes: [
-      { dest: "email", detail: "→ sales@cmgt.org · auto-assigned to the rep for your region", primary: true },
+      { dest: "email", detail: "Auto-assigned to the rep for your region", primary: true },
       { dest: "whatconverts", detail: "Logged as a sales-qualified lead with full attribution" },
       { dest: "mailchimp", detail: "Prospects audience · tag “proposal-request”" },
       { dest: "sheets", detail: "Master log + “Proposals” tab" },
@@ -75,7 +75,7 @@ export const INTENTS = [
       { key: "insured", label: "Licensed & insured?", type: "radio", required: true, options: ["Yes", "In progress"], col: 2 },
     ],
     routes: [
-      { dest: "email", detail: "→ vendors@cmgt.org · procurement inbox", primary: true },
+      { dest: "email", detail: "Sent straight to our procurement team", primary: true },
       { dest: "sheets", detail: "Master log + “Vendor directory” tab" },
     ],
   },
@@ -94,7 +94,7 @@ export const INTENTS = [
       { key: "urgency", label: "Urgency", type: "radio", required: true, options: ["Routine", "Urgent", "Emergency"], col: 2 },
     ],
     routes: [
-      { dest: "email", detail: "→ ops@cmgt.org · routed to your community's CAM", primary: true },
+      { dest: "email", detail: "Routed to your community's CAM", primary: true },
       { dest: "sheets", detail: "Master log + “Service log” tab" },
     ],
   },
@@ -108,7 +108,7 @@ export const INTENTS = [
     accentTint: "var(--c-yellow-tint)",
     fields: [],
     routes: [
-      { dest: "email", detail: "→ hello@cmgt.org · front-desk inbox", primary: true },
+      { dest: "email", detail: "Sent to our front-desk team", primary: true },
       { dest: "mailchimp", detail: "Newsletter audience · tag “general”" },
       { dest: "sheets", detail: "Master log + “Inbox” tab" },
     ],

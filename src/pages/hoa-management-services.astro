@@ -550,7 +550,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
-        <a class="cta-phone" href="tel:5045551234">Or call (504) 555-1234 · Mon–Fri, 8a–5p CT</a>
+        <a class="cta-phone" href="tel:2255032648">Or call (225) 503-2648 · Mon–Fri, 8a–5p CT</a>
       </div>
     </div>
   </section>
@@ -585,7 +585,7 @@ const breadcrumb = breadcrumbSchema([
   .ph-hero-lede strong { color: #fff; font-weight: 600; }
   .ph-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
   .ph-hero-band { position: relative; z-index: 2; }
-  .ph-hero-band .image-slot { display: block; width: 100%; height: clamp(280px, 32vw, 420px); }
+  .ph-hero-band :global(.image-slot) { display: block; width: 100%; height: clamp(280px, 32vw, 420px); }
   .ph-hero-stats { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; padding: 30px 0; border-top: 1px solid rgba(255,255,255,.18); }
   @media (max-width: 620px) { .ph-hero-stats { grid-template-columns: 1fr 1fr; gap: 22px; } }
   .ph-stat-num { font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1; letter-spacing: -.02em; color: #fff; }
@@ -616,7 +616,7 @@ const breadcrumb = breadcrumbSchema([
   .mdl-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--freedom-blue); text-decoration: none; margin-top: 6px; }
   .mdl-link .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
   .mdl-link:hover .arrow { transform: translateX(4px); }
-  .mdl-media .image-slot { width: 100%; height: 420px; }
+  .mdl-media :global(.image-slot) { width: 100%; height: 420px; }
 
   /* 3 C's strip */
   .ccc { background: var(--freedom-blue); color: #fff; padding: 100px 0; position: relative; overflow: hidden; }
@@ -728,8 +728,8 @@ const breadcrumb = breadcrumbSchema([
   @media (max-width: 920px) { .fit-layout { grid-template-columns: 1fr; gap: 40px; } }
   .fit-media { position: relative; }
   .fit-media .blk { position: absolute; left: -22px; bottom: -22px; width: 62%; height: 52%; background: var(--landscaping-green); border-radius: 18px; z-index: 0; }
-  .fit-media .image-slot { position: relative; z-index: 1; width: 100%; height: 500px; }
-  @media (max-width: 920px) { .fit-media .image-slot { height: 360px; } .fit-media .blk { display: none; } }
+  .fit-media :global(.image-slot) { position: relative; z-index: 1; width: 100%; height: 500px; }
+  @media (max-width: 920px) { .fit-media :global(.image-slot) { height: 360px; } .fit-media .blk { display: none; } }
   .fit-main { min-width: 0; }
   .fit-head { max-width: none; margin: 0 0 28px; }
   .fit-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
@@ -768,7 +768,7 @@ const breadcrumb = breadcrumbSchema([
 
   /* FULL-BLEED IMAGE MOMENT */
   .fbleed { position: relative; min-height: 480px; display: flex; align-items: center; overflow: hidden; isolation: isolate; }
-  .fbleed .image-slot { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .fbleed :global(.image-slot) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
   .fbleed::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(21,21,92,.92) 0%, rgba(21,21,92,.7) 42%, rgba(21,21,92,.25) 100%); pointer-events: none; }
   .fbleed-in { position: relative; z-index: 2; max-width: 760px; padding: 80px 0; pointer-events: none; }
   .fbleed .eyebrow { color: rgba(255,255,255,.62); }

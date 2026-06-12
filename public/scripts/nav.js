@@ -71,7 +71,7 @@
       items: [
         { t: 'Board Education Hub', d: 'Plain-language guides for volunteer board leaders', href: 'Resources.html' },
         { t: 'FAQ', d: 'Straight answers — no industry-speak', href: 'FAQ.html' },
-        { t: 'Blog', d: 'News & community stories across five states', href: '#' },
+        { t: 'Blog', d: 'News & community stories across five states', href: 'Resources.html' },
       ],
       featured: {
         eyebrow: 'Featured guide',
@@ -125,7 +125,7 @@
         { t: 'FAQ', href: 'FAQ.html' },
         { t: 'Contact', href: 'Request a Proposal.html' },
         { t: 'Testimonials', href: 'Testimonials.html' },
-        { t: 'Blog', href: '#' },
+        { t: 'Blog', href: 'Resources.html' },
       ],
     },
     {
@@ -167,7 +167,7 @@
 
     /* primary nav */
     h += '<div class="nav-main"><div class="nav-in">';
-    h += '<a class="nav-brand" href="' + HOME + '" aria-label="CMGT home"><img src="' + ASSETS + 'logo-full-color.svg" alt="CMGT"></a>';
+    h += '<a class="nav-brand" href="' + HOME + '" aria-label="CMGT home"><img src="' + ASSETS + 'logo.svg" alt="CMGT"></a>';
     h += '<nav class="nav-links" aria-label="Primary">';
     NAV.forEach(function (n, i) {
       if (n.type === 'link') {
@@ -247,7 +247,7 @@
 
     /* mobile drawer */
     h += '<div class="nav-drawer" role="dialog" aria-label="Menu">';
-    h += '<div class="nav-drawer-top"><img src="' + ASSETS + 'logo-full-color.svg" alt="CMGT"><button class="nav-drawer-close" type="button" aria-label="Close menu">✕</button></div>';
+    h += '<div class="nav-drawer-top"><img src="' + ASSETS + 'logo.svg" alt="CMGT"><button class="nav-drawer-close" type="button" aria-label="Close menu">✕</button></div>';
     NAV.forEach(function (n) {
       if (n.type === 'link') {
         h += '<div class="nd-group"><a class="nd-toggle" href="' + n.href + '">' + esc(n.label) + '</a></div>';

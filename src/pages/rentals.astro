@@ -123,8 +123,8 @@ const breadcrumb = breadcrumbSchema([
   .rn-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
   .rn-hero-media { position: relative; }
   .rn-hero-media .block { position: absolute; right: -26px; bottom: -26px; width: 66%; height: 54%; background: var(--landscaping-green); border-radius: 20px; z-index: 0; }
-  .rn-hero-media .image-slot { position: relative; z-index: 1; width: 100%; height: 520px; }
-  @media (max-width: 980px) { .rn-hero-media .image-slot { height: 400px; } }
+  .rn-hero-media :global(.image-slot) { position: relative; z-index: 1; width: 100%; height: 520px; }
+  @media (max-width: 980px) { .rn-hero-media :global(.image-slot) { height: 400px; } }
 
   /* FIREWALL NOTE */
   .fw { background: var(--freedom-blue); color: #fff; padding: 26px 0; }

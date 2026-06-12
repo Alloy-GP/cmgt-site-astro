@@ -21,22 +21,19 @@ export function FIcon({ name, size = 24, color = "currentColor", strokeWidth = 1
     case "spark": return <svg {...p}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></svg>;
     case "code": return <svg {...p}><polyline points="9 8 5 12 9 16"/><polyline points="15 8 19 12 15 16"/></svg>;
     case "layers": return <svg {...p}><polygon points="12 3 21 8 12 13 3 8 12 3"/><polyline points="3 13 12 18 21 13"/></svg>;
+    case "users": return <svg {...p}><path d="M16 19v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 17.5V19"/><circle cx="10" cy="8" r="3.2"/><path d="M19.5 19v-1.4a3.5 3.5 0 0 0-2.6-3.4M15.5 5.2a3.2 3.2 0 0 1 0 5.6"/></svg>;
     default: return null;
   }
 }
 
-// Destination glyphs (recognizable simplified marks, neutral so brand tint applies)
-export function DestMark({ id, size = 22 }) {
-  const c = { width: size, height: size, viewBox: "0 0 24 24" };
-  switch (id) {
-    case "mailchimp": // freddie-ish dot head
-      return (<svg {...c} fill="none"><circle cx="12" cy="11.5" r="7.5" fill="#1a1a1a"/><circle cx="9.4" cy="10.6" r="1.1" fill="#ffe01b"/><circle cx="14.6" cy="10.6" r="1.1" fill="#ffe01b"/><path d="M9 14.3c1.8 1.4 4.2 1.4 6 0" stroke="#ffe01b" strokeWidth="1.4" strokeLinecap="round"/></svg>);
-    case "sheets":
-      return (<svg {...c} fill="none"><rect x="5" y="3" width="14" height="18" rx="2" fill="#188038"/><rect x="8" y="8" width="8" height="9" rx="1" fill="#fff"/><path d="M8 11.3h8M8 14.3h8M12 8v9" stroke="#188038" strokeWidth="1.1"/></svg>);
-    case "whatconverts":
-      return (<svg {...c} fill="none"><rect x="3" y="3" width="18" height="18" rx="5" fill="#1f6fde"/><path d="M7 9l2.2 6L12 10l2.8 5L17 9" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>);
-    case "email":
-    default:
-      return <FIcon name="mail" size={size} color="var(--brand)" strokeWidth={1.7} />;
-  }
+// Destination marks — uniform CMGT line icons (single Freedom-Blue stroke,
+// matching the rest of the form). No third-party brand logos.
+const DEST_ICON = {
+  email: "users",
+  mailchimp: "mail",
+  sheets: "layers",
+  whatconverts: "spark",
+};
+export function DestMark({ id, size = 20 }) {
+  return <FIcon name={DEST_ICON[id] || "check-circle"} size={size} color="var(--brand)" strokeWidth={1.7} />;
 }

@@ -179,7 +179,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Talk it through <span class="arrow">→</span></a>
-        <a class="cta-phone" href="tel:5045551234">Or call (504) 555-1234 · Mon–Fri, 8a–5p CT</a>
+        <a class="cta-phone" href="tel:2255032648">Or call (225) 503-2648 · Mon–Fri, 8a–5p CT</a>
       </div>
     </div>
   </section>
@@ -200,8 +200,8 @@ const breadcrumb = breadcrumbSchema([
     .sol-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
     .sol-hero-media { position: relative; }
     .sol-hero-media .block { position: absolute; right: -26px; bottom: -26px; width: 66%; height: 54%; background: var(--landscaping-green); border-radius: 20px; z-index: 0; }
-    .sol-hero-media .image-slot { position: relative; z-index: 1; width: 100%; height: 460px; }
-    @media (max-width: 980px) { .sol-hero-media .image-slot { height: 380px; } }
+    .sol-hero-media :global(.image-slot) { position: relative; z-index: 1; width: 100%; height: 460px; }
+    @media (max-width: 980px) { .sol-hero-media :global(.image-slot) { height: 380px; } }
 
     /* SIGNS */
     .sig { background: var(--nb-lightest); padding: 104px 0; }

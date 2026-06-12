@@ -10,7 +10,7 @@ const orgSchema = {
   "url": `${SITE.url}/`,
   "logo": `${SITE.url}/assets/logo-full-color.svg`,
   "description": "Gulf South HOA, condo, and community association management. Independently owned since 2007.",
-  "telephone": "+1-504-555-1234",
+  "telephone": "+1-225-503-2648",
   "areaServed": ["Louisiana", "Texas", "Mississippi", "Alabama", "Florida Panhandle"],
   "sameAs": [],
 };
@@ -317,7 +317,7 @@ const orgSchema = {
       <p class="cta-b-p">Tell us a little about your community and a real person will reach out within one business day. No pitch deck, no pressure.</p>
       <div class="cta-b-actions">
         <a class="btn btn-green" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
-        <a class="btn btn-outline-light" href="tel:5045551234">Call (504) 555-1234</a>
+        <a class="btn btn-outline-light" href="tel:2255032648">Call (225) 503-2648</a>
       </div>
     </div>
   </section>
@@ -357,7 +357,7 @@ const orgSchema = {
     background: var(--landscaping-green);
     border-radius: 20px; z-index: 0;
   }
-  .hero-b-media .image-slot { position: relative; z-index: 1; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+  .hero-b-media :global(.image-slot) { position: relative; z-index: 1; width: 100%; height: auto; aspect-ratio: 4 / 5; }
   .hero-b-media .badge {
     position: absolute; z-index: 2; left: -26px; top: 40px;
     width: 104px; height: 104px; border-radius: 50%;
@@ -438,7 +438,7 @@ const orgSchema = {
   .story-b-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 72px; align-items: center; }
   @media (max-width: 980px) { .story-b-grid { grid-template-columns: 1fr; gap: 44px; } }
   .story-b-media { position: relative; }
-  .story-b-media .image-slot { width: 100%; height: 440px; }
+  .story-b-media :global(.image-slot) { width: 100%; height: 440px; }
   .story-b-media .leaf { position: absolute; right: -36px; top: -36px; width: 130px; height: 130px; pointer-events: none; }
   .story-b-media .leaf img { filter: brightness(0) saturate(100%) invert(67%) sepia(41%) saturate(640%) hue-rotate(86deg) brightness(99%) contrast(92%); }
   .story-b-h {
@@ -522,7 +522,7 @@ const orgSchema = {
     background: var(--nb-lightest);
     border-radius: 50%; z-index: 0;
   }
-  .app-media .image-slot { position: relative; z-index: 1; width: 241px; height: 472px; }
+  .app-media :global(.image-slot) { position: relative; z-index: 1; width: 241px; height: 472px; }
 
   /* NEWS */
   .news { background: #fff; padding: 40px 0 120px; }
@@ -534,7 +534,7 @@ const orgSchema = {
   }
   .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
   @media (max-width: 900px) { .news-grid { grid-template-columns: 1fr; } }
-  .news-card .image-slot { width: 100%; height: 250px; margin-bottom: 20px; }
+  .news-card :global(.image-slot) { width: 100%; height: 250px; margin-bottom: 20px; }
   .news-tag { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 8px; }
   .news-title { font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.25; color: var(--freedom-blue); margin: 0 0 8px; }
   .news-blurb { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0 0 12px; }

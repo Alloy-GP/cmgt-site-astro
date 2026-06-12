@@ -87,7 +87,7 @@ const breadcrumb = breadcrumbSchema([
   .ev-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: var(--ink-400); flex-wrap: wrap; }
   .ev-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--hairline-strong); }
   .ev-band { margin-top: 44px; }
-  .ev-band .image-slot { display: block; width: 100%; height: clamp(320px, 44vw, 560px); }
+  .ev-band :global(.image-slot) { display: block; width: 100%; height: clamp(320px, 44vw, 560px); }
 
   .ev-body { background: #fff; padding: 72px 0 90px; }
   .ev-grid { display: grid; grid-template-columns: 1fr 300px; gap: 64px; align-items: start; }
@@ -98,7 +98,7 @@ const breadcrumb = breadcrumbSchema([
   .ev-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
   .ev-p strong { color: var(--freedom-blue); font-weight: 600; }
   .ev-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
-  .ev-gallery .image-slot { width: 100%; height: 200px; }
+  .ev-gallery :global(.image-slot) { width: 100%; height: 200px; }
   .ev-aside { position: sticky; top: 120px; background: var(--nb-lightest); border-radius: 16px; padding: 30px 28px; }
   .ev-aside-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-400); margin: 0 0 16px; }
   .ev-fact { padding: 14px 0; border-top: 1px solid var(--hairline-strong); }
