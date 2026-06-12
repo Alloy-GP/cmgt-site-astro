@@ -13,6 +13,26 @@
   var HOME = 'index.html';
   var PROPOSAL = 'Request a Proposal.html';
 
+  /* Locations map: per-state detail shown in the map panel rail.
+     Geometry lives in mapPanelHTML(); these keys match each <g data-st="xx">.
+     view = clean Astro route (injected dynamically, after the .html href
+     rewriter has already run, so these must be final routes — not .html). */
+  var MAPDATA = {
+    intro: { eyebrow: 'Five states, neighbors in every one', state: 'Local where your community is.',
+      d: 'CMGT isn’t a national chain. We staff local teams in every market we serve — hover a state to meet your neighbors.',
+      chips: [], view: null, dir: null },
+    tx: { eyebrow: 'Texas', state: 'Texas', d: 'Communities across the Lone Star State, served by local teams.',
+      chips: ['Houston', 'Dallas–Fort Worth', 'Austin', 'San Antonio'], view: '/texas-hoa-management', dir: 'Houston, TX' },
+    la: { eyebrow: 'Louisiana · Headquarters', state: 'Louisiana', d: 'Where it started — Baton Rouge, New Orleans, the Northshore and beyond.',
+      chips: ['Baton Rouge', 'New Orleans', 'Hammond', 'Lafayette'], view: '/louisiana-hoa-management', dir: 'CMGT, Baton Rouge, LA' },
+    ms: { eyebrow: 'Mississippi', state: 'Mississippi', d: 'The largest community manager on the Mississippi Gulf Coast.',
+      chips: ['Gulfport', 'Biloxi', 'Bay St. Louis', 'Ocean Springs'], view: '/mississippi-hoa-management', dir: 'Gulfport, MS' },
+    al: { eyebrow: 'Alabama', state: 'Alabama', d: 'Gulf Coast communities — Fairhope, Foley and the Eastern Shore.',
+      chips: ['Fairhope', 'Foley', 'Gulf Shores', 'Daphne'], view: '/alabama-hoa-management', dir: 'Fairhope, AL' },
+    fl: { eyebrow: 'Florida Panhandle', state: 'Florida Panhandle', d: 'Developer-run communities on the Panhandle — our newest market.',
+      chips: ['Pensacola', 'Pace', 'Panama City'], view: '/developer-hoa-management', dir: 'Pace, FL' },
+  };
+
   var NAV = [
     {
       label: 'About',
@@ -54,7 +74,7 @@
     },
     {
       label: 'Locations',
-      type: 'dropdown',
+      type: 'map',
       items: [
         { t: 'Louisiana', d: 'Where it started \u2014 Baton Rouge, New Orleans, the Northshore & beyond', href: 'Louisiana HOA Management.html' },
         { t: 'Texas', d: 'Communities across the Lone Star State', href: 'Texas HOA Management.html' },
@@ -153,6 +173,55 @@
     return '<a class="nav-panel-item" href="' + it.href + '"><span class="t">' + esc(it.t) + '</span><span class="d">' + esc(it.d) + '</span></a>';
   }
 
+  /* Locations map — detail rail markup for a given state key */
+  function locRailHTML(key) {
+    var d = MAPDATA[key] || MAPDATA.intro;
+    var h = '';
+    h += '<p class="lm-rail-eyebrow">' + esc(d.eyebrow) + '</p>';
+    h += '<h3 class="lm-rail-state">' + esc(d.state) + '</h3>';
+    h += '<p class="lm-rail-d">' + esc(d.d) + '</p>';
+    if (d.chips && d.chips.length) {
+      h += '<div class="lm-chips">' + d.chips.map(function (c) { return '<span class="lm-chip">' + esc(c) + '</span>'; }).join('') + '</div>';
+    }
+    h += '<div class="lm-actions">';
+    if (d.view) {
+      h += '<a class="lm-btn lm-btn-primary" href="' + d.view + '">View ' + esc(d.state) + ' communities <span class="arr">→</span></a>';
+      h += '<a class="lm-btn lm-btn-ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(d.dir) + '">Get directions <span class="arr">↗</span></a>';
+    } else {
+      h += '<span class="lm-rail-hint"><span class="lm-hq-dot"></span> Headquartered in Baton Rouge, LA</span>';
+    }
+    h += '</div>';
+    return h;
+  }
+
+  /* Locations map — the SVG + rail panel */
+  function mapPanelHTML() {
+    var h = '<div class="nav-panel nav-panel-map"><div class="lm">';
+    h += '<div class="lm-map">';
+    h += '<svg viewBox="0 0 540 400" role="img" aria-label="Map of CMGT markets across the Gulf South">';
+    h += '<path d="M0,300 Q120,318 240,308 T540,318 L540,400 L0,400 Z" fill="var(--nb-lightest)"></path>';
+    h += '<text class="lm-gulf-label" x="300" y="372">Gulf of Mexico</text>';
+    /* TX */
+    h += '<g class="st" data-st="tx"><path class="st-shape" d="M150,58 L198,58 L198,104 L252,112 L260,168 L238,198 L210,214 L174,246 L150,302 L136,338 L108,300 L86,250 L68,210 L92,202 L64,166 L54,138 L150,104 Z"></path><text class="st-label" x="150" y="184">TX</text></g>';
+    h += '<g class="pin" data-pin="tx"><circle class="pin-pulse" cx="208" cy="206" r="5"></circle><circle class="pin-dot" cx="208" cy="206" r="5.5"></circle></g>';
+    /* LA */
+    h += '<g class="st" data-st="la"><path class="st-shape" d="M262,110 L350,110 L352,182 L378,202 L370,226 L388,240 L352,246 L332,258 L320,294 L300,286 L296,254 L272,266 L260,238 L258,184 Z"></path><text class="st-label" x="306" y="178">LA</text></g>';
+    h += '<g class="pin" data-pin="la"><circle class="pin-pulse" cx="308" cy="212" r="5"></circle><circle class="pin-hq" cx="308" cy="212" r="6.5"></circle><circle cx="308" cy="212" r="2.5" fill="var(--landscaping-green)"></circle></g>';
+    /* MS */
+    h += '<g class="st" data-st="ms"><path class="st-shape" d="M356,110 L404,110 L404,274 L380,294 L358,286 L354,184 Z"></path><text class="st-label" x="380" y="206">MS</text></g>';
+    h += '<g class="pin" data-pin="ms"><circle class="pin-pulse" cx="378" cy="288" r="5"></circle><circle class="pin-dot" cx="378" cy="288" r="5.5"></circle></g>';
+    /* AL */
+    h += '<g class="st" data-st="al"><path class="st-shape" d="M408,110 L458,110 L462,252 L464,280 L434,302 L422,296 L408,286 Z"></path><text class="st-label" x="434" y="206">AL</text></g>';
+    h += '<g class="pin" data-pin="al"><circle class="pin-pulse" cx="426" cy="290" r="5"></circle><circle class="pin-dot" cx="426" cy="290" r="5.5"></circle></g>';
+    /* FL */
+    h += '<g class="st" data-st="fl"><path class="st-shape" d="M426,300 L458,288 L502,294 L540,294 L548,322 L508,330 L466,332 L434,328 L422,314 Z"></path><text class="st-label" x="494" y="316">FL</text></g>';
+    h += '<g class="pin" data-pin="fl"><circle class="pin-pulse" cx="448" cy="308" r="5"></circle><circle class="pin-dot" cx="448" cy="308" r="5.5"></circle></g>';
+    h += '</svg></div>';
+    h += '<aside class="lm-rail" data-loc-rail>' + locRailHTML('intro') + '</aside>';
+    h += '</div></div>';
+    return h;
+  }
+
   function headerHTML() {
     var h = '';
     /* utility bar */
@@ -174,7 +243,7 @@
         h += '<div class="nav-item"><a class="nav-link" href="' + n.href + '">' + esc(n.label) + '</a></div>';
         return;
       }
-      h += '<div class="nav-item' + (n.type === 'mega' ? ' nav-item-mega' : '') + (n.featured ? ' nav-item-feat' : '') + '" data-nav-i="' + i + '">';
+      h += '<div class="nav-item' + (n.type === 'mega' ? ' nav-item-mega' : '') + (n.type === 'map' ? ' nav-item-map' : '') + (n.featured ? ' nav-item-feat' : '') + '" data-nav-i="' + i + '">';
       h += '<button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true">' + esc(n.label) + CHEV + '</button>';
       if (n.type === 'mega') {
         h += '<div class="nav-panel nav-panel-mega"><div class="mm-grid">';
@@ -208,6 +277,8 @@
         });
         h += '</div></div>';
         h += '</div></div>';
+      } else if (n.type === 'map') {
+        h += mapPanelHTML();
       } else {
         h += '<div class="nav-panel nav-panel-list' + (n.featured ? ' nav-panel-has-feat' : '') + '">';
         h += '<div class="np-cols">';
@@ -424,6 +495,37 @@
       var tg = g.querySelector('button.nd-toggle');
       if (tg) tg.addEventListener('click', function () { g.classList.toggle('open'); });
     });
+
+    /* Locations map: hover a state -> highlight + update detail rail; click -> navigate */
+    var mapPanel = headerSlot.querySelector('.nav-panel-map');
+    if (mapPanel) {
+      var railEl = mapPanel.querySelector('[data-loc-rail]');
+      var states = mapPanel.querySelectorAll('.st');
+      function clearMap() {
+        mapPanel.querySelectorAll('.st').forEach(function (s) { s.classList.remove('on'); });
+        mapPanel.querySelectorAll('.pin').forEach(function (p) { p.classList.remove('on'); });
+      }
+      states.forEach(function (st) {
+        var key = st.getAttribute('data-st');
+        st.addEventListener('mouseenter', function () {
+          clearMap();
+          st.classList.add('on');
+          var pin = mapPanel.querySelector('.pin[data-pin="' + key + '"]');
+          if (pin) pin.classList.add('on');
+          if (railEl) railEl.innerHTML = locRailHTML(key);
+        });
+        st.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var d = MAPDATA[key];
+          if (d && d.view) location.href = d.view;
+        });
+      });
+      var mapArea = mapPanel.querySelector('.lm-map');
+      if (mapArea) mapArea.addEventListener('mouseleave', function () {
+        clearMap();
+        if (railEl) railEl.innerHTML = locRailHTML('intro');
+      });
+    }
 
     /* footer newsletter signup (front-end only — wire to email provider at build) */
     if (footerSlot) {
