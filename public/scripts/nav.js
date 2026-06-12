@@ -281,6 +281,11 @@
     h += '<img src="' + ASSETS + 'logo-1C-white.svg" alt="CMGT">';
     h += '<p class="ft-brand-tagline">Commit<span class="dot">.</span> Communicate<span class="dot">.</span> Care<span class="dot">.</span></p>';
     h += '<p class="ft-brand-copy">Gulf South HOA management — 400+ communities across five states, independently owned since 2007.</p>';
+    h += '<div class="ft-creds"><p class="ft-creds-h">Accredited &amp; affiliated</p><div class="ft-creds-row">';
+    h += '<img src="' + ASSETS + 'cred-cai.webp" alt="Community Associations Institute (CAI)" loading="lazy">';
+    h += '<img src="' + ASSETS + 'cred-ams.webp" alt="Accredited Association Management Specialist (AMS)" loading="lazy">';
+    h += '<img src="' + ASSETS + 'cred-cmca.webp" alt="Certified Manager of Community Associations (CMCA)" loading="lazy">';
+    h += '</div></div>';
     h += '</div>';
     FOOTER.forEach(function (col) {
       h += '<div><p class="ft-col-h">' + esc(col.h) + '</p><ul class="ft-list">';

@@ -9,8 +9,8 @@
 // Paths must match exactly, including the trailing slash. Pages start at review:false
 // so the widget stays hidden until the first real review session.
 
-export const PASTEL_BASE = ''; // ← add the Pastel share link once the project is created
-export const TICKET_ID   = '';
+export const PASTEL_BASE = 'https://usepastel.com/link/4wen2164/#';
+export const TICKET_ID   = '10515';
 
 export interface ReviewItem {
   label: string;
