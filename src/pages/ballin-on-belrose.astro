@@ -1,0 +1,117 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home',                 url: SITE.url + '/' },
+  { name: 'About',                url: SITE.url + '/about' },
+  { name: 'CMGT Cares',           url: SITE.url + '/cmgt-cares' },
+  { name: 'Ballin’ on Belrose', url: SITE.url + '/ballin-on-belrose' },
+]);
+---
+<BaseLayout
+  title="Ballin' on Belrose — CMGT Cares"
+  description="Ballin' on Belrose is CMGT Cares' annual community basketball event in Denham Springs — neighbors together, raising funds for a local cause."
+  pageSchema={breadcrumb}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"About","href":"/about"},{"t":"CMGT Cares","href":"/cmgt-cares"},{"t":"Ballin’ on Belrose"}]'></nav>
+
+  <article>
+    <header class="ev-hero">
+      <div class="container ev-hero-in">
+        <div class="ev-cat">CMGT Cares · Event</div>
+        <h1 class="ev-h1">Ballin' on Belrose.</h1>
+        <p class="ev-lede">One court, a whole community, and a good cause. Our annual basketball event turns a Denham Springs afternoon into something that gives back.</p>
+        <div class="ev-meta"><span>Denham Springs, LA</span><span class="dot"></span><span>Annual · CMGT Cares</span></div>
+      </div>
+      <div class="ev-band">
+        <ImageSlot src="/photos/ballin-on-belrose-bb-hero.jpg" alt="Wide Ballin' on Belrose event photo — the court, the crowd, the day" shape="rect" radius={12} />
+      </div>
+    </header>
+
+    <div class="ev-body">
+      <div class="container ev-grid">
+        <div class="ev-wrap">
+          <h2 class="ev-h2">More than a game</h2>
+          <p class="ev-p">Ballin' on Belrose started the way most CMGT Cares things do — someone on the team had an idea for bringing neighbors together, and we ran with it. <strong>What looks like a basketball tournament is really a fundraiser in sneakers:</strong> a day where the community shows up, plays hard, and leaves having done some good.</p>
+          <p class="ev-p">It fits how we think about the third C. Anyone can manage a community from behind a desk. We'd rather be on the court with it.</p>
+
+          <div class="ev-gallery">
+            <ImageSlot src="/photos/ballin-on-belrose-bb-g1.jpg" alt="Ballin' on Belrose event photo" shape="rounded" radius={12} />
+            <ImageSlot src="/photos/ballin-on-belrose-bb-g2.jpg" alt="Ballin' on Belrose event photo" shape="rounded" radius={12} />
+          </div>
+
+          <h2 class="ev-h2">Where the money goes</h2>
+          <p class="ev-p">Proceeds support a local cause close to the community's heart. <strong>[Placeholder: confirm the beneficiary and the amount raised]</strong> — we'll feature the real story and totals here, because the impact is the whole point.</p>
+
+          <h2 class="ev-h2">Be part of the next one</h2>
+          <p class="ev-p">Whether you want to field a team, sponsor, or just come cheer, there's a place for you on the sideline. Watch this space — or reach out and we'll make sure you hear when the next date drops.</p>
+        </div>
+
+        <aside class="ev-aside">
+          <p class="ev-aside-h">Event at a glance</p>
+          <div class="ev-fact"><div class="ev-fact-k">What</div><div class="ev-fact-v">Community basketball</div></div>
+          <div class="ev-fact"><div class="ev-fact-k">Where</div><div class="ev-fact-v">Denham Springs, LA</div></div>
+          <div class="ev-fact"><div class="ev-fact-k">When</div><div class="ev-fact-v">Annual</div></div>
+          <div class="ev-fact"><div class="ev-fact-k">Benefiting</div><div class="ev-fact-v">A local cause</div></div>
+          <p class="ev-aside-note">Placeholder details — swap in the confirmed year, beneficiary, and funds raised.</p>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <section class="cta">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container cta-in">
+      <h2 class="cta-h">See more of CMGT Cares.</h2>
+      <p class="cta-p">Ballin' on Belrose is one of the ways we show up for our communities all year long.</p>
+      <div class="cta-actions">
+        <a class="btn btn-green" href="/cmgt-cares">Explore CMGT Cares <span class="arrow">→</span></a>
+        <a class="btn btn-outline-light" href="/request-a-proposal">Get involved</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+
+  .ev-hero { background: #fff; padding: 72px 0 0; }
+  .ev-hero-in { max-width: 860px; }
+  .ev-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .ev-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(40px, 5.4vw, 82px); line-height: .99; letter-spacing: -.03em; color: var(--freedom-blue); margin: 16px 0 20px; text-wrap: balance; }
+  .ev-lede { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; color: var(--ink-700); max-width: 640px; margin: 0 0 24px; text-wrap: pretty; }
+  .ev-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: var(--ink-400); flex-wrap: wrap; }
+  .ev-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--hairline-strong); }
+  .ev-band { margin-top: 44px; }
+  .ev-band .image-slot { display: block; width: 100%; height: clamp(320px, 44vw, 560px); }
+
+  .ev-body { background: #fff; padding: 72px 0 90px; }
+  .ev-grid { display: grid; grid-template-columns: 1fr 300px; gap: 64px; align-items: start; }
+  @media (max-width: 920px) { .ev-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .ev-wrap { max-width: 680px; }
+  .ev-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 32px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 40px 0 16px; }
+  .ev-h2:first-child { margin-top: 0; }
+  .ev-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+  .ev-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .ev-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+  .ev-gallery .image-slot { width: 100%; height: 200px; }
+  .ev-aside { position: sticky; top: 120px; background: var(--nb-lightest); border-radius: 16px; padding: 30px 28px; }
+  .ev-aside-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-400); margin: 0 0 16px; }
+  .ev-fact { padding: 14px 0; border-top: 1px solid var(--hairline-strong); }
+  .ev-fact:first-of-type { border-top: 0; padding-top: 0; }
+  .ev-fact-k { font-size: 12.5px; color: var(--ink-400); }
+  .ev-fact-v { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); margin-top: 2px; }
+  .ev-aside-note { font-size: 12px; color: var(--ink-400); margin: 18px 0 0; font-style: italic; }
+
+  .cta { background: var(--freedom-blue); color: #fff; padding: 90px 0; position: relative; overflow: hidden; }
+  .cta .leaf { position: absolute; right: -90px; top: -100px; width: 420px; height: 420px; opacity: .08; transform: rotate(-12deg); pointer-events: none; }
+  .cta .leaf img { filter: brightness(0) invert(1); }
+  .cta-in { position: relative; text-align: center; max-width: 700px; margin: 0 auto; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 52px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.65; color: rgba(255,255,255,.75); margin: 0 0 30px; }
+  .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+</style>

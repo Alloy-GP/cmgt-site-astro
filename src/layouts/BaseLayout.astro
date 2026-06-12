@@ -14,6 +14,7 @@
 //   </BaseLayout>
 
 import '../styles/global.css';
+import '../styles/nav.css';
 import { SITE } from '../config/site.ts';
 import { REVIEW_ITEMS, PASTEL_BASE, TICKET_ID } from '../config/review.ts';
 
@@ -130,11 +131,22 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
     )}
   </head>
   <body>
-    <!-- Add your SiteHeader component here -->
+    <!-- Shared CMGT chrome — rendered client-side by /scripts/nav.js into these mounts -->
+    <div id="site-header"></div>
+
     <main>
       <slot />
     </main>
-    <!-- Add your SiteFooter component here -->
+
+    <div id="site-footer"></div>
+
+    <!-- Shared behavior:
+         nav.js  — renders header + footer + breadcrumbs, wires dropdowns / mega menu /
+                   scroll-hide / glass / scrim / mobile drawer / newsletter, rewrites chrome links.
+         shared.js — .reveal scroll-ins, [data-count-to] count-ups, [data-year].
+         is:inline keeps Astro from bundling them so they serve as-is from /public. -->
+    <script src="/scripts/nav.js" defer is:inline></script>
+    <script src="/scripts/shared.js" defer is:inline></script>
 
     <!-- ── Alloy Preview Review Widget (stg only) ───────────────────────────
          Vanilla JS — no framework deps, works inside Pastel proxy.
@@ -151,9 +163,9 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
       var PK = '#d9356e';   // alloy pink
       var FONT = '"Gotham","Poppins","Helvetica Neue",Arial,sans-serif';
 
-      var SK  = 'xx_review_v1';
-      var TK  = 'xx_review_v1_ticket';
-      var ISK = 'xx_review_v1_started';
+      var SK  = 'cmgt_review_v1';
+      var TK  = 'cmgt_review_v1_ticket';
+      var ISK = 'cmgt_review_v1_started';
 
       // ── Persisted state ──────────────────────────────────────────────────
       var checked = {};

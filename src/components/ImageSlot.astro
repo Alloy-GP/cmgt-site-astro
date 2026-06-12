@@ -1,0 +1,45 @@
+---
+/**
+ * ImageSlot.astro — production replacement for the design's <image-slot>.
+ *
+ * The design HTML used a custom <image-slot> authoring element sized by each
+ * page's CSS (e.g. `.hero-b-media image-slot { aspect-ratio: 4/5 }`). In the
+ * Astro port that markup becomes <ImageSlot …>, which renders <img class="image-slot">,
+ * and the page's scoped CSS is rewritten from `image-slot` → `.image-slot` so the
+ * exact sizing/aspect carries over. Dimensions therefore come from page CSS; this
+ * component only carries shape (border-radius), object-fit/position, and an
+ * optional aspect-ratio fallback.
+ *
+ * Real photography isn't shot yet (see the "Image Prompts - *.md" art-direction
+ * sheets), so src defaults to a branded placeholder. Swap per-slot when photos land.
+ */
+export interface Props {
+  src?: string;
+  alt: string;
+  shape?: 'rect' | 'rounded' | 'circle' | 'pill';
+  radius?: number;            // px, when shape="rounded"
+  ratio?: string;             // CSS aspect-ratio fallback, e.g. "4 / 5"
+  fit?: 'cover' | 'contain' | 'fill';
+  position?: string;          // object-position
+  class?: string;
+}
+const {
+  src = '/photos/placeholder.svg',
+  alt,
+  shape = 'rounded',
+  radius = 12,
+  ratio,
+  fit = 'cover',
+  position = '50% 50%',
+  class: className = '',
+} = Astro.props;
+
+const r = shape === 'circle' ? '50%' : shape === 'pill' ? '999px' : shape === 'rounded' ? `${radius}px` : '0';
+const style = [
+  `border-radius:${r}`,
+  `object-fit:${fit}`,
+  `object-position:${position}`,
+  ratio ? `aspect-ratio:${ratio}` : '',
+].filter(Boolean).join(';') + ';';
+---
+<img class={`image-slot ${className}`.trim()} src={src} alt={alt} loading="lazy" decoding="async" style={style} />

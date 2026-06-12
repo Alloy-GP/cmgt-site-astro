@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   // ── STEP 1: update to client's live domain ────────────────────
-  site: 'https://clientsite.com',
+  site: 'https://cmgt.org',
 
   output: 'server',
   adapter: vercel(),

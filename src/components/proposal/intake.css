@@ -1,0 +1,132 @@
+/* =================================================================
+   CMGT Intake widget — styles
+   Ported from the Alloy Intake handoff, themed with CMGT tokens.
+   Relies on shared.css for Gelica/DM Sans @font-face + brand vars.
+   ================================================================= */
+
+.ai-scope {
+  /* intent category colors — derived from the CMGT brand palette
+     (Freedom Blue, Neighborly Blue, Landscaping Green + the site's gold star accent) */
+  --c-pink:#1E1E77;   --c-pink-tint:#E8E8F1;   /* proposal — Freedom Blue */
+  --c-blue:#3D6FB5;   --c-blue-tint:#EAF3FF;   /* vendor — Neighborly Blue, deepened for contrast */
+  --c-green:#2FA351;  --c-green-tint:#E2F8E9;  /* service — Landscaping Green, deepened for contrast */
+  --c-yellow:#B07E1E; --c-yellow-tint:#FAF1D8; /* general — gold accent */
+  --c-error:#D9356E;                            /* functional error — not a brand color */
+
+  --ai-border:#e7e3ec;
+  --ai-border-strong:#cfc8da;
+  --ai-ink:#211a2c;
+  --ai-muted:#8b8597;
+  --ai-body:#564f60;
+  --ai-shadow-sm:0 2px 8px rgba(24,16,44,.07);
+  --ai-shadow-md:0 12px 30px rgba(24,16,44,.13);
+
+  /* CMGT theme tokens */
+  --brand:#1E1E77;
+  --brand-deep:#15155C;
+  --brand-tint:#E8E8F1;
+  --accent:#1E1E77;          /* eyebrow / receipt header — kept AA on white */
+  --accent-tint:#DBF5E3;     /* green tint for pills + focus rings */
+  --green:#4ACF6C;
+  --green-deep:#3FBF60;
+  --ai-radius:12px;
+  --ai-radius-sm:7px;
+  --font-head: var(--font-display, "Gelica", Georgia, serif);
+  --font-ui: var(--font-body, "DM Sans", sans-serif);
+}
+
+/* ===================== Form widget ===================== */
+.ai-widget{
+  width:560px;max-width:100%;background:#fff;border:0;
+  border-radius:calc(var(--ai-radius) + 4px);box-shadow:var(--ai-shadow-md);overflow:hidden;
+  font-family:var(--font-ui);
+}
+.ai-accentbar{height:5px;background:linear-gradient(90deg,var(--brand),var(--green))}
+.ai-widget-inner{padding:30px 32px 30px}
+.ai-stage{opacity:1;transform:none}
+.ai-eyebrow{font-family:var(--font-ui);font-weight:700;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);opacity:.75}
+.ai-title{font-family:var(--font-head);font-weight:700;font-size:28px;line-height:1.12;letter-spacing:-.015em;color:var(--brand);margin:8px 0 0}
+.ai-sub{font-size:14.5px;line-height:1.55;color:var(--ai-body);font-weight:500;margin:9px 0 0;text-wrap:pretty}
+
+/* intent picker */
+.ai-intent-grid{display:flex;flex-direction:column;gap:11px;margin-top:22px}
+.ai-intent-card{
+  display:flex;align-items:center;gap:15px;width:100%;text-align:left;cursor:pointer;
+  background:#fff;border:1.5px solid var(--ai-border);border-radius:var(--ai-radius);
+  padding:15px 16px;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;font-family:inherit;
+}
+.ai-intent-icon{flex:none;width:46px;height:46px;border-radius:calc(var(--ai-radius) - 3px);display:flex;align-items:center;justify-content:center}
+.ai-intent-body{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.ai-intent-label{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;color:var(--ai-ink);letter-spacing:-.01em}
+.ai-hot{font-weight:700;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);
+  background:var(--accent-tint);padding:3px 7px;border-radius:999px}
+.ai-intent-blurb{font-size:13.5px;color:var(--ai-body);font-weight:500}
+.ai-intent-for{font-size:11.5px;color:var(--ai-muted);font-weight:500;margin-top:1px}
+.ai-intent-arrow{flex:none;transition:color .18s ease,transform .18s ease}
+.ai-intent-card:hover .ai-intent-arrow{transform:translateX(3px)}
+
+/* chosen chip + back */
+.ai-back{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;cursor:pointer;
+  font-family:inherit;font-weight:600;font-size:12.5px;color:var(--ai-muted);padding:0;margin-bottom:14px}
+.ai-back:hover{color:var(--brand)}
+.ai-chosen{display:flex;align-items:center;gap:12px;border:1.5px solid;border-radius:var(--ai-radius);
+  padding:11px 14px;margin-bottom:18px;background:#fff}
+.ai-chosen-icon{flex:none;width:38px;height:38px;border-radius:calc(var(--ai-radius) - 4px);display:flex;align-items:center;justify-content:center}
+.ai-chosen-txt{display:flex;flex-direction:column;line-height:1.3}
+.ai-chosen-txt strong{font-weight:700;font-size:15px;color:var(--ai-ink)}
+.ai-chosen-txt span{font-size:12.5px;color:var(--ai-muted);font-weight:500}
+
+/* form grid + fields */
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px 14px}
+@media(max-width:520px){.ai-grid{grid-template-columns:1fr}}
+.ai-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ai-label{font-weight:600;font-size:12.5px;color:var(--ai-ink);letter-spacing:.005em}
+.ai-req{color:var(--c-error);margin-left:3px}
+.ai-control{
+  font-family:inherit;font-size:14px;font-weight:500;color:var(--ai-ink);
+  background:#fbfafc;border:1.5px solid var(--ai-border);border-radius:var(--ai-radius-sm);
+  padding:11px 13px;width:100%;transition:border-color .15s ease,box-shadow .15s ease,background .15s ease;outline:none;
+}
+.ai-control::placeholder{color:#b3aebd}
+.ai-control:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 3px var(--accent-tint)}
+.ai-control.ai-err,.ai-select-wrap.ai-err .ai-control{border-color:var(--c-error)}
+.ai-err-msg{font-size:11.5px;font-weight:600;color:var(--c-error)}
+.ai-textarea{resize:vertical;min-height:64px;line-height:1.5}
+.ai-select-wrap{position:relative}
+.ai-select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:34px}
+.ai-caret{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--ai-muted);pointer-events:none}
+.ai-segmented{display:flex;gap:7px;flex-wrap:wrap}
+.ai-seg{flex:1;min-width:64px;font-family:inherit;font-weight:600;font-size:12.5px;color:var(--ai-body);cursor:pointer;
+  background:#fbfafc;border:1.5px solid var(--ai-border);border-radius:var(--ai-radius-sm);padding:10px 8px;transition:all .15s ease}
+.ai-seg:hover{border-color:var(--ai-border-strong)}
+.ai-seg.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:var(--ai-shadow-sm)}
+
+/* actions */
+.ai-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:24px;flex-wrap:wrap}
+.ai-trust{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:var(--ai-muted)}
+.ai-submit{
+  display:inline-flex;align-items:center;gap:9px;font-family:var(--font-ui);font-weight:700;font-size:13px;
+  letter-spacing:.06em;color:var(--brand);background:var(--green);border:0;cursor:pointer;
+  padding:14px 24px;border-radius:var(--ai-radius-sm);transition:transform .12s ease,background .18s ease,box-shadow .18s ease;
+  box-shadow:0 8px 22px rgba(74,207,108,.32);
+}
+.ai-submit:hover{background:var(--green-deep)}
+.ai-submit:active{transform:translateY(1px)}
+
+/* done / receipt */
+.ai-done{text-align:center}
+.ai-done-badge{width:62px;height:62px;border-radius:50%;margin:4px auto 0;display:flex;align-items:center;justify-content:center;
+  background:var(--c-green);box-shadow:0 8px 22px rgba(47,163,81,.4)}
+.ai-receipt{text-align:left;background:var(--brand-tint);border:1px solid var(--ai-border);border-radius:var(--ai-radius);padding:16px 17px;margin:22px 0 0}
+.ai-receipt-head{display:flex;align-items:center;gap:7px;font-weight:700;font-size:12px;letter-spacing:.02em;color:var(--brand);text-transform:none}
+.ai-receipt-list{list-style:none;margin:13px 0 0;padding:0;display:flex;flex-direction:column;gap:11px}
+.ai-receipt-row{display:flex;align-items:flex-start;gap:11px;opacity:.32;transform:translateY(4px);transition:opacity .35s ease,transform .35s ease}
+.ai-receipt-row.on{opacity:1;transform:none}
+.ai-receipt-check{flex:none;width:20px;height:20px;border-radius:50%;background:var(--c-green);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ai-receipt-mark{flex:none;width:24px;display:flex;justify-content:center}
+.ai-receipt-txt{display:flex;flex-direction:column;line-height:1.35}
+.ai-receipt-txt strong{font-weight:700;font-size:13.5px;color:var(--ai-ink)}
+.ai-receipt-txt span{font-size:12px;color:var(--ai-body);font-weight:500}
+.ai-restart{margin-top:20px;font-family:inherit;font-weight:600;font-size:13px;color:var(--brand);background:transparent;
+  border:1.5px solid var(--ai-border-strong);border-radius:var(--ai-radius-sm);padding:11px 20px;cursor:pointer;transition:all .15s ease}
+.ai-restart:hover{border-color:var(--brand);background:var(--brand-tint)}

@@ -38,8 +38,10 @@ export function orgSchema() {
     email: SITE.org.email,
     address: {
       '@type': 'PostalAddress',
+      streetAddress: SITE.org.streetAddress,
       addressLocality: SITE.org.addressLocality,
       addressRegion: SITE.org.addressRegion,
+      postalCode: SITE.org.postalCode,
       addressCountry: SITE.org.addressCountry,
     },
     areaServed: SITE.org.areaServed,
@@ -178,8 +180,10 @@ export function localBusinessSchema(opts?: { description?: string }) {
     email: SITE.org.email,
     address: {
       '@type': 'PostalAddress',
+      streetAddress: SITE.org.streetAddress,
       addressLocality: SITE.org.addressLocality,
       addressRegion: SITE.org.addressRegion,
+      postalCode: SITE.org.postalCode,
       addressCountry: SITE.org.addressCountry,
     },
     areaServed: SITE.org.areaServed,

@@ -1,0 +1,478 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home',      url: SITE.url + '/' },
+  { name: 'About',     url: SITE.url + '/about' },
+  { name: 'Our Story', url: SITE.url + '/our-story' },
+]);
+---
+<BaseLayout
+  title="Our Story — CMGT | People First, Learned the Hard Way"
+  description="The CMGT story — from one community in Denham Springs in 2007 to 400+ across five states, a flood that built our culture, and a people-first turn."
+  pageSchema={breadcrumb}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"About","href":"/about"},{"t":"Our Story"}]'></nav>
+
+  <!-- HERO — editorial opening spread -->
+  <section class="story-hero">
+    <div class="container story-hero-top">
+      <div class="eyebrow">Our story · Since 2007</div>
+      <h1 class="story-hero-display">People first — <em>learned the hard way.</em></h1>
+      <div class="story-hero-rule"></div>
+      <p class="story-hero-lede">
+        Nineteen years, five states, and 400+ communities — all of it started with an HOA
+        assessment notice on a friend's kitchen counter and four words Jeff Harman would
+        eat: <strong>“you couldn't pay me to do that.”</strong>
+      </p>
+    </div>
+    <div class="story-hero-band">
+      <ImageSlot src="/photos/our-story-story-hero-photo.jpg" alt="A founding-era Gulf South community at golden hour — manicured streetscape with live oaks" shape="rect" />
+      <div class="quote-over">
+        <div class="container">
+          <p class="story-hero-origin">“Well, actually <span class="g">— you could pay me to do that.”</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTERS -->
+  <section class="chapters">
+    <div class="container">
+      <article class="chapter reveal">
+        <div class="chapter-marker">
+          <div class="chapter-num">01</div>
+          <div class="chapter-label">The accidental beginning</div>
+        </div>
+        <div>
+          <h2 class="chapter-h">It started with a letter on a kitchen counter.</h2>
+          <p class="chapter-p">
+            Jeff Harman was running a financial counseling firm with his dad when he stopped by
+            a friend's house before dinner. A letter from the HOA was sitting on the counter.
+            He asked about it.
+          </p>
+          <p class="chapter-p">
+            His friend explained: neighbors volunteering their evenings and weekends to enforce
+            rules, collect assessments, and keep the community running. For free. Because
+            somebody had to.
+          </p>
+          <p class="chapter-p">
+            Jeff's first thought was that <strong>nobody should have to do that work for free.</strong>
+            His second thought was that somebody could build a company to take it off their plates.
+            He went home, talked to a few buddies who'd been wanting to build something together,
+            and they set a goal: <strong>sixty communities.</strong> That was the plan.
+          </p>
+        </div>
+      </article>
+
+      <article class="chapter reveal">
+        <div class="chapter-marker">
+          <div class="chapter-num">02</div>
+          <div class="chapter-label">The order of the P's</div>
+        </div>
+        <div>
+          <h2 class="chapter-h">Process. Product. Profit. People — in that order. That was the mistake.</h2>
+          <p class="chapter-p">
+            The first version of the company was built on systems: tight processes, a solid
+            product, healthy margins. And for five or six years, it worked. But somewhere in
+            that order, the people doing the work came last — and good people started moving on.
+          </p>
+          <p class="chapter-p">
+            The fix wasn't a new process. It was a mirror. Jeff flipped the order:
+            <strong>people first</strong> — hire great people, give them great tools, pour into
+            them, and they'll make the processes great, which makes the product great.
+            <em>That's still how CMGT runs today.</em>
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PULL QUOTE -->
+  <section class="pull">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container pull-in reveal">
+      <blockquote class="pull-q" style="margin-left:0; margin-right:0;">
+        "If I had to say what my company should be known for, I would say: <span class="g">the company
+        that takes care of its people</span> — because then they will be inspired to take care of
+        everyone else."
+      </blockquote>
+      <div class="pull-attr"><strong>Jeff Harman</strong> · Founder & CEO</div>
+    </div>
+  </section>
+
+  <!-- FLOOD -->
+  <section class="flood">
+    <div class="container flood-grid">
+      <div class="flood-media reveal">
+        <ImageSlot src="/photos/our-story-flood-photo.jpg" alt="A Denham Springs community showing resilience after the 2016 flood" shape="rounded" radius={20} />
+      </div>
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">2016 · Denham Springs</div>
+        <h2 class="flood-h">The flood that proved <em>who we were.</em></h2>
+        <p class="flood-p">
+          In August 2016, the Great Flood put most of Denham Springs underwater. Two feet of water
+          filled CMGT's office. Team members' homes flooded. Jeff's own house did too. So did
+          communities we managed.
+        </p>
+        <p class="flood-p">
+          With about thirty team members and no office, CMGT went fully remote overnight —
+          and the service didn't slip. <strong>The flood taught us our culture didn't live in a
+          building.</strong> When a developer client said "we're expanding into Mississippi,
+          we want you to come," the answer was easy. That was the first state line — the
+          beginning of today's five-state footprint.
+        </p>
+        <blockquote class="flood-quote" style="margin-left:0; margin-right:0;">
+          "It really clicked at the time of the flood that we could really do this."
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline">
+    <div class="container">
+      <div class="eyebrow eyebrow-blue reveal">Nineteen years, still counting</div>
+      <h2 class="tl-h reveal">Greatness isn't a destination. <span class="u">It's a journey.</span></h2>
+      <div class="tl-grid">
+        <div class="tl-item reveal">
+          <div class="tl-year">2007</div>
+          <div class="tl-t">One community, one team member</div>
+          <p class="tl-d">CMGT manages its first association in Denham Springs, Louisiana — a side project with a sixty-community plan.</p>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2012</div>
+          <div class="tl-t">CMGT Cares begins</div>
+          <p class="tl-d">The community giving program starts — because managing communities means caring about more than the grass.</p>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2014</div>
+          <div class="tl-t">Largest in Louisiana</div>
+          <p class="tl-d">CMGT becomes the state's largest HOA management company — every community won by referral and reputation.</p>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2016</div>
+          <div class="tl-t">The flood — and the leap</div>
+          <p class="tl-d">The Great Flood forces a fully remote model that sticks. A developer's invitation carries CMGT into Mississippi.</p>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2021</div>
+          <div class="tl-t">Largest on the Mississippi Gulf Coast</div>
+          <p class="tl-d">Five years in Mississippi, and CMGT becomes the largest manager on the Gulf Coast — neighbors there, not outsiders.</p>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2026</div>
+          <div class="tl-t">CMGT, fully realized</div>
+          <p class="tl-d">A full rebrand for a five-state team serving 400+ communities and 60,000+ homes — independently owned since day one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GREYHOUND -->
+  <section class="grey">
+    <div class="container grey-in">
+      <div class="eyebrow eyebrow-blue reveal">The Greyhound Mentality</div>
+      <h2 class="grey-h reveal">The joy was never in the capture. It's in the chase.</h2>
+      <p class="grey-p reveal">
+        Jeff's father taught him this at the greyhound races: the dogs chase the same stuffed
+        rabbit every day. They never catch it. And they come back the next day and run just as
+        hard. Their joy isn't in the capture — <strong>it's in the chase.</strong>
+      </p>
+      <p class="grey-p reveal">
+        That's how CMGT runs. The only constant here is that things are always changing, always
+        improving. No complacency, no "we've arrived" — just a team that comes back every day
+        and runs hard.
+      </p>
+      <p class="grey-tag reveal">Take what you do seriously. <span class="g">Never take yourself seriously.</span></p>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section class="lead">
+    <div class="container">
+      <div class="lead-top">
+        <div class="reveal">
+          <div class="eyebrow eyebrow-blue">Leadership</div>
+          <h2 class="lead-h">No face on the building. A team behind every community.</h2>
+        </div>
+        <div class="reveal">
+          <p class="lead-p">
+            CMGT is ~91 people across five states — remote-first, Gulf South-rooted, and built
+            on a team-based model where no community ever depends on a single person.
+          </p>
+          <a class="lead-link" href="/team-and-careers">Meet the whole team <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="lead-grid">
+        <div class="lead-card reveal">
+          <ImageSlot src="/photos/our-story-lead-jeff.jpg" alt="Jeff Harman, Founder & CEO" shape="circle" />
+          <div class="lead-name">Jeff Harman</div>
+          <div class="lead-role">Founder & CEO</div>
+        </div>
+        <div class="lead-card reveal">
+          <ImageSlot src="/photos/our-story-lead-amanda.jpg" alt="Amanda Betancourt, Chief Operating Officer" shape="circle" />
+          <div class="lead-name">Amanda Betancourt</div>
+          <div class="lead-role">Chief Operating Officer</div>
+        </div>
+        <div class="lead-card reveal">
+          <ImageSlot src="/photos/our-story-lead-ashley.jpg" alt="Ashley Melancon, Chief Financial Officer" shape="circle" />
+          <div class="lead-name">Ashley Melancon</div>
+          <div class="lead-role">Chief Financial Officer</div>
+        </div>
+        <div class="lead-card reveal">
+          <ImageSlot src="/photos/our-story-lead-chris.jpg" alt="Chris Tremblay, Chief Real Estate Officer" shape="circle" />
+          <div class="lead-name">Chris Tremblay</div>
+          <div class="lead-role">Chief Real Estate Officer</div>
+        </div>
+        <div class="lead-card reveal">
+          <ImageSlot src="/photos/our-story-lead-hannah.jpg" alt="Hannah Daigle, Head of HR" shape="circle" />
+          <div class="lead-name">Hannah Daigle</div>
+          <div class="lead-role">Head of HR</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="strip">
+    <div class="container strip-grid">
+      <div class="reveal">
+        <div class="strip-num" data-count-to="2007" data-plain data-duration="1600">0</div>
+        <div class="strip-label">founded in Denham Springs</div>
+      </div>
+      <div class="reveal">
+        <div class="strip-num" data-count-to="400" data-suffix="+" data-duration="1500">0+</div>
+        <div class="strip-label">communities managed</div>
+      </div>
+      <div class="reveal">
+        <div class="strip-num" data-count-to="5" data-duration="900">0</div>
+        <div class="strip-label">states, neighbors in every one</div>
+      </div>
+      <div class="reveal">
+        <div class="strip-num" data-count-to="96" data-suffix="%" data-duration="1600">0%</div>
+        <div class="strip-label">client retention</div>
+      </div>
+      <div class="reveal">
+        <div class="strip-num" data-count-to="100" data-suffix="%" data-duration="1400">0%</div>
+        <div class="strip-label">organic growth — no PE, ever</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container cta-in reveal">
+      <h2 class="cta-h">Nineteen years in. <em>Still chasing.</em></h2>
+      <p class="cta-p">If your community deserves a team that runs this hard, let's have a conversation — no pitch deck, no pressure.</p>
+      <div class="cta-actions">
+        <a class="btn btn-green" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+        <a class="btn btn-outline-light" href="tel:5045551234">Call (504) 555-1234</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Our Story — editorial split language ───────────────────── */
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+
+  /* HERO — editorial opening spread (distinct from home) */
+  .story-hero {
+    position: relative;
+    background: var(--freedom-blue);
+    color: #fff;
+    padding: 120px 0 0;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .story-hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 8%, rgba(141,189,255,.12) 0%, transparent 55%);
+    z-index: 0; pointer-events: none;
+  }
+  .story-hero-top { position: relative; z-index: 2; padding-bottom: 64px; }
+  .story-hero .eyebrow { color: rgba(255,255,255,.62); }
+  .story-hero-display {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: .98; letter-spacing: -.03em;
+    color: #fff;
+    margin: 22px 0 0;
+    text-wrap: balance;
+  }
+  .story-hero-display em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .story-hero-rule { width: 88px; height: 5px; background: var(--landscaping-green); border-radius: 3px; margin: 36px 0 32px; }
+  .story-hero-lede {
+    font-size: clamp(18px, 2vw, 22px); line-height: 1.6;
+    color: rgba(255,255,255,.82);
+    max-width: 680px; margin: 0;
+    text-wrap: pretty;
+  }
+  .story-hero-lede strong { color: #fff; font-weight: 600; }
+  /* full-bleed cinematic image band with overlaid origin quote */
+  .story-hero-band { position: relative; z-index: 2; }
+  .story-hero-band .image-slot { display: block; width: 100%; height: clamp(340px, 42vw, 560px); border-radius: 0; }
+  .story-hero-band .quote-over {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 64px 0 40px;
+    background: linear-gradient(to top, rgba(21,21,92,.82) 0%, rgba(21,21,92,.4) 55%, transparent 100%);
+    pointer-events: none;
+  }
+  .story-hero-band .quote-over .container { pointer-events: auto; }
+  .story-hero-origin {
+    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-size: clamp(22px, 2.6vw, 34px); line-height: 1.3; letter-spacing: -.01em;
+    color: #fff; max-width: 760px; margin: 0;
+    text-wrap: balance;
+  }
+  .story-hero-origin .g { color: var(--landscaping-green); }
+  @media (max-width: 700px) { .story-hero { padding-top: 92px; } }
+
+  /* CHAPTERS */
+  .chapters { background: #fff; padding: 40px 0 90px; }
+  .chapter {
+    display: grid; grid-template-columns: 240px 1fr;
+    gap: 56px;
+    padding: 54px 0;
+    border-top: 1.5px solid var(--hairline-strong);
+    max-width: 1020px;
+  }
+  @media (max-width: 860px) { .chapter { grid-template-columns: 1fr; gap: 18px; } }
+  .chapter-marker { display: flex; flex-direction: column; gap: 8px; }
+  .chapter-num { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 44px; line-height: 1; color: var(--landscaping-green); }
+  .chapter-label { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-400); }
+  .chapter-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(26px, 3vw, 36px); line-height: 1.15; letter-spacing: -.015em;
+    color: var(--freedom-blue);
+    margin: 0 0 18px; text-wrap: balance;
+  }
+  .chapter-p { font-size: 16.5px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 620px; }
+  .chapter-p:last-child { margin-bottom: 0; }
+  .chapter-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .chapter-p em { font-style: italic; }
+
+  /* PULL QUOTE */
+  .pull { background: var(--freedom-blue); color: #fff; padding: 110px 0; position: relative; overflow: hidden; }
+  .pull .leaf { position: absolute; right: -110px; top: -130px; width: 480px; height: 480px; opacity: .07; transform: rotate(-10deg); pointer-events: none; }
+  .pull .leaf img { filter: brightness(0) invert(1); }
+  .pull-in { position: relative; max-width: 920px; }
+  .pull-q {
+    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-size: clamp(28px, 3.6vw, 44px); line-height: 1.28; letter-spacing: -.01em;
+    color: #fff; margin: 0 0 28px;
+    text-wrap: balance;
+  }
+  .pull-q .g { color: var(--landscaping-green); font-style: normal; font-weight: 700; }
+  .pull-attr { font-size: 14px; color: rgba(255,255,255,.65); }
+  .pull-attr strong { color: #fff; font-weight: 600; }
+
+  /* FLOOD BAND */
+  .flood { background: var(--nb-lightest); padding: 110px 0; }
+  .flood-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 72px; align-items: center; }
+  @media (max-width: 980px) { .flood-grid { grid-template-columns: 1fr; gap: 44px; } }
+  .flood-media .image-slot { width: 100%; height: 460px; }
+  .flood-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em;
+    color: var(--freedom-blue); margin: 16px 0 20px; text-wrap: balance;
+  }
+  .flood-h em { font-style: italic; font-weight: 500; }
+  .flood-p { font-size: 16.5px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
+  .flood-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .flood-quote {
+    font-family: var(--font-display); font-weight: 500; font-style: italic;
+    font-size: 20px; line-height: 1.5; color: var(--freedom-blue);
+    border-left: 3px solid var(--landscaping-green);
+    padding-left: 20px; margin: 24px 0 0;
+  }
+
+  /* TIMELINE */
+  .timeline { background: #fff; padding: 120px 0 100px; }
+  .tl-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -.015em;
+    color: var(--freedom-blue); max-width: 700px;
+    margin: 18px 0 64px; text-wrap: balance;
+  }
+  .tl-h .u { background: linear-gradient(transparent 78%, var(--landscaping-green) 78%); padding-bottom: .04em; }
+  .tl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 48px; }
+  @media (max-width: 980px) { .tl-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .tl-grid { grid-template-columns: 1fr; } }
+  .tl-item { border-top: 1.5px solid var(--hairline-strong); padding: 22px 2px 36px; transition: border-color var(--dur-base) var(--ease-out); }
+  .tl-item:hover { border-top-color: var(--landscaping-green); }
+  .tl-year { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 34px; color: var(--landscaping-green); line-height: 1; }
+  .tl-t { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); margin: 12px 0 8px; line-height: 1.25; }
+  .tl-d { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0; }
+
+  /* GREYHOUND */
+  .grey { background: var(--fb-lightest); padding: 110px 0; position: relative; overflow: hidden; }
+  .grey-in { max-width: 860px; }
+  .grey-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em;
+    color: var(--freedom-blue); margin: 16px 0 22px; text-wrap: balance;
+  }
+  .grey-p { font-size: 16.5px; line-height: 1.75; color: var(--ink-700); margin: 0 0 16px; max-width: 680px; }
+  .grey-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .grey-tag {
+    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-size: clamp(24px, 2.8vw, 32px); color: var(--freedom-blue);
+    margin: 30px 0 0;
+  }
+  .grey-tag .g { color: inherit; background: linear-gradient(transparent 76%, var(--landscaping-green) 76%); font-style: italic; }
+
+  /* LEADERSHIP */
+  .lead { background: #fff; padding: 120px 0 100px; }
+  .lead-top { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: end; margin-bottom: 56px; }
+  @media (max-width: 860px) { .lead-top { grid-template-columns: 1fr; gap: 20px; } }
+  .lead-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em;
+    color: var(--freedom-blue); margin: 16px 0 0; text-wrap: balance;
+  }
+  .lead-p { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0 0 14px; }
+  .lead-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 600; font-size: 15px; color: var(--freedom-blue); text-decoration: none;
+  }
+  .lead-link .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .lead-link:hover .arrow { transform: translateX(4px); }
+  .lead-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 36px 28px; }
+  @media (max-width: 980px) { .lead-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .lead-grid { grid-template-columns: repeat(2, 1fr); } }
+  .lead-card { text-align: center; }
+  .lead-card .image-slot { width: 132px; height: 132px; margin: 0 auto 16px; }
+  .lead-name { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .lead-role { font-size: 12.5px; color: var(--ink-400); margin-top: 3px; }
+
+  /* STATS STRIP */
+  .strip { background: var(--landscaping-green); color: var(--freedom-blue); padding: 44px 0; }
+  .strip-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; }
+  @media (max-width: 980px) { .strip-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .strip-grid { grid-template-columns: 1fr 1fr; } }
+  .strip-num { font-family: var(--font-display); font-weight: 900; font-size: 40px; line-height: 1; letter-spacing: -.02em; }
+  .strip-label { font-size: 13px; font-weight: 600; margin-top: 6px; color: rgba(30,30,119,.78); }
+
+  /* CTA */
+  .cta { background: var(--freedom-blue); color: #fff; padding: 110px 0; position: relative; overflow: hidden; }
+  .cta .leaf { position: absolute; right: -80px; top: -90px; width: 420px; height: 420px; opacity: .08; transform: rotate(-12deg); pointer-events: none; }
+  .cta .leaf img { filter: brightness(0) invert(1); }
+  .cta-in { position: relative; text-align: center; max-width: 760px; margin: 0 auto; }
+  .cta-h {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(36px, 4.8vw, 60px); line-height: 1.04; letter-spacing: -.02em;
+    margin: 0 0 18px; text-wrap: balance;
+  }
+  .cta-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .cta-p { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,.75); margin: 0 0 38px; }
+  .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+</style>

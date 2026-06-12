@@ -1,0 +1,848 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'HOA Management Services', url: SITE.url + '/hoa-management-services' },
+]);
+---
+<BaseLayout
+  title="HOA Management Services for Gulf South Communities — CMGT"
+  description="Full-service HOA management across the Gulf South — a dedicated manager backed by a specialist team, financials by the 20th, and same-day answers."
+  pageSchema={breadcrumb}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"HOA Management Services"}]'></nav>
+
+  <!-- HERO -->
+  <section class="ph-hero">
+    <div class="container">
+      <div class="ph-hero-top">
+        <div>
+          <div class="eyebrow">HOA Management Services</div>
+          <h1 class="ph-hero-display">Full-service HOA management for the <em>Gulf South.</em></h1>
+        </div>
+        <div>
+          <p class="ph-hero-lede">
+            Single-family, master-planned, and townhome associations across five states.
+            One dedicated manager, a whole specialist team behind them, and
+            <strong>answers the same day — not the same month.</strong>
+          </p>
+          <div class="ph-hero-ctas">
+            <a class="btn btn-green" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+            <a class="btn btn-outline-light" href="/how-we-work">How we work</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ph-hero-band">
+      <ImageSlot src="/photos/hoa-management-services-hoa-hero-photo.jpg" alt="Wide view of a Gulf South single-family / master-planned community at golden hour" shape="rect" />
+    </div>
+    <div class="container">
+      <div class="ph-hero-stats">
+        <div><div class="ph-stat-num" data-count-to="400" data-suffix="+" data-duration="1500">0+</div><div class="ph-stat-label">communities managed</div></div>
+        <div><div class="ph-stat-num" data-count-to="60" data-suffix="k+" data-duration="1300">0k+</div><div class="ph-stat-label">homes under management</div></div>
+        <div><div class="ph-stat-num" data-count-to="96" data-suffix="%" data-duration="1600">0%</div><div class="ph-stat-label">client retention</div></div>
+        <div><div class="ph-stat-num" data-count-to="5" data-duration="900">0</div><div class="ph-stat-label">states, neighbors in every one</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section class="inc">
+    <div class="container">
+      <div class="inc-head reveal">
+        <div class="eyebrow eyebrow-blue">What full-service means</div>
+        <h2 class="inc-h">Everything your board carries — handled.</h2>
+        <p class="inc-sub">No à la carte gaps, no "that's not in your plan." <strong>One team owns the whole operation</strong> so your volunteers can get back to living in their community.</p>
+      </div>
+      <div class="inc-grid">
+        <div class="inc-item reveal"><div class="inc-num">01</div><h3 class="inc-t">Financial Management</h3><p class="inc-d">Budgets, reserves, dues collection, delinquency, and audit-ready books — with full transparency for every homeowner.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">02</div><h3 class="inc-t">Covenant Enforcement</h3><p class="inc-d">Consistent, compassionate compliance and architectural review — firm where it counts, never heavy-handed.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">03</div><h3 class="inc-t">Vendor & Project Oversight</h3><p class="inc-d">Bids, scopes, scheduling, and quality control with trusted local partners — plus our in-house Fix-It Squad.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">04</div><h3 class="inc-t">Board & Meeting Support</h3><p class="inc-d">Agendas, packets, minutes, and governance guidance — so meetings are shorter, calmer, and more productive.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">05</div><h3 class="inc-t">Homeowner Communication</h3><p class="inc-d">Same-day responses, clear newsletters, and a portal for payments, requests, and documents — 24/7.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">06</div><h3 class="inc-t">Emergency & Storm Response</h3><p class="inc-d">Hurricane plans in place before the season, not during it. Vendor mobilization, owner updates, and recovery support when storms hit.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODEL -->
+  <section class="mdl">
+    <div class="container mdl-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">The team-based model</div>
+        <h2 class="mdl-h">A dedicated manager — <em>and no single point of failure.</em></h2>
+        <p class="mdl-p">
+          You get one name you'll know, backed by specialists in accounting, covenants, vendors,
+          and communication. <strong>When one person's out, the work doesn't stop.</strong>
+          We built it this way on purpose — the one-overworked-manager model fails boards every day,
+          and if your last company left you feeling burned, that's exactly the gap we close.
+          Big enough to protect you, approachable enough that you'll never get lost in the shadow.
+        </p>
+        <a class="mdl-link" href="/how-we-work">See how the pod works <span class="arrow">→</span></a>
+      </div>
+      <div class="mdl-media reveal">
+        <ImageSlot src="/photos/hoa-management-services-hoa-model-photo.jpg" alt="A community manager meeting with HOA board members" shape="rounded" radius={20} />
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERY TIERS + NEAR-ME (SEO: "hoa management company", "what does an hoa management company do", "hoa management companies near me") -->
+  <section class="tiers">
+    <div class="container">
+      <div class="tiers-head reveal">
+        <div class="eyebrow eyebrow-blue">Full-service or on-site</div>
+        <h2 class="inc-h">What an HOA management company does — and how we deliver it.</h2>
+        <p class="inc-sub">A great HOA management company runs the finances, enforces the covenants, manages the vendors, and keeps homeowners informed — <strong>so your volunteer board doesn't have to.</strong> How that's delivered depends on your community.</p>
+      </div>
+      <div class="tier-grid">
+        <div class="tier-card reveal">
+          <div class="tier-tag">Most communities</div>
+          <h3 class="tier-t">Full-Service Management</h3>
+          <p class="tier-d">Your dedicated manager and the full specialist bench run the entire operation remotely — backed by our five-state team and technology.</p>
+          <ul class="tier-list">
+            <li>Dedicated Community Association Manager + specialist team</li>
+            <li>Complete financial, covenant, vendor & communication management</li>
+            <li>Best fit for single-family, townhome & master-planned HOAs</li>
+          </ul>
+        </div>
+        <div class="tier-card reveal">
+          <div class="tier-tag">Larger & amenity-rich</div>
+          <h3 class="tier-t">On-Site Management</h3>
+          <p class="tier-d">For communities that need staff on the ground, we place dedicated on-site personnel — with the same specialist bench behind them.</p>
+          <ul class="tier-list">
+            <li>Dedicated on-site manager and/or staff</li>
+            <li>Day-to-day presence for large or amenity-heavy communities</li>
+            <li>Same financial transparency and team-based backup</li>
+          </ul>
+        </div>
+      </div>
+      <div class="local-band reveal">
+        <h3 class="local-h">HOA management near you, across the Gulf South.</h3>
+        <div>
+          <p class="local-p">We're not parachuting in from out of state. CMGT manages communities with local teams in five states — and we license properly in every market before we enter it.</p>
+          <div class="local-states">
+            <a class="local-chip" href="/louisiana-hoa-management">Louisiana</a>
+            <a class="local-chip" href="/texas-hoa-management">Texas</a>
+            <a class="local-chip" href="/mississippi-hoa-management">Mississippi</a>
+            <a class="local-chip" href="/alabama-hoa-management">Alabama</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE: What full-service really covers -->
+  <section class="cov">
+    <div class="container">
+      <div class="cov-head reveal">
+        <div class="eyebrow eyebrow-blue">Full-service, in detail</div>
+        <h2 class="cov-h">What "we handle it" actually means.</h2>
+        <p class="cov-sub">"Full-service" gets thrown around a lot. Here's what your board actually hands off.</p>
+      </div>
+      <div class="cov-grid reveal">
+        <div class="cov-tabs" id="cov-tabs" role="tablist"></div>
+        <div class="cov-panel">
+          <h3 class="cov-panel-t" id="cov-t">Financial management &amp; reporting</h3>
+          <p class="cov-panel-p" id="cov-p">The money side is where most boards feel exposed — and where we go deepest. Your community's books are kept current, transparent, and audit-ready, with the full picture shared every month, not just at tax time.</p>
+          <ul class="cov-list" id="cov-list">
+            <li>Annual budget preparation</li>
+            <li>Reserve planning &amp; funding</li>
+            <li>Dues billing &amp; collection</li>
+            <li>Delinquency management</li>
+            <li>Monthly P&amp;L and balance sheet by the 20th</li>
+            <li>Bank reconciliations</li>
+            <li>Audit &amp; CPA coordination</li>
+            <li>Owner-facing financial transparency</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var COV = [
+          { tab: 'Financials', t: 'Financial management & reporting', p: "The money side is where most boards feel exposed — and where we go deepest. Your community's books are kept current, transparent, and audit-ready, with the full picture shared every month, not just at tax time.", items: ['Annual budget preparation', 'Reserve planning & funding', 'Dues billing & collection', 'Delinquency management', 'Monthly P&L and balance sheet by the 20th', 'Bank reconciliations', 'Audit & CPA coordination', 'Owner-facing financial transparency'] },
+          { tab: 'Covenants', t: 'Covenant & architectural enforcement', p: "Rules only work when they're applied the same way for everyone. We enforce your governing documents firmly and consistently — and handle architectural review so changes get answered, not lost.", items: ['Consistent covenant enforcement', 'Architectural review & approvals', 'Violation tracking & notices', 'Hearings & due-process support', 'Governing-document guidance', 'Fair, documented escalation'] },
+          { tab: 'Vendors', t: 'Vendor & project oversight', p: "From the weekly landscaper to a full clubhouse renovation, we source, scope, and supervise the work — with vetted local partners and accountable quality control.", items: ['Competitive bidding & scoping', 'Contract negotiation', 'Scheduling & quality control', 'Insurance & license verification', 'Capital project management', 'On-site quality inspections'] },
+          { tab: 'Board support', t: 'Board & meeting support', p: "We make volunteer service lighter. Your board sets direction; we handle the prep, the paperwork, and the institutional memory so meetings are shorter and decisions are cleaner.", items: ['Agenda & packet preparation', 'Meeting facilitation', 'Minutes & record-keeping', 'Governance & compliance guidance', 'Election & voting administration', 'Policy resolution drafting'] },
+          { tab: 'Communication', t: 'Homeowner communication', p: "Being available isn't enough if you're slow or hard to understand. We answer the same day, in plain language, and give every owner a 24/7 portal for the routine stuff.", items: ['Same-day homeowner responses', 'Newsletters & announcements', 'Online homeowner portal', 'Online payments & requests', 'Document library access', 'Community-wide notifications'] },
+          { tab: 'Storm response', t: 'Emergency & storm response', p: "This is the Gulf South — preparation isn't optional. We plan before the season, mobilize trusted vendors when weather hits, and keep owners informed when it matters most.", items: ['Pre-season preparedness planning', 'Emergency vendor mobilization', 'Insurance claim coordination', 'Real-time owner updates', 'Post-storm damage assessment', 'Reserve & deductible planning'] }
+        ];
+        var tabs = document.getElementById('cov-tabs');
+        var t = document.getElementById('cov-t'), p = document.getElementById('cov-p'), list = document.getElementById('cov-list');
+        tabs.innerHTML = COV.map(function (c, i) { return '<button class="cov-tab" role="tab" data-i="' + i + '"><span class="n">0' + (i + 1) + '</span>' + c.tab + '</button>'; }).join('');
+        function sel(i) {
+          var c = COV[i];
+          t.textContent = c.t; p.textContent = c.p;
+          list.innerHTML = c.items.map(function (x) { return '<li>' + x + '</li>'; }).join('');
+          [].forEach.call(tabs.children, function (b, bi) { b.classList.toggle('on', bi === i); });
+        }
+        [].forEach.call(tabs.children, function (b) { b.addEventListener('click', function () { sel(+b.dataset.i); }); });
+        tabs.children[0].classList.add('on'); // Financials baked into static HTML; activate without rewriting
+      })();
+    </script>
+  </section>
+
+  <!-- 3 C's -->
+  <section class="ccc">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container ccc-in reveal">
+      <div class="eyebrow" style="color: rgba(255,255,255,.6);">Why boards choose CMGT</div>
+      <p class="ccc-q">"We <span class="g">commit</span> because communities matter. We <span class="g">communicate</span> because people matter. We <span class="g">care</span> because that's what matters most."</p>
+    </div>
+  </section>
+
+  <!-- PEER PILLARS -->
+  <section class="peers">
+    <div class="container">
+      <div class="peers-head reveal">
+        <div class="eyebrow eyebrow-blue">Not a single-family HOA?</div>
+        <h2 class="peers-h">We have a dedicated practice for that.</h2>
+        <p class="peers-sub">Different communities need different expertise. These are full practices in their own right — not afterthoughts.</p>
+      </div>
+      <div class="peers-grid">
+        <a class="peer-card reveal" href="/condo-and-townhome-management">
+          <h3 class="peer-t">Condo & Townhome Management</h3>
+          <p class="peer-d">Condominiums, COAs, and luxury high-rises — with on-site teams where the building calls for it.</p>
+          <span class="peer-cta">Explore condo management <span class="arrow">→</span></span>
+        </a>
+        <a class="peer-card reveal" href="/hoa-financial-management">
+          <h3 class="peer-t">HOA Financial Management</h3>
+          <p class="peer-d">Professional financial and administrative support for smaller communities that don't need full-service oversight.</p>
+          <span class="peer-cta">Explore financial-only <span class="arrow">→</span></span>
+        </a>
+        <a class="peer-card reveal" href="/developer-hoa-management">
+          <h3 class="peer-t">Developer HOA Management</h3>
+          <p class="peer-d">Declarant control through homeowner turnover — structured from groundbreaking onward.</p>
+          <span class="peer-cta">Explore developer services <span class="arrow">→</span></span>
+        </a>
+      </div>
+      <p class="peers-sub reveal" style="margin-top: 32px;">Looking for management in a specific state? We serve <a href="/louisiana-hoa-management" style="color:var(--freedom-blue);font-weight:600;">Louisiana</a>, <a href="/texas-hoa-management" style="color:var(--freedom-blue);font-weight:600;">Texas</a>, <a href="/mississippi-hoa-management" style="color:var(--freedom-blue);font-weight:600;">Mississippi</a>, and <a href="/alabama-hoa-management" style="color:var(--freedom-blue);font-weight:600;">Alabama</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE: Is CMGT a fit? -->
+  <section class="fit">
+    <div class="container fit-layout">
+      <div class="fit-media reveal">
+        <div class="blk" aria-hidden="true"></div>
+        <ImageSlot src="/photos/hoa-management-services-hoa-fit-photo.jpg" alt="Warm portrait of an HOA board and community members" shape="rounded" radius={20} />
+      </div>
+      <div class="fit-main">
+        <div class="fit-head reveal">
+          <div class="eyebrow eyebrow-blue">60-second fit check</div>
+          <h2 class="fit-h">Is CMGT right for your community?</h2>
+          <p class="fit-sub">Three quick questions and we'll point you to the service that fits — no email required, no obligation.</p>
+        </div>
+        <div class="fit-card reveal">
+          <div class="fit-bar"><div class="fit-bar-fill" id="fit-fill"></div></div>
+          <div class="fit-body" id="fit-body"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var QS = [
+          { q: 'What kind of community do you lead?', opts: [
+            { label: 'Single-family / master-planned HOA', tag: 'hoa' },
+            { label: 'Condominium or high-rise', tag: 'condo' },
+            { label: 'Townhome association', tag: 'condo' },
+            { label: "I'm a developer building one", tag: 'dev' }
+          ]},
+          { q: 'What do you need help with?', opts: [
+            { label: 'The whole operation — top to bottom', tag: 'full' },
+            { label: 'Mostly the financials & books', tag: 'fin' },
+            { label: "We're switching from another manager", tag: 'switch' },
+            { label: 'Honestly, not sure yet', tag: 'unsure' }
+          ]},
+          { q: 'How is it going today?', opts: [
+            { label: 'Self-managed and stretched thin', tag: 'self' },
+            { label: 'Have a manager, but unhappy', tag: 'unhappy' },
+            { label: 'Brand-new or pre-construction', tag: 'new' },
+            { label: 'Doing okay, just exploring', tag: 'explore' }
+          ]}
+        ];
+        var RESULTS = {
+          condo: { e: 'Recommended', t: 'Condo & Townhome Management', d: 'Shared walls and building systems need a dedicated practice — not a single-family playbook. That’s exactly what our condo team does.', href: '/condo-and-townhome-management', cta: 'Explore condo management' },
+          dev: { e: 'Recommended', t: 'Developer HOA Management', d: 'From the first pro forma to homeowner turnover, we’re a lifecycle partner — flat $50/month until the first home is occupied.', href: '/developer-hoa-management', cta: 'Explore developer services' },
+          fin: { e: 'Recommended', t: 'HOA Financial Management', d: 'Keep running your community and let us run the books — accounting, reporting, and full transparency to every owner by the 20th.', href: '/hoa-financial-management', cta: 'Explore financial-only' },
+          switch: { e: 'Recommended', t: 'Switching Management Companies', d: 'We’ve run this transition hundreds of times. See the Day 1 to Day 90 plan that makes the change feel like relief.', href: '/switching-hoa-management-companies', cta: 'See the transition plan' },
+          self: { e: 'Recommended', t: 'Self-Managed vs. Professional', d: 'Stretched-thin volunteers have options short of handing over everything. Here’s the honest comparison — and a middle path.', href: '/self-managed-hoa', cta: 'Weigh the options' },
+          full: { e: 'Recommended', t: 'Full-Service HOA Management', d: 'One dedicated manager, a whole specialist team, and same-day answers. This is our flagship — and what most communities choose.', href: '/hoa-management-services', cta: 'Explore full-service' }
+        };
+        var body = document.getElementById('fit-body'), fill = document.getElementById('fit-fill');
+        var step = 0, answers = [];
+        function decide() {
+          var tags = answers.map(function (a) { return a.tag; });
+          if (tags.indexOf('condo') > -1) return 'condo';
+          if (tags.indexOf('dev') > -1 || tags.indexOf('new') > -1) return 'dev';
+          if (tags.indexOf('switch') > -1 || tags.indexOf('unhappy') > -1) return 'switch';
+          if (tags.indexOf('fin') > -1) return 'fin';
+          if (tags.indexOf('self') > -1) return 'self';
+          return 'full';
+        }
+        function renderQ() {
+          fill.style.width = (step / QS.length * 100) + '%';
+          var qd = QS[step];
+          body.innerHTML = '<div class="fit-step-n">Question ' + (step + 1) + ' of ' + QS.length + '</div>' +
+            '<h3 class="fit-q">' + qd.q + '</h3><div class="fit-opts">' +
+            qd.opts.map(function (o, i) { return '<button class="fit-opt" data-i="' + i + '"><span>' + o.label + '</span><span class="ar">→</span></button>'; }).join('') +
+            '</div>' + (step > 0 ? '<button class="fit-back" id="fit-back">← Back</button>' : '');
+          [].forEach.call(body.querySelectorAll('.fit-opt'), function (b) {
+            b.addEventListener('click', function () { answers[step] = qd.opts[+b.dataset.i]; step++; step < QS.length ? renderQ() : renderResult(); });
+          });
+          var back = document.getElementById('fit-back');
+          if (back) back.addEventListener('click', function () { step--; renderQ(); });
+        }
+        function renderResult() {
+          fill.style.width = '100%';
+          var r = RESULTS[decide()];
+          body.innerHTML = '<div class="fit-result-eyebrow">' + r.e + ' for you</div>' +
+            '<h3 class="fit-result-t">' + r.t + '</h3><p class="fit-result-d">' + r.d + '</p>' +
+            '<div class="fit-result-actions"><a class="btn btn-green" href="' + r.href + '">' + r.cta + ' <span class="arrow">→</span></a>' +
+            '<a class="btn btn-outline-blue" href="/request-a-proposal">Request a proposal</a></div>' +
+            '<button class="fit-back" id="fit-restart">← Start over</button>';
+          document.getElementById('fit-restart').addEventListener('click', function () { step = 0; answers = []; renderQ(); });
+        }
+        renderQ();
+      })();
+    </script>
+  </section>
+
+  <!-- COST -->
+  <section class="cost">
+    <div class="container cost-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">What it costs</div>
+        <h2 class="cost-h">How much does HOA management cost?</h2>
+        <p class="cost-p">The honest answer: <strong>it depends on your community</strong> — so we quote custom every time, never a one-size template. What we'll never do is compete to be the cheapest name on the list.</p>
+        <p class="cost-p">We compete on <strong>value</strong>. Better collections, smarter vendor pricing, and fewer expensive mistakes routinely cover the difference between us and a budget manager — and your board gets its evenings back on top of it.</p>
+        <p class="cost-note">Want a real number? Request a proposal and we'll scope a quote to your community — no pressure, no obligation.</p>
+      </div>
+      <div class="cost-factors reveal">
+        <div class="cost-frow"><span class="cost-fnum">01</span><div><h3 class="cost-ft">Size &amp; number of homes</h3><p class="cost-fd">More doors and more shared assets mean more to manage — the single biggest driver of scope.</p></div></div>
+        <div class="cost-frow"><span class="cost-fnum">02</span><div><h3 class="cost-ft">Amenities &amp; common areas</h3><p class="cost-fd">Pools, gates, clubhouses, and private roads each add vendor coordination and oversight.</p></div></div>
+        <div class="cost-frow"><span class="cost-fnum">03</span><div><h3 class="cost-ft">Service level</h3><p class="cost-fd">Full-service vs. financial-only vs. on-site staffing — you pay for the scope you actually need.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL-BLEED IMAGE MOMENT -->
+  <section class="fbleed">
+    <ImageSlot src="/photos/hoa-management-services-hoa-fullbleed.jpg" alt="Wide landscape of a Gulf South community neighborhood" shape="rect" />
+    <div class="container fbleed-in">
+      <div class="eyebrow">Why it matters</div>
+      <p class="fbleed-q">We manage communities, <span class="g">not just buildings.</span></p>
+      <p class="fbleed-sub">Behind every assessment and work order is a family, a board volunteer, a neighbor. <strong>We never forget that the community is people first.</strong></p>
+    </div>
+  </section>
+
+  <!-- SIGNS — interactive self-assessment -->
+  <section class="signs">
+    <div class="container">
+      <div class="signs-head reveal">
+        <div class="eyebrow eyebrow-blue">Is it time?</div>
+        <h2 class="signs-h">Signs your board has outgrown self-management.</h2>
+        <p class="signs-sub">Tick the ones that sound like your community. There are no wrong answers — just an honest gut-check on whether it's time for help.</p>
+      </div>
+      <div class="signs-card reveal">
+        <div class="signs-list" id="signs-list"></div>
+        <div class="signs-result">
+          <div class="signs-tally"><span class="big" id="signs-n">0</span> of 6 ring true</div>
+          <div class="signs-msg" id="signs-msg">Tap the statements above that match your community.</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var SIGNS = [
+          'One or two volunteers are doing almost all the work',
+          'Homeowner emails and requests pile up unanswered',
+          'Our finances have outgrown a spreadsheet',
+          'Delinquency keeps climbing and collections rarely happen',
+          'Enforcing the rules is straining neighborly relationships',
+          'We dread board meetings — they run long and circular'
+        ];
+        var list = document.getElementById('signs-list');
+        var nEl = document.getElementById('signs-n'), msg = document.getElementById('signs-msg');
+        var state = SIGNS.map(function () { return false; });
+        var check = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        list.innerHTML = SIGNS.map(function (s, i) { return '<button class="sign" data-i="' + i + '"><span class="sign-box">' + check + '</span><span>' + s + '</span></button>'; }).join('');
+        function tally() {
+          var n = state.filter(Boolean).length;
+          nEl.textContent = n;
+          if (n === 0) msg.innerHTML = 'Tap the statements above that match your community.';
+          else if (n <= 2) msg.innerHTML = "A couple of friction points — worth a conversation. <strong>We can take just the financials</strong> and leave the rest to you.";
+          else if (n <= 4) msg.innerHTML = "That's more than most boards should carry. <strong>It's probably time to bring in a team</strong> — let's talk through your options.";
+          else msg.innerHTML = "Your volunteers are running on fumes. <strong>This is exactly what full-service management fixes</strong> — let's have a conversation.";
+        }
+        [].forEach.call(list.children, function (b) {
+          b.addEventListener('click', function () { var i = +b.dataset.i; state[i] = !state[i]; b.classList.toggle('on', state[i]); tally(); });
+        });
+        tally();
+      })();
+    </script>
+  </section>
+
+  <!-- WHY CMGT vs national -->
+  <section class="vs">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container vs-in">
+      <div class="vs-head reveal">
+        <div class="eyebrow" style="color: rgba(255,255,255,.6);">Why CMGT</div>
+        <h2 class="vs-h">Big enough to protect you. <em>Independent enough to mean it.</em></h2>
+        <p class="vs-sub">Most of our competitors have been bought by private equity or rolled into a national brand. We haven't — and it shows in how we work.</p>
+      </div>
+      <div class="vs-toggle reveal" role="tablist">
+        <button class="vs-tbtn on" data-v="cmgt" type="button">CMGT</button>
+        <button class="vs-tbtn" data-v="chain" type="button">A national chain</button>
+      </div>
+      <div class="vs-rows reveal" id="vs-rows"></div>
+      <p class="vs-foot reveal">Independently owned since 2007 · 100% organic growth · no acquisitions, no outside investors.</p>
+    </div>
+    <script>
+      (function () {
+        var DATA = {
+          cmgt: [
+            ['Ownership', 'Independent and founder-led since 2007 — <strong>answers to communities, not investors</strong>.'],
+            ['Growth', '100% organic — <strong>every community earned by referral and reputation</strong>, never acquired.'],
+            ['Your manager', 'A dedicated local manager backed by a full specialist team — <strong>no single point of failure</strong>.'],
+            ['Decisions', 'Made here, in the Gulf South, by people who <strong>know your market and your weather</strong>.'],
+            ['Financials', '<strong>Shared with every owner by the 20th</strong> — transparency written into the agreement.']
+          ],
+          chain: [
+            ['Ownership', 'Often private-equity owned — pressure to cut costs and hit margins from out of state.'],
+            ['Growth', 'Frequently grown by acquisition — your community becomes one of thousands overnight.'],
+            ['Your manager', 'High portfolio loads and turnover; you may not know who your manager is this quarter.'],
+            ['Decisions', 'Policies set at a distant corporate HQ with little feel for local realities.'],
+            ['Financials', 'Reporting varies; transparency to all owners is rarely the default.']
+          ]
+        };
+        var rows = document.getElementById('vs-rows');
+        var btns = document.querySelectorAll('.vs-tbtn');
+        function render(v) {
+          rows.innerHTML = DATA[v].map(function (r) {
+            return '<div class="vs-row"><div class="vs-aspect">' + r[0] + '</div><div class="vs-val">' + r[1] + '</div></div>';
+          }).join('');
+          btns.forEach(function (b) { b.classList.toggle('on', b.dataset.v === v); });
+        }
+        btns.forEach(function (b) { b.addEventListener('click', function () { render(b.dataset.v); }); });
+        render('cmgt');
+      })();
+    </script>
+  </section>
+
+  <!-- SWITCHING CALLOUT -->
+  <section class="swcall">
+    <div class="container">
+      <div class="swcall-in reveal">
+        <div class="swcall-txt">
+          <div class="swcall-k">Already have a manager?</div>
+          <h2 class="swcall-h">Unhappy with your current company? Switching is easier than you think.</h2>
+          <p class="swcall-p">Slow responses and rising delinquency are the two reasons most boards leave — and we handle the whole transition for you, on a clear Day 1 to Day 90 plan.</p>
+        </div>
+        <a class="btn btn-blue swcall-cta" href="/switching-hoa-management-companies">See how switching works <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="tst">
+    <div class="container tst-in reveal">
+      <div class="eyebrow eyebrow-blue">From the boards we serve</div>
+      <blockquote class="tst-q" style="margin-left:0; margin-right:0;">
+        "CMGT transformed our HOA. They don't just report issues — <span class="hl">they show up with the answer.</span> Our board meetings are calmer, our reserves are healthier, and our homeowners actually like getting their newsletter."
+      </blockquote>
+      <div class="tst-name">Marcus Theriot</div>
+      <div class="tst-meta">Board President · via Google, May 2026</div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container faq-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">Common questions</div>
+        <h2 class="faq-h">Before you ask.</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q" type="button">What size communities do you manage?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">From small associations to master-planned communities of thousands of homes. <strong>If a community can support quality management, we can serve it</strong> — across Louisiana, Mississippi, Alabama, Texas, and the Florida Panhandle.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">How much does HOA management cost?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">Every community is different, so we quote custom — never a one-size template. We compete on <strong>value, not on being the cheapest.</strong> Request a proposal and we'll scope it to your community.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">What does switching from our current manager involve?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">We handle the handoff — records, vendors, finances, and homeowner communication — so the transition is felt as relief, not disruption. <strong>Most boards switch because of slow communication or rising delinquency.</strong></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Will we have one point of contact?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">Yes — a dedicated Community Association Manager who knows your community, backed by a full specialist team. <strong>You get one name, and no single point of failure.</strong></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOARD EDUCATION (hub → spokes) -->
+  <section class="edu">
+    <div class="container">
+      <div class="edu-head reveal">
+        <div class="eyebrow eyebrow-blue">Board education</div>
+        <h2 class="edu-h">Running the board yourself? Start here.</h2>
+        <p class="edu-sub">Plain-English guides from our Board Education Hub — written for volunteers, not insiders. No sales pitch, just the stuff that helps.</p>
+      </div>
+      <div class="edu-grid">
+        <a class="edu-card reveal" href="/hoa-reserve-study">
+          <span class="edu-cat">Finances</span>
+          <h3 class="edu-t">What is an HOA reserve study?</h3>
+          <p class="edu-d">When the big shared things wear out, will the money be there? How reserve studies work and how often to refresh them.</p>
+          <span class="edu-go">Read the guide <span class="arrow">→</span></span>
+        </a>
+        <a class="edu-card reveal" href="/hoa-collections-delinquency">
+          <span class="edu-cat">Finances</span>
+          <h3 class="edu-t">Keeping delinquency low, fairly</h3>
+          <p class="edu-d">A consistent, compassionate collections process protects the budget — and the neighbors who pay on time.</p>
+          <span class="edu-go">Read the guide <span class="arrow">→</span></span>
+        </a>
+        <a class="edu-card reveal" href="/hurricane-preparedness-for-hoas">
+          <span class="edu-cat">Insurance &amp; Risk</span>
+          <h3 class="edu-t">Hurricane prep for Gulf South boards</h3>
+          <p class="edu-d">Insurance, reserves, vendor contracts, and the communication plan to lock down before the season hits.</p>
+          <span class="edu-go">Read the guide <span class="arrow">→</span></span>
+        </a>
+        <a class="edu-card reveal" href="/hoa-budget-template">
+          <span class="edu-cat">Finances · Free template</span>
+          <h3 class="edu-t">Build an HOA budget that holds</h3>
+          <p class="edu-d">How to build an annual operating budget that funds reserves and avoids surprise assessments — plus a free template.</p>
+          <span class="edu-go">Get the template <span class="arrow">→</span></span>
+        </a>
+        <a class="edu-card reveal" href="/louisiana-hoa-laws">
+          <span class="edu-cat">Governance</span>
+          <h3 class="edu-t">Louisiana HOA laws, explained</h3>
+          <p class="edu-d">A board-friendly overview of the rules that govern your community — and when to call a professional.</p>
+          <span class="edu-go">Read the guide <span class="arrow">→</span></span>
+        </a>
+        <a class="edu-card reveal" href="/self-managed-hoa">
+          <span class="edu-cat">Solutions</span>
+          <h3 class="edu-t">Self-managed vs. professional</h3>
+          <p class="edu-d">An honest comparison for boards weighing whether it's time to bring in a team — and a middle path.</p>
+          <span class="edu-go">See the comparison <span class="arrow">→</span></span>
+        </a>
+      </div>
+      <a class="edu-all reveal" href="/resources">Explore the full Board Education Hub <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container cta-in">
+      <div class="reveal">
+        <h2 class="cta-h">Let's have a conversation.</h2>
+        <p class="cta-p">Tell us about your community and a real person will reach out within one business day. No pitch deck, no pressure.</p>
+      </div>
+      <div class="cta-actions reveal">
+        <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+        <a class="cta-phone" href="tel:5045551234">Or call (504) 555-1234 · Mon–Fri, 8a–5p CT</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      document.querySelectorAll('.faq-item').forEach(function (item) {
+        var btn = item.querySelector('.faq-q');
+        var ans = item.querySelector('.faq-a');
+        btn.addEventListener('click', function () {
+          var open = item.classList.toggle('open');
+          ans.style.maxHeight = open ? (ans.scrollHeight + 'px') : '0';
+        });
+      });
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+
+  /* HERO */
+  .ph-hero { background: var(--freedom-blue); color: #fff; padding: 96px 0 0; position: relative; overflow: hidden; isolation: isolate; }
+  .ph-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 16% 18%, rgba(141,189,255,.12) 0%, transparent 55%); z-index: 0; pointer-events: none; }
+  .ph-hero-top { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px; align-items: end; padding-bottom: 64px; }
+  @media (max-width: 980px) { .ph-hero-top { grid-template-columns: 1fr; gap: 32px; } }
+  .ph-hero .eyebrow { color: rgba(255,255,255,.65); }
+  .ph-hero-display { font-family: var(--font-display); font-weight: 900; font-size: clamp(44px, 5.6vw, 84px); line-height: .99; letter-spacing: -.03em; color: #fff; margin: 22px 0 0; text-wrap: balance; }
+  .ph-hero-display em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .ph-hero-lede { font-size: 17.5px; line-height: 1.7; color: rgba(255,255,255,.82); margin: 0 0 30px; }
+  .ph-hero-lede strong { color: #fff; font-weight: 600; }
+  .ph-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .ph-hero-band { position: relative; z-index: 2; }
+  .ph-hero-band .image-slot { display: block; width: 100%; height: clamp(280px, 32vw, 420px); }
+  .ph-hero-stats { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; padding: 30px 0; border-top: 1px solid rgba(255,255,255,.18); }
+  @media (max-width: 620px) { .ph-hero-stats { grid-template-columns: 1fr 1fr; gap: 22px; } }
+  .ph-stat-num { font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1; letter-spacing: -.02em; color: #fff; }
+  .ph-stat-label { font-size: 12.5px; color: rgba(255,255,255,.6); margin-top: 7px; }
+
+  /* INCLUDED */
+  .inc { background: #fff; padding: 116px 0; }
+  .inc-head { max-width: 720px; margin: 0 0 60px; }
+  .inc-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 3.8vw, 46px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .inc-sub { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+  .inc-sub strong { color: var(--freedom-blue); font-weight: 600; }
+  .inc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 44px; }
+  @media (max-width: 880px) { .inc-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .inc-grid { grid-template-columns: 1fr; } }
+  .inc-item { border-top: 3px solid var(--landscaping-green); padding-top: 22px; }
+  .inc-num { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; color: var(--ink-400); }
+  .inc-t { font-family: var(--font-display); font-weight: 700; font-size: 22px; line-height: 1.15; color: var(--freedom-blue); margin: 10px 0 10px; }
+  .inc-d { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0; }
+
+  /* MODEL band */
+  .mdl { background: var(--nb-lightest); padding: 110px 0; }
+  .mdl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 920px) { .mdl-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .mdl-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.14; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 18px; text-wrap: balance; }
+  .mdl-h em { font-style: italic; font-weight: 500; }
+  .mdl-p { font-size: 16px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
+  .mdl-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .mdl-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--freedom-blue); text-decoration: none; margin-top: 6px; }
+  .mdl-link .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .mdl-link:hover .arrow { transform: translateX(4px); }
+  .mdl-media .image-slot { width: 100%; height: 420px; }
+
+  /* 3 C's strip */
+  .ccc { background: var(--freedom-blue); color: #fff; padding: 100px 0; position: relative; overflow: hidden; }
+  .ccc .leaf { position: absolute; right: -110px; bottom: -140px; width: 480px; height: 480px; opacity: .07; transform: rotate(-12deg); pointer-events: none; }
+  .ccc .leaf img { filter: brightness(0) invert(1); }
+  .ccc-in { position: relative; }
+  .ccc-q { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.3; letter-spacing: -.01em; max-width: 940px; margin: 16px 0 0; text-wrap: balance; }
+  .ccc-q .g { color: var(--landscaping-green); font-style: normal; font-weight: 700; }
+
+  /* PEER PILLARS — keeps Condo etc. as separate pillars */
+  .peers { background: #fff; padding: 116px 0; }
+  .peers-head { max-width: 680px; margin: 0 0 50px; }
+  .peers-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .peers-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+  .peers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 880px) { .peers-grid { grid-template-columns: 1fr; } }
+  .peer-card { display: block; border: 1.5px solid var(--hairline-strong); border-radius: 16px; padding: 30px 28px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .peer-card:hover { border-color: var(--landscaping-green); transform: translateY(-3px); box-shadow: var(--shadow-2); }
+  .peer-t { font-family: var(--font-display); font-weight: 700; font-size: 21px; color: var(--freedom-blue); margin: 0 0 8px; }
+  .peer-d { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0 0 16px; }
+  .peer-cta { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 14px; color: var(--freedom-blue); }
+  .peer-cta .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .peer-card:hover .peer-cta .arrow { transform: translateX(4px); }
+
+  /* TESTIMONIAL */
+  .tst { background: var(--nb-lightest); padding: 110px 0; }
+  .tst-in { max-width: 940px; }
+  .tst-q { font-family: var(--font-display); font-weight: 500; font-style: italic; font-size: clamp(24px, 3vw, 36px); line-height: 1.36; color: var(--freedom-blue); margin: 24px 0 28px; text-wrap: balance; }
+  .tst-q .hl { background: linear-gradient(transparent 68%, rgba(74,207,108,.45) 68%); }
+  .tst-name { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .tst-meta { font-size: 13px; color: var(--ink-400); margin-top: 2px; }
+
+  /* FAQ */
+  .faq { background: #fff; padding: 116px 0; }
+  .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }
+  @media (max-width: 860px) { .faq-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .faq-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 0; text-wrap: balance; }
+  .faq-list { border-top: 1.5px solid var(--hairline-strong); }
+  .faq-item { border-bottom: 1.5px solid var(--hairline-strong); }
+  .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: transparent; border: 0; cursor: pointer; text-align: left; padding: 24px 2px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); }
+  .faq-sign { flex: none; width: 26px; height: 26px; position: relative; }
+  .faq-sign::before, .faq-sign::after { content: ""; position: absolute; background: var(--landscaping-green); border-radius: 2px; transition: transform var(--dur-base) var(--ease-out); }
+  .faq-sign::before { left: 0; right: 0; top: 12px; height: 2.5px; }
+  .faq-sign::after { top: 0; bottom: 0; left: 12px; width: 2.5px; }
+  .faq-item.open .faq-sign::after { transform: scaleY(0); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
+  .faq-a-in { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); padding: 0 2px 24px; max-width: 640px; }
+  .faq-a-in strong { color: var(--freedom-blue); font-weight: 600; }
+
+  /* CTA */
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 100px 0; position: relative; overflow: hidden; }
+  .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: rotate(14deg); pointer-events: none; }
+  .cta .leaf img { filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
+  .cta-in { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 58px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 12px; text-wrap: balance; }
+  .cta-p { font-size: 17px; line-height: 1.6; max-width: 500px; margin: 0; color: rgba(30,30,119,.82); }
+  .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
+
+  /* DELIVERY TIERS + NEAR-ME */
+  .tiers { background:#fff; padding: 26px 0 112px; }
+  .tiers-head { max-width: 760px; margin: 0 0 46px; }
+  .tier-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:760px){ .tier-grid{ grid-template-columns:1fr; } }
+  .tier-card { border:1.5px solid var(--hairline-strong); border-radius:16px; padding:34px 32px; transition: border-color var(--dur-base) var(--ease-out); }
+  .tier-card:hover { border-color: var(--landscaping-green); }
+  .tier-tag { font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--landscaping-green); }
+  .tier-t { font-family:var(--font-display); font-weight:700; font-size:24px; color:var(--freedom-blue); margin:10px 0 10px; }
+  .tier-d { font-size:14.5px; line-height:1.65; color:var(--ink-500); margin:0; }
+  .tier-list { list-style:none; margin:16px 0 0; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .tier-list li { font-size:14px; line-height:1.5; color:var(--ink-700); padding-left:22px; position:relative; }
+  .tier-list li::before { content:""; position:absolute; left:0; top:7px; width:8px; height:8px; border-radius:50%; background:var(--landscaping-green); }
+  .local-band { margin-top:56px; border-top:1.5px solid var(--hairline-strong); padding-top:38px; display:grid; grid-template-columns: 300px 1fr; gap:40px; }
+  @media (max-width:760px){ .local-band{ grid-template-columns:1fr; gap:18px; } }
+  .local-h { font-family:var(--font-display); font-weight:700; font-size:24px; line-height:1.2; color:var(--freedom-blue); margin:0; }
+  .local-p { font-size:14.5px; line-height:1.65; color:var(--ink-500); margin:0 0 16px; }
+  .local-states { display:flex; flex-wrap:wrap; gap:10px; }
+  .local-chip { font-size:14px; font-weight:600; color:var(--freedom-blue); background:var(--fb-lightest); padding:9px 16px; border-radius:999px; text-decoration:none; transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out); }
+  .local-chip:hover { background:var(--landscaping-green); color:var(--freedom-blue); }
+
+  /* COVERAGE EXPLORER */
+  .cov { background: #fff; padding: 26px 0 112px; }
+  .cov-head { max-width: 720px; margin: 0 0 40px; }
+  .cov-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .cov-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+  .cov-grid { display: grid; grid-template-columns: 300px 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 860px) { .cov-grid { grid-template-columns: 1fr; } }
+  .cov-tabs { display: flex; flex-direction: column; gap: 4px; }
+  @media (max-width: 860px) { .cov-tabs { flex-direction: row; flex-wrap: wrap; gap: 8px; } }
+  .cov-tab { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; cursor: pointer; background: transparent; border: 0; border-left: 3px solid transparent; border-radius: 0 8px 8px 0; padding: 16px 16px; font-family: var(--font-body); font-weight: 600; font-size: 15.5px; color: var(--ink-500); transition: all var(--dur-base) var(--ease-out); }
+  @media (max-width: 860px) { .cov-tab { width: auto; border-left: 0; border-bottom: 3px solid transparent; border-radius: 8px 8px 0 0; padding: 12px 14px; } }
+  .cov-tab:hover { color: var(--freedom-blue); background: var(--nb-lightest); }
+  .cov-tab.on { color: var(--freedom-blue); background: var(--nb-lightest); border-left-color: var(--landscaping-green); }
+  @media (max-width: 860px) { .cov-tab.on { border-left-color: transparent; border-bottom-color: var(--landscaping-green); } }
+  .cov-tab .n { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 20px; color: var(--landscaping-green); flex: none; }
+  .cov-panel { background: var(--nb-lightest); border-radius: 18px; padding: 40px 42px; min-height: 300px; }
+  @media (max-width: 560px) { .cov-panel { padding: 30px 26px; } }
+  .cov-panel-t { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; color: var(--freedom-blue); margin: 0 0 14px; }
+  .cov-panel-p { font-size: 16px; line-height: 1.75; color: var(--ink-700); margin: 0 0 22px; max-width: 620px; }
+  .cov-panel-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .cov-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+  @media (max-width: 560px) { .cov-list { grid-template-columns: 1fr; } }
+  .cov-list li { font-size: 14.5px; line-height: 1.5; color: var(--ink-700); padding-left: 24px; position: relative; }
+  .cov-list li::before { content: ""; position: absolute; left: 0; top: 7px; width: 8px; height: 8px; border-radius: 50%; background: var(--landscaping-green); }
+
+  /* FIT CHECK */
+  .fit { background: var(--nb-lightest); padding: 112px 0; }
+  .fit-layout { display: grid; grid-template-columns: .82fr 1fr; gap: 56px; align-items: center; }
+  @media (max-width: 920px) { .fit-layout { grid-template-columns: 1fr; gap: 40px; } }
+  .fit-media { position: relative; }
+  .fit-media .blk { position: absolute; left: -22px; bottom: -22px; width: 62%; height: 52%; background: var(--landscaping-green); border-radius: 18px; z-index: 0; }
+  .fit-media .image-slot { position: relative; z-index: 1; width: 100%; height: 500px; }
+  @media (max-width: 920px) { .fit-media .image-slot { height: 360px; } .fit-media .blk { display: none; } }
+  .fit-main { min-width: 0; }
+  .fit-head { max-width: none; margin: 0 0 28px; }
+  .fit-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .fit-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; max-width: 600px; }
+  .fit-card { background: #fff; border-radius: 20px; box-shadow: var(--shadow-3); overflow: hidden; max-width: none; }
+  .fit-bar { height: 5px; background: var(--fb-lightest); }
+  .fit-bar-fill { height: 100%; background: var(--landscaping-green); width: 0%; transition: width .4s var(--ease-out); }
+  .fit-body { padding: 40px 44px 44px; }
+  .fit-step-n { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-400); }
+  .fit-q { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.2; color: var(--freedom-blue); margin: 10px 0 26px; text-wrap: balance; }
+  .fit-opts { display: flex; flex-direction: column; gap: 12px; }
+  .fit-opt { text-align: left; cursor: pointer; font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--freedom-blue); background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 12px; padding: 18px 20px; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+  .fit-opt:hover { border-color: var(--landscaping-green); transform: translateX(4px); }
+  .fit-opt .ar { color: var(--landscaping-green); opacity: 0; transition: opacity var(--dur-base) var(--ease-out); }
+  .fit-opt:hover .ar { opacity: 1; }
+  .fit-back { background: transparent; border: 0; cursor: pointer; font-family: var(--font-body); font-weight: 600; font-size: 13px; color: var(--ink-400); padding: 0; margin-top: 22px; }
+  .fit-back:hover { color: var(--freedom-blue); }
+  .fit-result-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .fit-result-t { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 34px); line-height: 1.15; color: var(--freedom-blue); margin: 12px 0 14px; text-wrap: balance; }
+  .fit-result-d { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0 0 26px; }
+  .fit-result-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  /* COST */
+  .cost { background: #fff; padding: 112px 0; }
+  .cost-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
+  @media (max-width: 920px) { .cost-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .cost-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 18px; text-wrap: balance; }
+  .cost-p { font-size: 16px; line-height: 1.75; color: var(--ink-700); margin: 0 0 16px; max-width: 520px; }
+  .cost-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .cost-factors { display: flex; flex-direction: column; gap: 10px; }
+  .cost-frow { display: flex; gap: 14px; align-items: flex-start; background: var(--nb-lightest); border-radius: 13px; padding: 18px 20px; }
+  .cost-fnum { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 22px; color: var(--landscaping-green); flex: none; line-height: 1.2; }
+  .cost-ft { font-family: var(--font-display); font-weight: 700; font-size: 16.5px; color: var(--freedom-blue); margin: 0 0 5px; }
+  .cost-fd { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0; }
+  .cost-note { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); margin: 20px 0 0; font-style: italic; }
+
+  /* FULL-BLEED IMAGE MOMENT */
+  .fbleed { position: relative; min-height: 480px; display: flex; align-items: center; overflow: hidden; isolation: isolate; }
+  .fbleed .image-slot { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .fbleed::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(21,21,92,.92) 0%, rgba(21,21,92,.7) 42%, rgba(21,21,92,.25) 100%); pointer-events: none; }
+  .fbleed-in { position: relative; z-index: 2; max-width: 760px; padding: 80px 0; pointer-events: none; }
+  .fbleed .eyebrow { color: rgba(255,255,255,.62); }
+  .fbleed-q { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: clamp(30px, 4.4vw, 56px); line-height: 1.16; letter-spacing: -.02em; color: #fff; margin: 18px 0 22px; text-wrap: balance; }
+  .fbleed-q .g { font-style: normal; font-weight: 700; color: var(--landscaping-green); }
+  .fbleed-sub { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,.8); max-width: 520px; margin: 0; }
+  .fbleed-sub strong { color: #fff; font-weight: 600; }
+
+  /* SIGNS */
+  .signs { background: var(--nb-lightest); padding: 112px 0; }
+  .signs-head { max-width: 680px; margin: 0 0 40px; }
+  .signs-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .signs-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+  .signs-card { background: #fff; border-radius: 20px; box-shadow: var(--shadow-2); overflow: hidden; max-width: 860px; }
+  .signs-list { padding: 14px 8px; }
+  .sign { display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; cursor: pointer; background: transparent; border: 0; border-radius: 12px; padding: 18px 22px; font-family: var(--font-body); font-size: 16.5px; font-weight: 500; color: var(--ink-700); transition: background var(--dur-base) var(--ease-out); }
+  .sign:hover { background: var(--nb-lightest); }
+  .sign-box { flex: none; width: 26px; height: 26px; border-radius: 7px; border: 2px solid var(--hairline-strong); display: flex; align-items: center; justify-content: center; transition: all var(--dur-base) var(--ease-out); }
+  .sign-box svg { opacity: 0; transform: scale(.6); transition: all var(--dur-base) var(--ease-out); color: #fff; }
+  .sign.on .sign-box { background: var(--landscaping-green); border-color: var(--landscaping-green); }
+  .sign.on .sign-box svg { opacity: 1; transform: none; }
+  .sign.on { color: var(--freedom-blue); font-weight: 600; }
+  .signs-result { border-top: 1.5px solid var(--hairline); padding: 26px 30px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; background: var(--fb-lightest); }
+  .signs-tally { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--freedom-blue); }
+  .signs-tally .big { font-size: 26px; color: var(--landscaping-green); }
+  .signs-msg { font-size: 14.5px; line-height: 1.55; color: var(--ink-700); flex: 1; min-width: 220px; }
+  .signs-msg strong { color: var(--freedom-blue); }
+
+  /* WHY CMGT vs national */
+  .vs { background: var(--freedom-blue); color: #fff; padding: 112px 0; position: relative; overflow: hidden; }
+  .vs .leaf { position: absolute; right: -120px; bottom: -150px; width: 480px; height: 480px; opacity: .07; transform: rotate(-12deg); pointer-events: none; }
+  .vs .leaf img { width: 100%; filter: brightness(0) invert(1); }
+  .vs-in { position: relative; }
+  .vs-head { max-width: 720px; margin: 0 0 44px; }
+  .vs-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: #fff; margin: 16px 0 14px; text-wrap: balance; }
+  .vs-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .vs-sub { font-size: 16px; line-height: 1.7; color: rgba(255,255,255,.75); margin: 0; }
+  .vs-toggle { display: inline-flex; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; padding: 5px; margin-bottom: 32px; }
+  .vs-tbtn { font-family: var(--font-body); font-weight: 600; font-size: 14px; color: rgba(255,255,255,.7); background: transparent; border: 0; border-radius: 999px; padding: 10px 22px; cursor: pointer; transition: all var(--dur-base) var(--ease-out); }
+  .vs-tbtn.on { background: var(--landscaping-green); color: var(--freedom-blue); }
+  .vs-rows { display: flex; flex-direction: column; gap: 0; max-width: 820px; }
+  .vs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,.14); }
+  .vs-row:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
+  @media (max-width: 640px) { .vs-row { grid-template-columns: 1fr; gap: 10px; } }
+  .vs-aspect { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; }
+  .vs-val { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.78); }
+  .vs-val strong { color: var(--landscaping-green); font-weight: 600; }
+  .vs-foot { font-size: 13.5px; color: rgba(255,255,255,.5); margin: 24px 0 0; font-style: italic; }
+
+  /* SWITCHING CALLOUT */
+  .swcall { background: #fff; padding: 100px 0; }
+  .swcall-in { background: var(--fb-lightest); border-radius: 18px; padding: 40px 44px; display: flex; align-items: center; justify-content: space-between; gap: 36px; flex-wrap: wrap; position: relative; overflow: hidden; }
+  .swcall-in::after { content: ""; position: absolute; right: -50px; bottom: -70px; width: 200px; height: 200px; background: url('/assets/leaf-mark.svg') no-repeat center / contain; opacity: .06; transform: rotate(-12deg); pointer-events: none; filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
+  .swcall-txt { position: relative; max-width: 620px; }
+  .swcall-k { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .swcall-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 8px 0 8px; text-wrap: balance; }
+  .swcall-p { font-size: 15px; line-height: 1.6; color: var(--ink-500); margin: 0; }
+  .swcall-cta { position: relative; flex: none; }
+
+  /* BOARD EDUCATION */
+  .edu { background: var(--nb-lightest); padding: 104px 0; }
+  .edu-head { max-width: 680px; margin: 0 0 44px; }
+  .edu-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .edu-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+  .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  @media (max-width: 880px) { .edu-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .edu-grid { grid-template-columns: 1fr; } }
+  .edu-card { display: flex; flex-direction: column; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 26px 26px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .edu-card:hover { border-color: var(--landscaping-green); transform: translateY(-3px); box-shadow: var(--shadow-2); }
+  .edu-cat { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--landscaping-green); }
+  .edu-t { font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.22; color: var(--freedom-blue); margin: 10px 0 8px; }
+  .edu-d { font-size: 13.5px; line-height: 1.6; color: var(--ink-500); margin: 0 0 16px; flex: 1; }
+  .edu-go { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 14px; color: var(--freedom-blue); }
+  .edu-go .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .edu-card:hover .edu-go .arrow { transform: translateX(4px); }
+  .edu-all { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--freedom-blue); text-decoration: none; margin-top: 32px; border-bottom: 2px solid var(--landscaping-green); padding-bottom: 3px; }
+</style>

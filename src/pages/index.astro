@@ -1,18 +1,556 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CMGT",
+  "url": `${SITE.url}/`,
+  "logo": `${SITE.url}/assets/logo-full-color.svg`,
+  "description": "Gulf South HOA, condo, and community association management. Independently owned since 2007.",
+  "telephone": "+1-504-555-1234",
+  "areaServed": ["Louisiana", "Texas", "Mississippi", "Alabama", "Florida Panhandle"],
+  "sameAs": [],
+};
 ---
 <BaseLayout
-  title="Client Name — Short tagline here"
-  description="One sentence describing what the business does and who it serves."
+  title="CMGT — The Team Your Community Deserves"
+  description="Gulf South HOA & condo management done right — a dedicated manager, a whole specialist team, and same-day answers. 400+ communities, 96% retention."
+  pageSchema={orgSchema}
 >
-  <section style="padding: 120px 32px; max-width: 960px; margin: 0 auto; text-align: center;">
-    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Welcome to Your New Site</h1>
-    <p style="font-size: 1.125rem; color: #555; margin-bottom: 2rem;">
-      Replace this with your homepage content. Build page components in
-      <code>src/components/pages/</code> and import them here.
-    </p>
-    <a href="/contact" style="display: inline-block; padding: 12px 28px; background: #333; color: #fff; border-radius: 6px; text-decoration: none;">
-      Get in Touch
-    </a>
+
+  <!-- HERO -->
+  <section class="hero-b">
+    <div class="container hero-b-grid">
+      <div>
+        <div class="eyebrow eyebrow-blue">Gulf South HOA Management</div>
+        <h1 class="hero-b-display" id="hero-headline">The team your community <span class="u">deserves.</span></h1>
+        <p class="hero-b-body">
+          Every CMGT community gets a dedicated manager backed by specialists in
+          accounting, covenant enforcement, vendors, and communication — so questions get
+          answered <strong>the same day, not the same month.</strong>
+        </p>
+        <div class="hero-b-ctas">
+          <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+          <a class="btn btn-outline-blue" href="#how">How we work</a>
+        </div>
+        <div class="hero-b-trust">
+          <span class="stars" aria-label="5 stars">
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="#F0B400"><path d="M7 1l1.8 4 4.2.4-3.2 2.9 1 4.2L7 10.4 3.2 12.5l1-4.2L1 5.4l4.2-.4z"></path></svg>
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="#F0B400"><path d="M7 1l1.8 4 4.2.4-3.2 2.9 1 4.2L7 10.4 3.2 12.5l1-4.2L1 5.4l4.2-.4z"></path></svg>
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="#F0B400"><path d="M7 1l1.8 4 4.2.4-3.2 2.9 1 4.2L7 10.4 3.2 12.5l1-4.2L1 5.4l4.2-.4z"></path></svg>
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="#F0B400"><path d="M7 1l1.8 4 4.2.4-3.2 2.9 1 4.2L7 10.4 3.2 12.5l1-4.2L1 5.4l4.2-.4z"></path></svg>
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="#F0B400"><path d="M7 1l1.8 4 4.2.4-3.2 2.9 1 4.2L7 10.4 3.2 12.5l1-4.2L1 5.4l4.2-.4z"></path></svg>
+          </span>
+          <span>Trusted by 400+ communities across the Gulf South</span>
+        </div>
+      </div>
+      <div class="hero-b-media">
+        <div class="block" aria-hidden="true"></div>
+        <ImageSlot src="/photos/index-hero-b-photo.jpg" alt="A warm CMGT community manager meeting with a homeowner outside a well-kept Gulf South neighborhood at golden hour" shape="rounded" radius={20} />
+        <div class="badge" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GREEN STAT STRIP -->
+  <section class="strip-b">
+    <div class="container strip-b-grid">
+      <div class="reveal">
+        <div class="strip-b-num" data-count-to="400" data-suffix="+" data-duration="1500">0+</div>
+        <div class="strip-b-label">communities managed</div>
+      </div>
+      <div class="reveal">
+        <div class="strip-b-num" data-count-to="60" data-suffix="k+" data-duration="1300">0k+</div>
+        <div class="strip-b-label">homes under management</div>
+      </div>
+      <div class="reveal">
+        <div class="strip-b-num" data-count-to="96" data-suffix="%" data-duration="1600">0%</div>
+        <div class="strip-b-label">client retention</div>
+      </div>
+      <div class="reveal">
+        <div class="strip-b-num" data-count-to="5" data-duration="900">0</div>
+        <div class="strip-b-label">states, Gulf South roots</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO WE SERVE -->
+  <section class="serve">
+    <div class="container">
+      <div class="eyebrow eyebrow-blue reveal">Who we serve</div>
+      <h2 class="serve-h reveal">One team, four ways to put it to work.</h2>
+      <div class="serve-grid">
+        <article class="serve-card reveal">
+          <div class="serve-num">01</div>
+          <h3 class="serve-title">HOA Management</h3>
+          <p class="serve-copy">Full-service management for single-family communities — financials, covenant enforcement, and a manager backed by a whole team.</p>
+          <a class="serve-link" href="/hoa-management-services">Learn more <span class="arrow">→</span></a>
+        </article>
+        <article class="serve-card reveal">
+          <div class="serve-num">02</div>
+          <h3 class="serve-title">Condo Management</h3>
+          <p class="serve-copy">Luxury condominiums, townhomes, and high-rises — with full on-site teams where the community calls for it.</p>
+          <a class="serve-link" href="/condo-and-townhome-management">Learn more <span class="arrow">→</span></a>
+        </article>
+        <article class="serve-card reveal">
+          <div class="serve-num">03</div>
+          <h3 class="serve-title">Developer Services</h3>
+          <p class="serve-copy">Lifecycle management from groundbreaking through homeowner turnover, with one accountable team start to finish.</p>
+          <a class="serve-link" href="/developer-hoa-management">Learn more <span class="arrow">→</span></a>
+        </article>
+        <article class="serve-card reveal">
+          <div class="serve-num">04</div>
+          <h3 class="serve-title">Financial Management</h3>
+          <p class="serve-copy">Right-sized financials, reporting, and full transparency for smaller communities that don't need full-service oversight.</p>
+          <a class="serve-link" href="/hoa-financial-management">Learn more <span class="arrow">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 C's — dark band -->
+  <section class="ccc" id="how">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container ccc-in">
+      <div class="eyebrow reveal">The 3 C's</div>
+      <h2 class="ccc-h reveal">Three words we build everything on. They're not slogans — they're the standard.</h2>
+
+      <div class="ccc-row reveal">
+        <div class="ccc-num">01</div>
+        <div class="ccc-word">Commit<span class="dot">.</span></div>
+        <p class="ccc-copy">
+          <strong>Because communities matter.</strong> We commit to finding and delivering
+          solutions — not passing problems back to the board. We try to solve the problem
+          before you even know it exists.
+        </p>
+      </div>
+      <div class="ccc-row reveal">
+        <div class="ccc-num">02</div>
+        <div class="ccc-word">Communicate<span class="dot">.</span></div>
+        <p class="ccc-copy">
+          <strong>Because people matter.</strong> Consistent and compassionate — being
+          available isn't enough if you talk down to people. We want to be the best
+          communication company that just happens to do management.
+        </p>
+      </div>
+      <div class="ccc-row reveal">
+        <div class="ccc-num">03</div>
+        <div class="ccc-word">Care<span class="dot">.</span></div>
+        <p class="ccc-copy">
+          <strong>Because that's what matters most.</strong> Anyone can send a violation
+          letter. We care about the quality of your community and the quality of the
+          relationships inside it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY BAND -->
+  <section class="story-b">
+    <div class="container story-b-grid">
+      <div class="story-b-media reveal">
+        <ImageSlot src="/photos/index-story-b-photo.jpg" alt="Neighbors and a CMGT community manager talking and laughing together at a neighborhood clubhouse" shape="rounded" radius={20} />
+      </div>
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">Why boards switch to CMGT</div>
+        <h2 class="story-b-h">We manage communities, <em>not buildings.</em></h2>
+        <p class="story-b-p">
+          Most boards that call us are coming from somewhere that let them down —
+          communication that went quiet, or delinquency that kept climbing. We built
+          CMGT around fixing both — <strong>interactional, not transactional.</strong>
+          Straight to the heart, not straight to the point.
+        </p>
+        <p class="story-b-p">
+          Big enough to protect you. Approachable enough that you'll never get lost
+          in the shadow.
+        </p>
+        <a class="story-b-link" href="/how-we-work">See how we work <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETS -->
+  <section class="markets">
+    <div class="container">
+      <div class="eyebrow eyebrow-blue reveal">Markets we serve</div>
+      <h2 class="markets-h reveal">Proudly serving the <span class="u">Gulf South.</span></h2>
+      <p class="markets-lede reveal">
+        From hurricane prep to regional regulations, we understand Gulf South living —
+        with local teams across five states and growing.
+      </p>
+      <div class="markets-grid">
+        <div class="market reveal">
+          <h3 class="market-state">Louisiana</h3>
+          <div class="market-count"><strong>240</strong> communities</div>
+          <div class="market-cities">
+            <span>Denham Springs</span><span>Baton Rouge</span><span>New Orleans</span><span>Lafayette</span><span>Lake Charles</span><span>Shreveport</span>
+          </div>
+        </div>
+        <div class="market reveal">
+          <h3 class="market-state">Alabama</h3>
+          <div class="market-count"><strong>48</strong> communities</div>
+          <div class="market-cities">
+            <span>Huntsville</span><span>Birmingham</span><span>Mobile</span><span>Montgomery</span>
+          </div>
+        </div>
+        <div class="market reveal">
+          <h3 class="market-state">Texas</h3>
+          <div class="market-count"><strong>42</strong> communities</div>
+          <div class="market-cities">
+            <span>Houston</span><span>Beaumont</span><span>Austin</span><span>The Woodlands</span>
+          </div>
+        </div>
+        <div class="market reveal">
+          <h3 class="market-state">Mississippi</h3>
+          <div class="market-count"><strong>36</strong> communities</div>
+          <div class="market-cities">
+            <span>Jackson</span><span>Gulfport</span><span>Hattiesburg</span><span>Biloxi</span>
+          </div>
+        </div>
+        <div class="market reveal">
+          <h3 class="market-state">Florida</h3>
+          <div class="market-count"><strong>34</strong> communities</div>
+          <div class="market-cities">
+            <span>Panama City</span><span>Pensacola</span><span>Destin</span><span>Tallahassee</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="quotes-b">
+    <div class="container">
+      <div class="eyebrow eyebrow-blue reveal">Testimonials</div>
+      <h2 class="quotes-b-h reveal">See how our boards thrive.</h2>
+      <div class="quotes-b-grid">
+        <article class="quote-b-card reveal">
+          <div class="quote-b-mark">“</div>
+          <p class="quote-b-text">CMGT transformed our HOA. They don't just report issues — they show up with the answer. Our board meetings are calmer and our reserves are healthier.</p>
+          <div>
+            <div class="quote-b-name">Marcus Theriot</div>
+            <div class="quote-b-meta">Board President · via Google, May 2026</div>
+          </div>
+        </article>
+        <article class="quote-b-card reveal">
+          <div class="quote-b-mark">“</div>
+          <p class="quote-b-text">Hurricane season is no joke down here. CMGT had a plan, executed it, and kept every owner in the loop. That's the difference between a manager and a partner.</p>
+          <div>
+            <div class="quote-b-name">David Romero</div>
+            <div class="quote-b-meta">Board Member · via Google, October 2025</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <section class="app-band">
+    <div class="container app-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">The CMGT app</div>
+        <h2 class="app-h">Your community, in your pocket.</h2>
+        <p class="app-p">
+          Pay dues, request maintenance, view documents, and message your management
+          team — all from a single, secure app for iOS and Android.
+        </p>
+        <div class="app-stores">
+          <a class="store-badge" href="https://apps.apple.com/us/app/cmgt/id6745185459" target="_blank" rel="noopener">
+            <img src="/assets/badge-app-store.webp" alt="Download on the App Store" width="180" height="60">
+          </a>
+          <a class="store-badge" href="https://play.google.com/store/apps/details?id=org.cmgt.cmgt2" target="_blank" rel="noopener">
+            <img src="/assets/badge-google-play.webp" alt="Get it on Google Play" width="180" height="60">
+          </a>
+        </div>
+      </div>
+      <div class="app-media reveal">
+        <div class="block" aria-hidden="true"></div>
+        <ImageSlot src="/photos/index-app-screenshot.jpg" alt="CMGT homeowner app showing tiles for paying dues, maintenance requests, documents, and messages" shape="rect" radius={0} />
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section class="news">
+    <div class="container">
+      <div class="news-top">
+        <div>
+          <div class="eyebrow eyebrow-blue reveal">CMGT Cares</div>
+          <h2 class="news-h reveal">Latest from the community.</h2>
+        </div>
+        <a class="btn btn-outline-blue" href="/resources" style="padding: 11px 20px; font-size: 14px;">All blogs</a>
+      </div>
+      <div class="news-grid">
+        <article class="news-card reveal">
+          <ImageSlot src="/photos/index-news-1.jpg" alt="Community charity basketball event on a sunny Denham Springs afternoon" shape="rounded" radius={14} />
+          <div class="news-tag">CMGT Cares</div>
+          <h3 class="news-title"><a href="/ballin-on-belrose" style="color:inherit;text-decoration:none;">Ballin' on Belrose 2026</a></h3>
+          <p class="news-blurb">Our annual basketball tournament returned to Denham Springs to raise funds for the Baller Drai Foundation — bigger turnout, bigger heart.</p>
+          <div class="news-date">March 26, 2026</div>
+        </article>
+        <article class="news-card reveal">
+          <ImageSlot src="/photos/index-news-2.jpg" alt="Community volunteers being thanked and celebrated at a casual recognition gathering" shape="rounded" radius={14} />
+          <div class="news-tag">CMGT Cares</div>
+          <h3 class="news-title"><a href="/cmgt-cares" style="color:inherit;text-decoration:none;">River Ranch Recognition</a></h3>
+          <p class="news-blurb">River Ranch volunteers were honored at our quarterly recognition luncheon. Real communities are built by people who show up, every week.</p>
+          <div class="news-date">March 5, 2026</div>
+        </article>
+        <article class="news-card reveal">
+          <ImageSlot src="/photos/index-news-3.jpg" alt="CMGT team members and neighbors stacking wrapped gifts at a community toy drive" shape="rounded" radius={14} />
+          <div class="news-tag">CMGT Cares</div>
+          <h3 class="news-title"><a href="/cmgt-cares" style="color:inherit;text-decoration:none;">Toys for Tots</a></h3>
+          <p class="news-blurb">Our team and partner communities donated over 2,400 toys this season. Thank you to every family that filled the lobby with boxes.</p>
+          <div class="news-date">December 9, 2025</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-b">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container cta-b-in reveal">
+      <h2 class="cta-b-h">We manage<span class="dot">.</span> You live<span class="dot">.</span></h2>
+      <p class="cta-b-p">Tell us a little about your community and a real person will reach out within one business day. No pitch deck, no pressure.</p>
+      <div class="cta-b-actions">
+        <a class="btn btn-green" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+        <a class="btn btn-outline-light" href="tel:5045551234">Call (504) 555-1234</a>
+      </div>
+    </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* ── Editorial Split v2 ──────────────────────────────────────── */
+  body { background: #fff; }
+  .site-header.on-light { border-bottom: 1px solid var(--hairline); background: #fff; position: relative; }
+
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+
+  /* HERO */
+  .hero-b { background: #fff; padding: 90px 0 100px; overflow: hidden; }
+  .hero-b-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 72px; align-items: center; }
+  @media (max-width: 980px) { .hero-b-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .hero-b-display {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(48px, 5.6vw, 84px);
+    line-height: 1.0; letter-spacing: -.025em;
+    color: var(--freedom-blue);
+    margin: 22px 0 26px;
+    text-wrap: balance;
+  }
+  .hero-b-display .u { background: linear-gradient(transparent 78%, var(--landscaping-green) 78%); padding-bottom: .04em; }
+  .hero-b-body { font-size: 17.5px; line-height: 1.7; color: var(--ink-500); max-width: 520px; margin: 0 0 38px; }
+  .hero-b-body strong { color: var(--freedom-blue); font-weight: 600; }
+  .hero-b-ctas { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 46px; }
+  .hero-b-trust { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink-400); }
+  .hero-b-trust .stars { display: flex; gap: 2px; }
+
+  .hero-b-media { position: relative; }
+  .hero-b-media .block {
+    position: absolute; right: -28px; bottom: -28px;
+    width: 70%; height: 56%;
+    background: var(--landscaping-green);
+    border-radius: 20px; z-index: 0;
+  }
+  .hero-b-media .image-slot { position: relative; z-index: 1; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+  .hero-b-media .badge {
+    position: absolute; z-index: 2; left: -26px; top: 40px;
+    width: 104px; height: 104px; border-radius: 50%;
+    background: var(--freedom-blue);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-3);
+  }
+  .hero-b-media .badge img { width: 54px; filter: brightness(0) invert(1); opacity: .95; }
+  @media (max-width: 980px) { .hero-b-media .badge { left: 12px; } }
+
+  /* GREEN STAT STRIP */
+  .strip-b { background: var(--landscaping-green); color: var(--freedom-blue); padding: 44px 0; }
+  .strip-b-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  @media (max-width: 860px) { .strip-b-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; } }
+  .strip-b-num { font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1; letter-spacing: -.02em; }
+  .strip-b-label { font-size: 13.5px; font-weight: 600; margin-top: 6px; color: rgba(30,30,119,.78); }
+
+  /* WHO WE SERVE */
+  .serve { background: #fff; padding: 120px 0 100px; }
+  .serve-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -.015em;
+    color: var(--freedom-blue); max-width: 760px;
+    margin: 18px 0 60px; text-wrap: balance;
+  }
+  .serve-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  @media (max-width: 1060px) { .serve-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .serve-grid { grid-template-columns: 1fr; } }
+  .serve-card { border-top: 1.5px solid var(--hairline-strong); padding-top: 24px; transition: border-color var(--dur-base) var(--ease-out); }
+  .serve-card:hover { border-top-color: var(--landscaping-green); }
+  .serve-num { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 26px; color: var(--landscaping-green); }
+  .serve-title { font-family: var(--font-display); font-weight: 700; font-size: 22px; line-height: 1.18; color: var(--freedom-blue); margin: 12px 0 10px; }
+  .serve-copy { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0 0 16px; }
+  .serve-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-weight: 600; font-size: 14px; color: var(--freedom-blue);
+    text-decoration: none; border-bottom: 2px solid var(--landscaping-green); padding-bottom: 2px;
+  }
+  .serve-link .arrow { transition: transform var(--dur-base) var(--ease-out); }
+  .serve-link:hover .arrow { transform: translateX(4px); }
+
+  /* 3 C's — dark editorial band (borrowed from A/C) */
+  .ccc { background: var(--freedom-blue); color: #fff; padding: 110px 0 100px; position: relative; overflow: hidden; }
+  .ccc .leaf {
+    position: absolute; right: -120px; top: -140px;
+    width: 560px; height: 560px; opacity: .07; transform: rotate(-10deg);
+    pointer-events: none;
+  }
+  .ccc .leaf img { filter: brightness(0) invert(1); }
+  .ccc-in { position: relative; }
+  .ccc .eyebrow { color: rgba(255,255,255,.6); }
+  .ccc-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.8vw, 46px); line-height: 1.12; letter-spacing: -.015em;
+    color: #fff; max-width: 800px;
+    margin: 18px 0 48px; text-wrap: balance;
+  }
+  .ccc-row {
+    display: grid; grid-template-columns: 90px 1fr 1.1fr;
+    gap: 44px; align-items: baseline;
+    padding: 38px 0;
+    border-top: 1px solid rgba(255,255,255,.16);
+  }
+  .ccc-row:last-child { border-bottom: 1px solid rgba(255,255,255,.16); }
+  @media (max-width: 860px) { .ccc-row { grid-template-columns: 64px 1fr; } .ccc-copy { grid-column: 2; } }
+  .ccc-num { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 38px; color: var(--landscaping-green); }
+  .ccc-word {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(32px, 4.2vw, 54px); line-height: 1; letter-spacing: -.02em;
+    color: #fff;
+  }
+  .ccc-word .dot { color: var(--landscaping-green); }
+  .ccc-copy { font-size: 15.5px; line-height: 1.7; color: rgba(255,255,255,.72); margin: 0; }
+  .ccc-copy strong { color: #fff; font-weight: 600; }
+
+  /* STORY BAND */
+  .story-b { background: var(--nb-lightest); padding: 110px 0; }
+  .story-b-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 72px; align-items: center; }
+  @media (max-width: 980px) { .story-b-grid { grid-template-columns: 1fr; gap: 44px; } }
+  .story-b-media { position: relative; }
+  .story-b-media .image-slot { width: 100%; height: 440px; }
+  .story-b-media .leaf { position: absolute; right: -36px; top: -36px; width: 130px; height: 130px; pointer-events: none; }
+  .story-b-media .leaf img { filter: brightness(0) saturate(100%) invert(67%) sepia(41%) saturate(640%) hue-rotate(86deg) brightness(99%) contrast(92%); }
+  .story-b-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em;
+    color: var(--freedom-blue); margin: 16px 0 20px; text-wrap: balance;
+  }
+  .story-b-h em { font-style: italic; font-weight: 500; }
+  .story-b-p { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0 0 18px; max-width: 520px; }
+  .story-b-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .story-b-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 600; font-size: 15px; color: var(--freedom-blue);
+    text-decoration: none; margin-top: 10px;
+    border-bottom: 2px solid var(--landscaping-green); padding-bottom: 3px;
+  }
+  .story-b-link .arrow { transition: transform var(--dur-base) var(--ease-out); }
+  .story-b-link:hover .arrow { transform: translateX(4px); }
+
+  /* MARKETS */
+  .markets { background: #fff; padding: 120px 0 100px; }
+  .markets-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -.015em;
+    color: var(--freedom-blue); max-width: 700px;
+    margin: 18px 0 16px; text-wrap: balance;
+  }
+  .markets-h .u { background: linear-gradient(transparent 78%, var(--landscaping-green) 78%); padding-bottom: .04em; }
+  .markets-lede { font-size: 16px; line-height: 1.7; color: var(--ink-500); max-width: 600px; margin: 0 0 58px; }
+  .markets-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 36px; }
+  @media (max-width: 1060px) { .markets-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 680px) { .markets-grid { grid-template-columns: repeat(2, 1fr); } }
+  .market { border-top: 1.5px solid var(--hairline-strong); padding-top: 20px; }
+  .market-state { font-family: var(--font-display); font-weight: 700; font-size: 21px; color: var(--freedom-blue); margin: 0 0 4px; }
+  .market-count { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 14px; }
+  .market-count strong { color: var(--freedom-blue); }
+  .market-cities { display: flex; flex-direction: column; gap: 7px; font-size: 14px; color: var(--ink-500); }
+
+  /* TESTIMONIALS */
+  .quotes-b { background: var(--nb-lightest); padding: 110px 0; }
+  .quotes-b-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -.015em;
+    color: var(--freedom-blue); margin: 16px 0 54px;
+  }
+  .quotes-b-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 860px) { .quotes-b-grid { grid-template-columns: 1fr; } }
+  .quote-b-card {
+    background: #fff; border: 1px solid var(--hairline-strong);
+    border-radius: 14px; padding: 38px 40px;
+    box-shadow: var(--shadow-2);
+    display: flex; flex-direction: column; gap: 22px;
+  }
+  .quote-b-mark { font-family: var(--font-display); font-weight: 900; font-size: 56px; line-height: .5; color: var(--landscaping-green); margin-top: 16px; }
+  .quote-b-text { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.5; color: var(--freedom-blue); margin: 0; flex: 1; }
+  .quote-b-name { font-weight: 700; font-size: 15px; color: var(--freedom-blue); }
+  .quote-b-meta { font-size: 13px; color: var(--ink-400); margin-top: 2px; }
+
+  /* APP */
+  .app-band { background: #fff; padding: 120px 0; }
+  .app-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 72px; align-items: center; }
+  @media (max-width: 980px) { .app-grid { grid-template-columns: 1fr; gap: 44px; } }
+  .app-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.8vw, 46px); line-height: 1.1; letter-spacing: -.015em;
+    color: var(--freedom-blue); margin: 16px 0 18px; text-wrap: balance;
+  }
+  .app-p { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); max-width: 520px; margin: 0 0 32px; }
+  .app-stores { display: flex; gap: 14px; flex-wrap: wrap; }
+  .store-badge {
+    display: inline-flex; border-radius: 9px; overflow: hidden;
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .store-badge img { display: block; height: 52px; width: auto; }
+  .store-badge:hover { transform: translateY(-1px); box-shadow: var(--shadow-2); }
+  .app-media { display: flex; justify-content: center; position: relative; }
+  .app-media .block {
+    position: absolute; left: 50%; top: 50%;
+    width: 340px; height: 340px;
+    transform: translate(-50%, -50%);
+    background: var(--nb-lightest);
+    border-radius: 50%; z-index: 0;
+  }
+  .app-media .image-slot { position: relative; z-index: 1; width: 241px; height: 472px; }
+
+  /* NEWS */
+  .news { background: #fff; padding: 40px 0 120px; }
+  .news-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+  .news-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -.015em;
+    color: var(--freedom-blue); margin: 16px 0 0;
+  }
+  .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  @media (max-width: 900px) { .news-grid { grid-template-columns: 1fr; } }
+  .news-card .image-slot { width: 100%; height: 250px; margin-bottom: 20px; }
+  .news-tag { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 8px; }
+  .news-title { font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.25; color: var(--freedom-blue); margin: 0 0 8px; }
+  .news-blurb { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0 0 12px; }
+  .news-date { font-size: 12.5px; color: var(--ink-400); }
+
+  /* CTA */
+  .cta-b { background: var(--freedom-blue); color: #fff; padding: 110px 0; position: relative; overflow: hidden; }
+  .cta-b .leaf { position: absolute; right: -80px; top: -90px; width: 420px; height: 420px; opacity: .08; transform: rotate(-12deg); pointer-events: none; }
+  .cta-b .leaf img { filter: brightness(0) invert(1); }
+  .cta-b-in { position: relative; text-align: center; max-width: 760px; margin: 0 auto; }
+  .cta-b-h {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(38px, 5vw, 64px); line-height: 1.02; letter-spacing: -.02em;
+    margin: 0 0 18px; text-wrap: balance;
+  }
+  .cta-b-h .dot { color: var(--landscaping-green); }
+  .cta-b-p { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,.75); margin: 0 0 38px; }
+  .cta-b-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+</style>

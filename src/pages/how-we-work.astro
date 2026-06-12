@@ -1,0 +1,241 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home',         url: SITE.url + '/' },
+  { name: 'About',        url: SITE.url + '/about' },
+  { name: 'How We Work',  url: SITE.url + '/how-we-work' },
+]);
+---
+<BaseLayout
+  title="How We Work — CMGT | The Team Behind Every Community"
+  description="How CMGT works: one dedicated community manager backed by a full specialist team, so nothing depends on one person. Interactional, not transactional."
+  pageSchema={breadcrumb}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"About","href":"/about"},{"t":"How We Work"}]'></nav>
+
+  <!-- HERO -->
+  <section class="hw-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow-blue">How we work</div>
+      <h1 class="hw-hero-display">No single point of <em>failure.</em></h1>
+      <p class="hw-hero-lede">
+        Most companies give you one manager and hope they don't quit, get sick, or get
+        overwhelmed. We give every community a <strong>dedicated manager backed by a whole
+        specialist team</strong> — so nothing depends on one person having a good day.
+      </p>
+    </div>
+  </section>
+
+  <!-- POD MODEL -->
+  <section class="pod">
+    <div class="container">
+      <div class="pod-head reveal">
+        <div class="eyebrow eyebrow-blue">The team-based model</div>
+        <h2 class="pod-h">One name you'll know. <em>A whole team you won't have to.</em></h2>
+        <p class="pod-sub">
+          Your dedicated Community Association Manager is your point of contact — but behind
+          them sits the bench. <strong>When one specialist is out, the work doesn't stop.</strong>
+        </p>
+      </div>
+      <div class="pod-stage">
+        <div class="pod-core reveal">
+          <div class="pod-core-label">Your point of contact</div>
+          <h3 class="pod-core-t">Community Association Manager</h3>
+          <p class="pod-core-d">Knows your community, your board, and your history — and pulls in the right specialist the moment it's needed.</p>
+        </div>
+        <div class="pod-bench">
+          <div class="bench-chip reveal"><h4 class="bench-t">Accounting</h4><p class="bench-d">Budgets, reserves, dues, and full financial transparency.</p></div>
+          <div class="bench-chip reveal"><h4 class="bench-t">Covenant Enforcement</h4><p class="bench-d">Consistent, compassionate compliance — never heavy-handed.</p></div>
+          <div class="bench-chip reveal"><h4 class="bench-t">Vendor Management</h4><p class="bench-d">Bids, scopes, and oversight from trusted local partners.</p></div>
+          <div class="bench-chip reveal"><h4 class="bench-t">Communications</h4><p class="bench-d">Newsletters, notices, and same-day homeowner responses.</p></div>
+          <div class="bench-chip reveal"><h4 class="bench-t">Maintenance</h4><p class="bench-d">Work orders, fast response, and follow-through on every fix — start to finish.</p></div>
+          <div class="bench-chip reveal"><h4 class="bench-t">Board Support</h4><p class="bench-d">Meeting prep, minutes, and governance guidance.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="pr">
+    <div class="container">
+      <div class="eyebrow eyebrow-blue reveal">What that looks like, day to day</div>
+      <h2 class="pr-h reveal">Interactional, not transactional. Straight to the heart, not straight to the point.</h2>
+      <div class="pr-grid">
+        <div class="pr-item reveal">
+          <span class="pr-num">01</span>
+          <h3 class="pr-t">We bring the solution</h3>
+          <p class="pr-d">Anyone can report a problem. We come with the answer attached — the issue and the fix in the same message.</p>
+        </div>
+        <div class="pr-item reveal">
+          <span class="pr-num">02</span>
+          <h3 class="pr-t">We answer the same day</h3>
+          <p class="pr-d">Being available isn't enough if you're slow or talk down to people. Consistent and compassionate — in plain language.</p>
+        </div>
+        <div class="pr-item reveal">
+          <span class="pr-num">03</span>
+          <h3 class="pr-t">We get ahead of it</h3>
+          <p class="pr-d">We try to solve the problem before a homeowner or board even knows it exists. Proactive beats reactive every time.</p>
+        </div>
+        <div class="pr-item reveal">
+          <span class="pr-num">04</span>
+          <h3 class="pr-t">We treat people like people</h3>
+          <p class="pr-d">Not clients, customers, or ticket numbers. People care more about how you tell them something than what you tell them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH -->
+  <section class="tech">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container tech-in reveal">
+      <div class="eyebrow" style="color: rgba(255,255,255,.6);">Technology, in its place</div>
+      <p class="tech-q">"Technology that lets our humans <span class="g">be more human.</span>" We turn doers into thinkers — and let the systems do the busywork.</p>
+      <p class="tech-sub">From dedicated owner portals to the CMGT mobile app, our award-winning platform handles the work that doesn't need a human — so the humans handle the work that does.</p>
+    </div>
+  </section>
+
+  <!-- LOCAL + SWITCH -->
+  <section class="duo">
+    <div class="container duo-grid">
+      <div class="duo-card reveal">
+        <div class="duo-tag">Local in every market</div>
+        <h3 class="duo-t">Neighbors, not outsiders</h3>
+        <p class="duo-p">
+          We're not running your community from another state. Every market we serve has
+          CMGT people <strong>living and working in it</strong> — licensed before we enter,
+          and accountable to the neighbors they answer to. Big enough to protect you, local
+          enough to actually know you.
+        </p>
+        <a class="duo-link" href="#">Where we work <span class="arrow">→</span></a>
+      </div>
+      <div class="duo-card reveal">
+        <div class="duo-tag">Switching to CMGT</div>
+        <h3 class="duo-t">A transition that doesn't fall on you</h3>
+        <p class="duo-p">
+          Slow responses and rising delinquency are why most boards switch. <strong>We handle
+          the handoff</strong> — records, vendors, finances, and homeowner communication — so
+          the change is felt as relief, not disruption.
+        </p>
+        <a class="duo-link" href="/switching-hoa-management-companies">What switching looks like <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta-in">
+      <div class="reveal">
+        <h2 class="cta-h">See the team in action.</h2>
+        <p class="cta-p">Tell us about your community and we'll show you exactly who'd be behind it — within one business day.</p>
+      </div>
+      <div class="reveal">
+        <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+
+  /* HERO — left, stat rail underline */
+  .hw-hero { background: #fff; padding: 84px 0 64px; }
+  .hw-hero-display {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(46px, 6vw, 92px); line-height: .99; letter-spacing: -.03em;
+    color: var(--freedom-blue); margin: 22px 0 26px; max-width: 920px; text-wrap: balance;
+  }
+  .hw-hero-display em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .hw-hero-lede { font-size: 18px; line-height: 1.7; color: var(--ink-500); max-width: 600px; margin: 0; }
+  .hw-hero-lede strong { color: var(--freedom-blue); font-weight: 600; }
+
+  /* POD MODEL */
+  .pod { background: var(--nb-lightest); padding: 110px 0; }
+  .pod-head { max-width: 720px; margin: 0 0 60px; }
+  .pod-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.8vw, 46px); line-height: 1.12; letter-spacing: -.015em;
+    color: var(--freedom-blue); margin: 16px 0 16px; text-wrap: balance;
+  }
+  .pod-h em { font-style: italic; font-weight: 500; }
+  .pod-sub { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+  .pod-sub strong { color: var(--freedom-blue); font-weight: 600; }
+  .pod-stage { display: grid; grid-template-columns: 300px 1fr; gap: 32px; align-items: stretch; }
+  @media (max-width: 880px) { .pod-stage { grid-template-columns: 1fr; } }
+  .pod-core {
+    background: var(--freedom-blue); color: #fff; border-radius: 18px;
+    padding: 34px 30px; position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .pod-core::after {
+    content: ""; position: absolute; right: -60px; bottom: -70px; width: 220px; height: 220px;
+    background: url('/assets/leaf-mark.svg') no-repeat center / contain;
+    filter: brightness(0) invert(1); opacity: .1; transform: rotate(-12deg); pointer-events: none;
+  }
+  .pod-core-label { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); margin-bottom: 14px; }
+  .pod-core-t { font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 1.1; margin: 0 0 12px; }
+  .pod-core-d { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.78); margin: 0; position: relative; }
+  .pod-bench { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 620px) { .pod-bench { grid-template-columns: 1fr 1fr; } }
+  .bench-chip {
+    background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px;
+    padding: 22px 20px; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .bench-chip:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
+  .bench-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); margin: 0 0 5px; }
+  .bench-d { font-size: 13px; line-height: 1.55; color: var(--ink-500); margin: 0; }
+
+  /* PRINCIPLES */
+  .pr { background: #fff; padding: 116px 0; }
+  .pr-h {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(30px, 3.8vw, 46px); line-height: 1.1; letter-spacing: -.015em;
+    color: var(--freedom-blue); max-width: 760px; margin: 16px 0 60px; text-wrap: balance;
+  }
+  .pr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+  @media (max-width: 820px) { .pr-grid { grid-template-columns: 1fr; } }
+  .pr-item { display: grid; grid-template-columns: 56px 1fr; gap: 4px 18px; padding: 32px 0; border-top: 1.5px solid var(--hairline-strong); }
+  .pr-num { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 34px; color: var(--landscaping-green); line-height: 1; }
+  .pr-t { font-family: var(--font-display); font-weight: 700; font-size: 21px; color: var(--freedom-blue); margin: 0; align-self: center; }
+  .pr-d { grid-column: 2; font-size: 15px; line-height: 1.7; color: var(--ink-500); margin: 10px 0 0; }
+
+  /* TECH */
+  .tech { background: var(--freedom-blue); color: #fff; padding: 110px 0; position: relative; overflow: hidden; }
+  .tech .leaf { position: absolute; left: -120px; top: -130px; width: 480px; height: 480px; opacity: .07; transform: rotate(16deg); pointer-events: none; }
+  .tech .leaf img { filter: brightness(0) invert(1); }
+  .tech-in { position: relative; max-width: 880px; }
+  .tech-q {
+    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-size: clamp(28px, 3.6vw, 44px); line-height: 1.28; letter-spacing: -.01em; margin: 16px 0 0; text-wrap: balance;
+  }
+  .tech-q .g { color: var(--landscaping-green); font-style: normal; font-weight: 700; }
+  .tech-sub { position: relative; max-width: 620px; margin: 28px 0 0; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.82); }
+
+  /* FIXIT + SWITCH split */
+  .duo { background: #fff; padding: 110px 0; }
+  .duo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 820px) { .duo-grid { grid-template-columns: 1fr; } }
+  .duo-card {
+    border: 1.5px solid var(--hairline-strong); border-radius: 18px; padding: 40px 38px;
+    transition: border-color var(--dur-base) var(--ease-out);
+  }
+  .duo-card:hover { border-color: var(--landscaping-green); }
+  .duo-tag { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .duo-t { font-family: var(--font-display); font-weight: 700; font-size: 27px; line-height: 1.12; color: var(--freedom-blue); margin: 12px 0 14px; }
+  .duo-p { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); margin: 0 0 18px; }
+  .duo-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .duo-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--freedom-blue); text-decoration: none; }
+  .duo-link .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .duo-link:hover .arrow { transform: translateX(4px); }
+
+  /* CTA */
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 96px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+</style>

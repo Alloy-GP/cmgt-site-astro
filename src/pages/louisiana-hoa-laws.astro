@@ -1,0 +1,93 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home',                  url: SITE.url + '/' },
+  { name: 'Resources',             url: SITE.url + '/resources' },
+  { name: 'Governance & Meetings', url: SITE.url + '/louisiana-hoa-laws' },
+]);
+---
+<BaseLayout
+  title="Louisiana HOA Laws: What Boards Should Know — CMGT"
+  description="A plain-English overview of Louisiana HOA laws — governing documents, meetings and records, and when to call counsel. General info, not legal advice."
+  pageSchema={breadcrumb}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Governance & Meetings"}]'></nav>
+
+  <article>
+    <header class="art-hero">
+      <div class="container art-hero-in">
+        <div class="art-cat">Governance &amp; Meetings</div>
+        <h1 class="art-h1">Louisiana HOA laws, the board-friendly version.</h1>
+        <p class="art-lede">You don’t need a law degree to serve on a board — but you should know which rules govern your community and where the lines are. Here’s the plain-English lay of the land in Louisiana.</p>
+        <div class="art-meta"><span>7 min read</span><span class="dot"></span><span>Updated June 2026</span></div>
+      </div>
+    </header>
+
+    <div class="art-body">
+      <div class="container art-wrap">
+        <div class="art-take reveal">
+          <p class="art-take-h">The short version</p>
+          <p class="art-take-p">In Louisiana, your governing documents come first, state law sets the floor, and good records keep you protected. When in doubt, get qualified legal advice — this is an overview, not a substitute for it.</p>
+        </div>
+        <h2 class="art-h2">Your governing documents come first</h2><p class="art-p">For most day-to-day questions, the answer lives in your community’s own governing documents — the declaration (CC&Rs), bylaws, and any recorded amendments. These define assessments, enforcement powers, voting, and board authority. State law fills gaps and sets boundaries, but your documents are the first place to look.</p><h2 class="art-h2">Know the framework around you</h2><p class="art-p">Louisiana associations generally operate under the state’s nonprofit corporation framework and property-law provisions governing covenants and, for condos, the condominium act. The specifics — notice requirements, assessment authority, lien rights — interact with your documents in ways worth understanding before a dispute, not during one.</p><h2 class="art-h2">Run clean meetings and keep clean records</h2><p class="art-p">Good governance is mostly good paperwork: proper notice of meetings, accurate minutes, documented votes, and financials shared openly. Beyond compliance, clean records are what protect individual board members when a decision is later questioned.</p><h2 class="art-h2">Know when to call a professional</h2><p class="art-p">Lien filings, serious delinquency, covenant disputes, and document amendments are the moments to involve a qualified Louisiana attorney. A good management company helps you see those moments coming — and keeps the routine 95% running smoothly so the lawyers are only needed for the 5%.</p>
+
+      <p class="art-disclaimer reveal">This article is general information for Louisiana boards, not legal advice. Laws change and every community’s documents differ — consult a qualified Louisiana attorney for your specific situation.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="rel">
+    <div class="container">
+      <h2 class="rel-h">Keep reading.</h2>
+      <div class="rel-grid"><a class="rel-card" href="/louisiana-hoa-management"><span class="rel-t">Louisiana HOA Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/hoa-management-services"><span class="rel-t">Full-Service HOA Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/hoa-financial-management"><span class="rel-t">HOA Financial Management</span><span class="rel-ar">→</span></a></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container cta-in">
+      <div><h2 class="cta-h">Want this handled for you?</h2><p class="cta-p">A real person will walk through your community’s situation — within one business day.</p></div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+  .art-hero { background: var(--nb-lightest); padding: 76px 0 64px; }
+  .art-hero-in { max-width: 820px; }
+  .art-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .art-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.025em; color: var(--freedom-blue); margin: 16px 0 20px; text-wrap: balance; }
+  .art-lede { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; color: var(--ink-700); margin: 0 0 24px; text-wrap: pretty; }
+  .art-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: var(--ink-400); }
+  .art-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--hairline-strong); }
+  .art-body { background: #fff; padding: 70px 0 100px; }
+  .art-wrap { max-width: 720px; }
+  .art-take { background: var(--fb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 0 0 44px; }
+  .art-take-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); opacity: .6; margin: 0 0 8px; }
+  .art-take-p { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0; }
+  .art-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 32px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 44px 0 16px; text-wrap: balance; }
+  .art-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+  .art-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-dl { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; background: var(--freedom-blue); color: #fff; border-radius: 16px; padding: 30px 32px; margin: 44px 0; }
+  .art-dl-ico { flex: none; width: 56px; height: 56px; border-radius: 14px; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: var(--landscaping-green); }
+  .art-dl-body { flex: 1; min-width: 200px; }
+  .art-dl-t { font-family: var(--font-display); font-weight: 700; font-size: 21px; margin: 0 0 6px; }
+  .art-dl-d { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.78); margin: 0; }
+  .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
+  .rel { background: var(--nb-lightest); padding: 90px 0; }
+  .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
+  .rel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .rel-grid { grid-template-columns: 1fr; } }
+  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
+  .rel-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .rel-ar { color: var(--landscaping-green); font-size: 18px; }
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+</style>

@@ -6,8 +6,8 @@
 //   REVIEW_ITEMS — every reviewable page. Only items with review:true appear in the
 //                  widget; if none are true the widget is hidden entirely.
 //
-// Paths must match exactly, including the trailing slash. Start every page at
-// review:false so the widget stays hidden until the first real review session.
+// Paths must match exactly, including the trailing slash. Pages start at review:false
+// so the widget stays hidden until the first real review session.
 
 export const PASTEL_BASE = ''; // ← add the Pastel share link once the project is created
 export const TICKET_ID   = '';
@@ -19,7 +19,5 @@ export interface ReviewItem {
 }
 
 export const REVIEW_ITEMS: ReviewItem[] = [
-  { label: 'Homepage', path: '/',       review: false },
-  { label: 'About',    path: '/about/', review: false },
-  // Add every reviewable page here, all starting at review:false.
+  { label: 'Homepage', path: '/', review: false },
 ];

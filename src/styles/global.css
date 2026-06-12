@@ -1,56 +1,167 @@
-/* ==========================================================================
-   global.css — start here, add client's design system below
-   ========================================================================== */
+/* ─────────────────────────────────────────────────────────────────
+   CMGT Home Explorations — shared foundation
+   Self-hosted Gelica + DM Sans, brand tokens, header/footer, switcher
+   ───────────────────────────────────────────────────────────────── */
 
-/* ---------- Reset ---------- */
-*, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; }
-img, video { max-width: 100%; display: block; }
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap");
 
-/* ---------- Font faces ----------
-   Add @font-face declarations here for any self-hosted fonts.
-   Example:
-
-   @font-face {
-     font-family: "ClientFont";
-     font-weight: 400;
-     font-style: normal;
-     font-display: swap;
-     src: url("/fonts/ClientFont-Regular.woff2") format("woff2");
-   }
-*/
-
-/* ---------- CSS custom properties ----------
-   Define the client's design tokens here.
-   Reference these throughout the rest of the CSS — never hardcode values.
-
-   --color-primary:    #000000;
-   --color-accent:     #000000;
-   --color-bg:         #ffffff;
-   --color-text:       #333333;
-
-   --font-display:     "ClientFont", sans-serif;
-   --font-body:        "ClientFont", sans-serif;
-
-   --space-1: 4px;    --space-2: 8px;   --space-3: 12px;
-   --space-4: 16px;   --space-5: 24px;  --space-6: 32px;
-   --space-7: 48px;   --space-8: 64px;  --space-9: 96px;
-*/
+@font-face { font-family: 'Gelica'; font-weight: 200; font-style: normal; font-display: swap; src: url('/fonts/gelica-extra-light.otf') format('opentype'); }
+@font-face { font-family: 'Gelica'; font-weight: 300; font-style: normal; font-display: swap; src: url('/fonts/gelica-light.otf') format('opentype'); }
+@font-face { font-family: 'Gelica'; font-weight: 400; font-style: normal; font-display: swap; src: url('/fonts/gelica-regular.otf') format('opentype'); }
+@font-face { font-family: 'Gelica'; font-weight: 400; font-style: italic; font-display: swap; src: url('/fonts/gelica-italic.otf') format('opentype'); }
+@font-face { font-family: 'Gelica'; font-weight: 500; font-style: normal; font-display: swap; src: url('/fonts/gelica-medium.otf') format('opentype'); }
+@font-face { font-family: 'Gelica'; font-weight: 600; font-style: normal; font-display: swap; src: url('/fonts/gelica-semibold.otf') format('opentype'); }
+@font-face { font-family: 'Gelica'; font-weight: 700; font-style: normal; font-display: swap; src: url('/fonts/gelica-bold.otf') format('opentype'); }
+@font-face { font-family: 'Gelica'; font-weight: 900; font-style: normal; font-display: swap; src: url('/fonts/gelica-black.otf') format('opentype'); }
 
 :root {
-  /* Replace with client values */
-  --color-primary: #000000;
-  --color-accent:  #000000;
-  --color-bg:      #ffffff;
-  --color-text:    #333333;
-  --font-display:  system-ui, sans-serif;
-  --font-body:     system-ui, sans-serif;
+  --freedom-blue: #1E1E77;
+  --freedom-blue-deep: #15155C;
+  --landscaping-green: #4ACF6C;
+  --neighborly-blue: #8DBDFF;
+  --fb-lightest: #E8E8F1;
+  --nb-lightest: #F3F8FF;
+  --white: #FFFFFF;
+  --ink-700: #444444;
+  --ink-500: #666666;
+  --ink-400: #888888;
+  --hairline: #EEEEEE;
+  --hairline-strong: #DDDDDD;
+
+  --font-display: "Gelica", "Fraunces", Georgia, serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-base: 220ms;
+
+  --shadow-1: 0 1px 2px rgba(30, 30, 119, 0.06);
+  --shadow-2: 0 4px 14px rgba(30, 30, 119, 0.08);
+  --shadow-3: 0 18px 40px rgba(30, 30, 119, 0.14);
+
+  --max-w-page: 1240px;
 }
 
-/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   font-family: var(--font-body);
-  color: var(--color-text);
-  background: var(--color-bg);
+  color: var(--ink-700);
+  background: #fff;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; }
+
+.container { max-width: var(--max-w-page); margin: 0 auto; padding: 0 36px; }
+@media (max-width: 640px) { .container { padding: 0 20px; } }
+
+/* ── Buttons ───────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  font-family: var(--font-body);
+  font-weight: 600; font-size: 15px; letter-spacing: 0.01em;
+  padding: 14px 26px;
+  border-radius: 6px;
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  transition: all var(--dur-base) var(--ease-out);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn .arrow { display: inline-block; transition: transform var(--dur-base) var(--ease-out); }
+.btn:hover .arrow { transform: translateX(4px); }
+
+.btn-green { background: var(--landscaping-green); color: var(--freedom-blue); }
+.btn-green:hover { background: #3FBF60; box-shadow: var(--shadow-2); }
+
+.btn-blue { background: var(--freedom-blue); color: #fff; }
+.btn-blue:hover { background: #171758; box-shadow: var(--shadow-2); }
+
+.btn-outline-light { background: transparent; border-color: rgba(255,255,255,.7); color: #fff; }
+.btn-outline-light:hover { background: rgba(255,255,255,.12); }
+
+.btn-outline-blue { background: transparent; border-color: var(--freedom-blue); color: var(--freedom-blue); }
+.btn-outline-blue:hover { background: var(--freedom-blue); color: #fff; }
+
+/* ── Eyebrow ───────────────────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase;
+}
+
+/* ── Header ────────────────────────────────────────────────────── */
+.site-header { position: absolute; top: 0; left: 0; right: 0; z-index: 20; padding: 26px 0; }
+.site-header .hd-in { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.site-header .brand img { height: 30px; }
+.hd-nav { display: flex; gap: 32px; }
+.hd-nav a {
+  font-size: 15px; font-weight: 500; text-decoration: none;
+  opacity: .85; transition: opacity var(--dur-base) var(--ease-out);
+}
+.hd-nav a:hover { opacity: 1; }
+.hd-actions { display: flex; align-items: center; gap: 22px; }
+.hd-phone { font-size: 14px; font-weight: 600; text-decoration: none; opacity: .85; }
+.hd-cta { padding: 11px 20px; font-size: 14px; }
+.site-header.on-dark { color: #fff; }
+.site-header.on-light { color: var(--freedom-blue); }
+@media (max-width: 980px) { .hd-nav { display: none; } }
+@media (max-width: 560px) { .hd-phone { display: none; } }
+
+/* ── Footer ────────────────────────────────────────────────────── */
+.site-footer { background: var(--freedom-blue-deep); color: rgba(255,255,255,.65); padding: 54px 0 84px; }
+.site-footer .ft-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.site-footer img { height: 26px; }
+.ft-tagline { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; }
+.ft-tagline .dot { color: var(--landscaping-green); }
+.ft-copy { font-size: 13px; }
+
+/* ── Direction switcher ────────────────────────────────────────── */
+.dir-switcher {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  z-index: 100;
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(21, 21, 92, .92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  padding: 5px;
+  box-shadow: 0 12px 32px rgba(21,21,92,.35);
+}
+.dir-switcher a {
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,.65);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: all var(--dur-base) var(--ease-out);
+  white-space: nowrap;
+}
+.dir-switcher a:hover { color: #fff; }
+.dir-switcher a.active { background: var(--landscaping-green); color: var(--freedom-blue); }
+@media print { .dir-switcher { display: none; } }
+
+/* ── Scroll reveal ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+  .reveal.is-visible { opacity: 1; transform: none; }
+}
+
+/* ── Image slots ───────────────────────────────────────────────────
+   Production replacement for the design's <image-slot> element. Each
+   converted page renames its `image-slot` element selectors to
+   `.image-slot`; Astro's scoped specificity lets those page rules win
+   over this base, so per-slot sizing/aspect-ratio is preserved. */
+.image-slot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  background: var(--fb-lightest);
 }
