@@ -1,0 +1,482 @@
+---
+// src/layouts/BaseLayout.astro
+// Generic root layout — works for any AGP client site.
+// All SEO defaults pulled from src/config/site.ts.
+//
+// Usage (minimal):
+//   <BaseLayout title="Page Title" description="Page description.">
+//     ...page content...
+//   </BaseLayout>
+//
+// Usage (article with custom OG image + schema):
+//   <BaseLayout title="..." description="..." ogType="article" ogImage="/assets/og/article.png" pageSchema={articleSchema}>
+//     ...
+//   </BaseLayout>
+
+import '../styles/global.css';
+import { SITE } from '../config/site.ts';
+import { REVIEW_ITEMS, PASTEL_BASE, TICKET_ID } from '../config/review.ts';
+
+interface Props {
+  /** <title> tag. Keep ≤ 60 chars. Required. */
+  title: string;
+  /** Meta description. Keep 120–160 chars. Required. */
+  description: string;
+  /** og:type. Default: 'website'. Use 'article' for blog/resource pages. */
+  ogType?: 'website' | 'article';
+  /** Per-page OG image path from /public. Default: SITE.defaultOgImage. Must be 1200×630 PNG. */
+  ogImage?: string;
+  /** robots meta. Omit for normal indexed pages. Use 'noindex,nofollow' for thank-you pages etc. */
+  robots?: string;
+  /** Page-specific JSON-LD schema. Pass a single object or array. */
+  pageSchema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  ogType = 'website',
+  ogImage: ogImageProp,
+  robots,
+  pageSchema,
+} = Astro.props;
+
+const canonicalUrl    = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
+const resolvedOgImage = new URL(ogImageProp ?? SITE.defaultOgImage, Astro.site ?? SITE.url).toString();
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': SITE.org.type,
+  name: SITE.name,
+  url: SITE.url,
+  logo: SITE.org.logo,
+  description,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: SITE.org.addressLocality,
+    addressRegion:   SITE.org.addressRegion,
+    addressCountry:  SITE.org.addressCountry,
+  },
+  telephone: SITE.org.telephone,
+  email:     SITE.org.email,
+  areaServed: SITE.org.areaServed,
+  priceRange: SITE.org.priceRange,
+};
+
+const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
+
+// Alloy Preview Review widget renders on stg only — never on production.
+const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+
+    {robots && <meta name="robots" content={robots} />}
+
+    <!-- Open Graph -->
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url"         content={canonicalUrl} />
+    <meta property="og:type"        content={ogType} />
+    <meta property="og:site_name"   content={SITE.name} />
+    <meta property="og:locale"      content={SITE.locale} />
+    <meta property="og:image"       content={resolvedOgImage} />
+    <meta property="og:image:type"  content="image/png" />
+    <meta property="og:image:width" content={SITE.ogImageWidth} />
+    <meta property="og:image:height" content={SITE.ogImageHeight} />
+    <meta property="og:image:alt"   content={SITE.name} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:site"        content={SITE.twitterHandle} />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={resolvedOgImage} />
+    <meta name="twitter:image:alt"   content={SITE.name} />
+
+    <!-- Font preloads — update hrefs to match client's actual font files -->
+    <!-- <link rel="preload" href="/fonts/ClientFont-Regular.woff2" as="font" type="font/woff2" crossorigin /> -->
+    <!-- <link rel="preload" href="/fonts/ClientFont-Bold.woff2" as="font" type="font/woff2" crossorigin /> -->
+
+    <!-- JSON-LD: Organization (every page) -->
+    <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
+    {pageSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+    )}
+
+    <!-- Google Analytics: deferred until after page paint to avoid forced reflow -->
+    {gaMeasurementId && (
+      <script is:inline define:vars={{ gaMeasurementId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaMeasurementId);
+        window.addEventListener('load', function() {
+          var s = document.createElement('script');
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaMeasurementId;
+          document.head.appendChild(s);
+        });
+      </script>
+    )}
+  </head>
+  <body>
+    <!-- Add your SiteHeader component here -->
+    <main>
+      <slot />
+    </main>
+    <!-- Add your SiteFooter component here -->
+
+    <!-- ── Alloy Preview Review Widget (stg only) ───────────────────────────
+         Vanilla JS — no framework deps, works inside Pastel proxy.
+         Config comes from src/config/review.ts via define:vars.
+         Must stay is:inline — external JS bundles are stripped by Pastel's proxy.
+         Rename the localStorage prefix (xx_) to the client's initials per project.
+    ──────────────────────────────────────────────────────────────────────── -->
+    {!isProduction && <script is:inline define:vars={{ reviewItems: REVIEW_ITEMS, pastelBase: PASTEL_BASE, ticketIdFromConfig: TICKET_ID }}>
+    (function() {
+      var items = (reviewItems || []).filter(function(i) { return i.review; });
+      if (!items.length) return;
+
+      var P  = '#381c4f';   // alloy purple
+      var PK = '#d9356e';   // alloy pink
+      var FONT = '"Gotham","Poppins","Helvetica Neue",Arial,sans-serif';
+
+      var SK  = 'xx_review_v1';
+      var TK  = 'xx_review_v1_ticket';
+      var ISK = 'xx_review_v1_started';
+
+      // ── Persisted state ──────────────────────────────────────────────────
+      var checked = {};
+      try { checked = JSON.parse(localStorage.getItem(SK) || '{}'); } catch(_) {}
+
+      // Ticket ID comes from review.ts (baked in at deploy time) — no URL param needed
+      var ticketId = ticketIdFromConfig || '';
+      try {
+        if (ticketId) { localStorage.setItem(TK, ticketId); }
+        else { ticketId = localStorage.getItem(TK) || ''; }
+      } catch(_) {}
+
+      // ── Widget state ─────────────────────────────────────────────────────
+      var isOpen       = true;
+      var isStarted    = false;
+      try { isStarted = localStorage.getItem(ISK) === '1'; } catch(_) {}
+      var isSubmitting = false;
+      var isSubmitted  = false;
+      var wasDone      = false;
+
+      // ── Platform detection ───────────────────────────────────────────────
+      var isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent || '');
+
+      // ── Inject font + hover CSS once ─────────────────────────────────────
+      if (!document.getElementById('agp-styles')) {
+        var s = document.createElement('style');
+        s.id = 'agp-styles';
+        s.textContent =
+          '@font-face{font-family:"Gotham";font-weight:400;font-display:swap;src:url("/fonts/Gotham-Book.woff2") format("woff2")}' +
+          '@font-face{font-family:"Gotham";font-weight:500;font-display:swap;src:url("/fonts/Gotham-Medium.woff2") format("woff2")}' +
+          '@font-face{font-family:"Gotham";font-weight:700;font-display:swap;src:url("/fonts/Gotham-Bold.woff2") format("woff2")}' +
+          '@font-face{font-family:"Gotham";font-weight:800;font-display:swap;src:url("/fonts/Gotham-Black.woff2") format("woff2")}' +
+          '#agp-rw .agp-row:hover{background:#f8f6ff!important}' +
+          '#agp-rw input:focus,#agp-rw textarea:focus{border-color:' + PK + '!important;outline:none}' +
+          '#agp-rw .agp-open:hover{background:' + P + '!important;color:#fff!important;border-color:' + P + '!important}' +
+          '#agp-tab:hover{background:#4a2468!important;box-shadow:0 6px 24px rgba(56,28,79,.5)!important}' +
+          '#agp-minimize:hover{opacity:1!important;background:rgba(255,255,255,.15)!important}' +
+          '.tw-1txb66d.px-3.whitespace-nowrap{display:none!important}' +
+          '@keyframes agp-confetti-fall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(220px) rotate(720deg);opacity:0}}' +
+          '@keyframes agp-bar-pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}50%{box-shadow:0 0 0 5px rgba(34,197,94,.35)}}';
+        document.head.appendChild(s);
+      }
+
+      // ── Mount ────────────────────────────────────────────────────────────
+      var wrap = document.createElement('div');
+      wrap.id = 'agp-rw';
+      wrap.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:2147483647;font-family:' + FONT + ';opacity:1;';
+      document.body.appendChild(wrap);
+
+      function count() { return items.filter(function(i) { return checked[i.path]; }).length; }
+
+      // ── Confetti burst ───────────────────────────────────────────────────
+      function launchConfetti() {
+        var colors = ['#22c55e','#16a34a','#d9356e','#381c4f','#f5d880','#fff'];
+        var bar = document.getElementById('agp-bar-fill');
+        var rect = bar ? bar.getBoundingClientRect() : wrap.getBoundingClientRect();
+        for (var i = 0; i < 40; i++) {
+          var p = document.createElement('div');
+          var size  = 5 + Math.random() * 6;
+          var left  = rect.left + Math.random() * rect.width;
+          var top   = rect.top + rect.height / 2;
+          var delay = Math.random() * 350;
+          var dur   = 900 + Math.random() * 700;
+          var color = colors[Math.floor(Math.random() * colors.length)];
+          var shape = Math.random() > 0.5 ? '50%' : '2px';
+          p.style.cssText =
+            'position:fixed;top:' + top + 'px;left:' + left + 'px;' +
+            'width:' + size + 'px;height:' + size + 'px;' +
+            'background:' + color + ';border-radius:' + shape + ';' +
+            'pointer-events:none;z-index:2147483648;' +
+            'animation:agp-confetti-fall ' + dur + 'ms ease-in ' + delay + 'ms forwards;';
+          document.body.appendChild(p);
+          setTimeout(function(el) { return function() { if (el.parentNode) el.parentNode.removeChild(el); }; }(p), dur + delay + 100);
+        }
+      }
+
+      // ── Render ───────────────────────────────────────────────────────────
+      function render() {
+        var n    = count();
+        var tot  = items.length;
+        var pct  = tot ? Math.round(n / tot * 100) : 0;
+        var done = n === tot;
+        var rem  = tot - n;
+
+        // ── Collapsed tab ────────────────────────────────────────────────
+        if (!isOpen) {
+          wrap.innerHTML =
+            '<button id="agp-tab" style="background:' + P + ';color:#fff;border:none;border-radius:10px;' +
+            'padding:10px 16px;cursor:pointer;font-weight:700;font-size:13px;display:flex;align-items:center;' +
+            'gap:8px;box-shadow:0 4px 20px rgba(56,28,79,.35);letter-spacing:.01em;font-family:' + FONT + ';' +
+            'transition:background 150ms,box-shadow 150ms;">' +
+              '<img src="/assets/alloy-icon.png" alt="" style="width:20px;height:20px;display:block;flex-shrink:0;" />' +
+              '<span>Review Checklist</span>' +
+              '<span style="background:' + PK + ';color:#fff;border-radius:20px;padding:1px 7px;' +
+              'font-size:11px;font-weight:800;">' + n + '/' + tot + '</span>' +
+            '</button>';
+          document.getElementById('agp-tab').onclick = function() { isOpen = true; render(); };
+          return;
+        }
+
+        // ── Panel ────────────────────────────────────────────────────────
+        var html =
+          '<div style="background:#fff;border-radius:14px;width:340px;' +
+          'box-shadow:0 12px 48px rgba(56,28,79,.28);overflow:hidden;display:flex;' +
+          'flex-direction:column;max-height:82vh;">';
+
+        // Header (always shown)
+        html +=
+          '<div style="background:' + P + ';color:#fff;padding:13px 16px;display:flex;' +
+          'align-items:center;justify-content:space-between;">' +
+            '<div style="display:flex;align-items:center;gap:10px;">' +
+              '<img src="/assets/alloy-icon.png" alt="" style="width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,.15);padding:3px;display:block;flex-shrink:0;" />' +
+              '<div>' +
+                '<div style="font-weight:700;font-size:14px;line-height:1.2;">Review Checklist</div>' +
+                '<div style="font-size:10px;opacity:.7;font-weight:400;letter-spacing:.01em;">Check off each page as you review it</div>' +
+              '</div>' +
+            '</div>' +
+            '<button id="agp-minimize" title="Minimize" style="background:none;border:none;color:#fff;cursor:pointer;' +
+            'padding:4px 6px;border-radius:6px;opacity:.7;font-family:' + FONT + ';display:flex;flex-direction:column;' +
+            'gap:3px;align-items:center;justify-content:center;transition:opacity 150ms,background 150ms;" aria-label="Minimize">' +
+              '<span style="display:block;width:14px;height:2px;background:#fff;border-radius:1px;"></span>' +
+            '</button>' +
+          '</div>';
+
+        // ── Cover state (before review started) ──────────────────────────
+        if (!isStarted) {
+          html +=
+            '<div style="padding:32px 24px 24px;display:flex;flex-direction:column;align-items:center;gap:20px;">' +
+              '<div style="display:flex;align-items:center;gap:10px;background:#f4f2f9;border-radius:999px;padding:8px 18px;">' +
+                '<span style="font-size:13px;font-weight:700;color:' + P + ';">Browse</span>' +
+                '<div style="width:44px;height:24px;background:#ccc;border-radius:999px;position:relative;flex-shrink:0;">' +
+                  '<div style="position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2);"></div>' +
+                '</div>' +
+                '<span style="font-size:13px;font-weight:400;color:#aaa;">Comment</span>' +
+              '</div>' +
+              '<div style="text-align:center;">' +
+                '<div style="font-weight:700;font-size:15px;color:' + P + ';margin-bottom:8px;">Switch to Browse mode first</div>' +
+                '<div style="font-size:12px;color:#888;line-height:1.6;">Use the toggle at the bottom of your screen<br>to switch modes — or press <kbd style="background:#ede9f8;color:' + P + ';border-radius:4px;padding:1px 5px;font-size:11px;font-family:ui-monospace,monospace;">' + (isMac ? '⌥C' : 'Ctrl+C') + '</kbd> to toggle.</div>' +
+              '</div>' +
+              '<button id="agp-start" style="background:' + P + ';color:#fff;border:none;border-radius:10px;' +
+              'padding:12px 24px;font-weight:800;font-size:13px;cursor:pointer;width:100%;' +
+              'letter-spacing:.02em;font-family:' + FONT + ';box-shadow:0 4px 14px rgba(56,28,79,.22);transition:all 200ms;">' +
+                'Start review' +
+              '</button>' +
+            '</div>';
+
+        // ── Success state ─────────────────────────────────────────────────
+        } else if (isSubmitted) {
+          html +=
+            '<div style="padding:40px 24px;text-align:center;color:#1a7a4a;">' +
+              '<div style="width:48px;height:48px;background:#22c55e;border-radius:50%;display:flex;' +
+              'align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;color:#fff;">✓</div>' +
+              '<div style="font-weight:700;font-size:15px;margin-bottom:6px;">Review submitted!</div>' +
+              '<div style="font-size:12px;color:#666;line-height:1.5;">The Alloy team has been notified<br>and will follow up shortly.</div>' +
+            '</div>';
+
+        // ── Checklist state ───────────────────────────────────────────────
+        } else {
+          html +=
+            '<div style="padding:12px 16px 0;border-bottom:1px solid #f0f0f0;">' +
+              '<div style="height:8px;background:#ede9f8;border-radius:4px;margin-bottom:8px;">' +
+                '<div id="agp-bar-fill" style="height:100%;border-radius:4px;background:linear-gradient(90deg,#22c55e,#16a34a);' +
+                'width:' + pct + '%;transition:width .3s;' + (done ? 'animation:agp-bar-pulse 600ms ease 2;' : '') + '"></div>' +
+              '</div>' +
+              '<div style="font-size:11px;color:#666;padding-bottom:6px;">' +
+                (done ? '✓ All pages reviewed' : n + ' of ' + tot + ' pages reviewed') +
+              '</div>' +
+              '<div style="font-size:11px;padding-bottom:10px;line-height:1.5;' + (done ? 'color:#16a34a;font-weight:700;' : 'color:#999;') + '">' +
+                (done ? '🎉 All done! Hit the button below when you\'re ready.' : 'Open each page, check it off when done.') +
+              '</div>' +
+            '</div>';
+
+          var sorted = items.slice().sort(function(a, b) {
+            return (checked[a.path] ? 1 : 0) - (checked[b.path] ? 1 : 0);
+          });
+          html += '<div id="agp-list" style="overflow-y:auto;flex:1;padding:6px 0;max-height:320px;">';
+          sorted.forEach(function(item) {
+            var isChecked = !!checked[item.path];
+            var pUrl = pastelBase ? pastelBase + item.path : '';
+            html +=
+              '<div class="agp-row" data-path="' + item.path + '" style="display:flex;align-items:center;' +
+              'gap:10px;padding:9px 14px;cursor:pointer;' +
+              'background:' + (isChecked ? '#f8f6ff' : 'transparent') + ';' +
+              'border-bottom:1px solid #f5f5f5;transition:background 120ms;">' +
+                '<input type="checkbox" data-path="' + item.path + '" ' + (isChecked ? 'checked' : '') +
+                ' style="width:15px;height:15px;accent-color:' + P + ';flex-shrink:0;cursor:pointer;" />' +
+                '<span style="flex:1;color:' + (isChecked ? '#aaa' : P) + ';' +
+                'text-decoration:' + (isChecked ? 'line-through' : 'none') + ';font-size:13px;">' +
+                  item.label +
+                '</span>' +
+                '<a href="' + item.path + '" class="agp-open" ' +
+                'style="font-size:11px;color:' + P + ';text-decoration:none;font-weight:700;' +
+                'white-space:nowrap;padding:2px 8px;border:1.5px solid ' + P + ';' +
+                'border-radius:6px;flex-shrink:0;transition:all 120ms;" onclick="event.stopPropagation()">Open page</a>' +
+              '</div>';
+          });
+          html += '</div>';
+
+          if (items.length > 5) {
+            html += '<div id="agp-scroll-hint" style="text-align:center;font-size:11px;color:#aaa;padding:4px 0 2px;' +
+              'border-top:1px solid #f5f5f5;">Scroll for more pages ↓</div>';
+          }
+
+          html +=
+            '<div style="padding:12px 14px;border-top:1px solid #ede9f8;">' +
+              '<div id="agp-err" style="font-size:11px;color:#c0392b;display:none;margin-bottom:6px;"></div>' +
+              '<button id="agp-submit" style="background:' + (done ? P : '#c9c1d6') + ';color:#fff;border:none;border-radius:10px;' +
+              'padding:12px;font-weight:800;font-size:13px;cursor:' + (done ? 'pointer' : 'not-allowed') + ';width:100%;' +
+              'letter-spacing:.02em;font-family:' + FONT + ';transition:all 200ms;' +
+              (done ? 'box-shadow:0 4px 14px rgba(56,28,79,.22);' : '') +
+              '">Submit review to Alloy</button>' +
+            '</div>';
+        }
+
+        html += '</div>';
+        wrap.innerHTML = html;
+
+        // ── Events ───────────────────────────────────────────────────────
+        document.getElementById('agp-minimize').onclick = function() { isOpen = false; render(); };
+
+        if (!isStarted) {
+          document.getElementById('agp-start').onclick = function() {
+            isStarted = true;
+            try { localStorage.setItem(ISK, '1'); } catch(_) {}
+            render();
+          };
+          return;
+        }
+
+        var listEl = document.getElementById('agp-list');
+        var hintEl = document.getElementById('agp-scroll-hint');
+        if (listEl && hintEl) {
+          listEl.onscroll = function() {
+            if (listEl.scrollTop + listEl.clientHeight >= listEl.scrollHeight - 10) {
+              hintEl.style.display = 'none';
+            }
+          };
+        }
+
+        wrap.querySelectorAll('.agp-row').forEach(function(row) {
+          row.onclick = function(e) {
+            if (e.target.tagName === 'A' || e.target.tagName === 'INPUT') return;
+            var path = row.getAttribute('data-path');
+            var prevDone = count() === items.length;
+            checked[path] = !checked[path];
+            try { localStorage.setItem(SK, JSON.stringify(checked)); } catch(_) {}
+            var nowDone = count() === items.length;
+            render();
+            if (nowDone && !prevDone) launchConfetti();
+          };
+        });
+
+        wrap.querySelectorAll('input[type=checkbox]').forEach(function(cb) {
+          cb.onchange = function() {
+            var path = cb.getAttribute('data-path');
+            var prevDone = count() === items.length;
+            checked[path] = cb.checked;
+            try { localStorage.setItem(SK, JSON.stringify(checked)); } catch(_) {}
+            var nowDone = count() === items.length;
+            render();
+            if (nowDone && !prevDone) launchConfetti();
+          };
+          cb.onclick = function(e) { e.stopPropagation(); };
+        });
+
+        if (!isSubmitted) {
+          var submitEl = document.getElementById('agp-submit');
+
+          submitEl.onclick = function() {
+            if (count() < items.length || isSubmitting) return;
+            isSubmitting = true;
+            submitEl.disabled = true;
+            submitEl.textContent = 'Sending…';
+            submitEl.style.background = '#5a4070';
+
+            fetch('/api/review-complete', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                checkedCount: count(),
+                total:        items.length,
+                items:        items.map(function(i) {
+                                return { label: i.label, path: i.path, checked: !!checked[i.path] };
+                              }),
+                ticketId:     ticketId,
+              }),
+            })
+            .then(function(r) {
+              if (!r.ok) throw new Error('err');
+              isSubmitted = true;
+              isSubmitting = false;
+              try { localStorage.removeItem(SK); localStorage.removeItem(ISK); } catch(_) {}
+              render();
+            })
+            .catch(function() {
+              isSubmitting = false;
+              submitEl.disabled = false;
+              submitEl.textContent = 'I\'m Done Reviewing';
+              submitEl.style.background = P;
+              var err = document.getElementById('agp-err');
+              if (err) { err.textContent = 'Submission failed — email team@alloygp.co'; err.style.display = 'block'; }
+            });
+          };
+        }
+      }
+
+      render();
+
+      // ── Hide Pastel "Finish review" button ───────────────────────────────
+      function hidePastelBtn() {
+        document.querySelectorAll('button').forEach(function(el) {
+          if (el.textContent.trim().toLowerCase().indexOf('finish review') !== -1) {
+            el.style.setProperty('display', 'none', 'important');
+            var p = el.parentElement;
+            if (p) p.style.setProperty('display', 'none', 'important');
+          }
+        });
+      }
+      hidePastelBtn();
+      var pastelObs = new MutationObserver(hidePastelBtn);
+      pastelObs.observe(document.body, { childList: true, subtree: true });
+
+    })();
+    </script>}
+  </body>
+</html>
