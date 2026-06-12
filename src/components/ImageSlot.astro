@@ -42,4 +42,4 @@ const style = [
   ratio ? `aspect-ratio:${ratio}` : '',
 ].filter(Boolean).join(';') + ';';
 ---
-<img class={`image-slot ${className}`.trim()} src={src} alt={alt} loading="lazy" decoding="async" style={style} />
+<img class={`image-slot ${className}`.trim()} src={src} alt={alt} loading="lazy" decoding="async" style={style} onerror="this.onerror=null;this.src='/photos/placeholder.svg'" />

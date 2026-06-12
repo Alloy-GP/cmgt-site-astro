@@ -1,0 +1,40 @@
+{
+  "srcById": {
+    "story-hero-photo": "home-explorations/assets/photos/story-hero-photo.webp",
+    "flood-photo": "home-explorations/assets/photos/flood-photo.webp",
+    "lead-jeff": "home-explorations/assets/photos/lead-jeff.webp",
+    "fin-hero-photo": "home-explorations/assets/photos/fin-hero-photo.webp",
+    "hoa-hero-photo": "home-explorations/assets/photos/hoa-hero-photo.webp",
+    "hoa-fit-photo": "home-explorations/assets/photos/hoa-fit-photo.webp",
+    "hoa-fullbleed": "home-explorations/assets/photos/hoa-fullbleed.webp",
+    "hoa-model-photo": "home-explorations/assets/photos/hoa-model-photo.webp",
+    "story-b-photo": "home-explorations/assets/photos/story-b-photo.webp",
+    "app-screenshot": "home-explorations/assets/photos/app-screenshot.webp",
+    "news-1": "home-explorations/assets/photos/news-1.webp",
+    "news-2": "home-explorations/assets/photos/news-2.webp",
+    "news-3": "home-explorations/assets/photos/news-3.webp",
+    "hero-b-photo": "home-explorations/assets/photos/hero-b-photo.webp",
+    "condo-hero-photo": "home-explorations/assets/photos/condo-hero-photo.webp",
+    "condo-onsite-photo": "home-explorations/assets/photos/condo-onsite-photo.webp",
+    "sw-hero-photo": "home-explorations/assets/photos/sw-hero-photo.webp"
+  },
+  "pageOf": {
+    "story-hero-photo": "Our Story.html",
+    "flood-photo": "Our Story.html",
+    "lead-jeff": "Our Story.html",
+    "fin-hero-photo": "HOA Financial Management.html",
+    "hoa-hero-photo": "HOA Management Services.html",
+    "hoa-fit-photo": "HOA Management Services.html",
+    "hoa-fullbleed": "HOA Management Services.html",
+    "hoa-model-photo": "HOA Management Services.html",
+    "story-b-photo": "index.html",
+    "app-screenshot": "index.html",
+    "news-1": "index.html",
+    "news-2": "index.html",
+    "news-3": "index.html",
+    "hero-b-photo": "index.html",
+    "condo-hero-photo": "Condo & Townhome Management.html",
+    "condo-onsite-photo": "Condo & Townhome Management.html",
+    "sw-hero-photo": "Switching HOA Management Companies.html"
+  }
+}
