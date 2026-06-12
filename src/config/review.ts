@@ -19,5 +19,10 @@ export interface ReviewItem {
 }
 
 export const REVIEW_ITEMS: ReviewItem[] = [
-  { label: 'Homepage', path: '/', review: false },
+  { label: 'Homepage',                   path: '/',                                review: true },
+  { label: 'HOA Management',             path: '/hoa-management-services',         review: true },
+  { label: 'Condo & Townhome Management', path: '/condo-and-townhome-management',  review: true },
+  { label: 'Our Story',                  path: '/our-story',                       review: true },
+  { label: 'How We Work',                path: '/how-we-work',                     review: true },
+  { label: 'Request a Proposal',         path: '/request-a-proposal',              review: true },
 ];
