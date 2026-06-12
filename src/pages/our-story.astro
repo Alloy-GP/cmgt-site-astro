@@ -301,14 +301,14 @@ const breadcrumb = breadcrumbSchema([
   .story-hero .eyebrow { color: rgba(255,255,255,.62); }
   .story-hero-display {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 700;
     font-size: clamp(48px, 7vw, 104px);
     line-height: .98; letter-spacing: -.03em;
     color: #fff;
     margin: 22px 0 0;
     text-wrap: balance;
   }
-  .story-hero-display em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .story-hero-display em { font-style: normal; font-weight: 700; color: var(--landscaping-green); }
   .story-hero-rule { width: 88px; height: 5px; background: var(--landscaping-green); border-radius: 3px; margin: 36px 0 32px; }
   .story-hero-lede {
     font-size: clamp(18px, 2vw, 22px); line-height: 1.6;
@@ -328,7 +328,7 @@ const breadcrumb = breadcrumbSchema([
   }
   .story-hero-band .quote-over .container { pointer-events: auto; }
   .story-hero-origin {
-    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-family: var(--font-display); font-weight: 700; font-style: normal;
     font-size: clamp(22px, 2.6vw, 34px); line-height: 1.3; letter-spacing: -.01em;
     color: #fff; max-width: 760px; margin: 0;
     text-wrap: balance;
@@ -347,10 +347,10 @@ const breadcrumb = breadcrumbSchema([
   }
   @media (max-width: 860px) { .chapter { grid-template-columns: 1fr; gap: 18px; } }
   .chapter-marker { display: flex; flex-direction: column; gap: 8px; }
-  .chapter-num { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 44px; line-height: 1; color: var(--landscaping-green); }
+  .chapter-num { font-family: var(--font-display); font-weight: 700; font-style: normal; font-size: 44px; line-height: 1; color: var(--landscaping-green); }
   .chapter-label { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-400); }
   .chapter-h {
-    font-family: var(--font-display); font-weight: 400;
+    font-family: var(--font-display); font-weight: 700;
     font-size: clamp(26px, 3vw, 36px); line-height: 1.15; letter-spacing: -.015em;
     color: var(--freedom-blue);
     margin: 0 0 18px; text-wrap: balance;
@@ -366,7 +366,7 @@ const breadcrumb = breadcrumbSchema([
   .pull .leaf img { filter: brightness(0) invert(1); }
   .pull-in { position: relative; max-width: 920px; }
   .pull-q {
-    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-family: var(--font-display); font-weight: 700; font-style: normal;
     font-size: clamp(28px, 3.6vw, 44px); line-height: 1.28; letter-spacing: -.01em;
     color: #fff; margin: 0 0 28px;
     text-wrap: balance;
@@ -381,15 +381,15 @@ const breadcrumb = breadcrumbSchema([
   @media (max-width: 980px) { .flood-grid { grid-template-columns: 1fr; gap: 44px; } }
   .flood-media :global(.image-slot) { width: 100%; height: 460px; }
   .flood-h {
-    font-family: var(--font-display); font-weight: 400;
+    font-family: var(--font-display); font-weight: 700;
     font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em;
     color: var(--freedom-blue); margin: 16px 0 20px; text-wrap: balance;
   }
-  .flood-h em { font-style: italic; font-weight: 500; }
+  .flood-h em { font-style: normal; font-weight: 700; }
   .flood-p { font-size: 16.5px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
   .flood-p strong { color: var(--freedom-blue); font-weight: 600; }
   .flood-quote {
-    font-family: var(--font-display); font-weight: 500; font-style: italic;
+    font-family: var(--font-display); font-weight: 700; font-style: normal;
     font-size: 20px; line-height: 1.5; color: var(--freedom-blue);
     border-left: 3px solid var(--landscaping-green);
     padding-left: 20px; margin: 24px 0 0;
@@ -398,7 +398,7 @@ const breadcrumb = breadcrumbSchema([
   /* TIMELINE */
   .timeline { background: #fff; padding: 120px 0 100px; }
   .tl-h {
-    font-family: var(--font-display); font-weight: 400;
+    font-family: var(--font-display); font-weight: 700;
     font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -.015em;
     color: var(--freedom-blue); max-width: 700px;
     margin: 18px 0 64px; text-wrap: balance;
@@ -409,22 +409,22 @@ const breadcrumb = breadcrumbSchema([
   @media (max-width: 620px) { .tl-grid { grid-template-columns: 1fr; } }
   .tl-item { border-top: 1.5px solid var(--hairline-strong); padding: 22px 2px 36px; transition: border-color var(--dur-base) var(--ease-out); }
   .tl-item:hover { border-top-color: var(--landscaping-green); }
-  .tl-year { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 34px; color: var(--landscaping-green); line-height: 1; }
-  .tl-t { font-family: var(--font-display); font-weight: 400; font-size: 19px; color: var(--freedom-blue); margin: 12px 0 8px; line-height: 1.25; }
+  .tl-year { font-family: var(--font-display); font-weight: 700; font-style: normal; font-size: 34px; color: var(--landscaping-green); line-height: 1; }
+  .tl-t { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); margin: 12px 0 8px; line-height: 1.25; }
   .tl-d { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0; }
 
   /* GREYHOUND */
   .grey { background: var(--fb-lightest); padding: 110px 0; position: relative; overflow: hidden; }
   .grey-in { max-width: 860px; }
   .grey-h {
-    font-family: var(--font-display); font-weight: 400;
+    font-family: var(--font-display); font-weight: 700;
     font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em;
     color: var(--freedom-blue); margin: 16px 0 22px; text-wrap: balance;
   }
   .grey-p { font-size: 16.5px; line-height: 1.75; color: var(--ink-700); margin: 0 0 16px; max-width: 680px; }
   .grey-p strong { color: var(--freedom-blue); font-weight: 600; }
   .grey-tag {
-    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-family: var(--font-display); font-weight: 700; font-style: normal;
     font-size: clamp(24px, 2.8vw, 32px); color: var(--freedom-blue);
     margin: 30px 0 0;
   }
@@ -435,7 +435,7 @@ const breadcrumb = breadcrumbSchema([
   .lead-top { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: end; margin-bottom: 56px; }
   @media (max-width: 860px) { .lead-top { grid-template-columns: 1fr; gap: 20px; } }
   .lead-h {
-    font-family: var(--font-display); font-weight: 400;
+    font-family: var(--font-display); font-weight: 700;
     font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em;
     color: var(--freedom-blue); margin: 16px 0 0; text-wrap: balance;
   }
@@ -451,7 +451,7 @@ const breadcrumb = breadcrumbSchema([
   @media (max-width: 620px) { .lead-grid { grid-template-columns: repeat(2, 1fr); } }
   .lead-card { text-align: center; }
   .lead-card :global(.image-slot) { width: 132px; height: 132px; margin: 0 auto 16px; }
-  .lead-name { font-family: var(--font-display); font-weight: 400; font-size: 17px; color: var(--freedom-blue); }
+  .lead-name { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
   .lead-role { font-size: 12.5px; color: var(--ink-400); margin-top: 3px; }
 
   /* STATS STRIP */
@@ -459,7 +459,7 @@ const breadcrumb = breadcrumbSchema([
   .strip-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; }
   @media (max-width: 980px) { .strip-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 620px) { .strip-grid { grid-template-columns: 1fr 1fr; } }
-  .strip-num { font-family: var(--font-display); font-weight: 400; font-size: 40px; line-height: 1; letter-spacing: -.02em; }
+  .strip-num { font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1; letter-spacing: -.02em; }
   .strip-label { font-size: 13px; font-weight: 600; margin-top: 6px; color: rgba(30,30,119,.78); }
 
   /* CTA */
@@ -468,11 +468,11 @@ const breadcrumb = breadcrumbSchema([
   .cta .leaf img { filter: brightness(0) invert(1); }
   .cta-in { position: relative; text-align: center; max-width: 760px; margin: 0 auto; }
   .cta-h {
-    font-family: var(--font-display); font-weight: 400;
+    font-family: var(--font-display); font-weight: 700;
     font-size: clamp(36px, 4.8vw, 60px); line-height: 1.04; letter-spacing: -.02em;
     margin: 0 0 18px; text-wrap: balance;
   }
-  .cta-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .cta-h em { font-style: normal; font-weight: 700; color: var(--landscaping-green); }
   .cta-p { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,.75); margin: 0 0 38px; }
   .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 </style>
