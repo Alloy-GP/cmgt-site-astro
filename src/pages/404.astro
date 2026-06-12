@@ -1,0 +1,161 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+// Astro emits this as 404.html automatically. noindex so search engines
+// never surface the error page itself.
+const links = [
+  { t: 'HOA Management Services', href: '/hoa-management-services' },
+  { t: 'How We Work',             href: '/how-we-work' },
+  { t: 'Our Story',               href: '/our-story' },
+  { t: 'Resources',               href: '/resources' },
+  { t: 'FAQ',                     href: '/faq' },
+  { t: 'Contact',                 href: '/contact' },
+];
+---
+<BaseLayout
+  title="Page Not Found (404) — CMGT"
+  description="That page isn't on our map. Head back home or jump to one of our most-visited pages — we'll get you where you're going."
+  robots="noindex,nofollow"
+>
+  <section class="nf-hero">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container nf-in">
+      <div class="nf-code" aria-hidden="true">404</div>
+      <div class="eyebrow">Page not found</div>
+      <h1 class="nf-h">Looks like this one's <em>off the map.</em></h1>
+      <p class="nf-p">The page you're after may have moved, been renamed, or never existed in the first place. No worries — let's get you back to the neighborhood.</p>
+
+      <div class="nf-actions">
+        <a class="btn btn-green" href="/">Back home <span class="arrow">→</span></a>
+        <a class="btn btn-outline-light" href="/request-a-proposal">Request a proposal</a>
+      </div>
+
+      <div class="nf-links">
+        <p class="nf-links-h">Or pick up where you left off</p>
+        <ul>
+          {links.map((l) => (
+            <li><a href={l.href}>{l.t}<span class="arrow" aria-hidden="true">→</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf-hero {
+    background: var(--freedom-blue);
+    color: #fff;
+    padding: 132px 0 120px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 78vh;
+    display: flex;
+    align-items: center;
+  }
+  .nf-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 18% 18%, rgba(141,189,255,.14) 0%, transparent 55%);
+    z-index: 0;
+  }
+  .nf-hero .leaf {
+    position: absolute;
+    right: -130px;
+    bottom: -170px;
+    width: 560px;
+    height: 560px;
+    opacity: .07;
+    transform: rotate(-10deg);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .nf-hero .leaf img { width: 100%; filter: brightness(0) invert(1); }
+
+  .nf-in { position: relative; z-index: 2; max-width: 760px; }
+
+  .nf-code {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(72px, 13vw, 168px);
+    line-height: .9;
+    letter-spacing: -.04em;
+    color: var(--landscaping-green);
+    margin: 0 0 8px -.04em;
+  }
+
+  .nf-hero .eyebrow { color: rgba(255,255,255,.65); }
+
+  .nf-h {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(36px, 5vw, 68px);
+    line-height: 1.02;
+    letter-spacing: -.03em;
+    margin: 14px 0 20px;
+    text-wrap: balance;
+  }
+  .nf-h em { font-style: italic; font-weight: 300; color: var(--neighborly-blue); }
+
+  .nf-p {
+    font-size: 18px;
+    line-height: 1.65;
+    color: rgba(255,255,255,.82);
+    margin: 0 0 36px;
+    max-width: 560px;
+  }
+
+  .nf-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+
+  .nf-links-h {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.55);
+    margin: 0 0 18px;
+  }
+  .nf-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 600px;
+  }
+  .nf-links li { background: var(--freedom-blue); }
+  .nf-links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background: transparent;
+    transition: background var(--dur-base) var(--ease-out);
+  }
+  .nf-links a .arrow {
+    color: var(--landscaping-green);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .nf-links a:hover { background: rgba(255,255,255,.08); }
+  .nf-links a:hover .arrow { opacity: 1; transform: translateX(0); }
+
+  @media (max-width: 560px) {
+    .nf-hero { padding: 108px 0 96px; }
+    .nf-links ul { grid-template-columns: 1fr; }
+  }
+</style>
