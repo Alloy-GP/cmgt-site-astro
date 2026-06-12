@@ -175,7 +175,7 @@
     h += 'src="https://www.google.com/maps?q=' + encodeURIComponent(first.q) + '&z=' + first.z + '&output=embed" title="CMGT markets map"></iframe>';
     h += '</div>';
     h += '<aside class="lm-rail">';
-    h += '<p class="lm-rail-eyebrow">Five states, neighbors in every one</p>';
+    h += '<p class="lm-rail-eyebrow">We’re Local</p>';
     h += '<h3 class="lm-rail-h">Find your market.</h3>';
     h += '<div class="gm-list" data-gm-list>';
     h += MK.map(function (m, i) {
