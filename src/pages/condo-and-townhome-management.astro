@@ -559,7 +559,11 @@ const breadcrumb = breadcrumbSchema([
   </script>
 </BaseLayout>
 
-<style>
+<!-- is:global — several sections (cov tabs, vs comparison) are built client-side
+     via innerHTML, so they never receive Astro's scoped data-astro-cid attribute.
+     Scoped rules wouldn't match them. This page's CSS only loads on this route,
+     so global is safe here. -->
+<style is:global>
   body { background: #fff; }
   .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
 
