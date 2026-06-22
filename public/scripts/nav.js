@@ -196,7 +196,7 @@
     var h = '';
     /* utility bar */
     h += '<div class="util-bar"><div class="util-in">';
-    h += '<a class="util-phone" href="tel:2255032648">Call us — <strong>(225) 503-2648</strong> · Mon–Fri, 8a–5p CT</a>';
+    h += '<a class="util-phone" href="tel:2255032648">Call us — <strong>(225) 503-2648</strong> · Mon–Fri, 8:30a–4:30p CT</a>';
     h += '<nav class="util-links" aria-label="Utility">';
     UTILITY.forEach(function (u, i) {
       if (i > 0) h += '<span class="sep"></span>';

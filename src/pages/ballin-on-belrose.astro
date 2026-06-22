@@ -13,7 +13,7 @@ const breadcrumb = breadcrumbSchema([
 ---
 <BaseLayout
   title="Ballin' on Belrose — CMGT Cares"
-  description="Ballin' on Belrose is CMGT Cares' annual community basketball event in Denham Springs — neighbors together, raising funds for a local cause."
+  description="Ballin' on Belrose is a community walk-run up Daphne's Belrose Hill that raises funds for the Baller Dream Foundation — and CMGT shows up to climb and give back."
   pageSchema={breadcrumb}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"About","href":"/about"},{"t":"CMGT Cares","href":"/cmgt-cares"},{"t":"Ballin’ on Belrose"}]'></nav>
@@ -23,20 +23,20 @@ const breadcrumb = breadcrumbSchema([
       <div class="container ev-hero-in">
         <div class="ev-cat">CMGT Cares · Event</div>
         <h1 class="ev-h1">Ballin' on Belrose.</h1>
-        <p class="ev-lede">One court, a whole community, and a good cause. Our annual basketball event turns a Denham Springs afternoon into something that gives back.</p>
-        <div class="ev-meta"><span>Denham Springs, LA</span><span class="dot"></span><span>Annual · CMGT Cares</span></div>
+        <p class="ev-lede">One hill, a whole community, and a good cause. We join the climb up Daphne's Belrose Hill — again and again — to raise money for kids fighting cancer.</p>
+        <div class="ev-meta"><span>Daphne, AL</span><span class="dot"></span><span>May 16, 2026 · CMGT Cares</span></div>
       </div>
       <div class="ev-band">
-        <ImageSlot src="/photos/ballin-on-belrose-bb-hero.jpg" alt="Wide Ballin' on Belrose event photo — the court, the crowd, the day" shape="rect" radius={12} />
+        <ImageSlot src="/photos/ballin-on-belrose-bb-hero.jpg" alt="Wide Ballin' on Belrose photo — walkers and runners climbing Belrose Hill in Daphne" shape="rect" radius={12} />
       </div>
     </header>
 
     <div class="ev-body">
       <div class="container ev-grid">
         <div class="ev-wrap">
-          <h2 class="ev-h2">More than a game</h2>
-          <p class="ev-p">Ballin' on Belrose started the way most CMGT Cares things do — someone on the team had an idea for bringing neighbors together, and we ran with it. <strong>What looks like a basketball tournament is really a fundraiser in sneakers:</strong> a day where the community shows up, plays hard, and leaves having done some good.</p>
-          <p class="ev-p">It fits how we think about the third C. Anyone can manage a community from behind a desk. We'd rather be on the court with it.</p>
+          <h2 class="ev-h2">More than a walk</h2>
+          <p class="ev-p">Ballin' on Belrose is a community walk-run with a twist: participants climb Daphne's Belrose Hill over and over — up to eleven times, the elevation gain of Mount Everest. <strong>It's a fundraiser in sneakers:</strong> a morning where the whole community shows up, climbs hard, and leaves having done some good.</p>
+          <p class="ev-p">It fits how we think about the third C. Anyone can manage a community from behind a desk. We'd rather be out there climbing the hill with it.</p>
 
           <div class="ev-gallery">
             <ImageSlot src="/photos/ballin-on-belrose-bb-g1.jpg" alt="Ballin' on Belrose event photo" shape="rounded" radius={12} />
@@ -44,19 +44,19 @@ const breadcrumb = breadcrumbSchema([
           </div>
 
           <h2 class="ev-h2">Where the money goes</h2>
-          <p class="ev-p">Proceeds support a local cause close to the community's heart. <strong>[Placeholder: confirm the beneficiary and the amount raised]</strong> — we'll feature the real story and totals here, because the impact is the whole point.</p>
+          <p class="ev-p">Every dollar supports the <strong>Baller Dream Foundation</strong>, which brings encouragement, comfort, and unforgettable experiences to children and young adults battling cancer. That's the whole point of showing up.</p>
 
           <h2 class="ev-h2">Be part of the next one</h2>
-          <p class="ev-p">Whether you want to field a team, sponsor, or just come cheer, there's a place for you on the sideline. Watch this space — or reach out and we'll make sure you hear when the next date drops.</p>
+          <p class="ev-p">Whether you want to climb, fundraise, sponsor, or just come cheer, there's a place for you on Belrose Hill. Reach out and we'll make sure you hear when the next date drops.</p>
         </div>
 
         <aside class="ev-aside">
           <p class="ev-aside-h">Event at a glance</p>
-          <div class="ev-fact"><div class="ev-fact-k">What</div><div class="ev-fact-v">Community basketball</div></div>
-          <div class="ev-fact"><div class="ev-fact-k">Where</div><div class="ev-fact-v">Denham Springs, LA</div></div>
-          <div class="ev-fact"><div class="ev-fact-k">When</div><div class="ev-fact-v">Annual</div></div>
-          <div class="ev-fact"><div class="ev-fact-k">Benefiting</div><div class="ev-fact-v">A local cause</div></div>
-          <p class="ev-aside-note">Placeholder details — swap in the confirmed year, beneficiary, and funds raised.</p>
+          <div class="ev-fact"><div class="ev-fact-k">What</div><div class="ev-fact-v">Community walk-run, hill climb</div></div>
+          <div class="ev-fact"><div class="ev-fact-k">Where</div><div class="ev-fact-v">Daphne, AL</div></div>
+          <div class="ev-fact"><div class="ev-fact-k">When</div><div class="ev-fact-v">May 16, 2026</div></div>
+          <div class="ev-fact"><div class="ev-fact-k">Benefiting</div><div class="ev-fact-v">Baller Dream Foundation</div></div>
+          <p class="ev-aside-note">The challenge: climb Belrose Hill enough times to match the height of Mount Everest.</p>
         </aside>
       </div>
     </div>
@@ -108,7 +108,7 @@ const breadcrumb = breadcrumbSchema([
   .ev-aside-note { font-size: 12px; color: var(--ink-400); margin: 18px 0 0; font-style: italic; }
 
   .cta { background: var(--freedom-blue); color: #fff; padding: 90px 0; position: relative; overflow: hidden; }
-  .cta .leaf { position: absolute; right: -90px; top: -100px; width: 420px; height: 420px; opacity: .08; transform: rotate(-12deg); pointer-events: none; }
+  .cta .leaf { position: absolute; right: -90px; top: -100px; width: 420px; height: 420px; opacity: .08; transform: none; pointer-events: none; }
   .cta .leaf img { filter: brightness(0) invert(1); }
   .cta-in { position: relative; text-align: center; max-width: 700px; margin: 0 auto; }
   .cta-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 4vw, 52px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance; }

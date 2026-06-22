@@ -175,7 +175,7 @@ const breadcrumb = breadcrumbSchema([
   .pod-core::after {
     content: ""; position: absolute; right: -60px; bottom: -70px; width: 220px; height: 220px;
     background: url('/assets/leaf-mark.svg') no-repeat center / contain;
-    filter: brightness(0) invert(1); opacity: .1; transform: rotate(-12deg); pointer-events: none;
+    filter: brightness(0) invert(1); opacity: .1; transform: none; pointer-events: none;
   }
   .pod-core-label { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); margin-bottom: 14px; }
   .pod-core-t { font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 1.1; margin: 0 0 12px; }
@@ -206,7 +206,7 @@ const breadcrumb = breadcrumbSchema([
 
   /* TECH */
   .tech { background: var(--freedom-blue); color: #fff; padding: 110px 0; position: relative; overflow: hidden; }
-  .tech .leaf { position: absolute; left: -120px; top: -130px; width: 480px; height: 480px; opacity: .07; transform: rotate(16deg); pointer-events: none; }
+  .tech .leaf { position: absolute; left: -120px; top: -130px; width: 480px; height: 480px; opacity: .07; transform: none; pointer-events: none; }
   .tech .leaf img { filter: brightness(0) invert(1); }
   .tech-in { position: relative; max-width: 880px; }
   .tech-q {
