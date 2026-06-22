@@ -84,7 +84,7 @@ const breadcrumb = breadcrumbSchema([
 
   .ts-hero { background: var(--freedom-blue); color: #fff; padding: 92px 0 84px; position: relative; overflow: hidden; isolation: isolate; }
   .ts-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 18% 20%, rgba(141,189,255,.12) 0%, transparent 55%); z-index: 0; }
-  .ts-hero .leaf { position: absolute; right: -120px; bottom: -150px; width: 520px; height: 520px; opacity: .07; transform: rotate(-10deg); z-index: 0; pointer-events: none; }
+  .ts-hero .leaf { position: absolute; right: -120px; bottom: -150px; width: 520px; height: 520px; opacity: .07; transform: none; z-index: 0; pointer-events: none; }
   .ts-hero .leaf img { width: 100%; filter: brightness(0) invert(1); }
   .ts-hero-in { position: relative; z-index: 2; max-width: 820px; }
   .ts-hero .eyebrow { color: rgba(255,255,255,.65); }
@@ -111,7 +111,7 @@ const breadcrumb = breadcrumbSchema([
   .ts-note { text-align: center; font-size: 13px; color: var(--ink-400); margin: 8px 0 0; }
 
   .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 96px 0; position: relative; overflow: hidden; }
-  .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: rotate(14deg); pointer-events: none; }
+  .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: none; pointer-events: none; }
   .cta .leaf img { filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
   .cta-in { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
   .cta-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
