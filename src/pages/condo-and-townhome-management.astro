@@ -673,7 +673,7 @@ const breadcrumb = breadcrumbSchema([
 
   /* CTA */
   .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 100px 0; position: relative; overflow: hidden; }
-  .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: rotate(14deg); pointer-events: none; }
+  .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: none; pointer-events: none; }
   .cta .leaf img { filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
   .cta-in { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
   .cta-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(34px, 4.6vw, 58px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 12px; text-wrap: balance; }
@@ -683,7 +683,7 @@ const breadcrumb = breadcrumbSchema([
 
   /* TEAM-BASED MODEL */
   .team { background: var(--freedom-blue); color: #fff; padding: 112px 0; position: relative; overflow: hidden; }
-  .team .leaf { position: absolute; right: -130px; top: -120px; width: 440px; height: 440px; opacity: .07; transform: rotate(18deg); pointer-events: none; }
+  .team .leaf { position: absolute; right: -130px; top: -120px; width: 440px; height: 440px; opacity: .07; transform: none; pointer-events: none; }
   .team .leaf img { width: 100%; filter: brightness(0) invert(1); }
   .team-in { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
   @media (max-width: 920px) { .team-in { grid-template-columns: 1fr; gap: 40px; } }
@@ -784,7 +784,7 @@ const breadcrumb = breadcrumbSchema([
 
   /* WHY CMGT */
   .vs { background: var(--freedom-blue); color: #fff; padding: 112px 0; position: relative; overflow: hidden; }
-  .vs .leaf { position: absolute; right: -120px; bottom: -150px; width: 480px; height: 480px; opacity: .07; transform: rotate(-12deg); pointer-events: none; }
+  .vs .leaf { position: absolute; right: -120px; bottom: -150px; width: 480px; height: 480px; opacity: .07; transform: none; pointer-events: none; }
   .vs .leaf img { width: 100%; filter: brightness(0) invert(1); }
   .vs-in { position: relative; }
   .vs-head { max-width: 740px; margin: 0 0 44px; }
@@ -831,7 +831,7 @@ const breadcrumb = breadcrumbSchema([
   /* SWITCHING CALLOUT */
   .swcall { background: #fff; padding: 100px 0; }
   .swcall-in { background: var(--fb-lightest); border-radius: 18px; padding: 40px 44px; display: flex; align-items: center; justify-content: space-between; gap: 36px; flex-wrap: wrap; position: relative; overflow: hidden; }
-  .swcall-in::after { content: ""; position: absolute; right: -50px; bottom: -70px; width: 200px; height: 200px; background: url('/assets/leaf-mark.svg') no-repeat center / contain; opacity: .06; transform: rotate(-12deg); pointer-events: none; filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
+  .swcall-in::after { content: ""; position: absolute; right: -50px; bottom: -70px; width: 200px; height: 200px; background: url('/assets/leaf-mark.svg') no-repeat center / contain; opacity: .06; transform: none; pointer-events: none; filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
   .swcall-txt { position: relative; max-width: 640px; }
   .swcall-k { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
   .swcall-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 8px 0 8px; text-wrap: balance; }
