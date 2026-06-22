@@ -98,7 +98,7 @@
     { t: 'Homeowner / Board Login', href: '#', hideSm: false },
     { t: 'Pay Dues', href: '#', hideSm: false },
     { t: 'Order Documents', href: '#', hideSm: true },
-    { t: 'Owners & Renters', href: '#', hideSm: true },
+    { t: 'Rental Management', href: 'Rentals.html', hideSm: true },
   ];
 
   var FOOTER = [
@@ -145,7 +145,7 @@
         { t: 'Login', href: '#' },
         { t: 'Pay Dues', href: '#' },
         { t: 'Order Documents', href: '#' },
-        { t: 'Owners & Renters', href: '#' },
+        { t: 'Rental Management', href: 'Rentals.html' },
         { t: 'Request a Proposal', href: PROPOSAL },
       ],
     },
