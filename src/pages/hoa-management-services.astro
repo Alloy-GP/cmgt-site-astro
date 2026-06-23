@@ -118,10 +118,11 @@ const breadcrumb = breadcrumbSchema([
             <li>Day-to-day presence for large or amenity-heavy communities</li>
             <li>Same financial transparency and team-based backup</li>
           </ul>
+          <a class="tier-more" href="#onsite">See how on-site works <span aria-hidden="true">↓</span></a>
         </div>
       </div>
 
-      <div class="onsite reveal">
+      <div class="onsite reveal" id="onsite">
         <div class="onsite-head">
           <div class="eyebrow eyebrow-blue">A CMGT specialty</div>
           <h3 class="onsite-h">On-site management for large &amp; master-planned communities.</h3>
@@ -725,6 +726,8 @@ const breadcrumb = breadcrumbSchema([
   .tier-list { list-style:none; margin:16px 0 0; padding:0; display:flex; flex-direction:column; gap:9px; }
   .tier-list li { font-size:14px; line-height:1.5; color:var(--ink-700); padding-left:22px; position:relative; }
   .tier-list li::before { content:""; position:absolute; left:0; top:7px; width:8px; height:8px; border-radius:50%; background:var(--landscaping-green); }
+  .tier-more { display:inline-block; margin-top:18px; font-size:13.5px; font-weight:700; color:var(--freedom-blue); text-decoration:none; border-bottom:1.5px solid var(--landscaping-green); padding-bottom:1px; transition:opacity var(--dur-base) var(--ease-out); }
+  .tier-more:hover { opacity:.7; }
 
   /* On-site specialty feature */
   .onsite { margin-top:28px; background:var(--nb-lightest); border:1px solid var(--hairline); border-radius:18px; padding:44px 40px; }
