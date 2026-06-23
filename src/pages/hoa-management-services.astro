@@ -103,54 +103,51 @@ const breadcrumb = breadcrumbSchema([
           <div class="tier-tag">Most communities</div>
           <h3 class="tier-t">Full-Service Management</h3>
           <p class="tier-d">Your dedicated manager and the full specialist bench run the entire operation remotely — backed by our five-state team and technology.</p>
-          <ul class="tier-list">
-            <li>Dedicated Community Association Manager + specialist team</li>
-            <li>Complete financial, covenant, vendor & communication management</li>
-            <li>Best fit for single-family, townhome & master-planned HOAs</li>
-          </ul>
+          <div class="tier-detail">
+            <ul class="tier-list">
+              <li>Dedicated Community Association Manager + specialist team</li>
+              <li>Complete financial, covenant, vendor &amp; communication management</li>
+              <li>Monthly P&amp;L and balance sheet by the 20th — shared with every owner</li>
+              <li>Best fit for single-family, townhome &amp; master-planned HOAs</li>
+              <li>Runs entirely remotely, with local teams in every market</li>
+            </ul>
+          </div>
+          <button class="tier-toggle" type="button" aria-expanded="false">What's included <span class="tt-ico" aria-hidden="true"></span></button>
         </div>
-        <div class="tier-card reveal">
-          <div class="tier-tag">Larger & amenity-rich</div>
+        <div class="tier-card tier-card-feat reveal">
+          <div class="tier-tag">A CMGT specialty</div>
           <h3 class="tier-t">On-Site Management</h3>
-          <p class="tier-d">For communities that need staff on the ground, we place dedicated on-site personnel — with the same specialist bench behind them.</p>
-          <ul class="tier-list">
-            <li>Dedicated on-site manager and/or staff</li>
-            <li>Day-to-day presence for large or amenity-heavy communities</li>
-            <li>Same financial transparency and team-based backup</li>
-          </ul>
-          <a class="tier-more" href="#onsite">See how on-site works <span aria-hidden="true">↓</span></a>
-        </div>
-      </div>
-
-      <div class="onsite reveal" id="onsite">
-        <div class="onsite-head">
-          <div class="eyebrow eyebrow-blue">A CMGT specialty</div>
-          <h3 class="onsite-h">On-site management for large &amp; master-planned communities.</h3>
-          <p class="onsite-lede">As master-planned communities multiply across the Gulf South, daily on-site presence is becoming essential — and it's a discipline CMGT has built for. We put a dedicated team on the ground, backed by the same specialist bench that supports every community we manage.</p>
-        </div>
-        <div class="onsite-grid">
-          <div class="onsite-col">
-            <p class="onsite-col-h">Your on-site team</p>
-            <ul class="onsite-list">
+          <p class="tier-d">For larger and master-planned communities, we place a dedicated team on the ground — backed by the same specialist bench. As these communities multiply across the Gulf South, it's a discipline we've built for.</p>
+          <div class="tier-detail">
+            <p class="tier-sub">Your on-site team</p>
+            <ul class="tier-list">
               <li>A dedicated on-site Community Association Manager</li>
               <li>On-site maintenance and groundskeeping staff</li>
               <li>The full accounting, covenant &amp; support bench behind them, remotely</li>
               <li>The same monthly financials and full transparency — by the 20th</li>
             </ul>
-          </div>
-          <div class="onsite-col">
-            <p class="onsite-col-h">Built for two kinds of partner</p>
-            <ul class="onsite-list">
+            <p class="tier-sub">Built for two kinds of partner</p>
+            <ul class="tier-list">
               <li><strong>Developers</strong> — on-site staffing from groundbreaking through declarant control to homeowner turnover</li>
-              <li><strong>Boards</strong> of 500+ home or amenity-heavy communities — a manager who's present, lives nearby, and is there when it matters</li>
+              <li><strong>Boards</strong> of 500+ home or amenity-heavy communities — a manager who's present and there when it matters</li>
             </ul>
+            <a class="tier-cta" href="/request-a-proposal">Talk on-site management <span class="arrow">→</span></a>
           </div>
-        </div>
-        <div class="onsite-cta">
-          <p class="onsite-cue">Running 500+ homes or a high-rise — or planning a master-planned community? On-site is likely your model.</p>
-          <a class="btn btn-green" href="/request-a-proposal">Talk on-site management <span class="arrow">→</span></a>
+          <button class="tier-toggle" type="button" aria-expanded="false">Explore on-site <span class="tt-ico" aria-hidden="true"></span></button>
         </div>
       </div>
+      <script is:inline>
+        document.querySelectorAll('.tier-toggle').forEach(function (btn) {
+          var card = btn.closest('.tier-card');
+          var detail = card && card.querySelector('.tier-detail');
+          if (!detail) return;
+          btn.addEventListener('click', function () {
+            var open = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!open));
+            detail.style.maxHeight = open ? '0px' : (detail.scrollHeight + 'px');
+          });
+        });
+      </script>
 
       <div class="local-band reveal">
         <h3 class="local-h">HOA management near you, across the Gulf South.</h3>
@@ -716,7 +713,7 @@ const breadcrumb = breadcrumbSchema([
   /* DELIVERY TIERS + NEAR-ME */
   .tiers { background:#fff; padding: 26px 0 112px; }
   .tiers-head { max-width: 760px; margin: 0 0 46px; }
-  .tier-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .tier-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
   @media (max-width:760px){ .tier-grid{ grid-template-columns:1fr; } }
   .tier-card { border:1.5px solid var(--hairline-strong); border-radius:16px; padding:34px 32px; transition: border-color var(--dur-base) var(--ease-out); }
   .tier-card:hover { border-color: var(--landscaping-green); }
@@ -726,25 +723,17 @@ const breadcrumb = breadcrumbSchema([
   .tier-list { list-style:none; margin:16px 0 0; padding:0; display:flex; flex-direction:column; gap:9px; }
   .tier-list li { font-size:14px; line-height:1.5; color:var(--ink-700); padding-left:22px; position:relative; }
   .tier-list li::before { content:""; position:absolute; left:0; top:7px; width:8px; height:8px; border-radius:50%; background:var(--landscaping-green); }
-  .tier-more { display:inline-block; margin-top:18px; font-size:13.5px; font-weight:700; color:var(--freedom-blue); text-decoration:none; border-bottom:1.5px solid var(--landscaping-green); padding-bottom:1px; transition:opacity var(--dur-base) var(--ease-out); }
-  .tier-more:hover { opacity:.7; }
-
-  /* On-site specialty feature */
-  .onsite { margin-top:28px; background:var(--nb-lightest); border:1px solid var(--hairline); border-radius:18px; padding:44px 40px; }
-  @media (max-width:720px){ .onsite{ padding:32px 22px; } }
-  .onsite-head { max-width:760px; }
-  .onsite .eyebrow-blue { color:var(--landscaping-green); }
-  .onsite-h { font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3vw,34px); line-height:1.14; letter-spacing:-.02em; color:var(--freedom-blue); margin:12px 0 14px; text-wrap:balance; }
-  .onsite-lede { font-size:16px; line-height:1.65; color:var(--ink-500); margin:0 0 30px; max-width:720px; }
-  .onsite-grid { display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:30px; }
-  @media (max-width:720px){ .onsite-grid{ grid-template-columns:1fr; gap:26px; } }
-  .onsite-col-h { font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-400); margin:0 0 14px; }
-  .onsite-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:13px; }
-  .onsite-list li { position:relative; padding-left:26px; font-size:15px; line-height:1.5; color:var(--ink-700); }
-  .onsite-list li::before { content:""; position:absolute; left:0; top:7px; width:9px; height:9px; border-radius:50%; background:var(--landscaping-green); }
-  .onsite-list strong { color:var(--freedom-blue); font-weight:700; }
-  .onsite-cta { display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; border-top:1px solid var(--hairline-strong); padding-top:26px; }
-  .onsite-cue { font-family:var(--font-display); font-weight:700; font-size:17px; line-height:1.4; color:var(--freedom-blue); margin:0; max-width:560px; }
+  /* Expandable tier cards */
+  .tier-detail { max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
+  .tier-sub { font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-400); margin: 20px 0 12px; }
+  .tier-sub:first-child { margin-top: 4px; }
+  .tier-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 14px; font-weight: 700; color: var(--freedom-blue); text-decoration: none; border-bottom: 1.5px solid var(--landscaping-green); padding-bottom: 2px; }
+  .tier-cta .arrow { transition: transform var(--dur-base) var(--ease-out); }
+  .tier-cta:hover .arrow { transform: translateX(3px); }
+  .tier-toggle { margin-top: 18px; display: inline-flex; align-items: center; gap: 10px; background: transparent; border: 0; padding: 0; cursor: pointer; font-family: var(--font-body); font-size: 13.5px; font-weight: 700; color: var(--freedom-blue); }
+  .tt-ico { width: 8px; height: 8px; border-right: 2px solid var(--landscaping-green); border-bottom: 2px solid var(--landscaping-green); transform: rotate(45deg); transition: transform var(--dur-base) var(--ease-out); margin-top: -4px; }
+  .tier-toggle[aria-expanded="true"] .tt-ico { transform: rotate(-135deg); margin-top: 2px; }
+  .tier-card-feat { border-color: var(--neighborly-blue); }
   .local-band { margin-top:56px; border-top:1.5px solid var(--hairline-strong); padding-top:38px; display:grid; grid-template-columns: 300px 1fr; gap:40px; }
   @media (max-width:760px){ .local-band{ grid-template-columns:1fr; gap:18px; } }
   .local-h { font-family:var(--font-display); font-weight: 700; font-size:24px; line-height:1.2; color:var(--freedom-blue); margin:0; }
