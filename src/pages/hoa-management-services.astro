@@ -120,6 +120,37 @@ const breadcrumb = breadcrumbSchema([
           </ul>
         </div>
       </div>
+
+      <div class="onsite reveal">
+        <div class="onsite-head">
+          <div class="eyebrow eyebrow-blue">A CMGT specialty</div>
+          <h3 class="onsite-h">On-site management for large &amp; master-planned communities.</h3>
+          <p class="onsite-lede">As master-planned communities multiply across the Gulf South, daily on-site presence is becoming essential — and it's a discipline CMGT has built for. We put a dedicated team on the ground, backed by the same specialist bench that supports every community we manage.</p>
+        </div>
+        <div class="onsite-grid">
+          <div class="onsite-col">
+            <p class="onsite-col-h">Your on-site team</p>
+            <ul class="onsite-list">
+              <li>A dedicated on-site Community Association Manager</li>
+              <li>On-site maintenance and groundskeeping staff</li>
+              <li>The full accounting, covenant &amp; support bench behind them, remotely</li>
+              <li>The same monthly financials and full transparency — by the 20th</li>
+            </ul>
+          </div>
+          <div class="onsite-col">
+            <p class="onsite-col-h">Built for two kinds of partner</p>
+            <ul class="onsite-list">
+              <li><strong>Developers</strong> — on-site staffing from groundbreaking through declarant control to homeowner turnover</li>
+              <li><strong>Boards</strong> of 500+ home or amenity-heavy communities — a manager who's present, lives nearby, and is there when it matters</li>
+            </ul>
+          </div>
+        </div>
+        <div class="onsite-cta">
+          <p class="onsite-cue">Running 500+ homes or a high-rise — or planning a master-planned community? On-site is likely your model.</p>
+          <a class="btn btn-green" href="/request-a-proposal">Talk on-site management <span class="arrow">→</span></a>
+        </div>
+      </div>
+
       <div class="local-band reveal">
         <h3 class="local-h">HOA management near you, across the Gulf South.</h3>
         <div>
@@ -694,6 +725,23 @@ const breadcrumb = breadcrumbSchema([
   .tier-list { list-style:none; margin:16px 0 0; padding:0; display:flex; flex-direction:column; gap:9px; }
   .tier-list li { font-size:14px; line-height:1.5; color:var(--ink-700); padding-left:22px; position:relative; }
   .tier-list li::before { content:""; position:absolute; left:0; top:7px; width:8px; height:8px; border-radius:50%; background:var(--landscaping-green); }
+
+  /* On-site specialty feature */
+  .onsite { margin-top:28px; background:var(--nb-lightest); border:1px solid var(--hairline); border-radius:18px; padding:44px 40px; }
+  @media (max-width:720px){ .onsite{ padding:32px 22px; } }
+  .onsite-head { max-width:760px; }
+  .onsite .eyebrow-blue { color:var(--landscaping-green); }
+  .onsite-h { font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3vw,34px); line-height:1.14; letter-spacing:-.02em; color:var(--freedom-blue); margin:12px 0 14px; text-wrap:balance; }
+  .onsite-lede { font-size:16px; line-height:1.65; color:var(--ink-500); margin:0 0 30px; max-width:720px; }
+  .onsite-grid { display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:30px; }
+  @media (max-width:720px){ .onsite-grid{ grid-template-columns:1fr; gap:26px; } }
+  .onsite-col-h { font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-400); margin:0 0 14px; }
+  .onsite-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:13px; }
+  .onsite-list li { position:relative; padding-left:26px; font-size:15px; line-height:1.5; color:var(--ink-700); }
+  .onsite-list li::before { content:""; position:absolute; left:0; top:7px; width:9px; height:9px; border-radius:50%; background:var(--landscaping-green); }
+  .onsite-list strong { color:var(--freedom-blue); font-weight:700; }
+  .onsite-cta { display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; border-top:1px solid var(--hairline-strong); padding-top:26px; }
+  .onsite-cue { font-family:var(--font-display); font-weight:700; font-size:17px; line-height:1.4; color:var(--freedom-blue); margin:0; max-width:560px; }
   .local-band { margin-top:56px; border-top:1.5px solid var(--hairline-strong); padding-top:38px; display:grid; grid-template-columns: 300px 1fr; gap:40px; }
   @media (max-width:760px){ .local-band{ grid-template-columns:1fr; gap:18px; } }
   .local-h { font-family:var(--font-display); font-weight: 700; font-size:24px; line-height:1.2; color:var(--freedom-blue); margin:0; }
