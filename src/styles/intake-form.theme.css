@@ -1,0 +1,31 @@
+/* ===========================================================
+   Intake form THEME — CMGT brand values (EDIT this file)
+   -----------------------------------------------------------
+   This is the ONLY form stylesheet with client-specific values.
+   "Adopt the latest starter form" copies intake-form.css (structure)
+   and IntakeForm.jsx — it NEVER touches this file. Colors + fonts
+   set here survive every form sync.
+   Palette pulled from src/styles/global.css (Freedom Blue / Landscaping Green).
+   =========================================================== */
+.if-widget {
+  /* Fonts — match the site (Gelica display + DM Sans body) */
+  --if-font-heading: var(--font-display, "Gelica", Georgia, serif);
+  --if-font-body:    var(--font-body, "DM Sans", system-ui, sans-serif);
+
+  /* Motion */
+  --if-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Brand / accent palette — Freedom Blue primary, Landscaping Green for "success" */
+  --if-brand: #1E1E77; --if-brand-tint: #ECECF8;
+  --if-accent: #1E1E77; --if-accent-deep: #15155C; --if-accent-tint: rgba(30,30,119,.12);
+  --if-ink: #1B1C3A; --if-body: #4A4B63; --if-muted: #8A8B9E; --if-placeholder: #B3B4C6;
+  --if-border: #E4E4F0; --if-border-strong: #CFCFE2; --if-input-bg: #FAFAFE; --if-green: #2FA95A;
+  --if-radius: 14px; --if-radius-sm: 9px;
+}
+
+/* Per-intent accent tints (icon tile color when an intent is hovered/picked) */
+.if-widget .tone-teal  { --it: #1E1E77; --it-tint: #ECECF8; } /* proposal */
+.if-widget .tone-ocean { --it: #3F6FB5; --it-tint: #E9F1FF; } /* vendor */
+.if-widget .tone-sage  { --it: #2FA95A; --it-tint: #E5F6EC; } /* service */
+.if-widget .tone-gold  { --it: #8A7A3D; --it-tint: #F6F0DE; } /* general */
+.if-widget .tone-clay  { --it: #9A5A3A; --it-tint: #F6ECE6; }
