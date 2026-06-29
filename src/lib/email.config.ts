@@ -2,6 +2,13 @@
 // The only file you edit per client for email setup.
 // All API routes (contact.ts, lead.ts, subscribe.ts) read from here.
 
+// ── Non-production safety ────────────────────────────────────────────────
+// On stg/dev, route ALL form notifications to a test inbox and skip Mailchimp,
+// so testing never pings the real client inbox or pollutes the audience.
+// Production (PUBLIC_ENV=production) uses the real CMGT inboxes below, unchanged.
+const IS_PROD = import.meta.env.PUBLIC_ENV === 'production';
+const NON_PROD_NOTIFY = ['skyler@alloygp.co']; // where stg/dev test leads go
+
 export const EMAIL_CONFIG = {
 
   // ── Client brand identity. Used in headings, signatures, and links. ──
@@ -21,28 +28,27 @@ export const EMAIL_CONFIG = {
   replyTo: 'info@cmgt.org',
 
   // ── Default inbox — used by unknown/unrouted intents (fallback). ──
-  notify: [
-    'info@cmgt.org',
-  ],
+  notify: IS_PROD ? ['info@cmgt.org'] : NON_PROD_NOTIFY,
 
   // ── Failure-alert inbox. Handlers send the email-fallback alert here
   // when a notification send fails (see form-alert.ts). ──
-  alertsTo: [
-    'info@cmgt.org',
-  ],
+  alertsTo: IS_PROD ? ['info@cmgt.org'] : NON_PROD_NOTIFY,
 
   // ── Per-intent routing. The intake form sends an `intent`; /api/lead
   // routes the staff notification to the matching list (falls back to `notify`).
-  // Each value can be one address or several. (Refine per inbox when available.) ──
-  routes: {
-    proposal: ['info@cmgt.org'], // boards exploring new management
-    vendor:   ['info@cmgt.org'], // contractor / vendor bids
-    service:  ['info@cmgt.org'], // homeowner service requests
-    general:  ['info@cmgt.org'], // catch-all general inquiries
-  } as Record<string, string[]>,
+  // On non-prod everything goes to the test inbox so stg testing is safe. ──
+  routes: (IS_PROD
+    ? {
+        proposal: ['info@cmgt.org'], // boards exploring new management
+        vendor:   ['info@cmgt.org'], // contractor / vendor bids
+        service:  ['info@cmgt.org'], // homeowner service requests
+        general:  ['info@cmgt.org'], // catch-all general inquiries
+      }
+    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, service: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY }
+  ) as Record<string, string[]>,
 
   mailchimp: {
-    enabled:     true,      // set false if client has no Mailchimp
+    enabled:     IS_PROD,   // prod only — never add stg/dev test leads to the real audience
     defaultTags: ['website-lead'],
   },
 
