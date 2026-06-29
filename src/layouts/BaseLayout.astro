@@ -129,6 +129,25 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
         });
       </script>
     )}
+
+    {/*
+      WhatConverts — STG TEST of a different account (170705).
+      Gated to !isProduction so it loads on stg (stg-cmgt.alloygp.co) but NEVER
+      on production/main — safe even if this branch later merges to main.
+
+      CURRENT / PRODUCTION SETUP (recorded here so we don't lose it):
+        • Live cmgt.org uses WhatConverts account **169722**
+          (//s.ksrndkehqnwntyxlhgto.com/169722.js), loaded alongside
+          Google Tag Manager container **GT-M6J84JLJ**.
+        • When this Astro site goes to production, prod must use 169722 — NOT 170705.
+      This block intentionally does not touch prod, so 169722 stays the live account.
+    */}
+    {!isProduction && (
+      <Fragment>
+        <script is:inline>var $wc_load=function(a){return  JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
+        <script is:inline src="//s.ksrndkehqnwntyxlhgto.com/170705.js"></script>
+      </Fragment>
+    )}
   </head>
   <body>
     <!-- Shared CMGT chrome — rendered client-side by /scripts/nav.js into these mounts -->
