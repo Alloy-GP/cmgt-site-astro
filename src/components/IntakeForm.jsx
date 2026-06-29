@@ -333,15 +333,19 @@ function ProposalWizard({ onBack }) {
     );
   }
 
-  // All collected values mirrored as hidden inputs so call-tracking (WhatConverts)
-  // captures everything on submit, even fields from earlier (now-unmounted) steps.
+  // Collected values mirrored as off-screen text inputs so call-tracking
+  // (WhatConverts) captures everything on submit — even fields from earlier
+  // (now-unmounted) steps and the chip/card multi-selects, which aren't real
+  // inputs. WhatConverts reads any named input EXCEPT type="hidden", so these are
+  // type="text" hidden via CSS (.if-wc), not type="hidden". Budget/timeline/success
+  // are omitted here because they're visible inputs on step 3 that WC already reads
+  // (keeping them would duplicate the field in the lead).
   const mirror = [
     ['name', vals.name], ['email', vals.email], ['phone', vals.phone], ['company', vals.association],
     ['Role', vals.role], ['Location', vals.location], ['Number of units', vals.units],
     ['Community type', vals.type], ['Current management status', vals.mgmtStatus],
     ['Monthly dues / unit', vals.dues], ['Amenities', vals.amenities.join(', ')],
     ['Services needed', vals.services.join(', ')], ['Frustrations', vals.pains.join(', ')],
-    ['Budget range', vals.budget], ['Engagement timeline', vals.timeline],
   ];
 
   return (
@@ -354,7 +358,9 @@ function ProposalWizard({ onBack }) {
           <input type="text" name="website" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
         </label>
       </div>
-      {mirror.map(([n, v]) => <input key={n} type="hidden" name={n} value={v} readOnly />)}
+      <div className="if-wc" aria-hidden="true">
+        {mirror.map(([n, v]) => <input key={n} type="text" name={n} value={v} readOnly tabIndex={-1} autoComplete="off" />)}
+      </div>
 
       {/* Change request type lives at the top — same place as the other intents. */}
       <button type="button" className="if-back" onClick={onBack}><Ic name="arrowLeft" /> Change request type</button>
