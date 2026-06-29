@@ -224,6 +224,12 @@ function ProposalWizard({ onBack }) {
     window.dispatchEvent(new CustomEvent('intake:step', { detail: submission ? 'done' : step }));
   }, [step, submission]);
 
+  // On completion, scroll back to the top so the success screen isn't stranded at
+  // the bottom of the page after submitting from the last step.
+  useEffect(() => {
+    if (submission && typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [submission]);
+
   function validateStep(s) {
     const e = {};
     if (s === 1) {
@@ -484,6 +490,12 @@ export default function IntakeForm() {
     const want = new URLSearchParams(window.location.search).get('intent');
     if (want && intentById(want)) { setIntentId(want); setFields({}); setErrors({}); setStep('form'); }
   }, []);
+
+  // On completion, scroll back to the top so the success screen isn't stranded at
+  // the bottom of the page after submit.
+  useEffect(() => {
+    if (step === 'done' && typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [step]);
 
   // Broadcast the active intent so the surrounding page can adapt (e.g. swap hero
   // copy). No-op if nothing listens — keeps the component drop-in everywhere.
