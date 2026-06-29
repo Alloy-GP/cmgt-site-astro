@@ -348,10 +348,16 @@ function ProposalWizard({ onBack }) {
     ['Services needed', vals.services.join(', ')], ['Frustrations', vals.pains.join(', ')],
   ];
 
+  // Only expose the WhatConverts-tracked id on the FINAL step. WhatConverts
+  // captures (and freezes the lead on) the first submit-like event it sees inside
+  // a tracked form — clicking "Continue" out of step 2 was triggering a partial
+  // capture, so the lead never got step-3 fields. Keeping the form untracked until
+  // step 3 means the first (and only) capture is the complete final submit.
+  const wcTracked = step === 3 && TRACKING.intents.includes('proposal');
   return (
     <form
-      id={TRACKING.intents.includes('proposal') ? TRACKING.formId : 'intake-form'}
-      name={TRACKING.intents.includes('proposal') ? TRACKING.formId : 'intake-form'}
+      id={wcTracked ? TRACKING.formId : 'proposal-wizard'}
+      name={wcTracked ? TRACKING.formId : 'proposal-wizard'}
       className="if-stage if-wizard" onSubmit={submit} noValidate>
       <div className="if-hp" aria-hidden="true">
         <label>Leave this field empty
