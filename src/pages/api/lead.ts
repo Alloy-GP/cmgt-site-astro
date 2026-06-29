@@ -98,12 +98,19 @@ export const POST: APIRoute = async ({ request }) => {
     // Confirmation to submitter — only on a COMPLETE submit (don't confirm a half-finished form).
     if (!isPartial) {
       const firstName = name.split(' ')[0] || name;
+      // Recap of what they submitted, so the sender can see their own answers.
+      const summaryBlock = (detailRows || message)
+        ? `<hr style="border:none;border-top:1px solid #e5e5ef;margin:22px 0">
+           <p style="font-size:13px;color:#888;margin:0 0 8px"><strong>What you shared with us</strong></p>
+           ${detailRows ? `<table style="border-collapse:collapse;font-size:14px">${detailRows}</table>` : ''}
+           ${message ? `<p style="font-size:14px;margin:12px 0 0"><strong>In your words:</strong><br>${esc(message).replace(/\n/g, '<br>')}</p>` : ''}`
+        : '';
       const { error: confirmError } = await resend.emails.send({
         from:    EMAIL_CONFIG.from.hello,
         replyTo: EMAIL_CONFIG.replyTo,
         to:      email,
         subject: intentCfg.confirmSubject,
-        html:    intentCfg.confirmBody(firstName, EMAIL_CONFIG.brand.url),
+        html:    intentCfg.confirmBody(firstName, EMAIL_CONFIG.brand.url) + summaryBlock,
       });
       if (confirmError) console.error('Resend confirm error:', confirmError);
     }
