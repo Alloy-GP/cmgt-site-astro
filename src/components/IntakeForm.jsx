@@ -304,6 +304,10 @@ function ProposalWizard({ onBack }) {
   async function submit(ev) {
     ev.preventDefault();
     if (!validateStep(3) || sending) return;
+    // Fire the dedicated WhatConverts form once (single complete capture).
+    try {
+      if (typeof document !== 'undefined') document.getElementById(TRACKING.formId)?.requestSubmit?.();
+    } catch (e) { /* call-tracking is best-effort — never block the real submit */ }
     setSending(true); setSendError('');
     try {
       await postLead('complete');
@@ -333,34 +337,41 @@ function ProposalWizard({ onBack }) {
     );
   }
 
-  // Collected values mirrored as off-screen text inputs so call-tracking
-  // (WhatConverts) captures everything on submit — even fields from earlier
-  // (now-unmounted) steps and the chip/card multi-selects, which aren't real
-  // inputs. WhatConverts reads any named input EXCEPT type="hidden", so these are
-  // type="text" hidden via CSS (.if-wc), not type="hidden". Budget/timeline/success
-  // are omitted here because they're visible inputs on step 3 that WC already reads
-  // (keeping them would duplicate the field in the lead).
-  const mirror = [
+  // Every field, mirrored as off-screen named text inputs in a DEDICATED WhatConverts
+  // form (below). WhatConverts reads any named input except type="hidden", so these
+  // are type="text" hidden via CSS (.if-wc). This dedicated form is the only WC-tracked
+  // form and is fired exactly once (submit() → requestSubmit) so WC logs the complete
+  // lead in a single event — no partial mid-step captures, no duplicates.
+  const wcFields = [
     ['name', vals.name], ['email', vals.email], ['phone', vals.phone], ['company', vals.association],
     ['Role', vals.role], ['Location', vals.location], ['Number of units', vals.units],
     ['Community type', vals.type], ['Current management status', vals.mgmtStatus],
     ['Monthly dues / unit', vals.dues], ['Amenities', vals.amenities.join(', ')],
     ['Services needed', vals.services.join(', ')], ['Frustrations', vals.pains.join(', ')],
+    ['Budget range', vals.budget], ['Engagement timeline', vals.timeline],
+    ['What does success look like', vals.success],
   ];
 
   return (
-    <form
-      id={TRACKING.intents.includes('proposal') ? TRACKING.formId : 'intake-form'}
-      name={TRACKING.intents.includes('proposal') ? TRACKING.formId : 'intake-form'}
-      className="if-stage if-wizard" onSubmit={submit} noValidate>
-      <div className="if-hp" aria-hidden="true">
-        <label>Leave this field empty
-          <input type="text" name="website" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
-        </label>
-      </div>
-      <div className="if-wc" aria-hidden="true">
-        {mirror.map(([n, v]) => <input key={n} type="text" name={n} value={v} readOnly tabIndex={-1} autoComplete="off" />)}
-      </div>
+    <>
+      {/* Dedicated WhatConverts capture form — the ONLY WC-tracked form on this page
+          (id = TRACKING.formId). Holds every field as off-screen named inputs; submit()
+          fires it once via requestSubmit so WC logs the full lead in one event. The
+          visible wizard form below is deliberately NOT tracked (different id) so WC
+          can't take partial captures mid-flow. */}
+      <form id={TRACKING.formId} name={TRACKING.formId} className="if-wc" aria-hidden="true" tabIndex={-1} onSubmit={(e) => e.preventDefault()}>
+        {wcFields.map(([n, v]) => <input key={n} type="text" name={n} value={v} readOnly tabIndex={-1} autoComplete="off" />)}
+        <button type="submit" tabIndex={-1} aria-hidden="true">x</button>
+      </form>
+
+      <form
+        id="proposal-wizard" name="proposal-wizard"
+        className="if-stage if-wizard" onSubmit={submit} noValidate>
+        <div className="if-hp" aria-hidden="true">
+          <label>Leave this field empty
+            <input type="text" name="website" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
+          </label>
+        </div>
 
       {/* Change request type lives at the top — same place as the other intents. */}
       <button type="button" className="if-back" onClick={onBack}><Ic name="arrowLeft" /> Change request type</button>
@@ -454,7 +465,8 @@ function ProposalWizard({ onBack }) {
           </button>
         )}
       </div>
-    </form>
+      </form>
+    </>
   );
 }
 
