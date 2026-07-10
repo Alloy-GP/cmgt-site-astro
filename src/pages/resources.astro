@@ -220,9 +220,9 @@ const breadcrumb = breadcrumbSchema([
   .gloss-count { font-size: 13px; color: var(--ink-400); margin: 0 0 22px; }
   .gloss-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 44px; }
   @media (max-width: 760px) { .gloss-grid { grid-template-columns: 1fr; } }
-  .gloss-term { padding: 22px 2px; border-top: 1.5px solid var(--hairline-strong); }
-  .gloss-term-t { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--freedom-blue); margin: 0 0 6px; }
-  .gloss-term-t .abbr { color: var(--landscaping-green); font-weight: 600; font-size: 14px; margin-left: 8px; }
-  .gloss-term-d { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0; }
-  .gloss-empty { font-size: 15px; color: var(--ink-400); padding: 28px 2px; border-top: 1.5px solid var(--hairline-strong); grid-column: 1 / -1; }
+  .gloss-grid :global(.gloss-term) { padding: 22px 2px; border-top: 1.5px solid var(--hairline-strong); }
+  .gloss-grid :global(.gloss-term-t) { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--freedom-blue); margin: 0 0 6px; }
+  .gloss-grid :global(.gloss-term-t .abbr) { color: var(--landscaping-green); font-weight: 600; font-size: 14px; margin-left: 8px; }
+  .gloss-grid :global(.gloss-term-d) { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0; }
+  .gloss-grid :global(.gloss-empty) { font-size: 15px; color: var(--ink-400); padding: 28px 2px; border-top: 1.5px solid var(--hairline-strong); grid-column: 1 / -1; }
 </style>

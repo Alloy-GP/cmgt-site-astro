@@ -359,8 +359,11 @@ const breadcrumb = breadcrumbSchema([
   .viz-scrub::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; border-radius: 50%; background: var(--freedom-blue); border: 4px solid #fff; box-shadow: var(--shadow-2); cursor: pointer; }
   .viz-scrub::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--freedom-blue); border: 4px solid #fff; box-shadow: var(--shadow-2); cursor: pointer; }
   .viz-ticks { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 16px; }
-  .viz-tick { background: transparent; border: 0; cursor: pointer; text-align: center; padding: 6px 4px; font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-400); transition: color var(--dur-base) var(--ease-out); }
-  .viz-tick.on { color: var(--landscaping-green); }
+  /* .viz-tick buttons are injected via JS innerHTML into #viz-ticks, so Astro's
+     scoped hash never reaches them. Scope under the static .viz-ticks parent and
+     mark the generated descendants :global() so the CSS actually applies. */
+  .viz-ticks :global(.viz-tick) { background: transparent; border: 0; cursor: pointer; text-align: center; padding: 6px 4px; font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-400); transition: color var(--dur-base) var(--ease-out); }
+  .viz-ticks :global(.viz-tick.on) { color: var(--landscaping-green); }
   .viz-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1.5px solid var(--hairline); }
   @media (max-width: 760px) { .viz-panel { grid-template-columns: 1fr; } }
   .viz-left { padding: 36px 44px; }
@@ -371,8 +374,10 @@ const breadcrumb = breadcrumbSchema([
   .viz-right::after { content: ""; position: absolute; right: -50px; bottom: -60px; width: 190px; height: 190px; background: url('/assets/leaf-mark.svg') no-repeat center / contain; filter: brightness(0) invert(1); opacity: .08; transform: rotate(-12deg); pointer-events: none; }
   .viz-right-h { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--landscaping-green); margin: 0 0 16px; position: relative; }
   .viz-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; position: relative; }
-  .viz-list li { font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,.85); padding-left: 24px; position: relative; }
-  .viz-list li::before { content: ""; position: absolute; left: 0; top: 7px; width: 9px; height: 9px; border-radius: 50%; background: var(--landscaping-green); }
+  /* <li> items are injected via JS innerHTML into #viz-list — scope them :global under .viz-list. */
+  .viz-list :global(li) { font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,.85); padding-left: 24px; position: relative; }
+  .viz-list :global(li)::before { content: ""; position: absolute; left: 0; top: 7px; width: 9px; height: 9px; border-radius: 50%; background: var(--landscaping-green); }
   .viz-who { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 20px; position: relative; }
-  .viz-who strong { color: #fff; font-weight: 600; }
+  /* <strong> is injected via JS innerHTML into #viz-who — scope it :global under .viz-who. */
+  .viz-who :global(strong) { color: #fff; font-weight: 600; }
 </style>

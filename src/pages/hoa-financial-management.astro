@@ -1,0 +1,380 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'HOA Financial Management', url: SITE.url + '/hoa-financial-management' },
+]);
+---
+<BaseLayout
+  title="HOA Financial Management, Done in the Open — CMGT"
+  description="HOA financial management, accounting & bookkeeping for smaller communities — full P&L to every member, financials by the 20th, ~10% delinquency."
+  pageSchema={breadcrumb}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"HOA Financial Management"}]'></nav>
+
+  <!-- HERO -->
+  <section class="ph-hero">
+    <div class="container">
+      <div class="ph-hero-top">
+        <div>
+          <div class="eyebrow">HOA Financial Management</div>
+          <h1 class="ph-hero-display">The books, <em>open to everyone.</em></h1>
+        </div>
+        <div>
+          <p class="ph-hero-lede">
+            For smaller communities that deserve professional financials without a full-service price tag.
+            <strong>We handle the financials, bookkeeping, and the administrative side</strong> — and we put
+            the full picture in front of every homeowner, not just the treasurer.
+          </p>
+          <div class="ph-hero-ctas">
+            <a class="btn btn-green" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+            <a class="btn btn-outline-light" href="/self-managed-hoa">Self-managed vs. pro</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ph-hero-band">
+      <ImageSlot src="/photos/fin-hero-photo.webp" alt="A CMGT accountant and an HOA board member reviewing monthly financial statements together at a clubhouse table" shape="rect" />
+    </div>
+    <div class="container">
+      <div class="ph-hero-stats">
+        <div><div class="ph-stat-num">By the 20th</div><div class="ph-stat-label">financials delivered every month</div></div>
+        <div><div class="ph-stat-num" data-count-to="10" data-suffix="%" data-duration="1300">0%</div><div class="ph-stat-label">average delinquency rate</div></div>
+        <div><div class="ph-stat-num">100%</div><div class="ph-stat-label">of statements shared with members</div></div>
+        <div><div class="ph-stat-num" data-count-to="389" data-duration="1500">0</div><div class="ph-stat-label">communities' books we keep</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- F&A PACKAGE -->
+  <section class="inc">
+    <div class="container">
+      <div class="inc-head reveal">
+        <div class="eyebrow eyebrow-blue">The Financial &amp; Administrative package</div>
+        <h2 class="inc-h">HOA accounting and bookkeeping, handled end to end.</h2>
+        <p class="inc-sub">Right-sized support for smaller communities — because professional management shouldn't be a privilege of the biggest associations. Your board keeps running the day-to-day; we run the financial and administrative engine behind it.</p>
+      </div>
+      <div class="inc-grid">
+        <div class="inc-item reveal"><div class="inc-num">01</div><h3 class="inc-t">HOA Accounting</h3><p class="inc-d">Accrual or cash-basis accounting, general ledger, AP/AR, and month-end close — clean, current, and audit-ready.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">02</div><h3 class="inc-t">Bookkeeping</h3><p class="inc-d">Every transaction categorized and reconciled, with documentation your board and auditor can actually follow.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">03</div><h3 class="inc-t">Budgeting &amp; Reserves</h3><p class="inc-d">Annual budget preparation and reserve planning so your community funds the future instead of fearing it.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">04</div><h3 class="inc-t">Dues &amp; Delinquency</h3><p class="inc-d">Assessment billing, online payments, and a consistent collections process that keeps delinquency low.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">05</div><h3 class="inc-t">Financial Reporting</h3><p class="inc-d">Full P&amp;L, balance sheet, and bank reconciliations delivered monthly — in your hands by the 20th.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">06</div><h3 class="inc-t">Tax &amp; Audit Support</h3><p class="inc-d">Year-end packages and coordination with your CPA or auditor, so filing season is a non-event.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPARENCY -->
+  <section class="trn">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container trn-in">
+      <div class="eyebrow reveal" style="color: rgba(255,255,255,.6);">Radical transparency</div>
+      <h2 class="trn-h reveal">Most managers show the board the numbers. <em>We show everyone.</em></h2>
+      <p class="trn-sub reveal">We put the full P&amp;L and balance sheet in front of the entire membership — not because we have to, but because trust is built in the open. It's even written into our management agreement.</p>
+      <div class="trn-grid">
+        <div class="reveal"><div class="trn-num">20<span class="g">th</span></div><div class="trn-label">Financials delivered by the 20th of every month — a commitment in the agreement, not a hope.</div></div>
+        <div class="reveal"><div class="trn-num">~10<span class="g">%</span></div><div class="trn-label">Average delinquency across our communities.</div></div>
+        <div class="reveal"><div class="trn-num">100<span class="g">%</span></div><div class="trn-label">Of financial statements shared with every homeowner, not just the treasurer.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE: Delinquency recovery estimator -->
+  <section class="calc">
+    <div class="container">
+      <div class="calc-head reveal">
+        <div class="eyebrow eyebrow-blue">Try it</div>
+        <h2 class="calc-h">What's delinquency tying up in your community?</h2>
+        <p class="calc-sub">A rough, no-strings estimate. We're not after a number to quote you — we just want to show what a tighter, more consistent collections process can free up.</p>
+      </div>
+      <div class="calc-card reveal">
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <div class="calc-field-top"><span class="calc-label">Homes in your community</span><span class="calc-val" id="dq-units-v">120</span></div>
+            <input class="calc-range" type="range" id="dq-units" min="10" max="600" step="5" value="120" aria-label="Homes in your community">
+          </div>
+          <div class="calc-field">
+            <div class="calc-field-top"><span class="calc-label">Average monthly assessment</span><span class="calc-val" id="dq-dues-v">$250</span></div>
+            <input class="calc-range" type="range" id="dq-dues" min="50" max="800" step="10" value="250" aria-label="Average monthly assessment">
+          </div>
+          <div class="calc-field">
+            <div class="calc-field-top"><span class="calc-label">Current delinquency rate</span><span class="calc-val" id="dq-rate-v">22%</span></div>
+            <input class="calc-range" type="range" id="dq-rate" min="0" max="40" step="1" value="22" aria-label="Current delinquency rate">
+          </div>
+        </div>
+        <div class="calc-output">
+          <div class="calc-out-label">Potentially recoverable / year</div>
+          <div class="calc-out-num" id="dq-result">$0</div>
+          <p class="calc-out-sub" id="dq-detail"></p>
+        </div>
+      </div>
+      <p class="calc-foot reveal">Illustrative only — based on reaching our ~10% average delinquency. Your actual results depend on your community, governing documents, and collections policy.</p>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="mdl">
+    <div class="container mdl-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">Who it's for</div>
+        <h2 class="mdl-h">Quality management — <em>not just for big communities.</em></h2>
+        <p class="mdl-p">
+          We built the Financial &amp; Administrative package because it isn't fair that only
+          large associations get professional support. <strong>Smaller and self-managing HOAs
+          get the same financial rigor</strong> — the books, the transparency, the reporting —
+          while keeping the day-to-day in their own hands.
+        </p>
+        <p class="mdl-p">
+          It's an HOA service: condominiums almost always need full management, given their
+          shared-building complexity.
+        </p>
+        <a class="mdl-link" href="/self-managed-hoa">Self-managed vs. professional — the honest math <span class="arrow">→</span></a>
+      </div>
+      <div class="mdl-media reveal">
+        <ImageSlot alt="A volunteer HOA board meeting around a kitchen table in a smaller Gulf South community" shape="rounded" radius={20} />
+      </div>
+    </div>
+  </section>
+
+  <!-- PEER -->
+  <section class="peers">
+    <div class="container">
+      <div class="peers-head reveal">
+        <div class="eyebrow eyebrow-blue">Need more than the books?</div>
+        <h2 class="peers-h">We can take the whole operation.</h2>
+        <p class="peers-sub">Financial management is one of several CMGT practices — step up to full-service whenever your board is ready.</p>
+      </div>
+      <div class="peers-grid">
+        <a class="peer-card reveal" href="/hoa-management-services">
+          <h3 class="peer-t">HOA Management Services</h3>
+          <p class="peer-d">Full-service management — financials, covenants, vendors, and communication, all handled.</p>
+          <span class="peer-cta">Explore full-service <span class="arrow">→</span></span>
+        </a>
+        <a class="peer-card reveal" href="/condo-management">
+          <h3 class="peer-t">Condo &amp; Townhome Management</h3>
+          <p class="peer-d">Shared-building specialists for condominiums, townhomes, and high-rises.</p>
+          <span class="peer-cta">Explore condo management <span class="arrow">→</span></span>
+        </a>
+        <a class="peer-card reveal" href="/self-managed-hoa">
+          <h3 class="peer-t">Self-Managed vs. Professional</h3>
+          <p class="peer-d">An honest comparison for boards weighing whether to bring in a team.</p>
+          <span class="peer-cta">See the comparison <span class="arrow">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container faq-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">Common questions</div>
+        <h2 class="faq-h">Before you ask.</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q" type="button">What's the difference between financial management and full management?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">With financial management, <strong>your board still runs the community</strong> — meetings, covenants, vendors — and we run the accounting, bookkeeping, budgeting, and reporting. Full-service hands the entire operation to us.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">When do we get our financial statements?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in"><strong>By the 20th of every month</strong> — it's a commitment written into our management agreement. And we share the full P&amp;L and balance sheet with the entire membership, not just the board.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Can financial management help with delinquency?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">Yes. A consistent billing and collections process is a big reason our communities average <strong>around 10% delinquency</strong> — steady, predictable cash flow the board can count on.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">Do you offer financial-only management for condos?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">The F&amp;A package is an HOA service. <strong>Condominiums almost always need full management</strong> because of shared-building systems, insurance, and reserves — see our condo practice for that.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container cta-in">
+      <div class="reveal">
+        <h2 class="cta-h">Let's open the books.</h2>
+        <p class="cta-p">Tell us about your association and we'll show you what financial management with full transparency looks like — within two business days.</p>
+      </div>
+      <div class="cta-actions reveal">
+        <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+        <a class="cta-phone" href="tel:2255032648">Or call (225) 503-2648 · Mon–Thu 8:30a–4:30p · Fri 8:30a–4:00p CT</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      // FAQ accordion (static markup — safe to wire directly)
+      document.querySelectorAll('.faq-item').forEach(function (item) {
+        var btn = item.querySelector('.faq-q');
+        var ans = item.querySelector('.faq-a');
+        if (!btn || !ans) return;
+        btn.addEventListener('click', function () {
+          var open = item.classList.toggle('open');
+          ans.style.maxHeight = open ? (ans.scrollHeight + 'px') : '0';
+        });
+      });
+
+      // Delinquency recovery estimator
+      var u = document.getElementById('dq-units'), d = document.getElementById('dq-dues'), r = document.getElementById('dq-rate');
+      var uv = document.getElementById('dq-units-v'), dv = document.getElementById('dq-dues-v'), rv = document.getElementById('dq-rate-v');
+      var res = document.getElementById('dq-result'), det = document.getElementById('dq-detail');
+      if (u && d && r) {
+        var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+        var calc = function () {
+          var units = +u.value, dues = +d.value, rate = +r.value;
+          uv.textContent = units.toLocaleString('en-US');
+          dv.textContent = money(dues);
+          rv.textContent = rate + '%';
+          var annualBilled = units * dues * 12;
+          var current = annualBilled * (rate / 100);
+          var atTarget = annualBilled * 0.10;
+          var recoverable = Math.max(0, current - atTarget);
+          res.textContent = money(recoverable);
+          if (rate <= 10) {
+            det.innerHTML = '<strong>You’re already at or below our ~10% average.</strong> A consistent process keeps it there — and frees your board from chasing payments.';
+          } else {
+            det.innerHTML = 'At a ' + rate + '% rate, roughly <strong>' + money(current) + '</strong> is delinquent each year. Reaching our ~10% average could free up the amount above.';
+          }
+        };
+        [u, d, r].forEach(function (el) { el.addEventListener('input', calc); });
+        calc();
+      }
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+
+  .ph-hero { background: var(--freedom-blue); color: #fff; padding: 96px 0 0; position: relative; overflow: hidden; isolation: isolate; }
+  .ph-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 16% 18%, rgba(141,189,255,.12) 0%, transparent 55%); z-index: 0; pointer-events: none; }
+  .ph-hero-top { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px; align-items: end; padding-bottom: 64px; }
+  @media (max-width: 980px) { .ph-hero-top { grid-template-columns: 1fr; gap: 32px; } }
+  .ph-hero .eyebrow { color: rgba(255,255,255,.65); }
+  .ph-hero-display { font-family: var(--font-display); font-weight: 900; font-size: clamp(44px, 5.6vw, 84px); line-height: .99; letter-spacing: -.03em; color: #fff; margin: 22px 0 0; text-wrap: balance; }
+  .ph-hero-display em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .ph-hero-lede { font-size: 17.5px; line-height: 1.7; color: rgba(255,255,255,.82); margin: 0 0 30px; }
+  .ph-hero-lede strong { color: #fff; font-weight: 600; }
+  .ph-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .ph-hero-band { position: relative; z-index: 2; }
+  .ph-hero-band :global(.image-slot) { display: block; width: 100%; height: clamp(280px, 32vw, 420px); }
+  .ph-hero-stats { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; padding: 30px 0; border-top: 1px solid rgba(255,255,255,.18); }
+  @media (max-width: 620px) { .ph-hero-stats { grid-template-columns: 1fr 1fr; gap: 22px; } }
+  .ph-stat-num { font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1; letter-spacing: -.02em; color: #fff; }
+  .ph-stat-label { font-size: 12.5px; color: rgba(255,255,255,.6); margin-top: 7px; }
+
+  .inc { background: #fff; padding: 112px 0; }
+  .inc-head { max-width: 760px; margin: 0 0 56px; }
+  .inc-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 3.8vw, 46px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .inc-sub { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+  .inc-sub strong { color: var(--freedom-blue); font-weight: 600; }
+  .inc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 44px; }
+  @media (max-width: 880px) { .inc-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .inc-grid { grid-template-columns: 1fr; } }
+  .inc-item { border-top: 3px solid var(--landscaping-green); padding-top: 22px; }
+  .inc-num { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; color: var(--ink-400); }
+  .inc-t { font-family: var(--font-display); font-weight: 700; font-size: 22px; line-height: 1.15; color: var(--freedom-blue); margin: 10px 0 10px; }
+  .inc-d { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0; }
+
+  /* TRANSPARENCY band */
+  .trn { background: var(--freedom-blue); color: #fff; padding: 110px 0; position: relative; overflow: hidden; }
+  .trn .leaf { position: absolute; right: -120px; top: -130px; width: 480px; height: 480px; opacity: .07; transform: rotate(-12deg); pointer-events: none; }
+  .trn .leaf img { filter: brightness(0) invert(1); }
+  .trn-in { position: relative; }
+  .trn-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.14; letter-spacing: -.015em; color: #fff; max-width: 820px; margin: 16px 0 18px; text-wrap: balance; }
+  .trn-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .trn-sub { font-size: 16.5px; line-height: 1.7; color: rgba(255,255,255,.78); max-width: 680px; margin: 0 0 56px; }
+  .trn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 44px; }
+  @media (max-width: 820px) { .trn-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .trn-num { font-family: var(--font-display); font-weight: 700; font-size: 54px; line-height: 1; letter-spacing: -.02em; color: #fff; }
+  .trn-num .g { color: var(--landscaping-green); }
+  .trn-label { font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.7); margin-top: 12px; max-width: 260px; }
+
+  .mdl { background: var(--nb-lightest); padding: 110px 0; }
+  .mdl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 920px) { .mdl-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .mdl-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.14; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 18px; text-wrap: balance; }
+  .mdl-h em { font-style: italic; font-weight: 500; }
+  .mdl-p { font-size: 16px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
+  .mdl-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .mdl-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--freedom-blue); text-decoration: none; margin-top: 6px; }
+  .mdl-link .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .mdl-link:hover .arrow { transform: translateX(4px); }
+  .mdl-media :global(.image-slot) { width: 100%; height: 420px; }
+
+  .peers { background: #fff; padding: 110px 0; }
+  .peers-head { max-width: 680px; margin: 0 0 44px; }
+  .peers-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .peers-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+  .peers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 880px) { .peers-grid { grid-template-columns: 1fr; } }
+  .peer-card { display: block; border: 1.5px solid var(--hairline-strong); border-radius: 16px; padding: 30px 28px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .peer-card:hover { border-color: var(--landscaping-green); transform: translateY(-3px); box-shadow: var(--shadow-2); }
+  .peer-t { font-family: var(--font-display); font-weight: 700; font-size: 21px; color: var(--freedom-blue); margin: 0 0 8px; }
+  .peer-d { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0 0 16px; }
+  .peer-cta { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 14px; color: var(--freedom-blue); }
+  .peer-cta .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .peer-card:hover .peer-cta .arrow { transform: translateX(4px); }
+
+  .faq { background: var(--nb-lightest); padding: 110px 0; }
+  .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }
+  @media (max-width: 860px) { .faq-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .faq-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 0; text-wrap: balance; }
+  .faq-list { border-top: 1.5px solid var(--hairline-strong); }
+  .faq-item { border-bottom: 1.5px solid var(--hairline-strong); }
+  .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: transparent; border: 0; cursor: pointer; text-align: left; padding: 24px 2px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); }
+  .faq-sign { flex: none; width: 26px; height: 26px; position: relative; }
+  .faq-sign::before, .faq-sign::after { content: ""; position: absolute; background: var(--landscaping-green); border-radius: 2px; transition: transform var(--dur-base) var(--ease-out); }
+  .faq-sign::before { left: 0; right: 0; top: 12px; height: 2.5px; }
+  .faq-sign::after { top: 0; bottom: 0; left: 12px; width: 2.5px; }
+  .faq-item.open .faq-sign::after { transform: scaleY(0); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
+  .faq-a-in { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); padding: 0 2px 24px; max-width: 640px; }
+  .faq-a-in strong { color: var(--freedom-blue); font-weight: 600; }
+
+  /* Delinquency estimator */
+  .calc { background: #fff; padding: 112px 0; }
+  .calc-head { max-width: 720px; margin: 0 0 40px; }
+  .calc-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+  .calc-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; max-width: 620px; }
+  .calc-card { display: grid; grid-template-columns: 1fr .9fr; gap: 0; border-radius: 20px; overflow: hidden; border: 1.5px solid var(--hairline-strong); }
+  @media (max-width: 820px) { .calc-card { grid-template-columns: 1fr; } }
+  .calc-inputs { padding: 40px 40px 44px; }
+  .calc-field { margin-bottom: 30px; }
+  .calc-field:last-child { margin-bottom: 0; }
+  .calc-field-top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+  .calc-label { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--freedom-blue); }
+  .calc-val { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--landscaping-green); white-space: nowrap; }
+  .calc-range { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; background: var(--fb-lightest); outline: none; cursor: pointer; }
+  .calc-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--freedom-blue); border: 4px solid #fff; box-shadow: var(--shadow-2); cursor: pointer; }
+  .calc-range::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--freedom-blue); border: 4px solid #fff; box-shadow: var(--shadow-2); cursor: pointer; }
+  .calc-output { background: var(--freedom-blue); color: #fff; padding: 44px 40px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+  .calc-output::after { content: ""; position: absolute; right: -60px; bottom: -70px; width: 220px; height: 220px; background: url('/assets/leaf-mark.svg') no-repeat center / contain; filter: brightness(0) invert(1); opacity: .08; transform: rotate(-12deg); pointer-events: none; }
+  .calc-out-label { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--landscaping-green); position: relative; }
+  .calc-out-num { font-family: var(--font-display); font-weight: 900; font-size: clamp(40px, 5.5vw, 58px); line-height: 1; letter-spacing: -.02em; color: #fff; margin: 12px 0 0; position: relative; }
+  .calc-out-sub { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.78); margin: 16px 0 0; position: relative; }
+  /* the <strong> here is injected at runtime by the estimator script */
+  .calc-out-sub :global(strong) { color: #fff; font-weight: 600; }
+  .calc-foot { font-size: 12.5px; color: var(--ink-400); margin: 18px 0 0; }
+
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 100px 0; position: relative; overflow: hidden; }
+  .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: rotate(14deg); pointer-events: none; }
+  .cta .leaf img { filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
+  .cta-in { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 58px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 12px; text-wrap: balance; }
+  .cta-p { font-size: 17px; line-height: 1.6; max-width: 500px; margin: 0; color: rgba(30,30,119,.82); }
+  .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
+</style>

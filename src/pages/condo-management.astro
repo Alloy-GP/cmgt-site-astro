@@ -712,12 +712,12 @@ const breadcrumb = breadcrumbSchema([
   @media (max-width: 860px) { .cov-grid { grid-template-columns: 1fr; } }
   .cov-tabs { display: flex; flex-direction: column; gap: 4px; }
   @media (max-width: 860px) { .cov-tabs { flex-direction: row; flex-wrap: wrap; gap: 8px; } }
-  .cov-tab { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; cursor: pointer; background: transparent; border: 0; border-left: 3px solid transparent; border-radius: 0 8px 8px 0; padding: 16px 16px; font-family: var(--font-body); font-weight: 600; font-size: 15.5px; color: var(--ink-500); transition: all var(--dur-base) var(--ease-out); }
-  @media (max-width: 860px) { .cov-tab { width: auto; border-left: 0; border-bottom: 3px solid transparent; border-radius: 8px 8px 0 0; padding: 12px 14px; } }
-  .cov-tab:hover { color: var(--freedom-blue); background: var(--nb-lightest); }
-  .cov-tab.on { color: var(--freedom-blue); background: var(--nb-lightest); border-left-color: var(--landscaping-green); }
-  @media (max-width: 860px) { .cov-tab.on { border-left-color: transparent; border-bottom-color: var(--landscaping-green); } }
-  .cov-tab .n { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 20px; color: var(--landscaping-green); flex: none; }
+  .cov-tabs :global(.cov-tab) { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; cursor: pointer; background: transparent; border: 0; border-left: 3px solid transparent; border-radius: 0 8px 8px 0; padding: 16px 16px; font-family: var(--font-body); font-weight: 600; font-size: 15.5px; color: var(--ink-500); transition: all var(--dur-base) var(--ease-out); }
+  @media (max-width: 860px) { .cov-tabs :global(.cov-tab) { width: auto; border-left: 0; border-bottom: 3px solid transparent; border-radius: 8px 8px 0 0; padding: 12px 14px; } }
+  .cov-tabs :global(.cov-tab:hover) { color: var(--freedom-blue); background: var(--nb-lightest); }
+  .cov-tabs :global(.cov-tab.on) { color: var(--freedom-blue); background: var(--nb-lightest); border-left-color: var(--landscaping-green); }
+  @media (max-width: 860px) { .cov-tabs :global(.cov-tab.on) { border-left-color: transparent; border-bottom-color: var(--landscaping-green); } }
+  .cov-tabs :global(.cov-tab .n) { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 20px; color: var(--landscaping-green); flex: none; }
   .cov-panel { background: var(--nb-lightest); border-radius: 18px; padding: 40px 42px; min-height: 300px; }
   @media (max-width: 560px) { .cov-panel { padding: 30px 26px; } }
   .cov-panel-t { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; color: var(--freedom-blue); margin: 0 0 14px; }
@@ -736,11 +736,11 @@ const breadcrumb = breadcrumbSchema([
   .resp-grid { display: grid; grid-template-columns: 320px 1fr; gap: 28px; align-items: start; }
   @media (max-width: 820px) { .resp-grid { grid-template-columns: 1fr; } }
   .resp-chips { display: flex; flex-direction: column; gap: 8px; }
-  .resp-chip { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left; cursor: pointer; font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--freedom-blue); background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 12px; padding: 16px 18px; transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out); }
-  .resp-chip:hover { border-color: var(--landscaping-green); }
-  .resp-chip.on { background: var(--freedom-blue); border-color: var(--freedom-blue); color: #fff; }
-  .resp-chip .ar { opacity: 0; transition: opacity var(--dur-base) var(--ease-out); }
-  .resp-chip.on .ar { opacity: 1; color: var(--landscaping-green); }
+  .resp-chips :global(.resp-chip) { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left; cursor: pointer; font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--freedom-blue); background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 12px; padding: 16px 18px; transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out); }
+  .resp-chips :global(.resp-chip:hover) { border-color: var(--landscaping-green); }
+  .resp-chips :global(.resp-chip.on) { background: var(--freedom-blue); border-color: var(--freedom-blue); color: #fff; }
+  .resp-chips :global(.resp-chip .ar) { opacity: 0; transition: opacity var(--dur-base) var(--ease-out); }
+  .resp-chips :global(.resp-chip.on .ar) { opacity: 1; color: var(--landscaping-green); }
   .resp-panel { background: var(--nb-lightest); border-radius: 18px; padding: 38px 38px; min-height: 280px; }
   .resp-panel-t { font-family: var(--font-display); font-weight: 700; font-size: 24px; color: var(--freedom-blue); margin: 0 0 20px; }
   .resp-split { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 22px; }
@@ -798,12 +798,12 @@ const breadcrumb = breadcrumbSchema([
   .vs-tbtn { font-family: var(--font-body); font-weight: 600; font-size: 14px; color: rgba(255,255,255,.7); background: transparent; border: 0; border-radius: 999px; padding: 10px 22px; cursor: pointer; transition: all var(--dur-base) var(--ease-out); }
   .vs-tbtn.on { background: var(--landscaping-green); color: var(--freedom-blue); }
   .vs-rows { display: flex; flex-direction: column; gap: 0; max-width: 820px; }
-  .vs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,.14); }
-  .vs-row:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
-  @media (max-width: 640px) { .vs-row { grid-template-columns: 1fr; gap: 10px; } }
-  .vs-aspect { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; }
-  .vs-val { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.78); }
-  .vs-val strong { color: var(--landscaping-green); font-weight: 600; }
+  .vs-rows :global(.vs-row) { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,.14); }
+  .vs-rows :global(.vs-row:last-child) { border-bottom: 1px solid rgba(255,255,255,.14); }
+  @media (max-width: 640px) { .vs-rows :global(.vs-row) { grid-template-columns: 1fr; gap: 10px; } }
+  .vs-rows :global(.vs-aspect) { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; }
+  .vs-rows :global(.vs-val) { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.78); }
+  .vs-rows :global(.vs-val strong) { color: var(--landscaping-green); font-weight: 600; }
   .vs-foot { font-size: 13.5px; color: rgba(255,255,255,.5); margin: 24px 0 0; font-style: italic; }
 
   /* FULL-BLEED (condo) */

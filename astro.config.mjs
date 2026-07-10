@@ -35,6 +35,9 @@ export default defineConfig({
     // ── Condo page moved to design-canonical route ────────────────
     '/condo-and-townhome-management': '/condo-management',
 
+    // ── Financial Management: design declares this legacy 301-in ────
+    '/financial-administrative': '/hoa-financial-management',
+
     // ── On-Site Management: referenced by Florida + HMS pages but not
     //    in this content pass. Point to HMS (on-site is a delivery tier
     //    there) until a dedicated page is built.
