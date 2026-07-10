@@ -38,10 +38,15 @@ export default defineConfig({
     // ── Financial Management: design declares this legacy 301-in ────
     '/financial-administrative': '/hoa-financial-management',
 
-    // ── On-Site Management: referenced by Florida + HMS pages but not
-    //    in this content pass. Point to HMS (on-site is a delivery tier
-    //    there) until a dedicated page is built.
-    '/on-site-management': '/hoa-management-services',
+    // ── Contact is a stub → the proposal flow is the single contact page
+    '/contact': '/request-a-proposal',
+
+    // ── Deleted / relocated pages → 301s ──────────────────────────
+    '/ballin-on-belrose': '/testimonials',
+    '/team-and-careers': '/about/team-careers',
+    '/privacy-policy': '/privacy',
+    '/terms-of-service': '/terms',
+    '/cookie-policy': '/cookies',
 
     // ── Geo pages: flat (old ROUTES.md scaffold) → nested canonical ─
     '/alabama-hoa-management': '/hoa-management/alabama',

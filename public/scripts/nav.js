@@ -32,7 +32,7 @@
       items: [
         { t: 'Our Story', d: 'From one community in Denham Springs to 400+ across five states', href: 'Our Story.html' },
         { t: 'How We Work', d: 'The pod: one dedicated CAM, a whole specialist team behind them', href: 'How We Work.html' },
-        { t: 'Team & Careers', d: '≈91 teammates — remote-first, with Gulf South roots', href: 'Team & Careers.html' },
+        { t: 'Team & Careers', d: '≈91 teammates — remote-first, with Gulf South roots', href: '/about/team-careers' },
         { t: 'CMGT Cares', d: 'Giving back to our communities since 2012', href: 'CMGT Cares.html' },
       ],
       meta: 'Independent since 2007 · 100% organic growth · no PE, no acquisitions',
@@ -54,6 +54,7 @@
       },
       services: [
         { t: 'HOA Management Services', d: 'Full-service or on-site — a dedicated CAM backed by specialist teams', href: 'HOA Management Services.html' },
+        { t: 'On-Site Management', d: 'A daily on-property team for large communities & high-rises — a standalone plan', href: '/on-site-management' },
         { t: 'Condo & Townhome Management', d: 'Condo, COA & luxury high-rise, with on-site staff where it calls for it', href: '/condo-management' },
         { t: 'HOA Financial Management', d: 'Right-sized financials & reporting for smaller communities', href: 'HOA Financial Management.html' },
         { t: 'Developer HOA Management', d: 'Declarant control through homeowner turnover, with one accountable team', href: 'Developer HOA Management.html' },
@@ -106,6 +107,7 @@
       h: 'Management',
       links: [
         { t: 'HOA Management', href: 'HOA Management Services.html' },
+        { t: 'On-Site Management', href: '/on-site-management' },
         { t: 'Condo & Townhome', href: '/condo-management' },
         { t: 'Financial Management', href: 'HOA Financial Management.html' },
         { t: 'Developer Services', href: 'Developer HOA Management.html' },
@@ -131,7 +133,7 @@
       links: [
         { t: 'About CMGT', href: 'About.html' },
         { t: 'Our Story', href: 'Our Story.html' },
-        { t: 'Team & Careers', href: 'Team & Careers.html' },
+        { t: 'Team & Careers', href: '/about/team-careers' },
         { t: 'How We Work', href: 'How We Work.html' },
         { t: 'CMGT Cares', href: '/about/cmgt-cares' },
         { t: 'FAQ', href: 'FAQ.html' },
@@ -345,7 +347,7 @@
     h += '</div></div>';
     h += '<div class="ft-bottom"><div class="ft-bottom-in">';
     h += '<span>© ' + new Date().getFullYear() + ' CMGT, LLC · We Manage. You Live.</span>';
-    h += '<nav class="ft-legal" aria-label="Legal"><a href="Privacy Policy.html">Privacy</a><a href="Terms of Service.html">Terms</a><a href="Cookie Policy.html">Cookies</a><a href="#">Accessibility</a></nav>';
+    h += '<nav class="ft-legal" aria-label="Legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a><a href="#">Accessibility</a></nav>';
     h += '</div></div></footer>';
     return h;
   }

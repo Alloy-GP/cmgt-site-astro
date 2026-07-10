@@ -23,6 +23,7 @@ export const REVIEW_ITEMS: ReviewItem[] = [
 
   // Management & solutions
   { label: 'HOA Management Services',        path: '/hoa-management-services',                      review: true },
+  { label: 'On-Site Management',             path: '/on-site-management',                           review: true },
   { label: 'Condo & Townhome Management',    path: '/condo-management',                             review: true },
   { label: 'Developer HOA Management',       path: '/developer-hoa-management',                     review: true },
   { label: 'Switching Management Companies', path: '/switching-hoa-management-companies',           review: true },
@@ -46,8 +47,17 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'FAQ',                            path: '/faq',                                          review: true },
 
   // Company
+  { label: 'About CMGT',                     path: '/about',                                        review: true },
   { label: 'CMGT Cares',                     path: '/about/cmgt-cares',                             review: true },
+  { label: 'Team & Careers',                 path: '/about/team-careers',                           review: true },
   { label: 'Our Story',                      path: '/our-story',                                    review: true },
   { label: 'How We Work',                    path: '/how-we-work',                                  review: true },
+  { label: 'Testimonials',                   path: '/testimonials',                                 review: true },
+  { label: 'The Fix-It Squad',               path: '/fix-it-squad',                                 review: true },
   { label: 'Request a Proposal',             path: '/request-a-proposal',                           review: true },
+
+  // Legal
+  { label: 'Privacy Policy',                 path: '/privacy',                                      review: true },
+  { label: 'Terms of Service',               path: '/terms',                                        review: true },
+  { label: 'Cookie Policy',                  path: '/cookies',                                      review: true },
 ];
