@@ -6,7 +6,7 @@ import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
-  { name: 'Condo & Townhome Management', url: SITE.url + '/condo-and-townhome-management' },
+  { name: 'Condo & Townhome Management', url: SITE.url + '/condo-management' },
 ]);
 ---
 <BaseLayout
@@ -38,7 +38,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
     </div>
     <div class="ph-hero-band">
-      <ImageSlot src="/photos/condo-hero-photo.webp" alt="A row of modern Gulf Coast townhomes or a recently completed mid-rise condominium at golden hour" shape="rect" />
+      <ImageSlot src="/photos/condo-hero-photo.webp" alt="A Gulf South condominium and townhome community — a mid-rise building with balconies and shared grounds under a clear coastal sky" shape="rect" />
     </div>
     <div class="container">
       <div class="ph-hero-stats">
@@ -64,7 +64,7 @@ const breadcrumb = breadcrumbSchema([
         <div class="inc-item reveal"><div class="inc-num">03</div><h3 class="inc-t">Insurance Complexity</h3><p class="inc-d">Master policies, unit-owner coverage, and claims coordination — navigated with Gulf South storm realities front of mind.</p></div>
         <div class="inc-item reveal"><div class="inc-num">04</div><h3 class="inc-t">Tighter Communities</h3><p class="inc-d">Shared walls mean closer neighbors. Consistent, compassionate enforcement keeps the peace without the friction.</p></div>
         <div class="inc-item reveal"><div class="inc-num">05</div><h3 class="inc-t">On-Site When Needed</h3><p class="inc-d">Front desks, valets, and maintenance staff — we place dedicated people on-site for buildings that require it.</p></div>
-        <div class="inc-item reveal"><div class="inc-num">06</div><h3 class="inc-t">Vendor & Project Oversight</h3><p class="inc-d">From envelope repairs to amenity upgrades — competitively bid, scoped, and supervised, with insurance and licensing verified before anyone sets foot on the property.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">06</div><h3 class="inc-t">Vendor &amp; Project Oversight</h3><p class="inc-d">From envelope repairs to amenity upgrades — competitively bid, scoped, and supervised, with insurance and licensing verified before anyone sets foot on the property.</p></div>
       </div>
     </div>
   </section>
@@ -117,29 +117,6 @@ const breadcrumb = breadcrumbSchema([
         </div>
       </div>
     </div>
-    <script>
-      (function () {
-        var COV = [
-          { tab: 'Financials', t: 'Financial management & reporting', p: "Condo budgets carry bigger numbers and sharper scrutiny — every owner sees where their assessment goes. We keep the books current, transparent, and audit-ready, with the full picture shared every month, not just at tax time.", items: ['Annual budget preparation', 'Operating & reserve fund accounting', 'Monthly assessment billing & collection', 'Delinquency management', 'Monthly P&L and balance sheet by the 20th', 'Bank reconciliations', 'Audit & CPA coordination', 'Owner-facing financial transparency'] },
-          { tab: 'Insurance & reserves', t: 'Insurance & reserve oversight', p: "In an attached building, the line between the master policy and a unit owner's coverage is exactly where claims go wrong. We monitor your association's coverage and fund reserves for the systems everyone shares — so the money is there before the roof or elevator needs it.", items: ['Master insurance policy review', 'Coverage gap & deductible analysis', 'Claims coordination', 'Reserve study scheduling', 'Reserve funding strategy', 'Loss assessment guidance', 'Certificate of insurance tracking', 'Annual renewal management'] },
-          { tab: 'Building maintenance', t: 'Building & common-element maintenance', p: "The roof, the elevator, the hallways, the envelope — in a condo these belong to everyone, and they fail on their own timeline. We keep the shared systems inspected, serviced, and ahead of trouble, with vetted vendors and accountable quality control.", items: ['Roof & building-envelope upkeep', 'Elevator service contracts', 'Common-area & hallway maintenance', 'Amenity & pool management', 'Landscaping & exterior care', 'Preventive maintenance scheduling', 'Vendor monitoring & QC', 'Routine site inspections'] },
-          { tab: 'Owner communication', t: 'Owner & resident communication', p: "A building full of owners — plus renters and absentee owners — generates more questions, faster. We answer the same day in plain language, and give every owner a 24/7 portal for payments, requests, and documents.", items: ['Same-day owner responses', '24/7 owner portal', 'Online assessment payments', 'Building-wide notifications', 'Newsletters & announcements', 'Document library access', 'Renter & absentee-owner coordination', 'Move-in / move-out support'] },
-          { tab: 'Major projects', t: 'Capital & major projects', p: "A re-roof, a façade repair, an elevator modernization — the big projects are where condo boards feel most exposed. We scope the work, coordinate engineers and contractors, plan the funding, and keep owners informed from first bid to closeout.", items: ['Competitive bidding & scoping', 'Engineer & contractor coordination', 'Special-assessment planning', 'Construction oversight', 'Reserve-funded project management', 'Permit & compliance tracking', 'Owner updates through the work', 'Warranty & closeout'] },
-          { tab: 'Emergency response', t: 'Emergency & storm response', p: "This is the Gulf South, and a shared building can't afford a slow response — one delay means water in everyone's units. We plan before the season, mobilize trusted vendors when weather hits, coordinate evacuation and re-entry, and manage the recovery.", items: ['Pre-season preparedness planning', 'Emergency vendor mobilization', 'Water-intrusion rapid response', 'Evacuation & re-entry coordination', 'Insurance claim coordination', 'Real-time owner updates', 'Post-storm damage assessment', 'Recovery & rebuild management'] }
-        ];
-        var tabs = document.getElementById('cov-tabs');
-        var t = document.getElementById('cov-t'), p = document.getElementById('cov-p'), list = document.getElementById('cov-list');
-        tabs.innerHTML = COV.map(function (c, i) { return '<button class="cov-tab" role="tab" data-i="' + i + '"><span class="n">0' + (i + 1) + '</span>' + c.tab + '</button>'; }).join('');
-        function sel(i) {
-          var c = COV[i];
-          t.textContent = c.t; p.textContent = c.p;
-          list.innerHTML = c.items.map(function (x) { return '<li>' + x + '</li>'; }).join('');
-          [].forEach.call(tabs.children, function (b, bi) { b.classList.toggle('on', bi === i); });
-        }
-        [].forEach.call(tabs.children, function (b) { b.addEventListener('click', function () { sel(+b.dataset.i); }); });
-        tabs.children[0].classList.add('on'); // Financials baked into static HTML; activate without rewriting
-      })();
-    </script>
   </section>
 
   <!-- PROPERTY TYPES -->
@@ -186,33 +163,6 @@ const breadcrumb = breadcrumbSchema([
       </div>
       <p class="resp-foot reveal">Typical splits shown for illustration — your community's CC&Rs and bylaws are the final word. Clarifying these lines is one of the first things we do.</p>
     </div>
-    <script>
-      (function () {
-        var items = [
-          { k: 'Roof', assoc: 'Structure, membrane, and shingles on shared roofs.', owner: 'Nothing on shared roofs; interior leaks from owner alterations.', note: 'On most condos the roof is fully association-maintained — it protects everyone under it.' },
-          { k: 'Exterior walls & siding', assoc: 'Siding, paint, and the structural envelope.', owner: 'Anything attached by the owner (lights, mounts, satellite dishes).', note: 'Townhomes vary most here — we spell out the line so neighbors don’t guess.' },
-          { k: 'Windows & doors', assoc: 'Frames in the common structure (varies widely).', owner: 'Glass, screens, locks, and interior treatments.', note: 'This one is governing-doc dependent — a frequent source of disputes we head off early.' },
-          { k: 'Decks, patios & balconies', assoc: 'Structural elements of balconies on shared buildings.', owner: 'Surface finishes, railings upkeep, and personal use items.', note: 'Limited common elements often sit here — owner-used, association-structural.' },
-          { k: 'Interior & fixtures', assoc: 'Nothing inside the unit walls.', owner: 'Everything from the paint in: fixtures, appliances, flooring.', note: '“Studs in” is the simple rule of thumb — the owner’s domain.' },
-          { k: 'Landscaping & common areas', assoc: 'Shared grounds, amenities, lighting, and irrigation.', owner: 'Private patios or fenced yards designated to the unit.', note: 'Shared greenery is the association’s — it’s a big part of what dues fund.' }
-        ];
-        var chips = document.getElementById('resp-chips');
-        var title = document.getElementById('resp-title'), a = document.getElementById('resp-assoc'), o = document.getElementById('resp-owner'), n = document.getElementById('resp-note');
-        function select(i) {
-          [].forEach.call(chips.children, function (c, ci) { c.classList.toggle('on', ci === i); });
-          title.textContent = items[i].k;
-          a.textContent = items[i].assoc; o.textContent = items[i].owner; n.innerHTML = items[i].note;
-        }
-        items.forEach(function (it, i) {
-          var b = document.createElement('button');
-          b.type = 'button'; b.className = 'resp-chip';
-          b.innerHTML = '<span>' + it.k + '</span><span class="ar">→</span>';
-          b.addEventListener('click', function () { select(i); });
-          chips.appendChild(b);
-        });
-        select(0);
-      })();
-    </script>
   </section>
 
   <!-- STORM, INSURANCE & RESERVES -->
@@ -265,7 +215,7 @@ const breadcrumb = breadcrumbSchema([
         <a class="mdl-link" href="/how-we-work">See how the team-based model works <span class="arrow">→</span></a>
       </div>
       <div class="mdl-media reveal">
-        <ImageSlot src="/photos/condo-onsite-photo.webp" alt="A warm, business-casual on-site community manager greeting a resident in a bright condominium lobby" shape="rounded" radius={20} />
+        <ImageSlot src="/photos/condo-onsite-photo.webp" alt="An on-site CMGT staff member greeting a resident in the staffed lobby of a Gulf South condominium building" shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -296,12 +246,12 @@ const breadcrumb = breadcrumbSchema([
         </div>
         <div class="mkt-card">
           <h3 class="mkt-state">Texas</h3>
-          <div class="mkt-tag">East Texas</div>
-          <p class="mkt-cities">Orange — and working our way west</p>
+          <div class="mkt-tag">Growing market</div>
+          <p class="mkt-cities">Houston · Austin · Dallas — and growing</p>
         </div>
       </div>
       <div class="mkts-fl reveal">
-        <p><strong>A note on Florida:</strong> in the Pace / Panhandle area we manage community associations — including on-site management for larger communities. The one thing we don't take on there is <strong>condominium regimes.</strong></p>
+        <p><strong>A note on Florida:</strong> in the Florida Panhandle we provide full HOA management for non-condo communities — single-family HOAs, master-planned communities, and on-site teams. The one thing we don't take on there is condominium regimes, where the state's regulations aren't a fit for the service standard we insist on. <strong>Condo management is available across our four other states.</strong></p>
       </div>
     </div>
   </section>
@@ -322,41 +272,11 @@ const breadcrumb = breadcrumbSchema([
       <div class="vs-rows reveal" id="vs-rows"></div>
       <p class="vs-foot reveal">Independently owned since 2007 · 100% organic growth · decisions made here in the Gulf South.</p>
     </div>
-    <script>
-      (function () {
-        var DATA = {
-          cmgt: [
-            ['Ownership', 'Independent and founder-led since 2007 — <strong>answers to your board, not to investors</strong>.'],
-            ['Decisions', 'Made here in the Gulf South, by people who <strong>know hurricane season and your building codes</strong>.'],
-            ['On-site', 'A manager we can place in your building when it needs one — <strong>backed by a full specialist bench</strong>.'],
-            ['Insurance & reserves', 'Coverage monitored continuously and reserves planned in the open — <strong>the responsibilities most managers avoid</strong>.'],
-            ['Financials', '<strong>Shared with every owner by the 20th</strong> — transparency written into the agreement.']
-          ],
-          chain: [
-            ['Ownership', 'Often private-equity owned, with cost targets set far from your building.'],
-            ['Decisions', 'Policies set at a distant HQ with little feel for Gulf South storms or local codes.'],
-            ['On-site', 'High portfolio loads and turnover — you may not know who your manager is this quarter.'],
-            ['Insurance & reserves', 'Insurance monitoring is often disclaimed; reserve transparency varies widely.'],
-            ['Financials', 'Reporting varies; full transparency to every owner is rarely the default.']
-          ]
-        };
-        var rows = document.getElementById('vs-rows');
-        var btns = document.querySelectorAll('.vs-tbtn');
-        function render(v) {
-          rows.innerHTML = DATA[v].map(function (r) {
-            return '<div class="vs-row"><div class="vs-aspect">' + r[0] + '</div><div class="vs-val">' + r[1] + '</div></div>';
-          }).join('');
-          btns.forEach(function (b) { b.classList.toggle('on', b.dataset.v === v); });
-        }
-        btns.forEach(function (b) { b.addEventListener('click', function () { render(b.dataset.v); }); });
-        render('cmgt');
-      })();
-    </script>
   </section>
 
   <!-- FULL-BLEED (condo) -->
   <section class="fbleed">
-    <ImageSlot src="/photos/condo-community.jpg" alt="A Gulf Coast condominium community where neighbors live under one shared roof" shape="rect" />
+    <ImageSlot src="/photos/condo-community.jpg" alt="A wide exterior view of a Gulf South high-rise condominium community against a clear coastal sky" shape="rect" />
     <div class="container fbleed-in">
       <div class="eyebrow">Why it matters</div>
       <p class="fbleed-q">We manage communities, <span class="g">not just buildings.</span></p>
@@ -368,7 +288,7 @@ const breadcrumb = breadcrumbSchema([
   <section class="scope">
     <div class="container scope-in">
       <span class="scope-ico" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></span>
-      <p class="scope-t">A note on coverage: <strong>we do not manage condominiums in Florida</strong> — the regulatory environment there isn't a fit for the quality of service we insist on. Condo management is available across our other Gulf South markets.</p>
+      <p class="scope-t">A note on coverage: in Florida we manage non-condo communities — single-family HOAs and master-planned communities — but <strong>not condominium regimes</strong>; the regulatory environment there isn't a fit for the quality of service we insist on. Condo management is available across our four other states.</p>
     </div>
   </section>
 
@@ -462,7 +382,7 @@ const breadcrumb = breadcrumbSchema([
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">Do you manage condos in Florida?<span class="faq-sign" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-in">No. We don't manage condominiums in Florida — the regulatory environment isn't a fit for the service standard we hold ourselves to. <strong>Condo management is available across our other Gulf South markets.</strong></div></div>
+          <div class="faq-a"><div class="faq-a-in">No — condominium regimes are the one thing we don't take on in Florida; the regulatory environment isn't a fit for the service standard we hold ourselves to. We do provide full HOA management for non-condo Florida communities, though, and <strong>condo management across our four other states.</strong></div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">How do you handle reserves and big-ticket repairs?<span class="faq-sign" aria-hidden="true"></span></button>
@@ -489,23 +409,23 @@ const breadcrumb = breadcrumbSchema([
         <p class="edu-sub">Plain-English guides from our Board Education Hub — written for volunteers, not insiders. No sales pitch, just the stuff that helps.</p>
       </div>
       <div class="edu-grid">
-        <a class="edu-card reveal" href="/hoa-reserve-study">
+        <a class="edu-card reveal" href="/resources/hoa-reserve-study">
           <span class="edu-cat">Finances</span>
           <h3 class="edu-t">What is a reserve study?</h3>
           <p class="edu-d">When the roof, elevator, or envelope wears out, will the money be there? How reserve studies work — and how often to refresh them.</p>
           <span class="edu-go">Read the guide <span class="arrow">→</span></span>
         </a>
-        <a class="edu-card reveal" href="/hurricane-preparedness-for-hoas">
+        <a class="edu-card reveal" href="/resources/hurricane-preparedness-for-hoas">
           <span class="edu-cat">Insurance &amp; Risk</span>
           <h3 class="edu-t">Hurricane prep for Gulf South boards</h3>
           <p class="edu-d">Insurance, reserves, vendor contracts, and the communication plan to lock down before the season hits.</p>
           <span class="edu-go">Read the guide <span class="arrow">→</span></span>
         </a>
-        <a class="edu-card reveal" href="/hoa-collections-delinquency">
+        <a class="edu-card reveal" href="/hoa-financial-management">
           <span class="edu-cat">Finances</span>
           <h3 class="edu-t">Keeping delinquency low, fairly</h3>
           <p class="edu-d">A consistent, compassionate collections process protects the budget — and the neighbors who pay on time.</p>
-          <span class="edu-go">Read the guide <span class="arrow">→</span></span>
+          <span class="edu-go">See how it works <span class="arrow">→</span></span>
         </a>
         <a class="edu-card reveal" href="/switching-hoa-management-companies">
           <span class="edu-cat">Solutions</span>
@@ -519,11 +439,11 @@ const breadcrumb = breadcrumbSchema([
           <p class="edu-d">An honest comparison for boards weighing whether it's time to bring in a team — and a middle path.</p>
           <span class="edu-go">See the comparison <span class="arrow">→</span></span>
         </a>
-        <a class="edu-card reveal" href="/hoa-budget-template">
-          <span class="edu-cat">Finances · Free template</span>
+        <a class="edu-card reveal" href="/resources/hoa-budget-template">
+          <span class="edu-cat">Finances</span>
           <h3 class="edu-t">Build a budget that holds</h3>
-          <p class="edu-d">How to fund reserves and avoid surprise assessments — plus a free template you can put to work today.</p>
-          <span class="edu-go">Get the template <span class="arrow">→</span></span>
+          <p class="edu-d">How to fund reserves and avoid surprise assessments — and set up a budgeting process your board can run every year.</p>
+          <span class="edu-go">Read the guide <span class="arrow">→</span></span>
         </a>
       </div>
       <a class="edu-all reveal" href="/resources">Explore the full Board Education Hub <span class="arrow">→</span></a>
@@ -536,14 +456,101 @@ const breadcrumb = breadcrumbSchema([
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Let's talk about your community.</h2>
-        <p class="cta-p">Tell us about your condo or townhome community and a real person will reach out within one business day. No pitch deck, no pressure.</p>
+        <p class="cta-p">Tell us about your condo or townhome community and a real person will reach out within two business days. No pitch deck, no pressure.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
-        <a class="cta-phone" href="tel:2255032648">Or call (225) 503-2648 · Mon–Fri, 8a–5p CT</a>
+        <a class="cta-phone" href="tel:2255032648">Or call (225) 503-2648 · Mon–Thu 8:30a–4:30p · Fri 8:30a–4:00p CT</a>
       </div>
     </div>
   </section>
+
+  <script>
+    (function () {
+      var COV = [
+        { tab: 'Financials', t: 'Financial management & reporting', p: "Condo budgets carry bigger numbers and sharper scrutiny — every owner sees where their assessment goes. We keep the books current, transparent, and audit-ready, with the full picture shared every month, not just at tax time.", items: ['Annual budget preparation', 'Operating & reserve fund accounting', 'Monthly assessment billing & collection', 'Delinquency management', 'Monthly P&L and balance sheet by the 20th', 'Bank reconciliations', 'Audit & CPA coordination', 'Owner-facing financial transparency'] },
+        { tab: 'Insurance & reserves', t: 'Insurance & reserve oversight', p: "In an attached building, the line between the master policy and a unit owner's coverage is exactly where claims go wrong. We monitor your association's coverage and fund reserves for the systems everyone shares — so the money is there before the roof or elevator needs it.", items: ['Master insurance policy review', 'Coverage gap & deductible analysis', 'Claims coordination', 'Reserve study scheduling', 'Reserve funding strategy', 'Loss assessment guidance', 'Certificate of insurance tracking', 'Annual renewal management'] },
+        { tab: 'Building maintenance', t: 'Building & common-element maintenance', p: "The roof, the elevator, the hallways, the envelope — in a condo these belong to everyone, and they fail on their own timeline. We keep the shared systems inspected, serviced, and ahead of trouble, with vetted vendors and accountable quality control.", items: ['Roof & building-envelope upkeep', 'Elevator service contracts', 'Common-area & hallway maintenance', 'Amenity & pool management', 'Landscaping & exterior care', 'Preventive maintenance scheduling', 'Vendor monitoring & QC', 'Routine site inspections'] },
+        { tab: 'Owner communication', t: 'Owner & resident communication', p: "A building full of owners — plus renters and absentee owners — generates more questions, faster. We answer promptly in plain language, and give every owner a 24/7 portal for payments, requests, and documents.", items: ['Prompt owner responses', '24/7 owner portal', 'Online assessment payments', 'Building-wide notifications', 'Newsletters & announcements', 'Document library access', 'Renter & absentee-owner coordination', 'Move-in / move-out support'] },
+        { tab: 'Major projects', t: 'Capital & major projects', p: "A re-roof, a façade repair, an elevator modernization — the big projects are where condo boards feel most exposed. We scope the work, coordinate engineers and contractors, plan the funding, and keep owners informed from first bid to closeout.", items: ['Competitive bidding & scoping', 'Engineer & contractor coordination', 'Special-assessment planning', 'Construction oversight', 'Reserve-funded project management', 'Permit & compliance tracking', 'Owner updates through the work', 'Warranty & closeout'] },
+        { tab: 'Emergency response', t: 'Emergency & storm response', p: "This is the Gulf South, and a shared building can't afford a slow response — one delay means water in everyone's units. We plan before the season, mobilize trusted vendors when weather hits, coordinate evacuation and re-entry, and manage the recovery.", items: ['Pre-season preparedness planning', 'Emergency vendor mobilization', 'Water-intrusion rapid response', 'Evacuation & re-entry coordination', 'Insurance claim coordination', 'Real-time owner updates', 'Post-storm damage assessment', 'Recovery & rebuild management'] }
+      ];
+      var tabs = document.getElementById('cov-tabs');
+      var t = document.getElementById('cov-t'), p = document.getElementById('cov-p'), list = document.getElementById('cov-list');
+      if (tabs) {
+        tabs.innerHTML = COV.map(function (c, i) { return '<button class="cov-tab" role="tab" data-i="' + i + '"><span class="n">0' + (i + 1) + '</span>' + c.tab + '</button>'; }).join('');
+        function sel(i) {
+          var c = COV[i];
+          t.textContent = c.t; p.textContent = c.p;
+          list.innerHTML = c.items.map(function (x) { return '<li>' + x + '</li>'; }).join('');
+          [].forEach.call(tabs.children, function (b, bi) { b.classList.toggle('on', bi === i); });
+        }
+        [].forEach.call(tabs.children, function (b) { b.addEventListener('click', function () { sel(+b.dataset.i); }); });
+        tabs.children[0].classList.add('on');
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var items = [
+        { k: 'Roof', assoc: 'Structure, membrane, and shingles on shared roofs.', owner: 'Nothing on shared roofs; interior leaks from owner alterations.', note: 'On most condos the roof is fully association-maintained — it protects everyone under it.' },
+        { k: 'Exterior walls & siding', assoc: 'Siding, paint, and the structural envelope.', owner: 'Anything attached by the owner (lights, mounts, satellite dishes).', note: 'Townhomes vary most here — we spell out the line so neighbors don’t guess.' },
+        { k: 'Windows & doors', assoc: 'Frames in the common structure (varies widely).', owner: 'Glass, screens, locks, and interior treatments.', note: 'This one is governing-doc dependent — a frequent source of disputes we head off early.' },
+        { k: 'Decks, patios & balconies', assoc: 'Structural elements of balconies on shared buildings.', owner: 'Surface finishes, railings upkeep, and personal use items.', note: 'Limited common elements often sit here — owner-used, association-structural.' },
+        { k: 'Interior & fixtures', assoc: 'Nothing inside the unit walls.', owner: 'Everything from the paint in: fixtures, appliances, flooring.', note: '“Studs in” is the simple rule of thumb — the owner’s domain.' },
+        { k: 'Landscaping & common areas', assoc: 'Shared grounds, amenities, lighting, and irrigation.', owner: 'Private patios or fenced yards designated to the unit.', note: 'Shared greenery is the association’s — it’s a big part of what dues fund.' }
+      ];
+      var chips = document.getElementById('resp-chips');
+      var title = document.getElementById('resp-title'), a = document.getElementById('resp-assoc'), o = document.getElementById('resp-owner'), n = document.getElementById('resp-note');
+      if (!chips) return;
+      function select(i) {
+        [].forEach.call(chips.children, function (c, ci) { c.classList.toggle('on', ci === i); });
+        title.textContent = items[i].k;
+        a.textContent = items[i].assoc; o.textContent = items[i].owner; n.innerHTML = items[i].note;
+      }
+      items.forEach(function (it, i) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'resp-chip';
+        b.innerHTML = '<span>' + it.k + '</span><span class="ar">→</span>';
+        b.addEventListener('click', function () { select(i); });
+        chips.appendChild(b);
+      });
+      select(0);
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var DATA = {
+        cmgt: [
+          ['Ownership', 'Independent and founder-led since 2007 — <strong>answers to your board, not to investors</strong>.'],
+          ['Decisions', 'Made here in the Gulf South, by people who <strong>know hurricane season and your building codes</strong>.'],
+          ['On-site', 'A manager we can place in your building when it needs one — <strong>backed by a full specialist bench</strong>.'],
+          ['Insurance & reserves', 'Coverage monitored continuously and reserves planned in the open — <strong>the responsibilities most managers avoid</strong>.'],
+          ['Financials', '<strong>Shared with every owner by the 20th</strong> — transparency written into the agreement.']
+        ],
+        chain: [
+          ['Ownership', 'Often private-equity owned, with cost targets set far from your building.'],
+          ['Decisions', 'Policies set at a distant HQ with little feel for Gulf South storms or local codes.'],
+          ['On-site', 'High portfolio loads and turnover — you may not know who your manager is this quarter.'],
+          ['Insurance & reserves', 'Insurance monitoring is often disclaimed; reserve transparency varies widely.'],
+          ['Financials', 'Reporting varies; full transparency to every owner is rarely the default.']
+        ]
+      };
+      var rows = document.getElementById('vs-rows');
+      var btns = document.querySelectorAll('.vs-tbtn');
+      if (!rows) return;
+      function render(v) {
+        rows.innerHTML = DATA[v].map(function (r) {
+          return '<div class="vs-row"><div class="vs-aspect">' + r[0] + '</div><div class="vs-val">' + r[1] + '</div></div>';
+        }).join('');
+        btns.forEach(function (b) { b.classList.toggle('on', b.dataset.v === v); });
+      }
+      btns.forEach(function (b) { b.addEventListener('click', function () { render(b.dataset.v); }); });
+      render('cmgt');
+    })();
+  </script>
 
   <script>
     (function () {
@@ -559,11 +566,7 @@ const breadcrumb = breadcrumbSchema([
   </script>
 </BaseLayout>
 
-<!-- is:global — several sections (cov tabs, vs comparison) are built client-side
-     via innerHTML, so they never receive Astro's scoped data-astro-cid attribute.
-     Scoped rules wouldn't match them. This page's CSS only loads on this route,
-     so global is safe here. -->
-<style is:global>
+<style>
   body { background: #fff; }
   .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
 
@@ -573,13 +576,13 @@ const breadcrumb = breadcrumbSchema([
   .ph-hero-top { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px; align-items: end; padding-bottom: 64px; }
   @media (max-width: 980px) { .ph-hero-top { grid-template-columns: 1fr; gap: 32px; } }
   .ph-hero .eyebrow { color: rgba(255,255,255,.65); }
-  .ph-hero-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 5.6vw, 84px); line-height: .99; letter-spacing: -.03em; color: #fff; margin: 22px 0 0; text-wrap: balance; }
-  .ph-hero-display em { font-style: normal; font-weight: 700; color: var(--landscaping-green); }
+  .ph-hero-display { font-family: var(--font-display); font-weight: 900; font-size: clamp(44px, 5.6vw, 84px); line-height: .99; letter-spacing: -.03em; color: #fff; margin: 22px 0 0; text-wrap: balance; }
+  .ph-hero-display em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
   .ph-hero-lede { font-size: 17.5px; line-height: 1.7; color: rgba(255,255,255,.82); margin: 0 0 30px; }
   .ph-hero-lede strong { color: #fff; font-weight: 600; }
   .ph-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
   .ph-hero-band { position: relative; z-index: 2; }
-  .ph-hero-band .image-slot { display: block; width: 100%; height: clamp(280px, 32vw, 420px); }
+  .ph-hero-band :global(.image-slot) { display: block; width: 100%; height: clamp(280px, 32vw, 420px); }
   .ph-hero-stats { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; padding: 30px 0; border-top: 1px solid rgba(255,255,255,.18); }
   @media (max-width: 620px) { .ph-hero-stats { grid-template-columns: 1fr 1fr; gap: 22px; } }
   .ph-stat-num { font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1; letter-spacing: -.02em; color: #fff; }
@@ -617,13 +620,13 @@ const breadcrumb = breadcrumbSchema([
   .mdl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
   @media (max-width: 920px) { .mdl-grid { grid-template-columns: 1fr; gap: 36px; } }
   .mdl-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.14; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 18px; text-wrap: balance; }
-  .mdl-h em { font-style: normal; font-weight: 700; }
+  .mdl-h em { font-style: italic; font-weight: 500; }
   .mdl-p { font-size: 16px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
   .mdl-p strong { color: var(--freedom-blue); font-weight: 600; }
   .mdl-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--freedom-blue); text-decoration: none; margin-top: 6px; }
   .mdl-link .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
   .mdl-link:hover .arrow { transform: translateX(4px); }
-  .mdl-media .image-slot { width: 100%; height: 440px; }
+  .mdl-media :global(.image-slot) { width: 100%; height: 440px; }
 
   /* SCOPE NOTE (no FL condos) */
   .scope { background: var(--freedom-blue); color: #fff; padding: 28px 0; }
@@ -636,7 +639,7 @@ const breadcrumb = breadcrumbSchema([
   /* 3 C's */
   .ccc { background: var(--nb-lightest); padding: 100px 0; }
   .ccc-in { max-width: 940px; }
-  .ccc-q { font-family: var(--font-display); font-weight: 700; font-style: normal; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.3; letter-spacing: -.01em; color: var(--freedom-blue); margin: 16px 0 0; text-wrap: balance; }
+  .ccc-q { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.3; letter-spacing: -.01em; color: var(--freedom-blue); margin: 16px 0 0; text-wrap: balance; }
   .ccc-q .g { color: var(--landscaping-green); font-style: normal; font-weight: 700; }
 
   /* PEER (lateral link to HOA head pillar) */
@@ -673,22 +676,22 @@ const breadcrumb = breadcrumbSchema([
 
   /* CTA */
   .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 100px 0; position: relative; overflow: hidden; }
-  .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: none; pointer-events: none; }
+  .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: rotate(14deg); pointer-events: none; }
   .cta .leaf img { filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
   .cta-in { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
-  .cta-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(34px, 4.6vw, 58px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 12px; text-wrap: balance; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 58px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 12px; text-wrap: balance; }
   .cta-p { font-size: 17px; line-height: 1.6; max-width: 500px; margin: 0; color: rgba(30,30,119,.82); }
   .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
   .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
 
-  /* TEAM-BASED MODEL */
+  /* TEAM-BASED MODEL (condo) */
   .team { background: var(--freedom-blue); color: #fff; padding: 112px 0; position: relative; overflow: hidden; }
-  .team .leaf { position: absolute; right: -130px; top: -120px; width: 440px; height: 440px; opacity: .07; transform: none; pointer-events: none; }
+  .team .leaf { position: absolute; right: -130px; top: -120px; width: 440px; height: 440px; opacity: .07; transform: rotate(18deg); pointer-events: none; }
   .team .leaf img { width: 100%; filter: brightness(0) invert(1); }
   .team-in { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
   @media (max-width: 920px) { .team-in { grid-template-columns: 1fr; gap: 40px; } }
   .team-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: #fff; margin: 16px 0 20px; text-wrap: balance; }
-  .team-h em { font-style: normal; font-weight: 700; color: var(--landscaping-green); }
+  .team-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
   .team-p { font-size: 16.5px; line-height: 1.75; color: rgba(255,255,255,.82); margin: 0 0 18px; max-width: 520px; }
   .team-p strong { color: #fff; font-weight: 600; }
   .team-roles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -700,7 +703,7 @@ const breadcrumb = breadcrumbSchema([
   .team-role.lead .team-role-t { color: var(--freedom-blue); }
   .team-role.lead .team-role-d { color: rgba(30,30,119,.82); }
 
-  /* WHAT WE HANDLE */
+  /* WHAT WE HANDLE (cov) */
   .cov { background: #fff; padding: 112px 0; }
   .cov-head { max-width: 760px; margin: 0 0 48px; }
   .cov-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
@@ -714,7 +717,7 @@ const breadcrumb = breadcrumbSchema([
   .cov-tab:hover { color: var(--freedom-blue); background: var(--nb-lightest); }
   .cov-tab.on { color: var(--freedom-blue); background: var(--nb-lightest); border-left-color: var(--landscaping-green); }
   @media (max-width: 860px) { .cov-tab.on { border-left-color: transparent; border-bottom-color: var(--landscaping-green); } }
-  .cov-tab .n { font-family: var(--font-display); font-weight: 700; font-style: normal; font-size: 20px; color: var(--landscaping-green); flex: none; }
+  .cov-tab .n { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 20px; color: var(--landscaping-green); flex: none; }
   .cov-panel { background: var(--nb-lightest); border-radius: 18px; padding: 40px 42px; min-height: 300px; }
   @media (max-width: 560px) { .cov-panel { padding: 30px 26px; } }
   .cov-panel-t { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; color: var(--freedom-blue); margin: 0 0 14px; }
@@ -725,7 +728,7 @@ const breadcrumb = breadcrumbSchema([
   .cov-list li { font-size: 14.5px; line-height: 1.5; color: var(--ink-700); padding-left: 24px; position: relative; }
   .cov-list li::before { content: ""; position: absolute; left: 0; top: 7px; width: 8px; height: 8px; border-radius: 50%; background: var(--landscaping-green); }
 
-  /* WHO'S RESPONSIBLE */
+  /* INTERACTIVE: Who's responsible? */
   .resp { background: #fff; padding: 112px 0; }
   .resp-head { max-width: 720px; margin: 0 0 44px; }
   .resp-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
@@ -765,7 +768,7 @@ const breadcrumb = breadcrumbSchema([
   .risk-d { font-size: 14.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
   .risk-d strong { color: var(--freedom-blue); font-weight: 600; }
 
-  /* MARKETS */
+  /* MARKETS (condo, local presence) */
   .mkts { background: var(--nb-lightest); padding: 112px 0; }
   .mkts-head { max-width: 720px; margin: 0 0 48px; }
   .mkts-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
@@ -782,14 +785,14 @@ const breadcrumb = breadcrumbSchema([
   .mkts-fl p { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0; }
   .mkts-fl strong { color: var(--freedom-blue); font-weight: 600; }
 
-  /* WHY CMGT */
+  /* WHY CMGT (condo) */
   .vs { background: var(--freedom-blue); color: #fff; padding: 112px 0; position: relative; overflow: hidden; }
-  .vs .leaf { position: absolute; right: -120px; bottom: -150px; width: 480px; height: 480px; opacity: .07; transform: none; pointer-events: none; }
+  .vs .leaf { position: absolute; right: -120px; bottom: -150px; width: 480px; height: 480px; opacity: .07; transform: rotate(-12deg); pointer-events: none; }
   .vs .leaf img { width: 100%; filter: brightness(0) invert(1); }
   .vs-in { position: relative; }
   .vs-head { max-width: 740px; margin: 0 0 44px; }
   .vs-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: #fff; margin: 16px 0 14px; text-wrap: balance; }
-  .vs-h em { font-style: normal; font-weight: 700; color: var(--landscaping-green); }
+  .vs-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
   .vs-sub { font-size: 16px; line-height: 1.7; color: rgba(255,255,255,.75); margin: 0; }
   .vs-toggle { display: inline-flex; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; padding: 5px; margin-bottom: 32px; }
   .vs-tbtn { font-family: var(--font-body); font-weight: 600; font-size: 14px; color: rgba(255,255,255,.7); background: transparent; border: 0; border-radius: 999px; padding: 10px 22px; cursor: pointer; transition: all var(--dur-base) var(--ease-out); }
@@ -803,18 +806,18 @@ const breadcrumb = breadcrumbSchema([
   .vs-val strong { color: var(--landscaping-green); font-weight: 600; }
   .vs-foot { font-size: 13.5px; color: rgba(255,255,255,.5); margin: 24px 0 0; font-style: italic; }
 
-  /* FULL-BLEED */
+  /* FULL-BLEED (condo) */
   .fbleed { position: relative; min-height: 480px; display: flex; align-items: center; overflow: hidden; isolation: isolate; }
-  .fbleed .image-slot { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .fbleed :global(.image-slot) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
   .fbleed::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(21,21,92,.92) 0%, rgba(21,21,92,.7) 42%, rgba(21,21,92,.25) 100%); pointer-events: none; }
   .fbleed-in { position: relative; z-index: 2; max-width: 760px; padding: 80px 0; pointer-events: none; }
   .fbleed .eyebrow { color: rgba(255,255,255,.62); }
-  .fbleed-q { font-family: var(--font-display); font-weight: 700; font-style: normal; font-size: clamp(30px, 4.4vw, 56px); line-height: 1.16; letter-spacing: -.02em; color: #fff; margin: 18px 0 22px; text-wrap: balance; }
+  .fbleed-q { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: clamp(30px, 4.4vw, 56px); line-height: 1.16; letter-spacing: -.02em; color: #fff; margin: 18px 0 22px; text-wrap: balance; }
   .fbleed-q .g { font-style: normal; font-weight: 700; color: var(--landscaping-green); }
   .fbleed-sub { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,.8); max-width: 540px; margin: 0; }
   .fbleed-sub strong { color: #fff; font-weight: 600; }
 
-  /* WHAT IT COSTS */
+  /* WHAT IT COSTS (condo) */
   .cost { background: #fff; padding: 112px 0; }
   .cost-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
   @media (max-width: 920px) { .cost-grid { grid-template-columns: 1fr; gap: 36px; } }
@@ -823,22 +826,22 @@ const breadcrumb = breadcrumbSchema([
   .cost-p strong { color: var(--freedom-blue); font-weight: 600; }
   .cost-factors { display: flex; flex-direction: column; gap: 10px; }
   .cost-frow { display: flex; gap: 14px; align-items: flex-start; background: var(--nb-lightest); border-radius: 13px; padding: 18px 20px; }
-  .cost-fnum { font-family: var(--font-display); font-weight: 700; font-style: normal; font-size: 22px; color: var(--landscaping-green); flex: none; line-height: 1.2; }
+  .cost-fnum { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 22px; color: var(--landscaping-green); flex: none; line-height: 1.2; }
   .cost-ft { font-family: var(--font-display); font-weight: 700; font-size: 16.5px; color: var(--freedom-blue); margin: 0 0 5px; }
   .cost-fd { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0; }
   .cost-note { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); margin: 20px 0 0; font-style: italic; }
 
-  /* SWITCHING CALLOUT */
+  /* SWITCHING CALLOUT (condo) */
   .swcall { background: #fff; padding: 100px 0; }
   .swcall-in { background: var(--fb-lightest); border-radius: 18px; padding: 40px 44px; display: flex; align-items: center; justify-content: space-between; gap: 36px; flex-wrap: wrap; position: relative; overflow: hidden; }
-  .swcall-in::after { content: ""; position: absolute; right: -50px; bottom: -70px; width: 200px; height: 200px; background: url('/assets/leaf-mark.svg') no-repeat center / contain; opacity: .06; transform: none; pointer-events: none; filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
+  .swcall-in::after { content: ""; position: absolute; right: -50px; bottom: -70px; width: 200px; height: 200px; background: url('/assets/leaf-mark.svg') no-repeat center / contain; opacity: .06; transform: rotate(-12deg); pointer-events: none; filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
   .swcall-txt { position: relative; max-width: 640px; }
   .swcall-k { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
   .swcall-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 8px 0 8px; text-wrap: balance; }
   .swcall-p { font-size: 15px; line-height: 1.6; color: var(--ink-500); margin: 0; }
   .swcall-cta { position: relative; flex: none; }
 
-  /* BOARD EDUCATION */
+  /* BOARD EDUCATION (condo) */
   .edu { background: var(--nb-lightest); padding: 104px 0; }
   .edu-head { max-width: 680px; margin: 0 0 44px; }
   .edu-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }

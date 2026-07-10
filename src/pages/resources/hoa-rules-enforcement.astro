@@ -1,0 +1,206 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Resources', url: SITE.url + '/resources' },
+  { name: 'Covenants & Enforcement', url: SITE.url + '/resources/hoa-rules-enforcement' },
+]);
+
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How the HOA Violation Process Works, Step by Step',
+  description: "A typical sequence an association follows before an HOA violation fine can stand. Exact steps vary by the community's governing documents and state law, and the right to a hearing runs alongside the process.",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'First notice', text: 'A courtesy notice describes the issue and cites the specific rule.' },
+    { '@type': 'HowToStep', position: 2, name: 'Opportunity to cure', text: 'The homeowner gets a reasonable window to correct the issue; curing it in time usually ends the matter with no fine.' },
+    { '@type': 'HowToStep', position: 3, name: 'Further notice, if the documents require it', text: 'Many communities add a warning or intent-to-fine notice; others proceed once the cure period passes, as the governing documents control.' },
+    { '@type': 'HowToStep', position: 4, name: 'Fine', text: "If the violation is unresolved, a fine is applied according to the association's published fine schedule." },
+    { '@type': 'HowToStep', position: 5, name: 'Escalation', text: 'Continued fines, a lien, or legal action come only as a last resort, after due process.' },
+  ],
+};
+
+const faq = faqSchema([
+  { q: 'Can an HOA fine you without warning?', a: 'Usually no. Most governing documents, and state laws in markets like Texas and Florida, require notice and a chance to be heard before a fine takes effect. Whether a warning is required depends on your CC&Rs and your state.' },
+  { q: 'Can an HOA fine you without proof?', a: 'Legitimate enforcement should rest on documented evidence that a rule was broken, and you can ask the association to share what it relied on, such as a photo, a date, and the specific rule cited.' },
+  { q: "What happens if you don't pay an HOA fine?", a: 'Unpaid fines can grow with added charges and, in some states, attach to your property as a lien. Rules differ by state: Florida generally does not let fines under $1,000 become a lien, and Texas does not allow foreclosure for unpaid fines alone.' },
+  { q: 'Can you sue an HOA for not enforcing rules?', a: 'Sometimes, when an association enforces selectively or fails its duties, but it is a last resort after the internal dispute and hearing process. This is general information rather than legal advice, so consult an attorney about your situation.' },
+  { q: 'Can an HOA change the rules without a vote?', a: 'It depends on the rule and your governing documents. Some changes, especially to the recorded CC&Rs, require a membership vote, while boards can often adopt operating rules within their authority. Your governing documents and state law spell out which is which.' },
+]);
+---
+<BaseLayout
+  title="HOA Rules Enforcement & Violations: Fair for Both Sides | CMGT"
+  description="How HOA violations really work, from the notice and hearing process to your right to dispute a fine. A fair, plain-English guide for Gulf South boards and homeowners."
+  ogType="article"
+  pageSchema={[breadcrumb, howTo, faq]}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Covenants & Enforcement"}]'></nav>
+
+  <article>
+    <header class="art-hero">
+      <ImageSlot src="/photos/enforce-hero-photo.webp" alt="A CMGT community manager and a homeowner talking easily on a front porch — enforcement handled through conversation, not confrontation" shape="rect" />
+      <div class="container art-hero-in">
+        <div class="art-cat">Covenants &amp; Enforcement</div>
+        <h1 class="art-h1">HOA rules enforcement and violations: what's fair for both sides.</h1>
+        <p class="art-lede">An HOA violation notice can feel like an accusation — but the process is meant to be fair to both sides. Here's how enforcement actually works, what rights homeowners have, and how Gulf South boards can enforce the rules consistently and compassionately.</p>
+        <div class="art-meta"><span>8 min read</span><span class="dot"></span><span>2026 Edition · Updated July 2026</span></div>
+      </div>
+    </header>
+
+    <div class="art-body">
+      <div class="container art-wrap">
+        <div class="art-take reveal">
+          <p class="art-take-h">The short version</p>
+          <p class="art-take-p">Fair enforcement is consistent, documented, and grounded in the governing documents. Lead with communication, give real notice and a chance to cure before any fine, and apply every rule the same way for everyone.</p>
+        </div>
+
+        <p class="art-p">An HOA violation is a notice from your homeowners association that something on your property or in your conduct does not match the community's rules, and it is where neighbors and boards feel the most friction. Both sides usually want the same thing: to be treated fairly. Most guidance online reads either like a sales pitch or a call to war against your board, and almost none of it is written for communities here in the Gulf South. This guide walks the middle. It covers how HOA violations actually work, what rights homeowners have, and how boards across Louisiana, Mississippi, Alabama, Texas, and Florida can enforce the rules fairly.</p>
+
+        <h2 class="art-h2">What is an HOA violation (and what isn't)?</h2>
+        <p class="art-p"><strong>An HOA violation is a documented failure to follow the community's governing documents, not simply something a neighbor or board member happens to dislike.</strong> Those governing documents are the CC&amp;Rs, the bylaws, the rules, and the architectural standards set through the architectural review (ARC) process. A genuine HOA violation traces back to one of those written standards.</p>
+        <p class="art-p">Not every complaint is an HOA violation. A personal preference, an unwritten expectation, or a rule enforced against one home but ignored next door is not sound enforcement. Applying a rule unevenly is selective enforcement, and it weakens the association's position if challenged. Good HOA covenant enforcement points to a specific written rule and applies it evenly to everyone, which keeps the process feeling fair rather than personal.</p>
+
+        <h2 class="art-h2">How the HOA violation process works, step by step</h2>
+        <p class="art-p"><strong>Most associations follow a similar path before a fine can stand, but the exact sequence depends on the community's governing documents and state law.</strong> A typical sequence looks like this:</p>
+        <ol class="art-ol">
+          <li><strong>First notice.</strong> A courtesy notice describes the issue and cites the specific rule. A clear HOA notice of violation names the standard, not just the complaint.</li>
+          <li><strong>Opportunity to cure.</strong> The homeowner gets a reasonable window to correct the issue. Curing it in time usually ends the matter with no fine.</li>
+          <li><strong>Further notice, if the documents require it.</strong> Many communities add a warning or intent-to-fine notice; others proceed once the cure period passes. The governing documents control which applies.</li>
+          <li><strong>Fine.</strong> If the HOA violation is unresolved, a fine is applied according to the association's published fine schedule, so amounts stay consistent.</li>
+          <li><strong>Escalation.</strong> Continued fines, a lien, or legal action come only as a last resort, after due process.</li>
+        </ol>
+        <p class="art-p">The right to a hearing runs alongside this process rather than sitting at one fixed point, and how it works depends on the state and the governing documents. Florida requires the association to offer a hearing before an independent committee before it can impose a fine; Texas lets the homeowner request a board hearing; and in Louisiana, Mississippi, and Alabama the governing documents set how notice and hearing work, so a board may handle or waive a hearing under its own policy where the law allows.</p>
+        <p class="art-p">Because the right sequence depends on each community's documents, CMGT follows the governing documents and the board's adopted policy rather than one rigid template. Our first step is almost always communication: we send an educational letter before the first enforcement round, because for years we heard the same thing, "I didn't know." Communicating first resolves most issues before they ever become a formal HOA violation.</p>
+
+        <h2 class="art-h2">For homeowners: what to do if you receive a violation</h2>
+        <p class="art-p"><strong>Don't panic and don't ignore it: read the notice, check it against your governing documents, and respond in good faith before the deadline.</strong> An HOA violation notice starts a process, not a final judgment, and you have options at every step.</p>
+        <ul class="art-ul">
+          <li><strong>Find the cited rule.</strong> Locate the exact provision your notice references; if it is not written anywhere, say so in writing.</li>
+          <li><strong>Fix it if it is valid.</strong> Curing a legitimate issue within the stated period usually ends the matter with no fine.</li>
+          <li><strong>Ask for documentation.</strong> You can request the evidence and the rule the association relied on; reasonable enforcement is based on records.</li>
+          <li><strong>Use the hearing process in writing.</strong> If you still disagree, request a hearing and state your position calmly. The dispute template below helps.</li>
+          <li><strong>Keep records and know your appeal rights.</strong> Save every letter and photo, and confirm your hearing and appeal rights under your governing documents and state law.</li>
+        </ul>
+        <p class="art-p">Working the process in good faith is almost always more productive than refusing to engage.</p>
+
+        <h2 class="art-h2">For boards: how to handle HOA rules enforcement fairly</h2>
+        <p class="art-p"><strong>Fair HOA rules enforcement is consistent, documented, compassionate, and grounded in the governing documents, which is what holds up and keeps a community civil.</strong> Boards get into trouble when enforcement feels arbitrary or personal, so handling every HOA violation the same way is safest.</p>
+        <ul class="art-ul">
+          <li>Follow the same process for everyone, every time, to avoid any appearance of selective enforcement.</li>
+          <li>Explain the rule and the reason behind it, not just the penalty.</li>
+          <li>Give proper notice and a genuine chance to cure before any fine.</li>
+          <li>Document the standard, the notice, the dates, and the outcome.</li>
+          <li>Keep a published fine schedule so penalties are predictable. The same discipline shows up in a well-run community <a href="/resources/hoa-budget-template">budget</a>.</li>
+          <li>Lead with education first, enforcement second.</li>
+        </ul>
+        <p class="art-p">This is where a professional manager earns its keep. The <a href="https://www.caionline.org" target="_blank" rel="noopener">Community Associations Institute</a> has long stressed reasonable, consistent enforcement as the foundation of a healthy association, a principle CMGT has championed since we helped launch Louisiana's first CAI chapter. Our team-based model handles the hard conversations and hearings, so volunteer boards are not stuck being the villain. Boards wanting steady, compassionate covenant enforcement can <a href="/hoa-management-services">learn how our management works</a> or <a href="/request-a-proposal">request a proposal</a>.</p>
+
+        <h2 class="art-h2">Enforcement rules vary by state: what Gulf South boards and homeowners should know</h2>
+        <p class="art-p"><strong>In CMGT's markets, enforcement authority and limits differ meaningfully by state, so your governing documents are not the whole story.</strong> The same HOA violation can carry different notice, hearing, and fine rules depending on where the community sits.</p>
+        <ul class="art-ul">
+          <li><strong>Texas</strong> has the most detailed statutory process. The Texas Residential Property Owners Protection Act (Property Code Chapter 209) generally requires written notice, a chance to cure a curable violation, and the right to request a hearing before certain fines. The <a href="https://guides.sll.texas.gov/property-owners-associations" target="_blank" rel="noopener">Texas State Law Library</a> maintains a plain-language overview.</li>
+          <li><strong>Florida</strong> sets statutory notice and hearing steps under Chapter 720, including written notice of the right to a hearing before a fine and limits on how HOA violation fines may be applied. Florida updated these rules recently, so confirm the current version.</li>
+          <li><strong>Louisiana</strong> operates under the Louisiana Homeowners Association Act, which leans more heavily on each community's governing documents to define the process.</li>
+          <li><strong>Mississippi</strong> and <strong>Alabama</strong> have lighter statutory HOA frameworks, so the CC&amp;Rs and general contract law do most of the work, which makes clear governing documents especially important.</li>
+        </ul>
+        <p class="art-p">None of this is legal advice, and enforcement statutes change often. Boards and homeowners should confirm the specifics for their <a href="/hoa-management/louisiana">state and community</a> with qualified association counsel before acting on a dispute.</p>
+
+        <h2 class="art-h2">Violation notice &amp; dispute letter templates</h2>
+        <p class="art-p"><strong>A fair process is easier when both sides start from a clear, respectful template.</strong> Below are two starting points: a board-side HOA violation letter template and a homeowner-side dispute letter. Adapt each to your governing documents and state before sending.</p>
+        <div class="art-tmpl reveal">
+          <p class="t-t">Board HOA violation letter template</p>
+          <p>Dear [Homeowner Name],</p>
+          <p>Our records indicate that [condition] at [address] does not comply with [rule or CC&amp;R section]. Please correct this by [cure date]; if corrected by then, no fine will follow. If you believe this notice is in error, you may request a hearing by [method and deadline].</p>
+          <p>Sincerely,<br>[Board / Management Contact]</p>
+        </div>
+        <div class="art-tmpl reveal">
+          <p class="t-t">Homeowner dispute letter (sample letter to dispute an HOA violation notice)</p>
+          <p>Dear [Board / Management],</p>
+          <p>I am writing regarding the HOA violation notice dated [date] concerning [issue] at [address]. I respectfully dispute it and request a copy of the rule cited, any supporting documentation, and the date and process for a hearing.</p>
+          <p>[Briefly state your position, e.g., "The condition was corrected on [date]."] I want to resolve this fairly and in good faith.</p>
+          <p>Sincerely,<br>[Homeowner Name]</p>
+        </div>
+
+        <h2 class="art-h2">Frequently asked questions</h2>
+        <h3 class="art-lbl" style="font-size:19px;">Can an HOA fine you without warning?</h3>
+        <p class="art-p">Usually no. Most governing documents, and state laws in markets like Texas and Florida, require notice and a chance to be heard before a fine takes effect. Whether a warning is required depends on your CC&amp;Rs and your state.</p>
+        <h3 class="art-lbl" style="font-size:19px;">Can an HOA fine you without proof?</h3>
+        <p class="art-p">Legitimate enforcement should rest on documented evidence that a rule was broken, and you can ask the association to share what it relied on, such as a photo, a date, and the specific rule cited.</p>
+        <h3 class="art-lbl" style="font-size:19px;">What happens if you don't pay an HOA fine?</h3>
+        <p class="art-p">Unpaid fines can grow with added charges and, in some states, attach to your property as a lien. Rules differ by state: Florida generally does not let fines under $1,000 become a lien, and Texas does not allow foreclosure for unpaid fines alone.</p>
+        <h3 class="art-lbl" style="font-size:19px;">Can you sue an HOA for not enforcing rules?</h3>
+        <p class="art-p">Sometimes, when an association enforces selectively or fails its duties, but it is a last resort after the internal dispute and hearing process. This is general information rather than legal advice, so consult an attorney about your situation.</p>
+        <h3 class="art-lbl" style="font-size:19px;">Can an HOA change the rules without a vote?</h3>
+        <p class="art-p">It depends on the rule and your governing documents. Some changes, especially to the recorded CC&amp;Rs, require a membership vote, while boards can often adopt operating rules within their authority. Your governing documents and state law spell out which is which.</p>
+
+        <h2 class="art-h2">Fair enforcement is better for everyone</h2>
+        <p class="art-p">Enforcement works best when it is fair, consistent, and communicated with care, and most HOA violation disputes never need to escalate when it is. That is better for homeowners, who deserve to be treated like people, and better for boards, who deserve a process that holds up. Across the Gulf South, CMGT handles covenant enforcement this way, so boards are not stuck being the bad guy and neighbors stay neighbors.</p>
+
+        <p class="art-disclaimer">This article is general information for HOA boards and homeowners, not legal advice. Enforcement statutes and hearing requirements vary by state and change often — confirm the current rules for your state and your community's governing documents with qualified association counsel before acting on a dispute.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="rel">
+    <div class="container">
+      <h2 class="rel-h">Keep reading.</h2>
+      <div class="rel-grid"><a class="rel-card" href="/hoa-delinquency-recovery"><span class="rel-t">Delinquency Recovery</span><span class="rel-ar">→</span></a><a class="rel-card" href="/hoa-management-services"><span class="rel-t">Full-service HOA management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/request-a-proposal"><span class="rel-t">Talk to our team</span><span class="rel-ar">→</span></a></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container cta-in">
+      <div><h2 class="cta-h">Enforcement handled with care.</h2><p class="cta-p">Let CMGT handle the notices, hearings, and hard conversations — fairly and consistently — so your board isn't the bad guy. A real person will follow up within two business days.</p></div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+  .art-hero { position: relative; background: var(--freedom-blue); color: #fff; padding: 104px 0 88px; overflow: hidden; isolation: isolate; }
+  .art-hero > :global(.image-slot) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .art-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(30,30,119,.66) 0%, rgba(30,30,119,.84) 100%); pointer-events: none; }
+  .art-hero-in { position: relative; z-index: 2; max-width: 820px; }
+  .art-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .art-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.025em; color: #fff; margin: 16px 0 20px; text-wrap: balance; }
+  .art-lede { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; color: rgba(255,255,255,.9); margin: 0 0 24px; text-wrap: pretty; }
+  .art-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: rgba(255,255,255,.65); }
+  .art-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.4); }
+  .art-body { background: #fff; padding: 70px 0 100px; }
+  .art-wrap { max-width: 720px; }
+  .art-take { background: var(--fb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 0 0 44px; }
+  .art-take-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); opacity: .6; margin: 0 0 8px; }
+  .art-take-p { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0; }
+  .art-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 32px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 44px 0 16px; text-wrap: balance; }
+  .art-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+  .art-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-lbl { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); margin: 22px 0 6px; }
+  .art-ul, .art-ol { margin: 0 0 20px; padding-left: 22px; }
+  .art-ul li, .art-ol li { font-size: 17px; line-height: 1.65; color: var(--ink-700); margin: 0 0 9px; }
+  .art-ul li strong, .art-ol li strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-tmpl { background: var(--fb-lightest); border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 22px 26px; margin: 0 0 18px; }
+  .art-tmpl .t-t { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--freedom-blue); margin: 0 0 12px; }
+  .art-tmpl p { font-size: 15.5px; line-height: 1.7; color: var(--ink-700); margin: 0 0 10px; }
+  .art-tmpl p:last-child { margin-bottom: 0; }
+  .art-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .art-wrap a:hover { border-bottom-color: var(--landscaping-green); }
+  .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
+  .rel { background: var(--nb-lightest); padding: 90px 0; }
+  .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
+  .rel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .rel-grid { grid-template-columns: 1fr; } }
+  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
+  .rel-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .rel-ar { color: var(--landscaping-green); font-size: 18px; }
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+</style>

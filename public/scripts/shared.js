@@ -42,6 +42,18 @@
     targets.forEach(function (el) { cio.observe(el); });
   }
 
+  /* Accordions (generalized — distinct from FAQ.html's .faq-*) */
+  document.querySelectorAll('.acc-item').forEach(function (item) {
+    var q = item.querySelector('.acc-q'), panel = item.querySelector('.acc-panel');
+    if (!q || !panel) return;
+    q.setAttribute('aria-expanded', 'false');
+    q.addEventListener('click', function () {
+      var open = item.classList.toggle('open');
+      q.setAttribute('aria-expanded', open ? 'true' : 'false');
+      panel.style.maxHeight = open ? (panel.scrollHeight + 'px') : '0';
+    });
+  });
+
   /* Year */
   document.querySelectorAll('[data-year]').forEach(function (el) {
     el.textContent = new Date().getFullYear();
