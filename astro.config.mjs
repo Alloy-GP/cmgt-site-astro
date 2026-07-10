@@ -28,7 +28,32 @@ export default defineConfig({
   },
 
   redirects: {
-    // Add legacy URL redirects here as needed
-    // '/old-path': '/new-path',
+    // ── Deleted pages (content pass) ──────────────────────────────
+    '/resources/louisiana-hoa-laws': '/resources',
+    '/louisiana-hoa-laws': '/resources',
+
+    // ── Condo page moved to design-canonical route ────────────────
+    '/condo-and-townhome-management': '/condo-management',
+
+    // ── On-Site Management: referenced by Florida + HMS pages but not
+    //    in this content pass. Point to HMS (on-site is a delivery tier
+    //    there) until a dedicated page is built.
+    '/on-site-management': '/hoa-management-services',
+
+    // ── Geo pages: flat (old ROUTES.md scaffold) → nested canonical ─
+    '/alabama-hoa-management': '/hoa-management/alabama',
+    '/louisiana-hoa-management': '/hoa-management/louisiana',
+    '/mississippi-hoa-management': '/hoa-management/mississippi',
+    '/texas-hoa-management': '/hoa-management/texas',
+    '/florida-hoa-management': '/hoa-management/florida',
+
+    // ── CMGT Cares → nested under /about ──────────────────────────
+    '/cmgt-cares': '/about/cmgt-cares',
+
+    // ── Guides: flat → nested under /resources ────────────────────
+    '/hoa-reserve-study': '/resources/hoa-reserve-study',
+    '/hoa-budget-template': '/resources/hoa-budget-template',
+    '/hurricane-preparedness-for-hoas': '/resources/hurricane-preparedness-for-hoas',
+    '/hoa-rules-enforcement': '/resources/hoa-rules-enforcement',
   },
 });

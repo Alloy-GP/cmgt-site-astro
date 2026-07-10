@@ -1,0 +1,175 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'FAQ', url: SITE.url + '/faq' },
+]);
+
+const faq = faqSchema([
+  {
+    q: 'What does an HOA management company actually do?',
+    a: 'A good one runs the finances, enforces the covenants, manages the vendors, and keeps homeowners informed — so your volunteer board doesn’t have to. At CMGT, that comes through a dedicated manager backed by a full specialist team.',
+  },
+  {
+    q: 'How much does HOA management cost?',
+    a: 'Every community is different, so we quote custom — never a one-size template. We don’t compete on being the cheapest; we compete on value. Request a proposal and we’ll scope it to your community.',
+  },
+  {
+    q: 'What’s involved in switching from our current manager?',
+    a: 'We handle the handoff — records, vendors, finances, and homeowner communication — on a clear Day 1 to Day 90 timeline.',
+  },
+  {
+    q: 'When do we get our financial statements?',
+    a: 'By the 20th of every month — it’s written into our management agreement. And we share the full P&L and balance sheet with the entire membership, not just the board.',
+  },
+  {
+    q: 'Do you manage condos in Florida?',
+    a: 'No. We don’t manage condominiums in Florida — the regulatory environment there isn’t a fit for our service standard. We provide full HOA management for non-condo communities in the Panhandle, including On-Site for large master-planned communities.',
+  },
+  {
+    q: 'What areas do you serve?',
+    a: 'Five states across the Gulf South — Louisiana, Texas, Mississippi, Alabama, and the Florida Panhandle. We license properly in every market before we enter it.',
+  },
+]);
+---
+<BaseLayout
+  title="HOA Management FAQ — Straight Answers — CMGT"
+  description="Straight answers to the questions boards and homeowners ask most about HOA management — cost, switching, communication, and financials. No jargon."
+  pageSchema={[breadcrumb, faq]}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"FAQ"}]'></nav>
+
+  <section class="faq-hero">
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
+    <div class="container faq-hero-in">
+      <div class="eyebrow">Questions &amp; answers</div>
+      <h1 class="faq-hero-h">Straight answers, <em>no industry-speak.</em></h1>
+      <p class="faq-hero-p">The questions boards and homeowners ask us most — answered the way we'd explain them to a neighbor.</p>
+    </div>
+  </section>
+
+  <section class="faq-main">
+    <div class="container">
+      <div class="faq-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="faq-search" placeholder="Search questions — try “cost” or “switch”" aria-label="Search FAQs">
+      </div>
+      <p class="faq-empty" id="faq-empty">No match — but we'd be glad to answer directly. <a href="/request-a-proposal" style="color:var(--freedom-blue);font-weight:600;">Ask us anything →</a></p>
+      <div id="faq-cats"></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container cta-in">
+      <div>
+        <h2 class="cta-h">Still have a question?</h2>
+        <p class="cta-p">Ask a real person — we answer in plain language, usually within two business days.</p>
+      </div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Get in touch <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var DATA = [
+        { cat: 'Working with CMGT', qs: [
+          { q: 'What does an HOA management company actually do?', a: 'A good one runs the finances, enforces the covenants, manages the vendors, and keeps homeowners informed — <strong>so your volunteer board doesn’t have to.</strong> At CMGT, that comes through a dedicated manager backed by a full specialist team.' },
+          { q: 'Will we have one point of contact?', a: 'Yes — a dedicated Community Association Manager who knows your community, backed by specialists in accounting, covenants, vendors, and communication. <strong>You get one name, and no single point of failure.</strong>' },
+          { q: 'How fast do you respond?', a: 'Quickly, and clearly. Being available isn’t enough if you’re slow or talk down to people — we aim to answer in plain language, quickly, and to bring the solution along with the issue.' },
+          { q: 'What areas do you serve?', a: 'Five states across the Gulf South — Louisiana, Texas, Mississippi, Alabama, and the Florida Panhandle. We license properly in every market before we enter it.' }
+        ]},
+        { cat: 'Cost & switching', qs: [
+          { q: 'How much does HOA management cost?', a: 'Every community is different, so we quote custom — never a one-size template. <strong>We don’t compete on being the cheapest; we compete on value.</strong> Request a proposal and we’ll scope it to your community.' },
+          { q: 'What’s involved in switching from our current manager?', a: 'We handle the handoff — records, vendors, finances, and homeowner communication — on a clear Day 1 to Day 90 timeline. <a href="/switching-hoa-management-companies">See exactly how the transition works.</a>' },
+          { q: 'Why do most boards switch management companies?', a: 'Nearly always one of two reasons: <strong>communication that’s gone quiet, or delinquency that keeps climbing.</strong> Both are fixable — and both are what we built CMGT to solve.' },
+          { q: 'Is there a long lock-in contract?', a: 'We’d rather earn your business every month than trap you in a contract. Our retention — 96% by dollar value — comes from service, not handcuffs.' }
+        ]},
+        { cat: 'Money & transparency', qs: [
+          { q: 'When do we get our financial statements?', a: '<strong>By the 20th of every month</strong> — it’s written into our management agreement. And we share the full P&L and balance sheet with the entire membership, not just the board.' },
+          { q: 'Can you help lower our delinquency?', a: 'Yes. A consistent billing and collections process is why our communities average <strong>around 10% delinquency</strong> — the result of a steady process, not heavy-handed penalties.' },
+          { q: 'Do you offer financial-only management?', a: 'For HOAs, yes — our <a href="/hoa-financial-management">Financial &amp; Administrative package</a> handles the books while your board runs everything else. Condos almost always need full management.' }
+        ]},
+        { cat: 'Communities we serve', qs: [
+          { q: 'Do you manage condos and townhomes?', a: 'Yes — it’s a <a href="/condo-management">dedicated practice</a>, because shared walls, building systems, and reserves are a different discipline than single-family HOAs.' },
+          { q: 'Do you manage condos in Florida?', a: 'No. We don’t manage condominiums in Florida — the regulatory environment there isn’t a fit for our service standard. We provide <a href="/hoa-management/florida">full HOA management for non-condo communities</a> in the Panhandle, including On-Site for large master-planned communities.' },
+          { q: 'Do you work with developers?', a: 'Yes — we’re a <a href="/developer-hoa-management">lifecycle partner</a> from groundbreaking through homeowner turnover, with a flat $50/month fee until the first home is occupied.' },
+          { q: 'Do you manage rental properties?', a: 'In the Greater Baton Rouge area only, and as a service separate from HOA management. <a href="/rentals">See rental management.</a>' }
+        ]}
+      ];
+      var wrap = document.getElementById('faq-cats'), empty = document.getElementById('faq-empty'), search = document.getElementById('faq-search');
+      wrap.innerHTML = DATA.map(function (c) {
+        return '<div class="faq-cat"><p class="faq-cat-h">' + c.cat + '</p><div class="faq-list">' +
+          c.qs.map(function (x) {
+            return '<div class="faq-item" data-text="' + (x.q + ' ' + x.a).toLowerCase().replace(/<[^>]+>/g, '').replace(/"/g, '') + '">' +
+              '<button class="faq-q" type="button">' + x.q + '<span class="faq-sign" aria-hidden="true"></span></button>' +
+              '<div class="faq-a"><div class="faq-a-in">' + x.a + '</div></div></div>';
+          }).join('') + '</div></div>';
+      }).join('');
+      wrap.querySelectorAll('.faq-item').forEach(function (item) {
+        var btn = item.querySelector('.faq-q'), ans = item.querySelector('.faq-a');
+        btn.addEventListener('click', function () {
+          var open = item.classList.toggle('open');
+          ans.style.maxHeight = open ? (ans.scrollHeight + 'px') : '0';
+        });
+      });
+      search.addEventListener('input', function () {
+        var q = search.value.trim().toLowerCase(), any = false;
+        wrap.querySelectorAll('.faq-item').forEach(function (item) {
+          var hit = !q || item.dataset.text.indexOf(q) > -1;
+          item.style.display = hit ? '' : 'none';
+          if (hit) any = true;
+        });
+        wrap.querySelectorAll('.faq-cat').forEach(function (cat) {
+          var visible = [].some.call(cat.querySelectorAll('.faq-item'), function (i) { return i.style.display !== 'none'; });
+          cat.style.display = visible ? '' : 'none';
+        });
+        empty.style.display = any ? 'none' : 'block';
+      });
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+
+  .faq-hero { background: var(--freedom-blue); color: #fff; padding: 92px 0 80px; position: relative; overflow: hidden; isolation: isolate; }
+  .faq-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 18% 20%, rgba(141,189,255,.12) 0%, transparent 55%); z-index: 0; }
+  .faq-hero .leaf { position: absolute; right: -120px; bottom: -150px; width: 520px; height: 520px; opacity: .07; transform: rotate(-10deg); z-index: 0; pointer-events: none; }
+  .faq-hero .leaf img { width: 100%; filter: brightness(0) invert(1); }
+  .faq-hero-in { position: relative; z-index: 2; max-width: 720px; }
+  .faq-hero .eyebrow { color: rgba(255,255,255,.65); }
+  .faq-hero-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(44px, 5.6vw, 84px); line-height: 1.0; letter-spacing: -.03em; margin: 20px 0 22px; text-wrap: balance; }
+  .faq-hero-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .faq-hero-p { font-size: 18px; line-height: 1.65; color: rgba(255,255,255,.8); margin: 0; max-width: 560px; }
+
+  /* SEARCH + LAYOUT */
+  .faq-main { background: #fff; padding: 70px 0 110px; }
+  .faq-search { position: relative; max-width: 520px; margin: 0 0 50px; }
+  .faq-search input { width: 100%; font-family: var(--font-body); font-size: 16px; color: var(--freedom-blue); background: var(--nb-lightest); border: 1.5px solid var(--hairline-strong); border-radius: 10px; padding: 15px 16px 15px 46px; outline: none; transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out); }
+  .faq-search input:focus { border-color: var(--landscaping-green); background: #fff; }
+  .faq-search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--ink-400); pointer-events: none; }
+  .faq-cat { margin-bottom: 48px; }
+  .faq-cat-h { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); margin: 0 0 6px; }
+  .faq-list { border-top: 1.5px solid var(--hairline-strong); }
+  .faq-item { border-bottom: 1.5px solid var(--hairline-strong); }
+  .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: transparent; border: 0; cursor: pointer; text-align: left; padding: 24px 2px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); }
+  .faq-sign { flex: none; width: 26px; height: 26px; position: relative; }
+  .faq-sign::before, .faq-sign::after { content: ""; position: absolute; background: var(--landscaping-green); border-radius: 2px; transition: transform var(--dur-base) var(--ease-out); }
+  .faq-sign::before { left: 0; right: 0; top: 12px; height: 2.5px; }
+  .faq-sign::after { top: 0; bottom: 0; left: 12px; width: 2.5px; }
+  .faq-item.open .faq-sign::after { transform: scaleY(0); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
+  .faq-a-in { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); padding: 0 2px 24px; max-width: 760px; }
+  .faq-a-in strong { color: var(--freedom-blue); font-weight: 600; }
+  .faq-a-in a { color: var(--freedom-blue); font-weight: 600; }
+  .faq-empty { display: none; font-size: 16px; color: var(--ink-400); padding: 30px 0; }
+
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 96px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 480px; margin: 0; color: rgba(30,30,119,.82); }
+</style>

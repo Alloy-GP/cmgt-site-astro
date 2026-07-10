@@ -17,11 +17,11 @@
      view = clean Astro route (injected dynamically, after the .html href
      rewriter has already run, so these must be final routes — not .html). */
   var MK = [
-    { key: 'la', label: 'Louisiana',         hq: true,  q: 'Baton Rouge, LA', z: 8, view: '/louisiana-hoa-management',   dir: 'CMGT, Baton Rouge, LA' },
-    { key: 'tx', label: 'Texas',             hq: false, q: 'Houston, TX',     z: 7, view: '/texas-hoa-management',       dir: 'Houston, TX' },
-    { key: 'ms', label: 'Mississippi',       hq: false, q: 'Gulfport, MS',    z: 9, view: '/mississippi-hoa-management', dir: 'Gulfport, MS' },
-    { key: 'al', label: 'Alabama',           hq: false, q: 'Fairhope, AL',    z: 9, view: '/alabama-hoa-management',     dir: 'Fairhope, AL' },
-    { key: 'fl', label: 'Florida Panhandle', hq: false, q: 'Pensacola, FL',   z: 9, view: '/developer-hoa-management',   dir: 'Pace, FL' },
+    { key: 'la', label: 'Louisiana',         hq: true,  q: 'Baton Rouge, LA', z: 8, view: '/hoa-management/louisiana',   dir: 'CMGT, Baton Rouge, LA' },
+    { key: 'tx', label: 'Texas',             hq: false, q: 'Houston, TX',     z: 7, view: '/hoa-management/texas',       dir: 'Houston, TX' },
+    { key: 'ms', label: 'Mississippi',       hq: false, q: 'Gulfport, MS',    z: 9, view: '/hoa-management/mississippi', dir: 'Gulfport, MS' },
+    { key: 'al', label: 'Alabama',           hq: false, q: 'Fairhope, AL',    z: 9, view: '/hoa-management/alabama',     dir: 'Fairhope, AL' },
+    { key: 'fl', label: 'Florida Panhandle', hq: false, q: 'Pensacola, FL',   z: 9, view: '/hoa-management/florida',    dir: 'Pace, FL' },
   ];
 
   var NAV = [
@@ -54,12 +54,13 @@
       },
       services: [
         { t: 'HOA Management Services', d: 'Full-service or on-site — a dedicated CAM backed by specialist teams', href: 'HOA Management Services.html' },
-        { t: 'Condo & Townhome Management', d: 'Condo, COA & luxury high-rise, with on-site staff where it calls for it', href: 'Condo & Townhome Management.html' },
+        { t: 'Condo & Townhome Management', d: 'Condo, COA & luxury high-rise, with on-site staff where it calls for it', href: '/condo-management' },
         { t: 'HOA Financial Management', d: 'Right-sized financials & reporting for smaller communities', href: 'HOA Financial Management.html' },
         { t: 'Developer HOA Management', d: 'Declarant control through homeowner turnover, with one accountable team', href: 'Developer HOA Management.html' },
       ],
       solutions: [
         { t: 'Switching Management Companies', d: 'Slow responses? Rising delinquency? What a clean transition looks like', href: 'Switching HOA Management Companies.html' },
+        { t: 'HOA Delinquency Recovery', d: 'Rising past-due balances? A firm, fair path back to healthy reserves', href: '/hoa-delinquency-recovery' },
         { t: 'Self-Managed HOA vs. Professional', d: 'The honest math on when volunteer management stops working', href: 'Self-Managed HOA.html' },
       ],
     },
@@ -67,11 +68,11 @@
       label: 'Locations',
       type: 'map',
       items: [
-        { t: 'Louisiana', d: 'Where it started \u2014 Baton Rouge, New Orleans, the Northshore & beyond', href: 'Louisiana HOA Management.html' },
-        { t: 'Texas', d: 'Communities across the Lone Star State', href: 'Texas HOA Management.html' },
-        { t: 'Mississippi', d: 'The largest manager on the Mississippi Gulf Coast', href: 'Mississippi HOA Management.html' },
-        { t: 'Alabama', d: 'Gulf Coast communities \u2014 Fairhope, Foley & the Eastern Shore', href: 'Alabama HOA Management.html' },
-        { t: 'Florida Panhandle', d: 'Developer-run communities on the Panhandle', href: 'Developer HOA Management.html' },
+        { t: 'Louisiana', d: 'Where it started \u2014 Baton Rouge, New Orleans, the Northshore & beyond', href: '/hoa-management/louisiana' },
+        { t: 'Texas', d: 'Communities across the Lone Star State', href: '/hoa-management/texas' },
+        { t: 'Mississippi', d: 'The largest manager on the Mississippi Gulf Coast', href: '/hoa-management/mississippi' },
+        { t: 'Alabama', d: 'Gulf Coast communities \u2014 Fairhope, Foley & the Eastern Shore', href: '/hoa-management/alabama' },
+        { t: 'Florida Panhandle', d: 'Communities across the Florida Panhandle', href: '/hoa-management/florida' },
       ],
       meta: 'Local teams, neighbors in every market we serve',
     },
@@ -82,14 +83,13 @@
       items: [
         { t: 'Board Education Hub', d: 'Plain-language guides for volunteer board leaders', href: 'Resources.html' },
         { t: 'FAQ', d: 'Straight answers — no industry-speak', href: 'FAQ.html' },
-        { t: 'Blog', d: 'News & community stories across five states', href: 'Resources.html' },
       ],
       featured: {
         eyebrow: 'Featured guide',
         t: 'Hurricane prep for Gulf South boards',
         d: 'Insurance, reserves, vendors, and the communication plan — before the season hits.',
         cta: 'Read the guide',
-        href: 'Hurricane Preparedness for HOAs.html',
+        href: '/resources/hurricane-preparedness-for-hoas',
       },
     },
   ];
@@ -106,10 +106,11 @@
       h: 'Management',
       links: [
         { t: 'HOA Management', href: 'HOA Management Services.html' },
-        { t: 'Condo & Townhome', href: 'Condo & Townhome Management.html' },
+        { t: 'Condo & Townhome', href: '/condo-management' },
         { t: 'Financial Management', href: 'HOA Financial Management.html' },
         { t: 'Developer Services', href: 'Developer HOA Management.html' },
         { t: 'Switching Managers', href: 'Switching HOA Management Companies.html' },
+        { t: 'Delinquency Recovery', href: '/hoa-delinquency-recovery' },
         { t: 'Self-Managed vs. Pro', href: 'Self-Managed HOA.html' },
         { t: 'Rentals', href: 'Rentals.html' },
         { t: 'The Fix-It Squad', href: 'Fix-It Squad.html' },
@@ -118,11 +119,11 @@
     {
       h: 'Communities',
       links: [
-        { t: 'Louisiana', href: 'Louisiana HOA Management.html' },
-        { t: 'Texas', href: 'Texas HOA Management.html' },
-        { t: 'Mississippi', href: 'Mississippi HOA Management.html' },
-        { t: 'Alabama', href: 'Alabama HOA Management.html' },
-        { t: 'Florida Panhandle', href: 'Developer HOA Management.html' },
+        { t: 'Louisiana', href: '/hoa-management/louisiana' },
+        { t: 'Texas', href: '/hoa-management/texas' },
+        { t: 'Mississippi', href: '/hoa-management/mississippi' },
+        { t: 'Alabama', href: '/hoa-management/alabama' },
+        { t: 'Florida Panhandle', href: '/hoa-management/florida' },
       ],
     },
     {
@@ -132,11 +133,10 @@
         { t: 'Our Story', href: 'Our Story.html' },
         { t: 'Team & Careers', href: 'Team & Careers.html' },
         { t: 'How We Work', href: 'How We Work.html' },
-        { t: 'CMGT Cares', href: 'CMGT Cares.html' },
+        { t: 'CMGT Cares', href: '/about/cmgt-cares' },
         { t: 'FAQ', href: 'FAQ.html' },
         { t: 'Contact', href: 'Request a Proposal.html' },
         { t: 'Testimonials', href: 'Testimonials.html' },
-        { t: 'Blog', href: 'Resources.html' },
       ],
     },
     {
