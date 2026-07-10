@@ -60,9 +60,9 @@
         { t: 'Developer HOA Management', d: 'Declarant control through homeowner turnover, with one accountable team', href: 'Developer HOA Management.html' },
       ],
       solutions: [
-        { t: 'Switching Management Companies', d: 'Slow responses? Rising delinquency? What a clean transition looks like', href: 'Switching HOA Management Companies.html' },
-        { t: 'HOA Delinquency Recovery', d: 'Rising past-due balances? A firm, fair path back to healthy reserves', href: '/hoa-delinquency-recovery' },
-        { t: 'Self-Managed HOA vs. Professional', d: 'The honest math on when volunteer management stops working', href: 'Self-Managed HOA.html' },
+        { t: 'Switching Management Companies', short: 'Switching management companies', d: 'Slow responses? Rising delinquency? What a clean transition looks like', href: 'Switching HOA Management Companies.html' },
+        { t: 'HOA Delinquency Recovery', short: 'Delinquency recovery', d: 'Rising past-due balances? A firm, fair path back to healthy reserves', href: '/hoa-delinquency-recovery' },
+        { t: 'Self-Managed HOA vs. Professional', short: 'Self-managed vs. professional', d: 'The honest math on when volunteer management stops working', href: 'Self-Managed HOA.html' },
       ],
     },
     {
@@ -240,14 +240,12 @@
           h += '</a>';
         });
         h += '</div>';
-        h += '<p class="mm-eyebrow">Solutions</p><div class="mm-services mm-sols-grid">';
+        /* Solutions — quiet one-line links on a tinted strip (Option A) */
+        h += '<div class="mm-sols-strip"><p class="mm-eyebrow">Solutions</p><div class="sol-links">';
         n.solutions.forEach(function (sv) {
-          h += '<a class="mm-svc mm-sol" href="' + sv.href + '">';
-          h += '<span class="mm-svc-t">' + esc(sv.t) + '</span>';
-          h += '<span class="mm-svc-d">' + esc(sv.d) + '</span>';
-          h += '</a>';
+          h += '<a class="sol-link" href="' + sv.href + '" title="' + esc(sv.d) + '">' + esc(sv.short || sv.t) + ' <span class="arr">→</span></a>';
         });
-        h += '</div></div>';
+        h += '</div></div></div>';
         h += '</div></div>';
       } else if (n.type === 'map') {
         h += mapPanelHTML();

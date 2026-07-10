@@ -231,6 +231,24 @@
 .mm-sol .mm-svc-d { grid-column: 1; }
 .mm-sols-grid { margin-bottom: 0; }
 
+/* Solutions strip — quiet one-line links on a tinted band (Option A) */
+.mm-sols-strip {
+  margin: 4px -30px -26px; padding: 16px 30px 20px;
+  background: var(--nb-lightest, #F3F8FF);
+  border-top: 1px solid var(--hairline, #EEE);
+}
+.mm-sols-strip .mm-eyebrow { margin-bottom: 10px; }
+.sol-links { display: flex; flex-wrap: wrap; gap: 8px 28px; }
+.sol-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-size: 14px; font-weight: 600;
+  color: var(--freedom-blue, #1E1E77); text-decoration: none;
+  padding: 6px 0;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.sol-link .arr { color: var(--landscaping-green, #4ACF6C); transition: transform var(--dur-base) var(--ease-out); }
+.sol-link:hover .arr { transform: translateX(4px); }
+
 /* compact dropdowns (About / Resources) — same editorial rows.
    Item-anchored panels start from the button; nudge down so their top
    lines up with the bar-anchored mega panel (button is centered in the
