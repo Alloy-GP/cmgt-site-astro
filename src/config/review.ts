@@ -28,6 +28,7 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Developer HOA Management',       path: '/developer-hoa-management',                     review: true },
   { label: 'Switching Management Companies', path: '/switching-hoa-management-companies',           review: true },
   { label: 'HOA Delinquency Recovery',       path: '/hoa-delinquency-recovery',                     review: true },
+  { label: 'HOA Financial Management',       path: '/hoa-financial-management',                     review: true },
   { label: 'Self-Managed HOA',               path: '/self-managed-hoa',                             review: true },
   { label: 'Rentals',                        path: '/rentals',                                      review: true },
 
