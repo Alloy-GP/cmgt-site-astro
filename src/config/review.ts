@@ -19,11 +19,35 @@ export interface ReviewItem {
 }
 
 export const REVIEW_ITEMS: ReviewItem[] = [
-  { label: 'Homepage',                   path: '/',                                review: true },
-  { label: 'HOA Management',             path: '/hoa-management-services',         review: true },
-  { label: 'Condo & Townhome Management', path: '/condo-and-townhome-management',  review: true },
-  { label: 'Our Story',                  path: '/our-story',                       review: true },
-  { label: 'How We Work',                path: '/how-we-work',                     review: true },
-  { label: 'Request a Proposal',         path: '/request-a-proposal',              review: true },
-  { label: 'Switching Management Companies', path: '/switching-hoa-management-companies', review: true },
+  { label: 'Homepage',                       path: '/',                                             review: true },
+
+  // Management & solutions
+  { label: 'HOA Management Services',        path: '/hoa-management-services',                      review: true },
+  { label: 'Condo & Townhome Management',    path: '/condo-management',                             review: true },
+  { label: 'Developer HOA Management',       path: '/developer-hoa-management',                     review: true },
+  { label: 'Switching Management Companies', path: '/switching-hoa-management-companies',           review: true },
+  { label: 'HOA Delinquency Recovery',       path: '/hoa-delinquency-recovery',                     review: true },
+  { label: 'Self-Managed HOA',               path: '/self-managed-hoa',                             review: true },
+  { label: 'Rentals',                        path: '/rentals',                                      review: true },
+
+  // Locations
+  { label: 'Louisiana HOA Management',       path: '/hoa-management/louisiana',                     review: true },
+  { label: 'Texas HOA Management',           path: '/hoa-management/texas',                         review: true },
+  { label: 'Mississippi HOA Management',     path: '/hoa-management/mississippi',                   review: true },
+  { label: 'Alabama HOA Management',         path: '/hoa-management/alabama',                       review: true },
+  { label: 'Florida Panhandle HOA Management', path: '/hoa-management/florida',                     review: true },
+
+  // Resources & guides
+  { label: 'Resources Hub',                  path: '/resources',                                    review: true },
+  { label: 'Hurricane Preparedness',         path: '/resources/hurricane-preparedness-for-hoas',    review: true },
+  { label: 'HOA Reserve Study',              path: '/resources/hoa-reserve-study',                  review: true },
+  { label: 'HOA Budget Template',            path: '/resources/hoa-budget-template',                review: true },
+  { label: 'HOA Rules Enforcement',          path: '/resources/hoa-rules-enforcement',              review: true },
+  { label: 'FAQ',                            path: '/faq',                                          review: true },
+
+  // Company
+  { label: 'CMGT Cares',                     path: '/about/cmgt-cares',                             review: true },
+  { label: 'Our Story',                      path: '/our-story',                                    review: true },
+  { label: 'How We Work',                    path: '/how-we-work',                                  review: true },
+  { label: 'Request a Proposal',             path: '/request-a-proposal',                           review: true },
 ];
