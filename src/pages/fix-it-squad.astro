@@ -22,7 +22,15 @@ const breadcrumb = breadcrumbSchema([
     <div class="container fs-hero-in">
       <div class="eyebrow">In-house since 2019</div>
       <h1 class="fs-hero-h">The Fix-It Squad.</h1>
-      <p class="fs-hero-p">Our own maintenance division — <strong>not a rolodex of subcontractors.</strong> Trusted technicians, fast response, and fair pricing, accountable to the same standard as the rest of the team.</p>
+      <div class="fs-loc">Greater Baton Rouge &amp; surrounding areas</div>
+      <p class="fs-hero-p">Our own maintenance crew for the communities we manage in the <strong>Greater Baton Rouge area</strong> — <strong>not a rolodex of subcontractors.</strong> Trusted technicians, fast response, and fair pricing, accountable to the same standard as the rest of the team.</p>
+    </div>
+  </section>
+
+  <!-- SCOPE -->
+  <section class="fs-scope">
+    <div class="container">
+      <p class="fs-scope-note"><strong>A benefit of CMGT management in the Greater Baton Rouge area and surrounding markets</strong> — not a standalone service you buy separately. For the communities we manage elsewhere, the same accountability comes through managed vendor coordination, and On-Site communities have a dedicated on-site maintenance lead.</p>
     </div>
   </section>
 
@@ -43,7 +51,7 @@ const breadcrumb = breadcrumbSchema([
         </p>
       </div>
       <div class="diff-media reveal">
-        <ImageSlot alt="A CMGT Fix-It Squad maintenance technician working beside a branded CMGT service truck at a Gulf South community" shape="rounded" radius={20} />
+        <ImageSlot src="/photos/baton-rouge-maintenance-service.webp" alt="A CMGT Fix-It Squad maintenance technician arriving with a tool bag to help a homeowner at a Greater Baton Rouge home" shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -122,7 +130,7 @@ const breadcrumb = breadcrumbSchema([
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Maintenance that's actually handled.</h2>
-        <p class="cta-p">It comes standard with CMGT management. Tell us about your community and we'll show you how it works.</p>
+        <p class="cta-p">For the communities we manage in the Greater Baton Rouge area, the Fix-It Squad comes standard. Considering CMGT for your community? Tell us about it and we'll walk through what's included.</p>
       </div>
       <div class="reveal"><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
     </div>
@@ -143,6 +151,13 @@ const breadcrumb = breadcrumbSchema([
   .fs-hero-h em { font-style: italic; font-weight: 300; }
   .fs-hero-p { font-size: 18px; line-height: 1.65; color: rgba(30,30,119,.85); max-width: 560px; margin: 0; }
   .fs-hero-p strong { color: var(--freedom-blue); font-weight: 700; }
+  .fs-loc { display: inline-flex; align-items: center; gap: 8px; background: var(--freedom-blue); color: #fff; font-weight: 700; font-size: 13px; letter-spacing: .01em; padding: 7px 15px; border-radius: 999px; margin: 0 0 22px; }
+  .fs-loc::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--landscaping-green); flex-shrink: 0; }
+
+  /* SCOPE NOTE */
+  .fs-scope { background: #fff; padding: 40px 0 0; }
+  .fs-scope-note { max-width: 760px; font-size: 15px; line-height: 1.7; color: var(--ink-700); margin: 0; padding: 20px 24px; background: var(--nb-lightest); border-left: 3px solid var(--landscaping-green); border-radius: 0 10px 10px 0; }
+  .fs-scope-note strong { color: var(--freedom-blue); font-weight: 700; }
 
   /* DIFFERENCE */
   .diff { background: #fff; padding: 112px 0; }
