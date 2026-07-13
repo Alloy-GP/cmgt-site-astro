@@ -162,8 +162,8 @@ const faq = faqSchema([
   .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
   .rel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   @media (max-width: 760px) { .rel-grid { grid-template-columns: 1fr; } }
-  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
-  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
+  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; box-shadow: 0 2px 8px rgba(30,30,119,.05); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,30,119,.10); }
   .rel-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
   .rel-ar { color: var(--landscaping-green); font-size: 18px; }
   .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }

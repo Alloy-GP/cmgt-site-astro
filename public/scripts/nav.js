@@ -96,9 +96,9 @@
   ];
 
   var UTILITY = [
-    { t: 'Homeowner / Board Login', href: '#', hideSm: false },
-    { t: 'Pay Dues', href: '#', hideSm: false },
-    { t: 'Order Documents', href: '#', hideSm: true },
+    { t: 'Homeowner / Board Login', href: 'https://portal.cmgt.org/login', ext: true, hideSm: false },
+    { t: 'Pay Dues', href: 'https://portal.cmgt.org/login', ext: true, hideSm: false },
+    { t: 'Order Documents', href: 'https://www.homewisedocs.com/', ext: true, hideSm: true },
     { t: 'Rental Management', href: 'Rentals.html', hideSm: true },
   ];
 
@@ -144,9 +144,9 @@
     {
       h: 'Owners & Boards',
       links: [
-        { t: 'Login', href: '#' },
-        { t: 'Pay Dues', href: '#' },
-        { t: 'Order Documents', href: '#' },
+        { t: 'Login', href: 'https://portal.cmgt.org/login', ext: true },
+        { t: 'Pay Dues', href: 'https://portal.cmgt.org/login', ext: true },
+        { t: 'Order Documents', href: 'https://www.homewisedocs.com/', ext: true },
         { t: 'Rental Management', href: 'Rentals.html' },
         { t: 'Request a Proposal', href: PROPOSAL },
       ],
@@ -202,7 +202,7 @@
     h += '<nav class="util-links" aria-label="Utility">';
     UTILITY.forEach(function (u, i) {
       if (i > 0) h += '<span class="sep"></span>';
-      h += '<a href="' + u.href + '"' + (u.hideSm ? ' class="util-hide-sm"' : '') + '>' + esc(u.t) + '</a>';
+      h += '<a href="' + u.href + '"' + (u.ext ? ' target="_blank" rel="noopener noreferrer"' : '') + (u.hideSm ? ' class="util-hide-sm"' : '') + '>' + esc(u.t) + '</a>';
     });
     h += '</nav></div></div>';
 
@@ -330,7 +330,7 @@
     h += '</div>';
     FOOTER.forEach(function (col) {
       h += '<div><p class="ft-col-h">' + esc(col.h) + '</p><ul class="ft-list">';
-      col.links.forEach(function (l) { h += '<li><a href="' + l.href + '">' + esc(l.t) + '</a></li>'; });
+      col.links.forEach(function (l) { h += '<li><a href="' + l.href + '"' + (l.ext ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + esc(l.t) + '</a></li>'; });
       h += '</ul></div>';
     });
     h += '</div>';
