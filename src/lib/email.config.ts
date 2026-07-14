@@ -43,8 +43,9 @@ export const EMAIL_CONFIG = {
         vendor:   ['info@cmgt.org'], // contractor / vendor bids
         service:  ['info@cmgt.org'], // homeowner service requests
         general:  ['info@cmgt.org'], // catch-all general inquiries
+        rental:   [],                // TODO(rental routing): confirm destination inbox with client. Empty = accepted but NOT delivered anywhere (see lead.ts empty-route guard).
       }
-    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, service: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY }
+    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, service: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: [] }
   ) as Record<string, string[]>,
 
   mailchimp: {
@@ -71,6 +72,16 @@ export const EMAIL_CONFIG = {
         `<p>Hi ${firstName},</p>
         <p>Thanks for reaching out to CMGT. We've received the details about your community and appreciate the chance to learn more about what your board needs.</p>
         <p>A real person on the team for your region will review your request and follow up within one business day — with a proposal built around your community, not a template.</p>
+        <p>Talk soon,<br>The CMGT Team</p>`,
+    },
+    rental: {
+      label: 'Rental Management Inquiry',
+      notifySubject: (who: string) => `New rental management inquiry — ${who}`,
+      confirmSubject: 'We received your rental inquiry — CMGT',
+      confirmBody: (firstName: string) =>
+        `<p>Hi ${firstName},</p>
+        <p>Thanks for reaching out about rental management. We've received the details about your property.</p>
+        <p>A member of our Greater Baton Rouge rental team will review it and follow up within two business days.</p>
         <p>Talk soon,<br>The CMGT Team</p>`,
     },
     vendor: {

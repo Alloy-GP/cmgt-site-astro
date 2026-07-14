@@ -47,6 +47,14 @@ export const POST: APIRoute = async ({ request }) => {
     // Route the notification to the right inbox by intent (falls back to default).
     const notifyTo = EMAIL_CONFIG.routes[intent] ?? EMAIL_CONFIG.notify;
 
+    // An intent with an explicitly empty route (e.g. `rental`, pending the client's
+    // destination inbox) is accepted but intentionally NOT delivered anywhere yet —
+    // no staff email, no confirmation, no Mailchimp. Set a recipient in email.config.ts
+    // routes to activate it.
+    if (!notifyTo.length) {
+      return new Response(JSON.stringify({ success: true }), { status: 200 });
+    }
+
     // Per-intent content (subject + submitter confirmation) — see email.config.ts.
     const intentCfg = EMAIL_CONFIG.intents[intent] ?? EMAIL_CONFIG.intents.default;
 

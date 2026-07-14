@@ -76,6 +76,16 @@ export const PROPOSAL_V2 = {
 //   options?, placeholder?, inputMode?, maxLength?, col? }  (col:2 = full width)
 export const EXTRA_INTENTS = [
   {
+    id: 'rental', label: 'Have us manage your rental', icon: 'home', tone: 'ocean',
+    blurb: 'I want CMGT to manage my rental property.', forWho: 'Rental owners & landlords',
+    routeTo: 'our rental management team', fields: [
+      { key: 'address', label: 'Property address', type: 'text', required: true, placeholder: 'e.g. 123 Oak St, Baton Rouge', col: 2 },
+      { key: 'propertyType', label: 'Property type', type: 'select', required: true, options: ['Single-family home', 'Condo / townhome', 'Duplex', 'Small multi-family (2–4 units)', 'Other'] },
+      { key: 'units', label: 'Number of units', type: 'select', required: true, options: ['1', '2–4', '5–10', '10+'] },
+      { key: 'occupancy', label: 'Current status', type: 'radio', required: true, options: ['Occupied', 'Vacant', 'Not yet purchased'], col: 2 },
+    ],
+  },
+  {
     id: 'vendor', label: 'Submit a bid', icon: 'hardhat', tone: 'ocean',
     blurb: 'I’m a vendor who wants to work with you.', forWho: 'Contractors & service vendors',
     routeTo: 'our procurement team', fields: [

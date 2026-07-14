@@ -96,24 +96,21 @@
   ];
 
   var UTILITY = [
-    { t: 'Homeowner / Board Login', href: 'https://portal.cmgt.org/login', ext: true, hideSm: false },
-    { t: 'Pay Dues', href: 'https://portal.cmgt.org/login', ext: true, hideSm: false },
+    { t: 'Log In', href: '/login', hideSm: false },
+    { t: 'Pay Dues', href: 'https://portal.cmgt.org/public', ext: true, hideSm: false },
     { t: 'Order Documents', href: 'https://www.homewisedocs.com/', ext: true, hideSm: true },
     { t: 'Rental Management', href: 'Rentals.html', hideSm: true },
   ];
 
   var FOOTER = [
     {
-      h: 'Management',
+      h: 'Services',
       links: [
         { t: 'HOA Management', href: 'HOA Management Services.html' },
         { t: 'On-Site Management', href: '/on-site-management' },
         { t: 'Condo & Townhome', href: '/condo-management' },
         { t: 'Financial Management', href: 'HOA Financial Management.html' },
         { t: 'Developer Services', href: 'Developer HOA Management.html' },
-        { t: 'Switching Managers', href: 'Switching HOA Management Companies.html' },
-        { t: 'Delinquency Recovery', href: '/hoa-delinquency-recovery' },
-        { t: 'Self-Managed vs. Pro', href: 'Self-Managed HOA.html' },
         { t: 'Rentals', href: 'Rentals.html' },
         { t: 'The Fix-It Squad', href: 'Fix-It Squad.html' },
       ],
@@ -142,13 +139,12 @@
       ],
     },
     {
-      h: 'Owners & Boards',
+      h: 'Account Access',
       links: [
-        { t: 'Login', href: 'https://portal.cmgt.org/login', ext: true },
-        { t: 'Pay Dues', href: 'https://portal.cmgt.org/login', ext: true },
+        { t: 'Log In', href: '/login' },
+        { t: 'Pay Dues', href: 'https://portal.cmgt.org/public', ext: true },
         { t: 'Order Documents', href: 'https://www.homewisedocs.com/', ext: true },
-        { t: 'Rental Management', href: 'Rentals.html' },
-        { t: 'Request a Proposal', href: PROPOSAL },
+        { t: 'Submit a Maintenance Request', href: 'https://fixitsquad.org/', ext: true },
       ],
     },
   ];
