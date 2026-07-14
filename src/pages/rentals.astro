@@ -32,6 +32,7 @@ const breadcrumb = breadcrumbSchema([
           <a class="btn btn-outline-blue" href="#how">How it works</a>
           <a class="btn btn-outline-blue" href="/login">Log in to your portal</a>
         </div>
+        <p class="rn-hero-note">Looking to rent instead? <a href="/search-rentals">Browse available rentals →</a></p>
       </div>
       <div class="rn-hero-media">
         <div class="block" aria-hidden="true"></div>
@@ -139,6 +140,9 @@ const breadcrumb = breadcrumbSchema([
   .rn-hero-lede { font-size: 17.5px; line-height: 1.7; color: var(--ink-500); max-width: 500px; margin: 0 0 30px; }
   .rn-hero-lede strong { color: var(--freedom-blue); font-weight: 600; }
   .rn-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .rn-hero-note { margin: 18px 0 0; font-size: 14.5px; color: var(--ink-500); }
+  .rn-hero-note a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .rn-hero-note a:hover { border-bottom-color: var(--landscaping-green); }
   .rn-hero-media { position: relative; }
   .rn-hero-media .block { position: absolute; right: -26px; bottom: -26px; width: 66%; height: 54%; background: var(--landscaping-green); border-radius: 20px; z-index: 0; }
   .rn-hero-media :global(.image-slot) { position: relative; z-index: 1; width: 100%; height: 520px; }

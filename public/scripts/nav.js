@@ -112,6 +112,7 @@
         { t: 'Financial Management', href: 'HOA Financial Management.html' },
         { t: 'Developer Services', href: 'Developer HOA Management.html' },
         { t: 'Rentals', href: 'Rentals.html' },
+        { t: 'Search Rentals', href: '/search-rentals' },
         { t: 'The Fix-It Squad', href: 'Fix-It Squad.html' },
       ],
     },
