@@ -573,7 +573,7 @@ export default function IntakeForm() {
             <h2 className="if-title">How can we help?</h2>
             <p className="if-sub">Pick what fits — we’ll only ask what we need, then make sure the right person sees it fast.</p>
             <div className="if-intent-grid">
-              {INTENTS.map((it) => (
+              {INTENTS.filter((it) => !it.hidden).map((it) => (
                 <button type="button" key={it.id} className={`if-intent-card tone-${it.tone}`} onClick={() => pick(it.id)}>
                   <span className="if-intent-icon"><Ic name={it.icon} /></span>
                   <span className="if-intent-body">

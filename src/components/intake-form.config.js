@@ -77,6 +77,7 @@ export const PROPOSAL_V2 = {
 export const EXTRA_INTENTS = [
   {
     id: 'rental', label: 'Have us manage your rental', icon: 'home', tone: 'ocean',
+    hidden: true, // Baton Rouge-only — reachable via /request-a-proposal?intent=rental (rentals page), hidden from the general intent picker
     blurb: 'I want CMGT to manage my rental property.', forWho: 'Rental owners & landlords',
     routeTo: 'our rental management team', fields: [
       { key: 'address', label: 'Property address', type: 'text', required: true, placeholder: 'e.g. 123 Oak St, Baton Rouge', col: 2 },
