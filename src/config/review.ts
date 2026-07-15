@@ -31,6 +31,7 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'HOA Financial Management',       path: '/hoa-financial-management',                     review: true },
   { label: 'Self-Managed HOA',               path: '/self-managed-hoa',                             review: true },
   { label: 'Rentals',                        path: '/rentals',                                      review: true },
+  { label: 'Search Rentals (Listings)',      path: '/search-rentals',                               review: true },
 
   // Locations
   { label: 'Louisiana HOA Management',       path: '/hoa-management/louisiana',                     review: true },
@@ -56,6 +57,7 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Testimonials',                   path: '/testimonials',                                 review: true },
   { label: 'The Fix-It Squad',               path: '/fix-it-squad',                                 review: true },
   { label: 'Request a Proposal',             path: '/request-a-proposal',                           review: true },
+  { label: 'Log In (Account Hub)',           path: '/login',                                        review: true },
 
   // Legal
   { label: 'Privacy Policy',                 path: '/privacy',                                      review: true },
