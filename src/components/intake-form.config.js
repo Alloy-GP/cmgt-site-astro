@@ -97,16 +97,6 @@ export const EXTRA_INTENTS = [
     ],
   },
   {
-    id: 'service', label: 'Service request', icon: 'wrench', tone: 'sage',
-    blurb: 'I’m a homeowner and need something handled.', forWho: 'Homeowners',
-    routeTo: 'your community’s manager', fields: [
-      { key: 'association', label: 'Community name', type: 'text', required: true, placeholder: 'e.g. Lakeshore', col: 2 },
-      { key: 'unit', label: 'Unit / address', type: 'text', required: true, placeholder: 'e.g. 204B' },
-      { key: 'category', label: 'What’s the issue?', type: 'select', required: true, options: ['Common area', 'Landscaping', 'Plumbing / water', 'Gate / access', 'Billing / account', 'Other'] },
-      { key: 'urgency', label: 'Urgency', type: 'radio', required: true, options: ['Routine', 'Urgent', 'Emergency'], col: 2 },
-    ],
-  },
-  {
     id: 'general', label: 'General question', icon: 'chat', tone: 'gold',
     blurb: 'Something else — just reaching out.', forWho: 'Anyone',
     routeTo: 'our front desk', fields: [],

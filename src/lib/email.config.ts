@@ -41,11 +41,10 @@ export const EMAIL_CONFIG = {
     ? {
         proposal: ['info@cmgt.org'], // boards exploring new management
         vendor:   ['info@cmgt.org'], // contractor / vendor bids
-        service:  ['info@cmgt.org'], // homeowner service requests
         general:  ['info@cmgt.org'], // catch-all general inquiries
         rental:   [],                // TODO(rental routing): confirm destination inbox with client. Empty = accepted but NOT delivered anywhere (see lead.ts empty-route guard).
       }
-    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, service: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: [] }
+    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: [] }
   ) as Record<string, string[]>,
 
   mailchimp: {
@@ -92,16 +91,6 @@ export const EMAIL_CONFIG = {
         `<p>Hi ${firstName},</p>
         <p>Thanks for your interest in working with CMGT. We've received your information and passed it to our procurement team.</p>
         <p>If there's a fit for your trade and service area, someone will be in touch. We appreciate you reaching out.</p>
-        <p>Best regards,<br>The CMGT Team</p>`,
-    },
-    service: {
-      label: 'Service Request',
-      notifySubject: (who: string) => `New service request — ${who}`,
-      confirmSubject: 'We received your service request — CMGT',
-      confirmBody: (firstName: string) =>
-        `<p>Hi ${firstName},</p>
-        <p>Thanks for contacting CMGT. We've received your request and routed it to your community's manager.</p>
-        <p>A member of the team will follow up within one business day to confirm next steps. For an emergency, please call us at (225) 503-2648.</p>
         <p>Best regards,<br>The CMGT Team</p>`,
     },
     general: {

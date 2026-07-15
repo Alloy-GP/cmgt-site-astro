@@ -18,7 +18,7 @@
      rewriter has already run, so these must be final routes — not .html). */
   var MK = [
     { key: 'la', label: 'Louisiana',         hq: true,  q: 'Baton Rouge, LA', z: 8, view: '/hoa-management/louisiana',   dir: 'CMGT, Baton Rouge, LA' },
-    { key: 'tx', label: 'Texas',             hq: false, q: 'Houston, TX',     z: 7, view: '/hoa-management/texas',       dir: 'Houston, TX' },
+    { key: 'tx', label: 'Texas',             hq: false, q: 'Orange, TX',      z: 9, view: '/hoa-management/texas',       dir: 'Orange, TX' },
     { key: 'ms', label: 'Mississippi',       hq: false, q: 'Gulfport, MS',    z: 9, view: '/hoa-management/mississippi', dir: 'Gulfport, MS' },
     { key: 'al', label: 'Alabama',           hq: false, q: 'Fairhope, AL',    z: 9, view: '/hoa-management/alabama',     dir: 'Fairhope, AL' },
     { key: 'fl', label: 'Florida Panhandle', hq: false, q: 'Pensacola, FL',   z: 9, view: '/hoa-management/florida',    dir: 'Pace, FL' },
