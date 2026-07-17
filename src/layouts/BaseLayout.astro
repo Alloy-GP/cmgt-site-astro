@@ -15,6 +15,8 @@
 
 import '../styles/global.css';
 import '../styles/nav.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 import { SITE } from '../config/site.ts';
 import { REVIEW_ITEMS, PASTEL_BASE, TICKET_ID } from '../config/review.ts';
 
@@ -150,14 +152,15 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
     )}
   </head>
   <body>
-    <!-- Shared CMGT chrome — rendered client-side by /scripts/nav.js into these mounts -->
-    <div id="site-header"></div>
+    <!-- Shared CMGT chrome — server-rendered Astro components.
+         Interactivity is wired by /scripts/nav.js (behavior-only). -->
+    <Nav />
 
     <main>
       <slot />
     </main>
 
-    <div id="site-footer"></div>
+    <Footer />
 
     <!-- Shared behavior:
          nav.js  — renders header + footer + breadcrumbs, wires dropdowns / mega menu /
