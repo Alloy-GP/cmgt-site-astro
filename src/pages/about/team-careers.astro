@@ -113,30 +113,12 @@ const breadcrumb = breadcrumbSchema([
           <div class="eyebrow eyebrow-blue">Open roles</div>
           <h2 class="jobs-h">Come run with us.</h2>
         </div>
-        <p class="jobs-note reveal">Placeholder roles — swap in live openings, or point this section at your ATS.</p>
       </div>
-      <a class="job reveal" href="#">
-        <div>
-          <h3 class="job-t">Community Association Manager</h3>
-          <span class="job-meta">Remote — Louisiana<span class="dot">·</span>Full-time<span class="dot">·</span>Management</span>
-        </div>
-        <span class="job-apply">View role <span class="arrow">→</span></span>
-      </a>
-      <a class="job reveal" href="#">
-        <div>
-          <h3 class="job-t">Staff Accountant</h3>
-          <span class="job-meta">Remote — Gulf South<span class="dot">·</span>Full-time<span class="dot">·</span>Accounting</span>
-        </div>
-        <span class="job-apply">View role <span class="arrow">→</span></span>
-      </a>
-      <a class="job reveal" href="#">
-        <div>
-          <h3 class="job-t">Fix-It Squad Technician</h3>
-          <span class="job-meta">On-site — Baton Rouge<span class="dot">·</span>Full-time<span class="dot">·</span>Maintenance</span>
-        </div>
-        <span class="job-apply">View role <span class="arrow">→</span></span>
-      </a>
-      <p class="jobs-empty reveal">Don't see your role? We're always glad to meet good people — <a href="/request-a-proposal" style="color: var(--freedom-blue); font-weight: 600;">say hello</a>.</p>
+      <div class="jobs-none reveal">
+        <h3 class="jobs-none-h">No open roles at the moment.</h3>
+        <p class="jobs-none-p">We're not hiring for a specific position right now. But good communities are built by good people, and we'd rather meet you early than miss you. If you think you belong on this team, introduce yourself — we read every note.</p>
+        <a class="jobs-none-cta" href="/request-a-proposal">Introduce yourself <span class="arrow">→</span></a>
+      </div>
     </div>
   </section>
 
@@ -242,6 +224,12 @@ const breadcrumb = breadcrumbSchema([
   .job-apply .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
   .job:hover .job-apply .arrow { transform: translateX(4px); }
   .jobs-empty { font-size: 14px; color: var(--ink-400); margin-top: 22px; }
+  .jobs-none { border-top: 1.5px solid var(--hairline-strong); border-bottom: 1.5px solid var(--hairline-strong); padding: 40px 0; max-width: 640px; }
+  .jobs-none-h { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--freedom-blue); margin: 0 0 12px; }
+  .jobs-none-p { font-size: 16px; line-height: 1.65; color: var(--ink-500); margin: 0 0 20px; }
+  .jobs-none-cta { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--freedom-blue); }
+  .jobs-none-cta .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .jobs-none-cta:hover .arrow { transform: translateX(4px); }
 
   /* CTA */
   .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 96px 0; }
