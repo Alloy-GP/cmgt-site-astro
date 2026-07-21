@@ -48,8 +48,9 @@ export const EMAIL_CONFIG = {
   ) as Record<string, string[]>,
 
   mailchimp: {
-    enabled:     IS_PROD,   // prod only — never add stg/dev test leads to the real audience
-    defaultTags: ['website-lead'],
+    enabled:      IS_PROD,   // prod only — never add stg/dev test leads to the real audience
+    defaultTags:  ['website-lead'],        // tag applied to lead/proposal form submissions
+    subscribeTags: ['website-newsletter'], // tag applied to footer newsletter opt-ins
   },
 
   // ───────────────────────────────────────────────────────────────────────────

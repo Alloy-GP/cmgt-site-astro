@@ -36,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
           email_address: email,
           status: 'subscribed',
           merge_fields: { FNAME: firstName },
-          tags: EMAIL_CONFIG.mailchimp.defaultTags,
+          tags: EMAIL_CONFIG.mailchimp.subscribeTags ?? EMAIL_CONFIG.mailchimp.defaultTags,
         });
       } catch (err: any) {
         const alreadyExists = err?.response?.body?.title === 'Member Exists';
