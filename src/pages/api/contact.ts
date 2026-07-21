@@ -4,20 +4,13 @@
 
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
-import mailchimp from '@mailchimp/mailchimp_marketing';
 import { EMAIL_CONFIG } from '~/lib/email.config';
 import { sendWithAlert } from '~/lib/form-alert';
+import { upsertMailchimpContact } from '~/lib/mailchimp';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 // Astro reads env via import.meta.env, so pass the Slack URL explicitly.
 const FORM_ALERT_SLACK_URL = import.meta.env.FORM_ALERT_SLACK_URL;
-
-if (EMAIL_CONFIG.mailchimp.enabled) {
-  mailchimp.setConfig({
-    apiKey: import.meta.env.MAILCHIMP_API_KEY,
-    server: import.meta.env.MAILCHIMP_SERVER_PREFIX,
-  });
-}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -70,19 +63,13 @@ export const POST: APIRoute = async ({ request }) => {
       console.error('Resend confirm error:', err);
     }
 
-    // Optional Mailchimp opt-in
-    if (subscribe && EMAIL_CONFIG.mailchimp.enabled) {
-      try {
-        await mailchimp.lists.addListMember(import.meta.env.MAILCHIMP_AUDIENCE_ID, {
-          email_address: email,
-          status: 'subscribed',
-          merge_fields: { FNAME: name.split(' ')[0] },
-          tags: EMAIL_CONFIG.mailchimp.defaultTags,
-        });
-      } catch (err: any) {
-        console.error('Mailchimp opt-in error:', err?.response?.body ?? err);
-      }
-    }
+    // Add / update the contact in Mailchimp on every submission (upsert).
+    await upsertMailchimpContact({
+      email,
+      firstName: name.split(' ')[0],
+      lastName:  name.split(' ').slice(1).join(' '),
+      tags: EMAIL_CONFIG.mailchimp.defaultTags,
+    });
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (err) {
