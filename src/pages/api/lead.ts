@@ -7,6 +7,7 @@ import { Resend } from 'resend';
 import mailchimp from '@mailchimp/mailchimp_marketing';
 import { EMAIL_CONFIG } from '~/lib/email.config';
 import { sendWithAlert } from '~/lib/form-alert';
+import { addToPipedrive } from '~/lib/pipedrive';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 // Astro reads env via import.meta.env, so pass the Slack URL explicitly.
@@ -143,6 +144,22 @@ export const POST: APIRoute = async ({ request }) => {
       } catch (err: any) {
         console.error('Mailchimp lead error:', err?.response?.body ?? err);
       }
+    }
+
+    // Push COMPLETE lead submissions into Pipedrive (Organization + Person + Deal).
+    // No-op on stg/dev or until PIPEDRIVE_API_TOKEN is set; never throws.
+    // Partials are skipped so a one-off abandoned form doesn't create a duplicate deal.
+    if (!isPartial) {
+      const role = detailFields.find((f) => /role/i.test(f.label))?.value || '';
+      const notesText = [
+        ...detailFields.map((f) => `${f.label}: ${f.value || '—'}`),
+        message ? `\nMessage:\n${message}` : '',
+      ].filter(Boolean).join('\n');
+      await addToPipedrive({
+        email, name, phone, role, org: company,
+        notes: notesText,
+        source: `${intentCfg.label}${ref ? ` · ${ref}` : ''}`,
+      });
     }
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
