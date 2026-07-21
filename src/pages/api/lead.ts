@@ -128,7 +128,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Optional Mailchimp — adds leads to the list when enabled
     if (EMAIL_CONFIG.mailchimp.enabled) {
       try {
-        await mailchimp.lists.addListMember(import.meta.env.MAILCHIMP_AUDIENCE_ID, {
+        await mailchimp.lists.addListMember(import.meta.env.MAILCHIMP_AUDIENCE_ID ?? import.meta.env.MAILCHIMP_LIST_ID, {
           email_address: email,
           status: 'subscribed',
           merge_fields: {
