@@ -1,0 +1,183 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Resources', url: SITE.url + '/resources' },
+  { name: 'Insurance & Risk', url: SITE.url + '/resources/hurricane-preparedness-for-hoas' },
+]);
+
+const faq = faqSchema([
+  {
+    q: 'Who is responsible for hurricane damage in an HOA?',
+    a: 'The association is typically responsible for common areas and homeowners for their own lots and homes, but your governing documents control the exact line. Read the CC&Rs closely, since what counts as “common” versus “individual” varies by community. Let your manager help you draw that line before a storm forces the question.',
+  },
+  {
+    q: 'What should be in an HOA hurricane preparedness plan?',
+    a: 'A written HOA hurricane preparedness plan should cover roles, communication, insurance, vendor contacts, and clear before, during, and after protocols. That maps to the five phases here: pre-season prep, storm communication, a during-storm safety plan, post-storm documentation, and insurance and recovery funding. Update it every year.',
+  },
+  {
+    q: 'Can an HOA restrict hurricane shutters?',
+    a: 'Boards can set reasonable architectural standards for hurricane shutters through the ARC, but outright bans invite conflict and, in some states, run into statutory limits. Settle a pre-approved standard before storm season, and confirm your state’s rules with association counsel.',
+  },
+  {
+    q: 'Can an HOA apply for FEMA disaster aid?',
+    a: 'In most cases, community associations are not eligible for the individual assistance FEMA provides to households, though limited exceptions and other federal programs can apply. Insurance and reserves, not federal aid, are your primary recovery tools. Check official FEMA and Ready.gov guidance for current eligibility.',
+  },
+]);
+---
+<BaseLayout
+  title="Hurricane Preparedness for Gulf South HOAs (2026 Edition) | CMGT"
+  description="A board-ready HOA hurricane plan for Gulf South communities: pre-season prep, storm communication, damage assessment, and insurance from a manager who's lived it."
+  ogType="article"
+  pageSchema={[breadcrumb, faq]}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Insurance & Risk"}]'></nav>
+
+  <article>
+    <header class="art-hero">
+      <ImageSlot src="/photos/hurricane-hero-photo.webp" alt="A Gulf South community standing intact under a dramatic, storm-darkened sky as a hurricane approaches the coast" shape="rect" />
+      <div class="container art-hero-in">
+        <div class="art-cat">Insurance &amp; Risk</div>
+        <h1 class="art-h1">Hurricane preparedness for Gulf South HOAs: a board’s storm-season plan.</h1>
+        <p class="art-lede">A name appears in the forecast, the cone drifts toward your coast, and you realize the community you volunteered to govern has no real plan. Here’s the five-phase storm-season plan that 19 years of Gulf storms taught us.</p>
+        <div class="art-meta"><span>6 min read</span><span class="dot"></span><span>2026 Edition · Updated June 2026</span></div>
+      </div>
+    </header>
+
+    <div class="art-body">
+      <div class="container art-wrap">
+        <div class="art-take reveal">
+          <p class="art-take-h">The short version</p>
+          <p class="art-take-p">The work that protects a community happens before a storm is ever named. Five phases, from pre-season prep to insurance recovery, turn a hurricane from a crisis into a managed event.</p>
+        </div>
+
+        <p class="art-p">Every Gulf South board member knows the moment. A name appears in the hurricane forecast, the cone drifts toward your coast, and you realize the community you volunteered to govern has no real plan. HOA hurricane preparedness never feels urgent in January. It feels very urgent when a Category 3 is three days out.</p>
+        <p class="art-p">We’ve lived it. In 2016, the Great Flood put two feet of water in our Denham Springs office, yet we closed for only four days and kept serving every community. Here’s the five-phase plan that experience taught us.</p>
+
+        <h2 class="art-h2">Why a generic hurricane plan fails Gulf South HOAs</h2>
+        <p class="art-p">Generic hurricane preparedness advice fails Gulf South boards. Most templates are built for a national audience or Florida condos and skip the wind, surge, and freshwater flooding we face here. Communities in <a href="/hoa-management/louisiana">Louisiana</a>, <a href="/hoa-management/mississippi">Mississippi</a>, and <a href="/hoa-management/alabama">Alabama</a> sit in flood zones where standard property insurance won’t cover rising water, and after a storm the good crews are booked for a hundred miles. <strong>The association that lined up its vendors in April is the one that gets served in September.</strong> Professional HOA management is also still new here, so if your board has never built a plan, you’re normal.</p>
+
+        <h2 class="art-h2">Phase 1: your pre-season checklist (complete by June 1)</h2>
+        <p class="art-p">Protection happens before a storm is ever named, so review and update your HOA hurricane preparedness checklist every year before June 1. A written HOA disaster plan is a core board responsibility, and the <a href="https://www.caionline.org" target="_blank" rel="noopener">Community Associations Institute</a> offers useful planning resources; CMGT led Louisiana’s first CAI chapter, so we hold ourselves to it.</p>
+        <ul class="art-ul">
+          <li>Adopt and update a written plan yearly, with roles clearly assigned.</li>
+          <li>Review wind, flood, and directors &amp; officers (D&amp;O) insurance, and know your deductibles.</li>
+          <li>Confirm the reserve fund can absorb a deductible or emergency spend.</li>
+          <li>Inspect roofs, drainage, and trees on common property.</li>
+          <li>Secure or plan storage for common-area furniture and loose objects.</li>
+          <li>Build a vendor and emergency-contact list, with agreements set in advance.</li>
+          <li>Back up governing documents, policies, and the homeowner roster to the cloud.</li>
+        </ul>
+        <p class="art-p"><strong>Confirm your coverage before June 1: a standard property policy does not cover flood, and most Gulf South communities need a separate flood policy as well.</strong> This is where a management partner earns its keep. CMGT runs a dedicated Insurance &amp; Reserve department that tracks coverage and renewals, and insurance monitoring is written into our management agreement. <a href="https://www.ready.gov/hurricanes" target="_blank" rel="noopener">Ready.gov’s hurricane resources</a> are a good reference for your board.</p>
+
+        <h3 class="art-h3">Storm shutters and what boards can (and can’t) restrict</h3>
+        <p class="art-p">Settle your rules on hurricane protection before a storm forms. Questions about HOA restrictions on hurricane shutters start with your governing documents. Your Architectural Review Committee (ARC) can set reasonable standards for how shutters look and install, but a blanket ban invites conflict and can expose the board to liability. <strong>The better move is a pre-approved shutter standard already written into your covenants, so a homeowner can act fast.</strong> Statutory limits on shutter restrictions vary by state, so confirm what yours allows with association counsel.</p>
+
+        <h2 class="art-h2">Phase 2: communication and final prep as the storm approaches</h2>
+        <p class="art-p">Once a named storm enters the forecast cone, the board’s job becomes communication. <strong>The 48 to 72 hours before landfall are when a calm, clear message to homeowners does more good than almost anything else.</strong> Your hurricane preparedness plan should already say how you’ll reach everyone when networks are strained. Point homeowners to local evacuation orders, clarify where their responsibility ends and the association’s begins, and secure the community: furniture, pool equipment, gates, and drains.</p>
+        <p class="art-p">Our founder, Jeff Harman, wants CMGT known as the best communication company that just happens to do management. Boards who manage with us reach homeowners through the portal, app, email, and text, and about 70% already use it. That’s what a management partner is for; you can <a href="/request-a-proposal">request a proposal</a> any time.</p>
+
+        <h2 class="art-h2">Phase 3: staying connected during the storm</h2>
+        <p class="art-p">During the storm, only two jobs matter: safety and keeping a communication lifeline open as power and cell service fail. <strong>Nobody inspects a roof in 100-mph wind, and no board should try.</strong> Set that expectation early so silence doesn’t read as neglect.</p>
+        <p class="art-p">A prepared board already knows who monitors conditions, how updates flow once it’s safe, and which fallback channel to use when the usual ones go dark. This is where a remote-capable partner proves its worth. In 2016 our office sat under two feet of water, yet the work continued because our records live in the cloud, not a filing cabinet that floods.</p>
+
+        <h2 class="art-h2">Phase 4: damage assessment and documentation after the storm</h2>
+        <p class="art-p">Good hurricane preparedness pays off most in the first 72 hours after the storm. HOA hurricane recovery follows a strict order: safety, documentation, then cleanup. Skipping straight to cleanup is the costliest board mistake, and consistent homeowners association hurricane procedures keep things orderly.</p>
+        <p class="art-p">Do a safety walk of common areas before anyone re-enters. <strong>Photograph and log every piece of common-area damage before you touch it, because those date-stamped records become the backbone of your insurance claim.</strong> Prioritize hazards, bring in your Phase 1 vendors, and keep homeowners updated. The association handles common areas and homeowners their own lots and homes, but your governing documents set the exact line. CMGT’s team-based model helps: while one specialist documents damage, another moves vendors and another answers calls, so recovery never stalls on one person.</p>
+
+        <h2 class="art-h2">Phase 5: insurance claims, FEMA, and funding the recovery</h2>
+        <p class="art-p">Funding recovery means knowing what your policies cover, filing a documented claim quickly, and knowing where federal help applies. The distinction that trips up most Gulf South boards is wind versus water. <strong>A standard wind or property policy usually excludes flooding, so most Gulf South associations need a separate flood policy as well.</strong> Flood includes storm surge and rising water, covered through the National Flood Insurance Program; <a href="https://www.floodsmart.gov" target="_blank" rel="noopener">FloodSmart</a> explains the difference.</p>
+        <div class="art-table-wrap">
+          <table class="art-table">
+            <thead><tr><th>&nbsp;</th><th>Wind / property coverage</th><th>Flood coverage (NFIP)</th></tr></thead>
+            <tbody>
+              <tr><td>What it covers</td><td>Wind-driven damage: roofs, siding, structures</td><td>Rising water and storm surge</td></tr>
+              <tr><td>Where it comes from</td><td>Your standard association property policy</td><td>A separate NFIP flood policy</td></tr>
+              <tr><td>The common gap</td><td>Usually excludes flood and surge</td><td>Does not cover wind damage</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="art-p">File with your Phase 4 documentation, report promptly, and meet the adjuster with photos and estimates. While it processes, a healthy reserve fund bridges the gap; if a loss outruns reserves, a special assessment may be needed, which homeowners accept more readily when the board has been financially transparent. Don’t count on FEMA to fill it: associations usually aren’t eligible for the individual assistance FEMA gives households, so treat insurance and reserves as your primary tools and confirm eligibility against official guidance. Insurance is a job many companies would rather avoid, which is why our Insurance &amp; Reserve department handles coverage and claims, part of the broader <a href="/hoa-management-services">community association management</a> support the right partner provides.</p>
+
+        <h2 class="art-h2">Frequently asked questions</h2>
+        <h3 class="art-h3">Who is responsible for hurricane damage in an HOA?</h3>
+        <p class="art-p">The association is typically responsible for common areas and homeowners for their own lots and homes, but your governing documents control the exact line. Read the CC&amp;Rs closely, since what counts as “common” versus “individual” varies by community. Let your manager help you draw that line before a storm forces the question.</p>
+        <h3 class="art-h3">What should be in an HOA hurricane preparedness plan?</h3>
+        <p class="art-p">A written HOA hurricane preparedness plan should cover roles, communication, insurance, vendor contacts, and clear before, during, and after protocols. That maps to the five phases here: pre-season prep, storm communication, a during-storm safety plan, post-storm documentation, and insurance and recovery funding. Update it every year.</p>
+        <h3 class="art-h3">Can an HOA restrict hurricane shutters?</h3>
+        <p class="art-p">Boards can set reasonable architectural standards for hurricane shutters through the ARC, but outright bans invite conflict and, in some states, run into statutory limits. Settle a pre-approved standard before storm season, and confirm your state’s rules with association counsel.</p>
+        <h3 class="art-h3">Can an HOA apply for FEMA disaster aid?</h3>
+        <p class="art-p">In most cases, community associations are not eligible for the individual assistance FEMA provides to households, though limited exceptions and other federal programs can apply. Insurance and reserves, not federal aid, are your primary recovery tools. Check official FEMA and Ready.gov guidance for current eligibility.</p>
+
+        <h2 class="art-h2">A prepared board turns a hurricane into a managed event</h2>
+        <p class="art-p">Five phases, one goal: prepare before June 1, communicate as the storm nears, stay safe and connected during it, document carefully afterward, and fund recovery with coverage and reserves set up in advance. That’s what real HOA hurricane preparedness looks like, and it turns a hurricane from a crisis into a managed event.</p>
+        <p class="art-p">We’ve done exactly that alongside Gulf South communities for 19 years, including the year our own office took on two feet of water. If your board wants a partner who has already weathered Gulf storm seasons, we’d love to talk.</p>
+
+        <p class="art-disclaimer">This article is general information for Gulf South HOA boards, not legal or financial advice. Confirm insurance, statutory, and FEMA-eligibility specifics with your association counsel and insurance agent.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="rel">
+    <div class="container">
+      <h2 class="rel-h">Keep reading.</h2>
+      <div class="rel-grid"><a class="rel-card" href="/hoa-management-services"><span class="rel-t">Full-Service HOA Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/condo-management"><span class="rel-t">Condo &amp; Townhome Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/request-a-proposal"><span class="rel-t">Talk to our team</span><span class="rel-ar">→</span></a></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container cta-in">
+      <div><h2 class="cta-h">Want this handled for you?</h2><p class="cta-p">A real person will walk through your community’s storm plan — within two business days.</p></div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+  .art-hero { position: relative; background: var(--freedom-blue); color: #fff; padding: 104px 0 88px; overflow: hidden; isolation: isolate; }
+  .art-hero > :global(.image-slot) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .art-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(30,30,119,.66) 0%, rgba(30,30,119,.84) 100%); pointer-events: none; }
+  .art-hero-in { position: relative; z-index: 2; max-width: 820px; }
+  .art-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .art-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.025em; color: #fff; margin: 16px 0 20px; text-wrap: balance; }
+  .art-lede { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; color: rgba(255,255,255,.9); margin: 0 0 24px; text-wrap: pretty; }
+  .art-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: rgba(255,255,255,.65); }
+  .art-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.4); }
+  .art-body { background: #fff; padding: 70px 0 100px; }
+  .art-wrap { max-width: 720px; }
+  .art-take { background: var(--fb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 0 0 44px; }
+  .art-take-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); opacity: .6; margin: 0 0 8px; }
+  .art-take-p { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0; }
+  .art-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 32px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 44px 0 16px; text-wrap: balance; }
+  .art-h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(19px, 2.2vw, 23px); line-height: 1.25; color: var(--freedom-blue); margin: 30px 0 10px; }
+  .art-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+  .art-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-ul { margin: 0 0 20px; padding-left: 22px; }
+  .art-ul li { font-size: 17px; line-height: 1.65; color: var(--ink-700); margin: 0 0 9px; }
+  .art-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .art-wrap a:hover { border-bottom-color: var(--landscaping-green); }
+  .art-table-wrap { margin: 26px 0 10px; overflow-x: auto; }
+  .art-table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  .art-table th, .art-table td { text-align: left; padding: 12px 14px; border: 1px solid var(--hairline-strong); vertical-align: top; }
+  .art-table thead th { background: var(--freedom-blue); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 13px; }
+  .art-table td:first-child { font-weight: 600; color: var(--freedom-blue); background: var(--nb-lightest); }
+  .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
+  .rel { background: var(--nb-lightest); padding: 90px 0; }
+  .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
+  .rel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .rel-grid { grid-template-columns: 1fr; } }
+  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; box-shadow: 0 2px 8px rgba(30,30,119,.05); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,30,119,.10); }
+  .rel-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .rel-ar { color: var(--landscaping-green); font-size: 18px; }
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+</style>

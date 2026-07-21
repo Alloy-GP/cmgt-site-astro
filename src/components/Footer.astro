@@ -1,0 +1,101 @@
+---
+/**
+ * Footer.astro — server-rendered site footer (brand + credentials, link
+ * columns, newsletter CTA, legal bar). Markup mirrors the former
+ * public/scripts/nav.js footer so src/styles/nav.css applies unchanged.
+ * The newsletter form is wired client-side by public/scripts/nav.js.
+ * `ext` links render target=_blank rel="noopener noreferrer".
+ */
+const PROPOSAL = '/request-a-proposal';
+const year = new Date().getFullYear();
+
+const FOOTER = [
+  {
+    h: 'Services',
+    links: [
+      { t: 'HOA Management', href: '/hoa-management-services' },
+      { t: 'On-Site Management', href: '/on-site-management' },
+      { t: 'Condo & Townhome', href: '/condo-management' },
+      { t: 'Financial Management', href: '/hoa-financial-management' },
+      { t: 'Developer Services', href: '/developer-hoa-management' },
+      { t: 'Rentals', href: '/rentals' },
+      { t: 'Search Rentals', href: '/search-rentals' },
+      { t: 'The Fix-It Squad', href: '/fix-it-squad' },
+    ],
+  },
+  {
+    h: 'Communities',
+    links: [
+      { t: 'Louisiana', href: '/hoa-management/louisiana' },
+      { t: 'Texas', href: '/hoa-management/texas' },
+      { t: 'Mississippi', href: '/hoa-management/mississippi' },
+      { t: 'Alabama', href: '/hoa-management/alabama' },
+      { t: 'Florida Panhandle', href: '/hoa-management/florida' },
+    ],
+  },
+  {
+    h: 'Company',
+    links: [
+      { t: 'About CMGT', href: '/about' },
+      { t: 'Our Story', href: '/our-story' },
+      { t: 'Team & Careers', href: '/about/team-careers' },
+      { t: 'How We Work', href: '/how-we-work' },
+      { t: 'CMGT Cares', href: '/about/cmgt-cares' },
+      { t: 'FAQ', href: '/faq' },
+      { t: 'Contact', href: PROPOSAL },
+      { t: 'Testimonials', href: '/testimonials' },
+    ],
+  },
+  {
+    h: 'Account Access',
+    links: [
+      { t: 'Log In', href: '/login' },
+      { t: 'Pay Dues', href: 'https://portal.cmgt.org/public', ext: true },
+      { t: 'Order Documents', href: 'https://www.homewisedocs.com/', ext: true },
+      { t: 'Submit a Maintenance Request', href: 'https://fixitsquad.org/', ext: true },
+    ],
+  },
+] as any[];
+---
+<footer class="ft">
+  <div class="ft-main">
+    <div class="ft-brand-col">
+      <img src="/assets/logo-1C-white.svg" alt="CMGT" />
+      <p class="ft-brand-tagline">Commit<span class="dot">.</span> Communicate<span class="dot">.</span> Care<span class="dot">.</span></p>
+      <p class="ft-brand-copy">Gulf South HOA management — 400+ communities across five states, independently owned since 2007.</p>
+      <div class="ft-creds"><p class="ft-creds-h">Accredited &amp; affiliated</p><div class="ft-creds-row">
+        <img src="/assets/cred-cai.webp" alt="Community Associations Institute (CAI)" loading="lazy" />
+        <img src="/assets/cred-ams.webp" alt="Accredited Association Management Specialist (AMS)" loading="lazy" />
+        <img src="/assets/cred-cmca.webp" alt="Certified Manager of Community Associations (CMCA)" loading="lazy" />
+      </div></div>
+    </div>
+    {FOOTER.map((col) => (
+      <div>
+        <p class="ft-col-h">{col.h}</p>
+        <ul class="ft-list">
+          {col.links.map((l: any) => (
+            <li><a href={l.href} target={l.ext ? '_blank' : undefined} rel={l.ext ? 'noopener noreferrer' : undefined}>{l.t}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+  <div class="ft-cta"><div class="ft-cta-in">
+    <div>
+      <h2 class="ft-cta-h">Board insights, in your inbox<span class="dot">.</span></h2>
+      <p class="ft-cta-p">Plain-English guides on reserves, budgets, and Gulf South HOA law — a few times a year, never spam.</p>
+    </div>
+    <div>
+      <form class="ft-nl" novalidate>
+        <input type="email" placeholder="you@email.com" aria-label="Email address" required />
+        <button class="ft-nl-btn" type="submit">Subscribe <span class="arrow">→</span></button>
+      </form>
+      <p class="ft-nl-ok">Thanks — you’re on the list.</p>
+      <p class="ft-nl-note">For HOA boards &amp; homeowners. Unsubscribe anytime.</p>
+    </div>
+  </div></div>
+  <div class="ft-bottom"><div class="ft-bottom-in">
+    <span>© {year} CMGT, LLC · We Manage. You Live.</span>
+    <nav class="ft-legal" aria-label="Legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a><a href="#">Accessibility</a></nav>
+  </div></div>
+</footer>

@@ -4,7 +4,7 @@ import { SITE } from '~/config/site';
 import { breadcrumbSchema } from '~/lib/schema';
 
 const breadcrumb = breadcrumbSchema([
-  { name: 'Home',         url: SITE.url + '/' },
+  { name: 'Home', url: SITE.url + '/' },
   { name: 'Testimonials', url: SITE.url + '/testimonials' },
 ]);
 ---
@@ -46,7 +46,7 @@ const breadcrumb = breadcrumbSchema([
     <div class="container cta-in">
       <div>
         <h2 class="cta-h">Ready to join them?</h2>
-        <p class="cta-p">Tell us about your community and a real person will reach out within one business day.</p>
+        <p class="cta-p">Tell us about your community and a real person will reach out within two business days.</p>
       </div>
       <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
     </div>
@@ -66,7 +66,6 @@ const breadcrumb = breadcrumbSchema([
         { n: 'Tom Allard', r: 'Board Member · The Woodlands', q: "What sold me was that they came to a problem with the solution already attached. We're not paying them to tell us what's broken — we know what's broken." }
       ];
       var grid = document.getElementById('ts-grid');
-      if (!grid) return;
       function star() { return '<svg width="15" height="15" viewBox="0 0 14 14" fill="#F0B400"><path d="M7 1l1.8 4 4.2.4-3.2 2.9 1 4.2L7 10.4 3.2 12.5l1-4.2L1 5.4l4.2-.4z"></path></svg>'; }
       grid.innerHTML = T.map(function (t) {
         var initials = t.n.split(/[ &]+/).slice(0, 2).map(function (w) { return w[0]; }).join('');
@@ -100,14 +99,17 @@ const breadcrumb = breadcrumbSchema([
   .ts-grid { columns: 3; column-gap: 28px; }
   @media (max-width: 980px) { .ts-grid { columns: 2; } }
   @media (max-width: 640px) { .ts-grid { columns: 1; } }
-  .ts-card { break-inside: avoid; margin: 0 0 28px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 16px; padding: 30px 30px; box-shadow: var(--shadow-1); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
-  .ts-card:hover { border-color: var(--landscaping-green); transform: translateY(-3px); box-shadow: var(--shadow-2); }
-  .ts-card-stars { display: flex; gap: 2px; margin-bottom: 16px; }
-  .ts-quote { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0 0 20px; }
-  .ts-attr { display: flex; align-items: center; gap: 12px; }
-  .ts-avatar { flex: none; width: 42px; height: 42px; border-radius: 50%; background: var(--fb-lightest); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--freedom-blue); }
-  .ts-name { font-weight: 700; font-size: 14.5px; color: var(--freedom-blue); }
-  .ts-role { font-size: 12.5px; color: var(--ink-400); margin-top: 1px; }
+  /* .ts-card and its children are injected at runtime by the inline script, so
+     Astro's scoped hash never reaches them. Scope under the static .ts-wall
+     parent and mark the generated descendants :global() so the CSS applies. */
+  .ts-wall :global(.ts-card) { break-inside: avoid; margin: 0 0 28px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 16px; padding: 30px 30px; box-shadow: var(--shadow-1); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .ts-wall :global(.ts-card):hover { border-color: var(--landscaping-green); transform: translateY(-3px); box-shadow: var(--shadow-2); }
+  .ts-wall :global(.ts-card-stars) { display: flex; gap: 2px; margin-bottom: 16px; }
+  .ts-wall :global(.ts-quote) { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0 0 20px; }
+  .ts-wall :global(.ts-attr) { display: flex; align-items: center; gap: 12px; }
+  .ts-wall :global(.ts-avatar) { flex: none; width: 42px; height: 42px; border-radius: 50%; background: var(--fb-lightest); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--freedom-blue); }
+  .ts-wall :global(.ts-name) { font-weight: 700; font-size: 14.5px; color: var(--freedom-blue); }
+  .ts-wall :global(.ts-role) { font-size: 12.5px; color: var(--ink-400); margin-top: 1px; }
   .ts-note { text-align: center; font-size: 13px; color: var(--ink-400); margin: 8px 0 0; }
 
   .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 96px 0; position: relative; overflow: hidden; }

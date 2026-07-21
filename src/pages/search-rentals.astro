@@ -1,0 +1,138 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home',           url: SITE.url + '/' },
+  { name: 'Rentals',        url: SITE.url + '/rentals' },
+  { name: 'Search Rentals', url: SITE.url + '/search-rentals' },
+]);
+---
+<BaseLayout
+  title="Search Rentals — Available Homes for Rent | CMGT"
+  description="Browse available rental homes and properties managed by CMGT across the Greater Baton Rouge area. Search, filter, and apply online."
+  pageSchema={breadcrumb}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Rentals","href":"/rentals"},{"t":"Search Rentals"}]'></nav>
+
+  <section class="sr-hero">
+    <div class="container">
+      <div class="sr-hero-in">
+        <div class="eyebrow eyebrow-blue">Greater Baton Rouge</div>
+        <h1 class="sr-h1">Search available rentals.</h1>
+        <p class="sr-lede">Browse the homes and properties we currently have available across the Greater Baton Rouge area. Filter by what matters to you, and apply right from the listing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sr-listings">
+    <div class="container">
+      <!-- Tenant Turner widget (customer_id 4821) -->
+      <div class="sr-widget">
+        <script id="ttWidget" type="text/javascript" is:inline>
+          try {
+            window.tenantTurnerListingsWidget = {
+              connection: { customer_id: 4821, user_id: null },
+              environment: { root_path: "https://app.tenantturner.com" },
+              tracking: {},
+              options: {
+                appearance__theme_color: "1E1E77",
+                appearance__map_enabled: 0,
+                appearance__map_height: "800",
+                appearance__map_width: "100",
+                appearance__map_view: "show_listings_first",
+                appearance__application_enabled: 1,
+                appearance__application_display_type: "link",
+                appearance__waitlist_enabled: 1,
+                appearance__description_enabled: 1,
+                search__search_enabled: 1,
+                search__default_value: "",
+                filter__filter_enabled: 1,
+                filter__city_default_value: "",
+                filter__state_default_value: "",
+                filter__property_type_default_value: "",
+                filter__bedrooms_default_value: "",
+                filter__baths_default_value: "",
+                filter__pets_default_value: "",
+                sort__sort_enabled: 1,
+                sort__default_value: "Most Recent"
+              }
+            };
+          } catch (err) { if (console) { console.warn("TT widget error: " + err); } }
+        </script>
+        <script is:inline>
+          try {
+            (function () {
+              var w = window;
+              var tt = w.TenantTurner;
+              if (typeof tt !== "function") {
+                var d = document;
+                function l() {
+                  var s = d.createElement("script");
+                  s.type = "text/javascript";
+                  s.async = true;
+                  s.src = (window.tenantTurnerListingsWidget.environment.root_path
+                    ? window.tenantTurnerListingsWidget.environment.root_path + "/widget/widget.js"
+                    : "https://app.tenantturner.com/widget/widget.js");
+                  var x = d.getElementById("ttWidget");
+                  x.parentNode.insertBefore(s, x);
+                }
+                if (w.attachEvent) { w.attachEvent("onload", l); }
+                else { w.addEventListener("load", l, false); }
+              }
+            })();
+          } catch (err) { if (console) { console.log("TT widget error: " + err); } }
+        </script>
+      </div>
+      <!-- end Tenant Turner widget -->
+      <noscript>
+        <p class="sr-noscript">Our live rental listings need JavaScript to load. Please enable it, or call <a href="tel:2255032648">(225) 503-2648</a> and we'll walk you through current availability.</p>
+      </noscript>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+
+  .sr-hero { background: var(--nb-lightest); padding: 84px 0 64px; }
+  .sr-hero-in { max-width: 720px; }
+  .sr-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(44px, 5.4vw, 80px); line-height: 1.0; letter-spacing: -.03em; color: var(--freedom-blue); margin: 18px 0 20px; text-wrap: balance; }
+  .sr-lede { font-size: 17.5px; line-height: 1.7; color: var(--ink-500); margin: 0; max-width: 600px; }
+
+  .sr-listings { background: #fff; padding: 56px 0 96px; }
+  .sr-widget { min-height: 480px; }
+  .sr-noscript { font-size: 15px; line-height: 1.6; color: var(--ink-500); }
+  .sr-noscript a { color: var(--freedom-blue); font-weight: 600; }
+
+  /* ── TenantTurner widget overrides (renders inline; elements are injected
+     client-side, so these use :global). Match the site font + tidy the filter
+     controls. Material Icons are left untouched so the widget's icons render. ── */
+  .sr-widget :global(*):not(.material-icons):not([class*="material-icons"]) {
+    font-family: var(--font-body) !important;
+  }
+  .sr-widget :global(.tt-view-container input),
+  .sr-widget :global(.tt-view-container select) {
+    font-size: 14.5px !important;
+    color: var(--ink-700) !important;
+    border: 1.5px solid var(--hairline-strong) !important;
+    border-radius: 10px !important;
+    padding: 10px 12px !important;
+    background-color: #fff !important;
+  }
+  .sr-widget :global(.tt-view-container input:focus),
+  .sr-widget :global(.tt-view-container select:focus) {
+    border-color: var(--freedom-blue) !important;
+    outline: none !important;
+  }
+  .sr-widget :global(.tt-rental-row) {
+    border-radius: 14px !important;
+    border-color: var(--hairline-strong) !important;
+  }
+  .sr-widget :global(.tt-rental-row img) {
+    border-radius: 10px !important;
+    object-fit: cover !important;
+  }
+</style>

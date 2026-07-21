@@ -5,8 +5,8 @@ import { breadcrumbSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
-  { name: 'Home',             url: SITE.url + '/' },
-  { name: 'How We Work',      url: SITE.url + '/how-we-work' },
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'How We Work', url: SITE.url + '/how-we-work' },
   { name: 'The Fix-It Squad', url: SITE.url + '/fix-it-squad' },
 ]);
 ---
@@ -22,7 +22,18 @@ const breadcrumb = breadcrumbSchema([
     <div class="container fs-hero-in">
       <div class="eyebrow">In-house since 2019</div>
       <h1 class="fs-hero-h">The Fix-It Squad.</h1>
-      <p class="fs-hero-p">Our own maintenance division — <strong>not a rolodex of subcontractors.</strong> Trusted technicians, fast response, and fair pricing, accountable to the same standard as the rest of the team.</p>
+      <div class="fs-loc">Greater Baton Rouge &amp; surrounding areas</div>
+      <p class="fs-hero-p">Our own maintenance crew for the communities we manage in the <strong>Greater Baton Rouge area</strong> — <strong>not a rolodex of subcontractors.</strong> Trusted technicians, fast response, and fair pricing, accountable to the same standard as the rest of the team.</p>
+      <div class="fs-hero-ctas">
+        <a class="btn btn-blue" href="https://fixitsquad.org/" target="_blank" rel="noopener noreferrer">Submit a maintenance request <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCOPE -->
+  <section class="fs-scope">
+    <div class="container">
+      <p class="fs-scope-note"><strong>A benefit of CMGT management in the Greater Baton Rouge area and surrounding markets</strong> — not a standalone service you buy separately. For the communities we manage elsewhere, the same accountability comes through managed vendor coordination, and On-Site communities have a dedicated on-site maintenance lead.</p>
     </div>
   </section>
 
@@ -43,7 +54,7 @@ const breadcrumb = breadcrumbSchema([
         </p>
       </div>
       <div class="diff-media reveal">
-        <ImageSlot src="/photos/fix-it-squad-fs-diff-photo.jpg" alt="Fix-It Squad technician with branded truck" shape="rounded" radius={20} />
+        <ImageSlot src="/photos/baton-rouge-maintenance-service.webp" alt="A CMGT Fix-It Squad maintenance technician arriving with a tool bag to help a homeowner at a Greater Baton Rouge home" shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -51,7 +62,7 @@ const breadcrumb = breadcrumbSchema([
   <!-- POINTS -->
   <section class="pts">
     <div class="container pts-grid">
-      <div class="reveal"><h3 class="pt-t">Fast <span class="g">response</span></h3><p class="pt-d">In-house scheduling means we're not waiting on a third party to call you back. Urgent issues get triaged the same day.</p></div>
+      <div class="reveal"><h3 class="pt-t">Fast <span class="g">response</span></h3><p class="pt-d">In-house scheduling means we're not waiting on a third party to call you back. Urgent issues get triaged quickly.</p></div>
       <div class="reveal"><h3 class="pt-t">Fair <span class="g">pricing</span></h3><p class="pt-d">Transparent rates with no hidden vendor markups. You see what the work costs, and why.</p></div>
       <div class="reveal"><h3 class="pt-t">Trusted <span class="g">hands</span></h3><p class="pt-d">Background-checked technicians who represent CMGT — and treat your community like it's their own.</p></div>
     </div>
@@ -84,15 +95,48 @@ const breadcrumb = breadcrumbSchema([
     </div>
   </section>
 
+  <section class="sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="eyebrow eyebrow-green">How it works</div>
+        <h2 class="sec-h">From reported to resolved — without the middleman.</h2>
+        <p class="sec-sub">Because scheduling, the crew, and the manager all sit under one roof, a work order doesn’t bounce between companies waiting for someone to pick up.</p>
+      </div>
+      <div class="feat-grid reveal">
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">1 · Report</h3><p class="feat-p">A board member, homeowner, or resident logs the issue through the portal or a quick call — no chasing a vendor’s voicemail.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">2 · Triage</h3><p class="feat-p">We assess priority quickly. Anything urgent — safety, water, access — jumps the line immediately.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">3 · Fix</h3><p class="feat-p">A background-checked CMGT technician handles it on site. No third-party scheduling, no week-long callback gap.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">4 · Close-out</h3><p class="feat-p">The work is documented, the board sees what was done and what it cost, and the record lives with your community’s file.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="eyebrow eyebrow-green">Common questions</div>
+        <h2 class="sec-h">Straight answers about the Squad.</h2>
+      </div>
+      <div class="acc-list reveal">
+        <div class="acc-item"><button class="acc-q" type="button">Is the Fix-It Squad an extra cost?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Having the Squad available <strong>comes standard with CMGT management.</strong> Actual repair work is billed at transparent rates with no hidden vendor markup — you see what the work costs and why.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">Do you still use outside contractors?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">When a job needs a licensed specialty trade — major electrical, roofing, elevators — we bring one in, manage the work, and stand behind the result. The accountability still runs back to CMGT.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">How fast is “fast response”?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Urgent issues are triaged quickly. Because scheduling is in-house, we’re never waiting on a third party to call your community back.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">Can rental owners use the Squad?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Yes — for our Greater Baton Rouge rental owners, the Squad handles turn and make-ready between tenants. <a href="/rentals">See rental management.</a></div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">What happens during storm season?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">We secure common areas ahead of Gulf weather and mobilize quickly afterward — one of the clearest advantages of a crew that already knows your property.</div></div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="cta">
     <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
     <div class="container cta-in">
       <div class="reveal">
-        <h2 class="cta-h">Maintenance that's actually handled.</h2>
-        <p class="cta-p">It comes standard with CMGT management. Tell us about your community and we'll show you how it works.</p>
+        <h2 class="cta-h">Need something fixed?</h2>
+        <p class="cta-p">Homeowners, boards, and residents in the communities we manage across the Greater Baton Rouge area — submit a request and our in-house crew takes it from there.</p>
+        <p class="cta-sub">Not a CMGT community yet? <a href="/hoa-management-services">See HOA management →</a></p>
       </div>
-      <div class="reveal"><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
+      <div class="reveal"><a class="btn btn-blue" href="https://fixitsquad.org/" target="_blank" rel="noopener noreferrer">Submit a maintenance request <span class="arrow">→</span></a></div>
     </div>
   </section>
 </BaseLayout>
@@ -111,6 +155,14 @@ const breadcrumb = breadcrumbSchema([
   .fs-hero-h em { font-style: italic; font-weight: 300; }
   .fs-hero-p { font-size: 18px; line-height: 1.65; color: rgba(30,30,119,.85); max-width: 560px; margin: 0; }
   .fs-hero-p strong { color: var(--freedom-blue); font-weight: 700; }
+  .fs-loc { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.55); color: var(--freedom-blue); font-weight: 700; font-size: 13px; letter-spacing: .01em; padding: 7px 15px; border-radius: 999px; margin: 0 0 22px; }
+  .fs-loc::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--landscaping-green); flex-shrink: 0; }
+  .fs-hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin: 28px 0 0; }
+
+  /* SCOPE NOTE */
+  .fs-scope { background: #fff; padding: 40px 0 0; }
+  .fs-scope-note { max-width: 760px; font-size: 15px; line-height: 1.7; color: var(--ink-700); margin: 0; padding: 20px 24px; background: var(--nb-lightest); border-left: 3px solid var(--landscaping-green); border-radius: 0 10px 10px 0; }
+  .fs-scope-note strong { color: var(--freedom-blue); font-weight: 700; }
 
   /* DIFFERENCE */
   .diff { background: #fff; padding: 112px 0; }
@@ -155,4 +207,7 @@ const breadcrumb = breadcrumbSchema([
   .cta-in { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
   .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
   .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 480px; margin: 0; color: rgba(30,30,119,.82); }
+  .cta-sub { font-size: 14.5px; line-height: 1.5; margin: 14px 0 0; color: rgba(30,30,119,.72); }
+  .cta-sub a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .cta-sub a:hover { border-bottom-color: var(--freedom-blue); }
 </style>

@@ -1,0 +1,181 @@
+/* ===========================================================
+   Intake Form (multi-intent) — STRUCTURE ONLY (canonical)
+   Namespaced .if-* / .if-hp. Brand colors + fonts live in
+   intake-form.theme.css. This file is safe to sync verbatim across
+   sites ("adopt the latest starter form") — it holds no client values.
+   Both stylesheets must be loaded (see request-a-proposal.astro).
+   =========================================================== */
+.if-widget {
+  width: 560px; max-width: 100%; background: #fff; border: 1px solid var(--if-border);
+  border-radius: calc(var(--if-radius) + 4px); box-shadow: 0 12px 30px rgba(23,35,37,.13); overflow: hidden;
+  font-family: var(--if-font-body); color: var(--if-ink);
+}
+
+/* --- Honeypot (visually hidden anti-spam field) --- */
+.if-hp { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(100%); white-space: nowrap; }
+
+/* --- WhatConverts capture mirror: off-screen named text inputs that hold every
+   collected value so call-tracking reads the full lead on submit (it ignores
+   type="hidden", so these must be real text inputs, just visually removed). --- */
+.if-wc { position: absolute; left: -9999px; top: 0; width: 1px; height: 1px; overflow: hidden; }
+.if-wc input { width: 1px; height: 1px; }
+
+/* --- Component --- */
+.if-accentbar { height: 5px; background: linear-gradient(90deg, var(--if-brand), var(--if-accent)); }
+.if-inner { padding: 30px 32px; }
+.if-eyebrow { font-family: var(--if-font-heading); font-weight: 700; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--if-accent); }
+.if-title { font-family: var(--if-font-heading); font-weight: 800; font-size: 27px; line-height: 1.12; letter-spacing: -.015em; color: var(--if-ink); margin: 8px 0 0; }
+.if-sub { font-size: 14.5px; line-height: 1.55; color: var(--if-body); margin: 9px 0 0; }
+.if-intent-grid { display: flex; flex-direction: column; gap: 11px; margin-top: 22px; }
+.if-intent-card { display: flex; align-items: center; gap: 15px; width: 100%; text-align: left; cursor: pointer; background: #fff; border: 1.5px solid var(--if-border); border-radius: var(--if-radius); padding: 15px 16px; font-family: inherit; transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.if-intent-card:hover { border-color: var(--it); box-shadow: 0 12px 30px rgba(23,35,37,.10); transform: translateY(-2px); }
+.if-intent-icon { flex: none; width: 46px; height: 46px; border-radius: 11px; display: flex; align-items: center; justify-content: center; background: var(--it-tint); color: var(--it); }
+.if-intent-icon .if-ic { width: 24px; height: 24px; }
+.if-intent-body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.if-intent-label { display: flex; align-items: center; gap: 9px; font-family: var(--if-font-heading); font-weight: 700; font-size: 16px; color: var(--if-ink); letter-spacing: -.01em; }
+.if-hot { font-family: var(--if-font-heading); font-weight: 700; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--if-accent); background: var(--if-accent-tint); padding: 3px 7px; border-radius: 999px; }
+.if-intent-blurb { font-size: 13.5px; color: var(--if-body); }
+.if-intent-for { font-size: 11.5px; color: var(--if-muted); margin-top: 1px; }
+.if-intent-arrow { flex: none; color: var(--if-muted); transition: color .18s ease, transform .18s ease; }
+.if-intent-arrow .if-ic { width: 18px; height: 18px; }
+.if-intent-card:hover .if-intent-arrow { color: var(--it); transform: translateX(3px); }
+.if-back { display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; cursor: pointer; font-family: var(--if-font-heading); font-weight: 600; font-size: 12.5px; color: var(--if-muted); padding: 0; margin-bottom: 14px; }
+.if-back:hover { color: var(--if-accent); }
+.if-back .if-ic { width: 15px; height: 15px; }
+.if-chosen { display: flex; align-items: center; gap: 12px; border: 0; border-bottom: 1px solid var(--if-border); border-radius: 0; padding: 0 0 16px; margin-bottom: 18px; }
+.if-chosen .if-intent-icon { width: 38px; height: 38px; }
+.if-chosen .if-intent-icon .if-ic { width: 20px; height: 20px; }
+.if-chosen-txt { display: flex; flex-direction: column; line-height: 1.3; }
+.if-chosen-txt strong { font-family: var(--if-font-heading); font-weight: 700; font-size: 15px; color: var(--if-ink); }
+.if-chosen-txt span { font-size: 12.5px; color: var(--if-muted); }
+.if-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 14px; }
+.if-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.if-label { font-family: var(--if-font-heading); font-weight: 600; font-size: 12.5px; color: var(--if-ink); }
+.if-req { color: var(--if-accent); margin-left: 3px; }
+.if-control { font-family: var(--if-font-body); font-size: 14px; color: var(--if-ink); background: var(--if-input-bg); border: 1.5px solid var(--if-border); border-radius: var(--if-radius-sm); padding: 11px 13px; width: 100%; outline: none; transition: border-color .15s, box-shadow .15s, background .15s; box-sizing: border-box; }
+.if-control::placeholder { color: var(--if-placeholder); }
+.if-control:focus { border-color: var(--if-accent); background: #fff; box-shadow: 0 0 0 3px var(--if-accent-tint); }
+.if-control.is-err, .if-select-wrap.is-err .if-control { border-color: #b9466a; }
+.if-err-msg { font-size: 11.5px; font-weight: 600; color: #b9466a; }
+.if-textarea { resize: vertical; min-height: 64px; line-height: 1.5; }
+.if-select-wrap { position: relative; }
+.if-select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 34px; }
+/* Floating label: field name sits inside the control, shrinks to the top
+   border on focus/fill so it never disappears. */
+.if-float { position: relative; }
+.if-flabel {
+  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  transform-origin: left center; font-family: var(--if-font-body); font-size: 14px; line-height: 1;
+  color: var(--if-muted); pointer-events: none; background: var(--if-input-bg); padding: 0 5px;
+  max-width: calc(100% - 26px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: top .14s ease, transform .14s ease, color .14s ease, background .14s ease;
+}
+.if-float.if-float-top .if-flabel { top: 14px; transform: none; }
+.if-float:focus-within .if-flabel,
+.if-float.has-value .if-flabel {
+  top: 0; transform: translateY(-50%) scale(.84); font-weight: 600; background: #fff; color: var(--if-muted);
+}
+.if-float:focus-within .if-flabel { color: var(--if-accent); }
+.if-float.is-err .if-control { border-color: #b9466a; }
+.if-float .if-req { color: var(--if-accent); }
+.if-caret { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--if-muted); pointer-events: none; }
+.if-caret .if-ic { width: 14px; height: 14px; }
+.if-segmented { display: flex; gap: 7px; flex-wrap: wrap; }
+.if-seg { flex: 1; min-width: 64px; font-family: var(--if-font-heading); font-weight: 600; font-size: 12.5px; color: var(--if-body); cursor: pointer; background: var(--if-input-bg); border: 1.5px solid var(--if-border); border-radius: var(--if-radius-sm); padding: 10px 8px; transition: all .15s ease; }
+.if-seg:hover { border-color: var(--if-border-strong); }
+.if-seg.on { background: var(--if-brand); border-color: var(--if-brand); color: #fff; }
+.if-senderror { margin-top: 16px; font-size: 13px; font-weight: 600; color: #b9466a; }
+.if-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+.if-trust { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--if-muted); }
+.if-trust .if-ic { width: 13px; height: 13px; }
+.if-submit { display: inline-flex; align-items: center; gap: 9px; font-family: var(--if-font-heading); font-weight: 700; font-size: 13px; letter-spacing: .06em; color: #fff; background: var(--if-accent); border: 0; cursor: pointer; padding: 14px 24px; border-radius: var(--if-radius-sm); box-shadow: 0 8px 22px rgba(58,146,166,.32); transition: transform .12s ease, background .18s ease; }
+.if-submit .if-ic { width: 16px; height: 16px; }
+.if-submit:hover { background: var(--if-accent-deep); }
+.if-submit:active { transform: translateY(1px); }
+.if-submit:disabled { opacity: .7; cursor: default; }
+.if-done { text-align: center; }
+.if-done-badge { width: 62px; height: 62px; border-radius: 50%; margin: 4px auto 0; display: flex; align-items: center; justify-content: center; background: var(--if-green); box-shadow: 0 8px 22px rgba(100,125,87,.40); }
+.if-done-badge .if-ic { width: 30px; height: 30px; color: #fff; }
+.if-done-badge svg, .if-receipt-check svg { stroke-width: 3; }
+.if-receipt { text-align: left; background: var(--if-brand-tint); border: 1px solid var(--if-border); border-radius: var(--if-radius); padding: 16px 17px; margin-top: 22px; }
+.if-receipt-head { display: flex; align-items: center; gap: 7px; font-family: var(--if-font-heading); font-weight: 700; font-size: 12px; color: var(--if-accent); }
+.if-receipt-head .if-ic { width: 15px; height: 15px; }
+.if-receipt-list { list-style: none; margin: 13px 0 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.if-receipt-row { display: flex; align-items: flex-start; gap: 11px; opacity: .32; transform: translateY(4px); transition: opacity .35s ease, transform .35s ease; }
+.if-receipt-row.on { opacity: 1; transform: none; }
+.if-receipt-check { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--if-green); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.if-receipt-check .if-ic { width: 12px; height: 12px; color: #fff; }
+.if-receipt-txt { display: flex; flex-direction: column; line-height: 1.35; }
+.if-receipt-txt strong { font-family: var(--if-font-heading); font-weight: 700; font-size: 13.5px; color: var(--if-ink); }
+.if-receipt-txt span { font-size: 12px; color: var(--if-body); }
+.if-restart { margin-top: 20px; font-family: var(--if-font-heading); font-weight: 600; font-size: 13px; color: var(--if-accent); background: transparent; border: 1.5px solid var(--if-border-strong); border-radius: var(--if-radius-sm); padding: 11px 20px; cursor: pointer; transition: all .15s ease; }
+.if-restart:hover { border-color: var(--if-accent); background: var(--if-brand-tint); }
+.if-ic { display: inline-flex; }
+.if-ic svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 520px) {
+  .if-inner { padding: 22px 18px; }
+  .if-grid { grid-template-columns: 1fr; }
+  .if-title { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) { .if-receipt-row, .if-intent-card, .if-submit { transition: none !important; } }
+
+/* ===========================================================
+   PROPOSAL v2 — guided 3-step wizard (STRUCTURE ONLY)
+   Rendered by ProposalWizard when PROPOSAL_FORM_VERSION === 2.
+   Brand colors/fonts still come from intake-form.theme.css.
+   =========================================================== */
+.if-wizard { display: block; }
+
+/* Progress bar: 1 · You → 2 · Your community → 3 · What you need */
+.if-steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 0 22px; padding: 0; }
+.if-step-pip { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.if-step-bar { height: 3px; border-radius: 3px; background: var(--if-border); transition: background .25s ease; }
+.if-step-pip.on .if-step-bar, .if-step-pip.done .if-step-bar { background: var(--if-accent); }
+.if-step-label { font-family: var(--if-font-heading); font-weight: 700; font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--if-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.if-step-pip.on .if-step-label { color: var(--if-ink); }
+
+.if-wstep { display: block; }
+.if-stephead { margin-bottom: 18px; }
+.if-stephead .if-eyebrow { display: block; color: var(--if-green); }
+.if-stephead .if-title { font-size: 24px; margin-top: 4px; }
+.if-stephead .if-sub { margin-top: 6px; }
+
+/* Group label above a multi-select cluster */
+.if-grouplabel { display: block; font-family: var(--if-font-heading); font-weight: 700; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--if-ink); margin-bottom: 11px; }
+.if-grouplabel em { font-style: normal; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--if-muted); font-size: 12px; }
+
+/* Chips (amenities, services) */
+.if-pillgrid { display: flex; flex-wrap: wrap; gap: 8px; }
+.if-pill { font-family: var(--if-font-body); font-size: 13px; font-weight: 500; color: var(--if-body); cursor: pointer; background: #fff; border: 1.5px solid var(--if-border); border-radius: 999px; padding: 8px 15px; transition: all .14s ease; }
+.if-pill:hover { border-color: var(--if-border-strong); }
+.if-pill.on { background: var(--if-brand); border-color: var(--if-brand); color: #fff; }
+
+/* Checkbox cards (pain points) — 2-up by default, 1-up when the form's
+   container is narrow (set via container-type on the page) so it never crams. */
+.if-checkgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+@container (max-width: 620px) { .if-checkgrid { grid-template-columns: 1fr; } }
+.if-checkcard { display: flex; align-items: flex-start; gap: 10px; text-align: left; cursor: pointer; background: var(--if-input-bg); border: 1.5px solid var(--if-border); border-radius: var(--if-radius-sm); padding: 11px 13px; font-family: var(--if-font-body); transition: border-color .14s ease, background .14s ease; }
+.if-checkcard:hover { border-color: var(--if-border-strong); }
+.if-checkcard.on { background: var(--if-accent-tint); border-color: var(--if-accent); }
+.if-checkbox { flex: none; width: 18px; height: 18px; margin-top: 1px; border-radius: 5px; border: 1.5px solid var(--if-border-strong); background: #fff; display: flex; align-items: center; justify-content: center; }
+.if-checkcard.on .if-checkbox { background: var(--if-accent); border-color: var(--if-accent); }
+.if-checkbox .if-ic { width: 12px; height: 12px; color: #fff; }
+.if-checktxt { font-size: 13px; line-height: 1.35; color: var(--if-ink); }
+
+/* "What happens next" reassurance (final step) */
+.if-next { display: flex; gap: 11px; align-items: flex-start; background: var(--if-brand-tint); border: 1px solid var(--if-border); border-radius: var(--if-radius); padding: 14px 16px; margin-top: 20px; }
+.if-next .if-ic { flex: none; width: 16px; height: 16px; color: var(--if-accent); margin-top: 2px; }
+.if-next p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--if-body); }
+.if-next strong { color: var(--if-ink); }
+
+/* Wizard nav row */
+.if-wnav { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 24px; }
+.if-wnav .if-back { margin-bottom: 0; }
+.if-wstepcount { font-family: var(--if-font-heading); font-weight: 600; font-size: 12px; color: var(--if-muted); }
+
+@media (max-width: 560px) {
+  .if-checkgrid { grid-template-columns: 1fr; }
+  .if-step-label { font-size: 9px; letter-spacing: .04em; }
+  .if-wnav { flex-wrap: wrap; }
+  .if-wstepcount { order: 3; width: 100%; text-align: center; }
+}

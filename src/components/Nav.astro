@@ -1,0 +1,239 @@
+---
+/**
+ * Nav.astro — server-rendered site header (utility bar, primary nav with
+ * mega/dropdown/map panels, and the mobile drawer).
+ *
+ * Markup mirrors the former public/scripts/nav.js renderer exactly so
+ * src/styles/nav.css applies unchanged. Interactivity (hover/click dropdowns,
+ * scroll-hide, scrim, mobile drawer, Locations map re-fly, breadcrumbs) is
+ * wired client-side by public/scripts/nav.js, which now only ATTACHES to this
+ * SSR'd DOM. The Locations map reads its per-state data from the data-*
+ * attributes on each .gm-row below.
+ */
+const HOME = '/';
+const PROPOSAL = '/request-a-proposal';
+
+const MK = [
+  { key: 'la', label: 'Louisiana',         hq: true,  q: 'Baton Rouge, LA', z: 8, view: '/hoa-management/louisiana',   dir: 'CMGT, Baton Rouge, LA' },
+  { key: 'tx', label: 'Texas',             hq: false, q: 'Orange, TX',      z: 9, view: '/hoa-management/texas',       dir: 'Orange, TX' },
+  { key: 'ms', label: 'Mississippi',       hq: false, q: 'Gulfport, MS',    z: 9, view: '/hoa-management/mississippi', dir: 'Gulfport, MS' },
+  { key: 'al', label: 'Alabama',           hq: false, q: 'Fairhope, AL',    z: 9, view: '/hoa-management/alabama',     dir: 'Fairhope, AL' },
+  { key: 'fl', label: 'Florida Panhandle', hq: false, q: 'Pensacola, FL',   z: 9, view: '/hoa-management/florida',     dir: 'Pace, FL' },
+];
+const first = MK[0];
+const gmSrc = (m: typeof MK[number]) => `https://www.google.com/maps?q=${encodeURIComponent(m.q)}&z=${m.z}&output=embed`;
+const gmDir = (m: typeof MK[number]) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(m.dir)}`;
+
+const NAV = [
+  {
+    label: 'About', type: 'dropdown', hub: '/about',
+    items: [
+      { t: 'Our Story', d: 'From one community in Denham Springs to 400+ across five states', href: '/our-story' },
+      { t: 'How We Work', d: 'The pod: one dedicated CAM, a whole specialist team behind them', href: '/how-we-work' },
+      { t: 'Team & Careers', d: '≈91 teammates — remote-first, with Gulf South roots', href: '/about/team-careers' },
+      { t: 'CMGT Cares', d: 'Giving back to our communities since 2012', href: '/about/cmgt-cares' },
+    ],
+    meta: 'Independent since 2007 · 100% organic growth · no PE, no acquisitions',
+  },
+  {
+    label: 'Management', type: 'mega',
+    aside: {
+      eyebrow: 'Management',
+      statement: 'We manage communities, not buildings.',
+      d: 'Every community gets a dedicated manager backed by a whole team — interactional, not transactional.',
+      cta: 'Not sure which fits? Let’s talk',
+      href: PROPOSAL,
+      stats: [ { v: '400+', l: 'communities' }, { v: '96%', l: 'retention' }, { v: '4.2★', l: '535 reviews' } ],
+    },
+    services: [
+      { t: 'HOA Management Services', d: 'Full-service or on-site — a dedicated CAM backed by specialist teams', href: '/hoa-management-services' },
+      { t: 'On-Site Management', d: 'A daily on-property team for large communities & high-rises — a standalone plan', href: '/on-site-management' },
+      { t: 'Condo & Townhome Management', d: 'Condo, COA & luxury high-rise, with on-site staff where it calls for it', href: '/condo-management' },
+      { t: 'HOA Financial Management', d: 'Right-sized financials & reporting for smaller communities', href: '/hoa-financial-management' },
+      { t: 'Developer HOA Management', d: 'Declarant control through homeowner turnover, with one accountable team', href: '/developer-hoa-management' },
+    ],
+    solutions: [
+      { t: 'Switching Management Companies', short: 'Switching management companies', d: 'Slow responses? Rising delinquency? What a clean transition looks like', href: '/switching-hoa-management-companies' },
+      { t: 'HOA Delinquency Recovery', short: 'Delinquency recovery', d: 'Rising past-due balances? A firm, fair path back to healthy reserves', href: '/hoa-delinquency-recovery' },
+      { t: 'Self-Managed HOA vs. Professional', short: 'Self-managed vs. professional', d: 'The honest math on when volunteer management stops working', href: '/self-managed-hoa' },
+    ],
+  },
+  {
+    label: 'Locations', type: 'map',
+    items: [],
+    meta: 'Local teams, neighbors in every market we serve',
+  },
+  {
+    label: 'Resources', type: 'dropdown', hub: '/resources',
+    items: [
+      { t: 'Board Education Hub', d: 'Plain-language guides for volunteer board leaders', href: '/resources' },
+      { t: 'FAQ', d: 'Straight answers — no industry-speak', href: '/faq' },
+    ],
+    featured: {
+      eyebrow: 'Featured guide',
+      t: 'Hurricane prep for Gulf South boards',
+      d: 'Insurance, reserves, vendors, and the communication plan — before the season hits.',
+      cta: 'Read the guide',
+      href: '/resources/hurricane-preparedness-for-hoas',
+    },
+  },
+] as any[];
+
+const UTILITY = [
+  { t: 'Log In', href: '/login', hideSm: false },
+  { t: 'Pay Dues', href: 'https://portal.cmgt.org/public', ext: true, hideSm: false },
+  { t: 'Order Documents', href: 'https://www.homewisedocs.com/', ext: true, hideSm: true },
+  { t: 'Rental Management', href: '/rentals', hideSm: true },
+] as any[];
+---
+<!-- utility bar -->
+<div class="util-bar"><div class="util-in">
+  <a class="util-phone" href="tel:2255032648">Call us — <strong>(225) 503-2648</strong> · Mon–Fri, 8:30a–4:30p CT</a>
+  <nav class="util-links" aria-label="Utility">
+    {UTILITY.map((u, i) => (
+      <>
+        {i > 0 && <span class="sep"></span>}
+        <a href={u.href} class={u.hideSm ? 'util-hide-sm' : undefined} target={u.ext ? '_blank' : undefined} rel={u.ext ? 'noopener noreferrer' : undefined}>{u.t}</a>
+      </>
+    ))}
+  </nav>
+</div></div>
+
+<!-- primary nav -->
+<div class="nav-main"><div class="nav-in">
+  <a class="nav-brand" href={HOME} aria-label="CMGT home"><img src="/assets/logo.svg" alt="CMGT" /></a>
+  <nav class="nav-links" aria-label="Primary">
+    {NAV.map((n, i) => (
+      <div class={`nav-item${n.type === 'mega' ? ' nav-item-mega' : ''}${n.type === 'map' ? ' nav-item-map' : ''}${n.featured ? ' nav-item-feat' : ''}`} data-nav-i={i}>
+        <button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true">{n.label}<span class="chev"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 8 11 13 6"></polyline></svg></span></button>
+
+        {n.type === 'mega' && (
+          <div class="nav-panel nav-panel-mega"><div class="mm-grid">
+            <aside class="mm-aside">
+              <span class="mm-aside-eyebrow">{n.aside.eyebrow}</span>
+              <p class="mm-statement">{n.aside.statement}</p>
+              <p class="mm-aside-d">{n.aside.d}</p>
+              <a class="mm-aside-cta" href={n.aside.href}>{n.aside.cta} →</a>
+              <div class="mm-aside-stats">
+                {n.aside.stats.map((st: any) => (
+                  <div class="mm-stat"><span class="mm-stat-v">{st.v}</span><span class="mm-stat-l">{st.l}</span></div>
+                ))}
+              </div>
+            </aside>
+            <div class="mm-body">
+              <p class="mm-eyebrow">Services</p>
+              <div class="mm-services">
+                {n.services.map((sv: any, si: number) => (
+                  <a class="mm-svc" href={sv.href}>
+                    <span class="mm-num">0{si + 1}</span>
+                    <span class="mm-svc-t">{sv.t}</span>
+                    <span class="mm-svc-d">{sv.d}</span>
+                  </a>
+                ))}
+              </div>
+              <div class="mm-sols-strip"><p class="mm-eyebrow">Solutions</p><div class="sol-links">
+                {n.solutions.map((sv: any) => (
+                  <a class="sol-link" href={sv.href} title={sv.d}>{sv.short || sv.t} <span class="arr">→</span></a>
+                ))}
+              </div></div>
+            </div>
+          </div></div>
+        )}
+
+        {n.type === 'map' && (
+          <div class="nav-panel nav-panel-map"><div class="lm">
+            <div class="gm-wrap">
+              <div class="gm-tag" data-gm-tag><span class="dot"></span> {first.label} · HQ</div>
+              <iframe data-gm-map loading="lazy" referrerpolicy="no-referrer-when-downgrade" src={gmSrc(first)} title="CMGT markets map"></iframe>
+            </div>
+            <aside class="lm-rail">
+              <p class="lm-rail-eyebrow">We’re Local</p>
+              <h3 class="lm-rail-h">Find your market.</h3>
+              <div class="gm-list" data-gm-list>
+                {MK.map((m, mi) => (
+                  <button class={`gm-row${mi === 0 ? ' on' : ''}`} type="button"
+                    data-key={m.key} data-q={m.q} data-z={String(m.z)} data-view={m.view} data-dir={m.dir} data-label={m.label} data-hq={m.hq ? '1' : ''}>
+                    <span class="pin"></span>{m.label}{m.hq && <span class="hq">HQ</span>}
+                  </button>
+                ))}
+              </div>
+              <div class="lm-actions">
+                <a class="lm-btn lm-btn-primary" data-gm-view href={first.view}>View {first.label} communities <span class="arr">→</span></a>
+                <a class="lm-btn lm-btn-ghost" data-gm-dir target="_blank" rel="noopener" href={gmDir(first)}>Get directions <span class="arr">↗</span></a>
+              </div>
+            </aside>
+          </div></div>
+        )}
+
+        {(n.type === 'dropdown') && (
+          <div class={`nav-panel nav-panel-list${n.featured ? ' nav-panel-has-feat' : ''}`}>
+            <div class="np-cols">
+              <div class="np-list">
+                {n.hub
+                  ? <a class="mm-eyebrow mm-eyebrow-link" href={n.hub}>{n.label} →</a>
+                  : <p class="mm-eyebrow">{n.label}</p>}
+                {n.items.map((it: any, ii: number) => (
+                  <a class="mm-svc" href={it.href}>
+                    <span class="mm-num">0{ii + 1}</span>
+                    <span class="mm-svc-t">{it.t}</span>
+                    <span class="mm-svc-d">{it.d}</span>
+                  </a>
+                ))}
+              </div>
+              {n.featured && (
+                <a class="np-feat" href={n.featured.href}>
+                  <span class="mm-eyebrow">{n.featured.eyebrow}</span>
+                  <span class="np-feat-t">{n.featured.t}</span>
+                  <span class="np-feat-d">{n.featured.d}</span>
+                  <span class="np-feat-cta">{n.featured.cta} →</span>
+                </a>
+              )}
+            </div>
+            {n.meta && <p class="np-meta">{n.meta}</p>}
+          </div>
+        )}
+      </div>
+    ))}
+  </nav>
+  <div class="nav-actions">
+    <a class="nav-cta" href={PROPOSAL}>Request a Proposal / Contact</a>
+    <button class="nav-burger" type="button" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+  </div>
+</div></div>
+
+<!-- mobile drawer -->
+<div class="nav-drawer" role="dialog" aria-label="Menu">
+  <div class="nav-drawer-top"><img src="/assets/logo.svg" alt="CMGT" /><button class="nav-drawer-close" type="button" aria-label="Close menu">✕</button></div>
+  {NAV.map((n) => (
+    <div class="nd-group">
+      <button class="nd-toggle" type="button">{n.label}<span class="chev"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 8 11 13 6"></polyline></svg></span></button>
+      <div class="nd-sub">
+        {n.type === 'mega' ? (
+          <>
+            <p class="nav-group-label">Services</p>
+            {n.services.map((it: any) => (
+              <a class="nav-panel-item" href={it.href}><span class="t">{it.t}</span><span class="d">{it.d}</span></a>
+            ))}
+            <p class="nav-group-label">Solutions</p>
+            {n.solutions.map((it: any) => (
+              <a class="nav-panel-item" href={it.href}><span class="t">{it.t}</span><span class="d">{it.d}</span></a>
+            ))}
+          </>
+        ) : n.type === 'map' ? (
+          MK.map((m) => (
+            <a class="nav-panel-item" href={m.view}><span class="t">{m.label}</span></a>
+          ))
+        ) : (
+          n.items.map((it: any) => (
+            <a class="nav-panel-item" href={it.href}><span class="t">{it.t}</span><span class="d">{it.d}</span></a>
+          ))
+        )}
+      </div>
+    </div>
+  ))}
+  <div class="nd-cta-row"><a class="nav-cta" style="justify-content:center;" href={PROPOSAL}>Request a Proposal / Contact</a></div>
+  <div class="nd-util">
+    {UTILITY.map((u) => <a href={u.href} target={u.ext ? '_blank' : undefined} rel={u.ext ? 'noopener noreferrer' : undefined}>{u.t}</a>)}
+    <a href="tel:2255032648">(225) 503-2648</a>
+  </div>
+</div>

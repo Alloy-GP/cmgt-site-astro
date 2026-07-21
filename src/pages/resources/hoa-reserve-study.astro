@@ -1,0 +1,173 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Resources', url: SITE.url + '/resources' },
+  { name: 'Finances & Reserves', url: SITE.url + '/resources/hoa-reserve-study' },
+]);
+
+const faq = faqSchema([
+  {
+    q: 'How often should an HOA do a reserve study?',
+    a: 'Most experts recommend a full HOA reserve study every three to five years, with a lighter review annually and after any major project or damage event. The full study includes an on-site inspection; the annual review simply keeps the funding plan current in between. Note that some states set their own required intervals, so confirm whether your state imposes a specific schedule.',
+  },
+  {
+    q: 'What can HOA reserve funds be used for?',
+    a: 'Reserve funds are for the repair and replacement of the major shared components identified in the study, not day-to-day operating expenses. Typical uses include roof replacement, road repaving, and pool resurfacing. Borrowing from reserves to cover routine operating costs is a red flag: it usually signals a budgeting problem and leaves the community exposed when a big-ticket repair comes due.',
+  },
+  {
+    q: 'How much should be in an HOA reserve fund?',
+    a: 'There’s no universal dollar figure. The right amount is whatever your funding plan says your community needs to stay adequately funded, usually expressed as a percent funded score. A community above 70% funded is generally considered financially strong, while a low percentage is a warning sign of a possible special assessment ahead. Your HOA reserve study sets the specific target for your community.',
+  },
+  {
+    q: 'Is a reserve study required in Louisiana, Mississippi, or Alabama?',
+    a: 'Generally no. These states don’t broadly mandate reserve studies for HOAs the way California and Florida do. That said, your governing documents or a lender may still expect one, and skipping it leaves the community exposed to surprise special assessments. Because state law changes, confirm your community’s current obligations with your association counsel.',
+  },
+]);
+---
+<BaseLayout
+  title="HOA Reserve Studies: The Complete Board Guide (2026) | CMGT"
+  description="What an HOA reserve study is, why your board needs one, what it costs, and how to turn the findings into a funding plan. A plain-English guide for boards."
+  ogType="article"
+  pageSchema={[breadcrumb, faq]}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Finances & Reserves"}]'></nav>
+
+  <article>
+    <header class="art-hero">
+      <ImageSlot src="/photos/reserve-hero-photo.webp" alt="A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan" shape="rect" />
+      <div class="container art-hero-in">
+        <div class="art-cat">Finances &amp; Reserves</div>
+        <h1 class="art-h1">HOA reserve studies: a complete guide for boards.</h1>
+        <p class="art-lede">The clubhouse roof gives out, the quote is $180,000, and the reserve fund has $40,000 in it. A reserve study is how a board keeps that scenario out of every homeowner’s mailbox. Here’s what it is, whether you need one, what it costs, and the part most guides skip.</p>
+        <div class="art-meta"><span>6 min read</span><span class="dot"></span><span>2026 Edition · Updated June 2026</span></div>
+      </div>
+    </header>
+
+    <div class="art-body">
+      <div class="container art-wrap">
+        <div class="art-take reveal">
+          <p class="art-take-h">The short version</p>
+          <p class="art-take-p">A reserve study is a long-range savings plan for your community’s major shared assets. Commission one from an independent specialist, fund it through the annual budget, and refresh it every three to five years.</p>
+        </div>
+
+        <p class="art-p">The clubhouse roof finally gives out, the quote comes back at $180,000, and the reserve fund has $40,000 in it. Now every homeowner is staring down a special assessment nobody saw coming. An HOA reserve study is how a board keeps that scenario from ever landing in a homeowner’s mailbox. This is a plain-English guide to what an HOA reserve study is, whether your community needs one, what it costs, and the part most guides skip: what to do once it’s done.</p>
+
+        <h2 class="art-h2">What is an HOA reserve study?</h2>
+        <p class="art-p">An HOA reserve study is a professional assessment of a community’s major shared assets paired with a long-term plan for funding their repair and replacement. In plain terms, it answers two questions: what big-ticket items your community will eventually have to replace, and how much to set aside each year so the money is there when the bill arrives. That’s what a reserve study is for an HOA: a financial roadmap for the next 20 to 30 years.</p>
+        <p class="art-p">Every credible HOA reserve study has three standard parts:</p>
+        <div class="art-callout reveal">
+          <p class="art-callout-h">The three parts of a reserve study</p>
+          <ol>
+            <li><strong>Physical inventory.</strong> A component list of the shared assets the association maintains: roofs, roads, the pool, fencing, the clubhouse, and similar capital expenditures.</li>
+            <li><strong>Condition assessment.</strong> The current condition of each component and its remaining useful life, so the board knows what’s near the end of the road and what has years left.</li>
+            <li><strong>Funding plan.</strong> How much to contribute each year so the reserve fund can cover replacements as they come due, instead of scrambling when they hit.</li>
+          </ol>
+        </div>
+        <p class="art-p"><strong>The single number to watch is “percent funded”: how much your community has saved compared to what the study says it should have on hand at this point.</strong> A community sitting at 15% funded is a special assessment waiting to happen; one at 70% or higher is generally considered strong. The study gives you that number and, more importantly, a plan to improve it.</p>
+
+        <h2 class="art-h2">Does your HOA actually need one? (Even if your state doesn’t require it)</h2>
+        <p class="art-p">Nearly every community benefits from an HOA reserve study, and a growing number of states now legally require them, but Louisiana, Mississippi, and Alabama generally do not. That gap is exactly why so many Gulf South communities get caught off guard. Reserve study requirements by state vary widely: California requires a full study every three years, and Florida now mandates structural integrity reserve studies for older condo buildings after the 2021 Surfside collapse. Much of the Gulf South has no such mandate.</p>
+        <p class="art-p"><strong>Not legally required does not mean not needed.</strong> Underfunded reserves are the leading cause of surprise special assessments, and the risk shows up before any repair does. Lenders and buyers increasingly scrutinize reserve health: <a href="https://www.fanniemae.com" target="_blank" rel="noopener">Fannie Mae</a>, for example, generally expects a condo budget to put at least 10% of income toward reserves for units to qualify for financing. A thin reserve fund can quietly make a community harder to sell and harder to insure. An HOA reserve study replaces guesswork with a plan, which is the whole point of proactive, transparent management: solve the problem before a homeowner ever knows it exists.</p>
+
+        <h2 class="art-h2">How much does a reserve study cost, and how often do you need one?</h2>
+        <p class="art-p">Most HOA reserve studies cost roughly $2,500 to $5,000, and boards should refresh them every three to five years. The exact HOA reserve study cost depends on community size, number of components, and whether a site visit is included, so a large community with lots of amenities runs higher than a small single-family HOA. (Treat these as general industry figures; pricing varies by provider and market.)</p>
+        <p class="art-p">There are two common formats. A <strong>full study</strong> includes an on-site inspection of every component and is the most thorough, which is why boards commission one every three to five years. An <strong>update</strong>, sometimes done without a site visit, refreshes the numbers in between for less. A light annual review between studies keeps the funding plan honest as costs and conditions change. Some states set their own intervals, so how often an HOA should do a reserve study can be a legal question, but every three to five years for a full study is the widely accepted standard.</p>
+
+        <h2 class="art-h2">How to choose a reserve study provider</h2>
+        <p class="art-p">Look for an independent, credentialed reserve specialist who holds the Reserve Specialist (RS) or Professional Reserve Analyst (PRA) designation and follows the National Reserve Study Standards. The best HOA reserve study companies do exactly this work and have no financial stake in the repairs they recommend. A quick vetting checklist:</p>
+        <ul class="art-ul">
+          <li><strong>Credentials:</strong> RS or PRA designation, backed by the <a href="https://www.caionline.org" target="_blank" rel="noopener">Community Associations Institute’s</a> reserve study standards.</li>
+          <li><strong>Independence:</strong> not tied to a contractor who profits from the repairs identified.</li>
+          <li><strong>Standards compliance:</strong> the report follows National Reserve Study Standards, with a clear component list and multiple funding scenarios.</li>
+          <li><strong>References:</strong> experience with communities similar to yours in size and amenities.</li>
+        </ul>
+        <p class="art-p"><strong>CMGT does not perform reserve studies, and that is exactly why we can help boards choose the right one.</strong> As your management partner, we help you vet and commission a qualified independent provider, coordinate access for the site inspection, then make sure the findings get used. Because we don’t sell studies, our only interest is pointing your board to the right specialist.</p>
+
+        <h2 class="art-h2">Turning the study into a budget (the part most boards miss)</h2>
+        <p class="art-p">An HOA reserve study is only useful if its funding plan makes it into your annual budget and assessment schedule. That’s the step where an HOA reserve study stops being a report on a shelf and starts protecting the community. The hand-off is simple: reserve contributions become a real budget line item, the funding scenarios (baseline versus full funding) set where assessments land, and the plan gets revisited each budget cycle.</p>
+        <p class="art-p"><strong>This is where a management partner earns its keep, and it’s the part reserve study providers rarely help with.</strong> CMGT builds reserve contributions into the annual budget as a dedicated line and reviews it with the board so the plan is something you can actually fund. Our monthly financial statements go to every homeowner, not just the board, so the whole community can watch the reserve fund grow. That transparency does real work: homeowners who see where their money goes are likelier to support the assessments that keep deferred maintenance from piling up. Folding a reserve plan into a sustainable budget is core to our <a href="/hoa-management-services">community association management</a> approach and how we handle <a href="/hoa-financial-management">financial and budget planning</a>. If your board wants that kind of proactive partner, you can <a href="/request-a-proposal">request a proposal</a> any time.</p>
+
+        <h2 class="art-h2">Frequently asked questions</h2>
+        <h3 class="art-h3">How often should an HOA do a reserve study?</h3>
+        <p class="art-p">Most experts recommend a full HOA reserve study every three to five years, with a lighter review annually and after any major project or damage event. The full study includes an on-site inspection; the annual review simply keeps the funding plan current in between. Note that some states set their own required intervals, so confirm whether your state imposes a specific schedule.</p>
+        <h3 class="art-h3">What can HOA reserve funds be used for?</h3>
+        <p class="art-p">Reserve funds are for the repair and replacement of the major shared components identified in the study, not day-to-day operating expenses. Typical uses include roof replacement, road repaving, and pool resurfacing. Borrowing from reserves to cover routine operating costs is a red flag: it usually signals a budgeting problem and leaves the community exposed when a big-ticket repair comes due.</p>
+        <h3 class="art-h3">How much should be in an HOA reserve fund?</h3>
+        <p class="art-p">There’s no universal dollar figure. The right amount is whatever your funding plan says your community needs to stay adequately funded, usually expressed as a percent funded score. A community above 70% funded is generally considered financially strong, while a low percentage is a warning sign of a possible special assessment ahead. Your HOA reserve study sets the specific target for your community.</p>
+        <h3 class="art-h3">Is a reserve study required in Louisiana, Mississippi, or Alabama?</h3>
+        <p class="art-p">Generally no. These states don’t broadly mandate reserve studies for HOAs the way California and Florida do. That said, your governing documents or a lender may still expect one, and skipping it leaves the community exposed to surprise special assessments. Because state law changes, confirm your community’s current obligations with your association counsel.</p>
+
+        <h2 class="art-h2">A reserve study tells you what’s coming, and how to pay for it</h2>
+        <p class="art-p">An HOA reserve study gives your community two things it can’t get any other way: an honest look at what will need repair or replacement, and a realistic plan to pay for it without a special assessment surprise. The board that acts on its study and folds the funding plan into a sustainable budget never has to send that dreaded letter. You don’t have to figure it out alone: CMGT helps boards commission the right study and turn its findings into a transparent, fundable budget.</p>
+
+        <p class="art-disclaimer">This article is general information for HOA boards, not legal or financial advice. Reserve study pricing, state requirements, and lending guidelines change over time — confirm current specifics with a qualified reserve specialist and your association counsel.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="rel">
+    <div class="container">
+      <h2 class="rel-h">Keep reading.</h2>
+      <div class="rel-grid"><a class="rel-card" href="/hoa-financial-management"><span class="rel-t">HOA Financial Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/hoa-management-services"><span class="rel-t">Full-Service HOA Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/request-a-proposal"><span class="rel-t">Talk to our team</span><span class="rel-ar">→</span></a></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container cta-in">
+      <div><h2 class="cta-h">Want this handled for you?</h2><p class="cta-p">A real person will walk through your community’s reserves and budget — within two business days.</p></div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+  .art-hero { position: relative; background: var(--freedom-blue); color: #fff; padding: 104px 0 88px; overflow: hidden; isolation: isolate; }
+  .art-hero > :global(.image-slot) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .art-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(30,30,119,.66) 0%, rgba(30,30,119,.84) 100%); pointer-events: none; }
+  .art-hero-in { position: relative; z-index: 2; max-width: 820px; }
+  .art-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .art-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.025em; color: #fff; margin: 16px 0 20px; text-wrap: balance; }
+  .art-lede { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; color: rgba(255,255,255,.9); margin: 0 0 24px; text-wrap: pretty; }
+  .art-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: rgba(255,255,255,.65); }
+  .art-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.4); }
+  .art-body { background: #fff; padding: 70px 0 100px; }
+  .art-wrap { max-width: 720px; }
+  .art-take { background: var(--fb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 0 0 44px; }
+  .art-take-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); opacity: .6; margin: 0 0 8px; }
+  .art-take-p { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0; }
+  .art-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 32px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 44px 0 16px; text-wrap: balance; }
+  .art-h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(19px, 2.2vw, 23px); line-height: 1.25; color: var(--freedom-blue); margin: 30px 0 10px; }
+  .art-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+  .art-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-ul { margin: 0 0 20px; padding-left: 22px; }
+  .art-ul li { font-size: 17px; line-height: 1.65; color: var(--ink-700); margin: 0 0 9px; }
+  .art-ul li strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-callout { background: var(--fb-lightest); border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 28px; margin: 26px 0; }
+  .art-callout-h { font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--freedom-blue); margin: 0 0 14px; }
+  .art-callout ol { margin: 0; padding-left: 20px; }
+  .art-callout li { font-size: 16px; line-height: 1.6; color: var(--ink-700); margin: 0 0 11px; }
+  .art-callout li:last-child { margin-bottom: 0; }
+  .art-callout li strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .art-wrap a:hover { border-bottom-color: var(--landscaping-green); }
+  .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
+  .rel { background: var(--nb-lightest); padding: 90px 0; }
+  .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
+  .rel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .rel-grid { grid-template-columns: 1fr; } }
+  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; box-shadow: 0 2px 8px rgba(30,30,119,.05); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,30,119,.10); }
+  .rel-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .rel-ar { color: var(--landscaping-green); font-size: 18px; }
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+</style>

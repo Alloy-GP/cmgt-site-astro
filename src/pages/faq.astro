@@ -5,16 +5,34 @@ import { breadcrumbSchema, faqSchema } from '~/lib/schema';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
-  { name: 'FAQ',  url: SITE.url + '/faq' },
+  { name: 'FAQ', url: SITE.url + '/faq' },
 ]);
 
 const faq = faqSchema([
-  { q: 'What does an HOA management company actually do?', a: "A good one runs the finances, enforces the covenants, manages the vendors, and keeps homeowners informed — so your volunteer board doesn't have to. At CMGT, that comes through a dedicated manager backed by a full specialist team." },
-  { q: 'How much does HOA management cost?', a: "Every community is different, so we quote custom — never a one-size template. We don't compete on being the cheapest; we compete on value. Request a proposal and we'll scope it to your community." },
-  { q: "What's involved in switching from our current manager?", a: 'We handle the handoff — records, vendors, finances, and homeowner communication — on a clear Day 1 to Day 90 timeline.' },
-  { q: 'When do we get our financial statements?', a: "By the 20th of every month — it's written into our management agreement. And we share the full P&L and balance sheet with the entire membership, not just the board." },
-  { q: 'Do you manage condos in Florida?', a: "No. We don't manage condominiums in Florida — the regulatory environment there isn't a fit for our service standard. We do manage developer-run communities in the Florida Panhandle." },
-  { q: 'What areas do you serve?', a: 'Five states across the Gulf South — Louisiana, Texas, Mississippi, Alabama, and the Florida Panhandle. We license properly in every market before we enter it.' },
+  {
+    q: 'What does an HOA management company actually do?',
+    a: 'A good one runs the finances, enforces the covenants, manages the vendors, and keeps homeowners informed — so your volunteer board doesn’t have to. At CMGT, that comes through a dedicated manager backed by a full specialist team.',
+  },
+  {
+    q: 'How much does HOA management cost?',
+    a: 'Every community is different, so we quote custom — never a one-size template. We don’t compete on being the cheapest; we compete on value. Request a proposal and we’ll scope it to your community.',
+  },
+  {
+    q: 'What’s involved in switching from our current manager?',
+    a: 'We handle the handoff — records, vendors, finances, and homeowner communication — on a clear Day 1 to Day 90 timeline.',
+  },
+  {
+    q: 'When do we get our financial statements?',
+    a: 'By the 20th of every month — it’s written into our management agreement. And we share the full P&L and balance sheet with the entire membership, not just the board.',
+  },
+  {
+    q: 'Do you manage condos in Florida?',
+    a: 'No. We don’t manage condominiums in Florida — the regulatory environment there isn’t a fit for our service standard. We provide full HOA management for non-condo communities in the Panhandle, including On-Site for large master-planned communities.',
+  },
+  {
+    q: 'What areas do you serve?',
+    a: 'Five states across the Gulf South — Louisiana, Texas, Mississippi, Alabama, and the Florida Panhandle. We license properly in every market before we enter it.',
+  },
 ]);
 ---
 <BaseLayout
@@ -48,19 +66,19 @@ const faq = faqSchema([
     <div class="container cta-in">
       <div>
         <h2 class="cta-h">Still have a question?</h2>
-        <p class="cta-p">Ask a real person — we answer in plain language, usually within one business day.</p>
+        <p class="cta-p">Ask a real person — we answer in plain language, usually within two business days.</p>
       </div>
       <div><a class="btn btn-blue" href="/request-a-proposal">Get in touch <span class="arrow">→</span></a></div>
     </div>
   </section>
 
-  <script is:inline>
+  <script>
     (function () {
       var DATA = [
         { cat: 'Working with CMGT', qs: [
           { q: 'What does an HOA management company actually do?', a: 'A good one runs the finances, enforces the covenants, manages the vendors, and keeps homeowners informed — <strong>so your volunteer board doesn’t have to.</strong> At CMGT, that comes through a dedicated manager backed by a full specialist team.' },
           { q: 'Will we have one point of contact?', a: 'Yes — a dedicated Community Association Manager who knows your community, backed by specialists in accounting, covenants, vendors, and communication. <strong>You get one name, and no single point of failure.</strong>' },
-          { q: 'How fast do you respond?', a: 'Same day. Being available isn’t enough if you’re slow or talk down to people — we aim to answer in plain language, quickly, and to bring the solution along with the issue.' },
+          { q: 'How fast do you respond?', a: 'Quickly, and clearly. Being available isn’t enough if you’re slow or talk down to people — we aim to answer in plain language, quickly, and to bring the solution along with the issue.' },
           { q: 'What areas do you serve?', a: 'Five states across the Gulf South — Louisiana, Texas, Mississippi, Alabama, and the Florida Panhandle. We license properly in every market before we enter it.' }
         ]},
         { cat: 'Cost & switching', qs: [
@@ -71,12 +89,12 @@ const faq = faqSchema([
         ]},
         { cat: 'Money & transparency', qs: [
           { q: 'When do we get our financial statements?', a: '<strong>By the 20th of every month</strong> — it’s written into our management agreement. And we share the full P&L and balance sheet with the entire membership, not just the board.' },
-          { q: 'Can you help lower our delinquency?', a: 'Yes. A consistent billing and collections process is why our communities average <strong>around 10% delinquency</strong> — meaningfully below the industry norm.' },
+          { q: 'Can you help lower our delinquency?', a: 'Yes. A consistent billing and collections process is why our communities average <strong>around 10% delinquency</strong> — the result of a steady process, not heavy-handed penalties.' },
           { q: 'Do you offer financial-only management?', a: 'For HOAs, yes — our <a href="/hoa-financial-management">Financial &amp; Administrative package</a> handles the books while your board runs everything else. Condos almost always need full management.' }
         ]},
         { cat: 'Communities we serve', qs: [
-          { q: 'Do you manage condos and townhomes?', a: 'Yes — it’s a <a href="/condo-and-townhome-management">dedicated practice</a>, because shared walls, building systems, and reserves are a different discipline than single-family HOAs.' },
-          { q: 'Do you manage condos in Florida?', a: 'No. We don’t manage condominiums in Florida — the regulatory environment there isn’t a fit for our service standard. We do manage developer-run communities in the Florida Panhandle.' },
+          { q: 'Do you manage condos and townhomes?', a: 'Yes — it’s a <a href="/condo-management">dedicated practice</a>, because shared walls, building systems, and reserves are a different discipline than single-family HOAs.' },
+          { q: 'Do you manage condos in Florida?', a: 'No. We don’t manage condominiums in Florida — the regulatory environment there isn’t a fit for our service standard. We provide <a href="/hoa-management/florida">full HOA management for non-condo communities</a> in the Panhandle, including On-Site for large master-planned communities.' },
           { q: 'Do you work with developers?', a: 'Yes — we’re a <a href="/developer-hoa-management">lifecycle partner</a> from groundbreaking through homeowner turnover, with a flat $50/month fee until the first home is occupied.' },
           { q: 'Do you manage rental properties?', a: 'In the Greater Baton Rouge area only, and as a service separate from HOA management. <a href="/rentals">See rental management.</a>' }
         ]}
@@ -134,20 +152,23 @@ const faq = faqSchema([
   .faq-search input { width: 100%; font-family: var(--font-body); font-size: 16px; color: var(--freedom-blue); background: var(--nb-lightest); border: 1.5px solid var(--hairline-strong); border-radius: 10px; padding: 15px 16px 15px 46px; outline: none; transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out); }
   .faq-search input:focus { border-color: var(--landscaping-green); background: #fff; }
   .faq-search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--ink-400); pointer-events: none; }
-  .faq-cat { margin-bottom: 48px; }
-  .faq-cat-h { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); margin: 0 0 6px; }
-  .faq-list { border-top: 1.5px solid var(--hairline-strong); }
-  .faq-item { border-bottom: 1.5px solid var(--hairline-strong); }
-  .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: transparent; border: 0; cursor: pointer; text-align: left; padding: 24px 2px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); }
-  .faq-sign { flex: none; width: 26px; height: 26px; position: relative; }
-  .faq-sign::before, .faq-sign::after { content: ""; position: absolute; background: var(--landscaping-green); border-radius: 2px; transition: transform var(--dur-base) var(--ease-out); }
-  .faq-sign::before { left: 0; right: 0; top: 12px; height: 2.5px; }
-  .faq-sign::after { top: 0; bottom: 0; left: 12px; width: 2.5px; }
-  .faq-item.open .faq-sign::after { transform: scaleY(0); }
-  .faq-a { max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
-  .faq-a-in { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); padding: 0 2px 24px; max-width: 760px; }
-  .faq-a-in strong { color: var(--freedom-blue); font-weight: 600; }
-  .faq-a-in a { color: var(--freedom-blue); font-weight: 600; }
+  /* These elements are injected at runtime by the inline script, so Astro's
+     scoped hash never reaches them. Scope under the static .faq-main parent and
+     mark the generated descendants :global() so the CSS actually applies. */
+  .faq-main :global(.faq-cat) { margin-bottom: 48px; }
+  .faq-main :global(.faq-cat-h) { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); margin: 0 0 6px; }
+  .faq-main :global(.faq-list) { border-top: 1.5px solid var(--hairline-strong); }
+  .faq-main :global(.faq-item) { border-bottom: 1.5px solid var(--hairline-strong); }
+  .faq-main :global(.faq-q) { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: transparent; border: 0; cursor: pointer; text-align: left; padding: 24px 2px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); }
+  .faq-main :global(.faq-sign) { flex: none; width: 26px; height: 26px; position: relative; }
+  .faq-main :global(.faq-sign)::before, .faq-main :global(.faq-sign)::after { content: ""; position: absolute; background: var(--landscaping-green); border-radius: 2px; transition: transform var(--dur-base) var(--ease-out); }
+  .faq-main :global(.faq-sign)::before { left: 0; right: 0; top: 12px; height: 2.5px; }
+  .faq-main :global(.faq-sign)::after { top: 0; bottom: 0; left: 12px; width: 2.5px; }
+  .faq-main :global(.faq-item.open .faq-sign)::after { transform: scaleY(0); }
+  .faq-main :global(.faq-a) { max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
+  .faq-main :global(.faq-a-in) { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); padding: 0 2px 24px; max-width: 760px; }
+  .faq-main :global(.faq-a-in strong) { color: var(--freedom-blue); font-weight: 600; }
+  .faq-main :global(.faq-a-in a) { color: var(--freedom-blue); font-weight: 600; }
   .faq-empty { display: none; font-size: 16px; color: var(--ink-400); padding: 30px 0; }
 
   .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 96px 0; }

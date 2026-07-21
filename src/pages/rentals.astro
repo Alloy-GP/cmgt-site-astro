@@ -5,7 +5,7 @@ import { breadcrumbSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
-  { name: 'Home',    url: SITE.url + '/' },
+  { name: 'Home', url: SITE.url + '/' },
   { name: 'Rentals', url: SITE.url + '/rentals' },
 ]);
 ---
@@ -28,13 +28,15 @@ const breadcrumb = breadcrumbSchema([
           you collect the deposit and keep your weekends.
         </p>
         <div class="rn-hero-ctas">
-          <a class="btn btn-blue" href="/request-a-proposal">Get a rental quote <span class="arrow">→</span></a>
+          <a class="btn btn-blue" href="/request-a-proposal?intent=rental">Have us manage it <span class="arrow">→</span></a>
           <a class="btn btn-outline-blue" href="#how">How it works</a>
+          <a class="btn btn-outline-blue" href="/login">Log in to your portal</a>
         </div>
+        <p class="rn-hero-note">Looking to rent instead? <a href="/search-rentals">Browse available rentals →</a></p>
       </div>
       <div class="rn-hero-media">
         <div class="block" aria-hidden="true"></div>
-        <ImageSlot src="/photos/rentals-rn-hero-photo.jpg" alt="Baton Rouge rental single-family home" shape="rounded" radius={20} />
+        <ImageSlot src="/photos/rn-hero-photo.webp" alt="A well-kept single-family rental home in the Greater Baton Rouge area with a tidy lawn and inviting front porch" shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -92,15 +94,32 @@ const breadcrumb = breadcrumbSchema([
     </div>
   </section>
 
+  <section class="sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="eyebrow eyebrow-green">Owner questions</div>
+        <h2 class="sec-h">What Baton Rouge owners ask.</h2>
+      </div>
+      <div class="acc-list reveal">
+        <div class="acc-item"><button class="acc-q" type="button">What areas do you cover?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Rental management is offered in the <strong>Greater Baton Rouge area only</strong>, and it’s a separate service from our HOA community management — built for individual owners and small investors, not associations.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">How much does rental management cost?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">We quote each property straightforwardly based on its size and needs — no buried fees. Tell us about your rental and we’ll come back with a clear number within two business days.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">How do you screen tenants?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Every applicant goes through credit, background, income, and rental-history checks before signing — so the right renter ends up in your property.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">Who handles repairs and after-hours emergencies?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Our in-house <a href="/fix-it-squad">Fix-It Squad</a> coordinates maintenance — fast, fair, and documented — with your approval required on the larger jobs.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">How and when do I get paid?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Rent is deposited to your account each month with a clear owner statement, so you always know what came in and what went out.</div></div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="cta">
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Let's talk about your property.</h2>
-        <p class="cta-p">Tell us about your Baton Rouge rental and we'll come back with a straightforward quote — within one business day.</p>
+        <p class="cta-p">Tell us about your Baton Rouge rental and we'll come back with a clear management quote — within two business days.</p>
       </div>
-      <div class="reveal">
-        <a class="btn btn-blue" href="/request-a-proposal">Get a rental quote <span class="arrow">→</span></a>
+      <div class="cta-actions reveal">
+        <a class="btn btn-blue" href="/request-a-proposal?intent=rental">Have us manage it <span class="arrow">→</span></a>
+        <a class="cta-phone" href="tel:2255032648">Or call (225) 503-2648 · Mon–Fri, 8:30a–4:30p CT</a>
       </div>
     </div>
   </section>
@@ -121,6 +140,9 @@ const breadcrumb = breadcrumbSchema([
   .rn-hero-lede { font-size: 17.5px; line-height: 1.7; color: var(--ink-500); max-width: 500px; margin: 0 0 30px; }
   .rn-hero-lede strong { color: var(--freedom-blue); font-weight: 600; }
   .rn-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .rn-hero-note { margin: 18px 0 0; font-size: 14.5px; color: var(--ink-500); }
+  .rn-hero-note a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .rn-hero-note a:hover { border-bottom-color: var(--landscaping-green); }
   .rn-hero-media { position: relative; }
   .rn-hero-media .block { position: absolute; right: -26px; bottom: -26px; width: 66%; height: 54%; background: var(--landscaping-green); border-radius: 20px; z-index: 0; }
   .rn-hero-media :global(.image-slot) { position: relative; z-index: 1; width: 100%; height: 520px; }
@@ -172,4 +194,6 @@ const breadcrumb = breadcrumbSchema([
   .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
   .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
   .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 480px; margin: 0; color: rgba(30,30,119,.82); }
+  .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
 </style>

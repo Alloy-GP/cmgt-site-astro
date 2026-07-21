@@ -1,0 +1,213 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+// MOCKUP — not linked from nav/footer yet. Deliberately noindex until finalized.
+// External portal URLs are real so the client can see where each door leads.
+const PORTALS = {
+  hoa:     'https://portal.cmgt.org/public',
+  owner:   'https://app.propertyware.com/pw/index.html#/login/owner/cmgtproperties.org',
+  tenant:  'https://app.propertyware.com/pw/index.html#/login/tenant/cmgtproperties.org',
+  docs:    'https://www.homewisedocs.com/',
+  fixit:   'https://fixitsquad.org/',
+};
+---
+<BaseLayout
+  title="Log In & Account Access — CMGT"
+  description="One place to log in and get things done — for CMGT homeowners, boards, rental owners, and tenants. Pay dues, manage your rental, order documents, or submit a maintenance request."
+  robots="noindex,nofollow"
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Log In"}]'></nav>
+
+  <!-- HERO -->
+  <section class="lh-hero">
+    <div class="container">
+      <div class="lh-hero-in">
+        <div class="eyebrow">Account access</div>
+        <h1 class="lh-hero-h">Log in &amp; <em>get things done.</em></h1>
+        <p class="lh-hero-p">
+          Pick the door that fits you. Whether you're a homeowner, a board member, a rental owner,
+          or a resident, your account and quick actions all live right here.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGINS BY AUDIENCE -->
+  <section class="lh-sec">
+    <div class="container">
+      <div class="lh-head">
+        <div class="eyebrow eyebrow-blue">Log in to your account</div>
+        <h2 class="lh-h2">Which one are you?</h2>
+        <p class="lh-sub">Each account lives with the team that runs it, so you land exactly where you need to be.</p>
+      </div>
+
+      <div class="lh-grid">
+        <div class="lh-card">
+          <div class="lh-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10.5 9-7.5 9 7.5"/><path d="M5.5 8.7V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V8.7"/><path d="M9.5 21v-6.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V21"/></svg>
+          </div>
+          <div class="lh-who">HOA homeowners &amp; boards</div>
+          <h3 class="lh-t">Homeowner &amp; Board Portal</h3>
+          <p class="lh-d">Pay dues, view your community's documents and financials, submit requests, and manage your account.</p>
+          <a class="btn btn-blue" href={PORTALS.hoa} target="_blank" rel="noopener noreferrer">Log in <span class="arrow">→</span></a>
+        </div>
+
+        <div class="lh-card">
+          <div class="lh-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="4"/><path d="m10.8 10.8 8 8"/><path d="m16 15 2 2"/><path d="m18.5 12.5 2 2"/></svg>
+          </div>
+          <div class="lh-who">Rental owners <span class="lh-geo">· Baton Rouge</span></div>
+          <h3 class="lh-t">Owner Portal</h3>
+          <p class="lh-d">Landlords managing a CMGT-managed rental: statements, owner draws, work orders, and reports.</p>
+          <a class="btn btn-blue" href={PORTALS.owner} target="_blank" rel="noopener noreferrer">Log in <span class="arrow">→</span></a>
+        </div>
+
+        <div class="lh-card">
+          <div class="lh-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>
+          </div>
+          <div class="lh-who">Tenants &amp; renters <span class="lh-geo">· Baton Rouge</span></div>
+          <h3 class="lh-t">Resident Portal</h3>
+          <p class="lh-d">Pay rent, submit maintenance requests, and manage your lease and account details.</p>
+          <a class="btn btn-blue" href={PORTALS.tenant} target="_blank" rel="noopener noreferrer">Log in <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK ACTIONS -->
+  <section class="lh-sec lh-sec-alt">
+    <div class="container">
+      <div class="lh-head">
+        <div class="eyebrow eyebrow-blue">In a hurry?</div>
+        <h2 class="lh-h2">Quick actions.</h2>
+        <p class="lh-sub">The things people reach for most — no digging required.</p>
+      </div>
+
+      <div class="lh-actions">
+        <a class="lh-action" href={PORTALS.hoa} target="_blank" rel="noopener noreferrer">
+          <span class="lh-action-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          </span>
+          <span class="lh-action-body"><span class="lh-action-t">Pay Dues</span><span class="lh-action-d">HOA homeowner portal</span></span>
+          <span class="lh-action-ar">→</span>
+        </a>
+
+        <a class="lh-action" href={PORTALS.docs} target="_blank" rel="noopener noreferrer">
+          <span class="lh-action-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg>
+          </span>
+          <span class="lh-action-body"><span class="lh-action-t">Order Documents</span><span class="lh-action-d">Resale &amp; closing docs</span></span>
+          <span class="lh-action-ar">→</span>
+        </a>
+
+        <a class="lh-action" href={PORTALS.fixit} target="_blank" rel="noopener noreferrer">
+          <span class="lh-action-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1-5 5L4 17l3 3 5.7-5.7a4 4 0 0 0 5-5z"/></svg>
+          </span>
+          <span class="lh-action-body"><span class="lh-action-t">Submit a Maintenance Request</span><span class="lh-action-d">Owners, tenants &amp; residents · Baton Rouge</span></span>
+          <span class="lh-action-ar">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNING & RESOURCES (future) -->
+  <section class="lh-sec">
+    <div class="container">
+      <div class="lh-head">
+        <div class="eyebrow eyebrow-green">Coming soon</div>
+        <h2 class="lh-h2">Learning &amp; resources.</h2>
+        <p class="lh-sub">We're building a library of training and guides — right here, alongside your account. Board education, owner how-tos, and resident basics, all in one place.</p>
+      </div>
+
+      <div class="lh-res-grid">
+        <div class="lh-res-card">
+          <span class="lh-soon">Coming soon</span>
+          <h3 class="lh-res-t">Board Training</h3>
+          <p class="lh-res-d">Short courses for volunteer board members — running meetings, reading financials, enforcing covenants fairly.</p>
+        </div>
+        <div class="lh-res-card">
+          <span class="lh-soon">Coming soon</span>
+          <h3 class="lh-res-t">Owner Guides</h3>
+          <p class="lh-res-d">Plain-language how-tos for homeowners and rental owners — dues, documents, requests, and what to expect.</p>
+        </div>
+        <div class="lh-res-card">
+          <span class="lh-soon">Coming soon</span>
+          <h3 class="lh-res-t">Resident Basics</h3>
+          <p class="lh-res-d">Quick answers for renters and residents — paying rent, submitting requests, and getting help fast.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HELP -->
+  <section class="lh-help">
+    <div class="container lh-help-in">
+      <p class="lh-help-t">Not sure where to go?</p>
+      <a class="lh-help-phone" href="tel:2255032648">Call us — <strong>(225) 503-2648</strong> · Mon–Fri, 8:30a–4:30p CT</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+  .eyebrow-green { color: var(--landscaping-green); font-weight: 700; }
+
+  /* HERO */
+  .lh-hero { background: var(--freedom-blue); color: #fff; padding: 96px 0 84px; position: relative; overflow: hidden; isolation: isolate; }
+  .lh-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 16% 18%, rgba(141,189,255,.12) 0%, transparent 55%); z-index: 0; pointer-events: none; }
+  .lh-hero-in { position: relative; z-index: 2; max-width: 720px; }
+  .lh-hero .eyebrow { color: rgba(255,255,255,.65); }
+  .lh-hero-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(42px, 5.6vw, 82px); line-height: 1.0; letter-spacing: -.03em; color: #fff; margin: 18px 0 22px; text-wrap: balance; }
+  .lh-hero-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+  .lh-hero-p { font-size: 17.5px; line-height: 1.7; color: rgba(255,255,255,.82); margin: 0; max-width: 560px; }
+
+  /* SECTIONS */
+  .lh-sec { background: #fff; padding: 96px 0; }
+  .lh-sec-alt { background: var(--nb-lightest); }
+  .lh-head { max-width: 680px; margin: 0 0 44px; }
+  .lh-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 14px 0 12px; text-wrap: balance; }
+  .lh-sub { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+
+  /* AUDIENCE LOGIN CARDS */
+  .lh-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .lh-grid { grid-template-columns: 1fr; } }
+  .lh-card { display: flex; flex-direction: column; align-items: flex-start; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 16px; padding: 30px 28px; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .lh-card:hover { border-color: var(--landscaping-green); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(30,30,119,.09); }
+  .lh-ic { width: 46px; height: 46px; border-radius: 12px; background: var(--fb-lightest); color: var(--freedom-blue); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .lh-ic svg { width: 24px; height: 24px; }
+  .lh-who { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 6px; }
+  .lh-geo { color: var(--landscaping-green); }
+  .lh-t { font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.15; color: var(--freedom-blue); margin: 0 0 10px; }
+  .lh-d { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0 0 22px; flex-grow: 1; }
+  .lh-card .btn { align-self: flex-start; }
+
+  /* QUICK ACTIONS */
+  .lh-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 860px) { .lh-actions { grid-template-columns: 1fr; } }
+  .lh-action { display: flex; align-items: center; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 20px 22px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .lh-action:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
+  .lh-action-ic { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: var(--fb-lightest); color: var(--freedom-blue); display: flex; align-items: center; justify-content: center; }
+  .lh-action-ic svg { width: 21px; height: 21px; }
+  .lh-action-body { display: flex; flex-direction: column; flex-grow: 1; }
+  .lh-action-t { font-family: var(--font-display); font-weight: 700; font-size: 15.5px; color: var(--freedom-blue); line-height: 1.2; }
+  .lh-action-d { font-size: 12.5px; color: var(--ink-400); margin-top: 3px; }
+  .lh-action-ar { color: var(--landscaping-green); font-size: 18px; font-weight: 700; }
+
+  /* LEARNING & RESOURCES */
+  .lh-res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .lh-res-grid { grid-template-columns: 1fr; } }
+  .lh-res-card { position: relative; background: var(--nb-lightest); border: 1.5px dashed var(--hairline-strong); border-radius: 16px; padding: 28px 26px; }
+  .lh-soon { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--landscaping-green); background: rgba(74,207,108,.12); padding: 4px 11px; border-radius: 999px; margin-bottom: 14px; }
+  .lh-res-t { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); margin: 0 0 9px; }
+  .lh-res-d { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0; }
+
+  /* HELP */
+  .lh-help { background: var(--freedom-blue); color: #fff; padding: 40px 0; }
+  .lh-help-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .lh-help-t { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: #fff; margin: 0; }
+  .lh-help-phone { font-size: 15px; color: rgba(255,255,255,.85); text-decoration: none; }
+  .lh-help-phone strong { color: #fff; }
+</style>

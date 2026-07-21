@@ -2,7 +2,9 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
 import { breadcrumbSchema } from '~/lib/schema';
-import FormWidget from '~/components/proposal/FormWidget.jsx';
+import IntakeForm from '~/components/IntakeForm.jsx';
+import '~/styles/intake-form.theme.css'; // per-site brand colors/fonts (edit this)
+import '~/styles/intake-form.css';       // canonical structure (synced from starter)
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home',                url: SITE.url + '/' },
@@ -16,161 +18,296 @@ const breadcrumb = breadcrumbSchema([
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Contact"}]'></nav>
 
-  <!-- HERO + FORM -->
-  <section class="prop-hero ai-scope" data-screen-label="Request a Proposal">
-    <div class="prop-hero-deco" aria-hidden="true">
-      <div class="leaf"><img src="/assets/leaf-mark.svg" alt=""></div>
-    </div>
-    <div class="container prop-grid">
-      <div class="prop-copy">
-        <div class="eyebrow">Get in touch</div>
-        <h1 class="prop-h1">One place to <span class="accent">reach us.</span></h1>
-        <div class="prop-rule"></div>
-        <p class="prop-lede">
-          Proposal, question, or just hello — it all starts here. No pitch deck, no pressure.
-          Tell us a little about your community and <strong>a real person will reach out
-          within one business day.</strong>
-        </p>
-
-        <ol class="prop-steps">
-          <li class="prop-step">
-            <span class="prop-step-num">01</span>
-            <div>
-              <h3 class="prop-step-title">The right person sees it fast.</h3>
-              <p class="prop-step-body">Your request routes straight to the team for your region the moment you hit send — no inbox black holes.</p>
+  <section class="prop ai-scope" data-screen-label="Request a Proposal">
+    <div class="container">
+      <!-- Split hero: copy + stats left, form (the hero) right -->
+      <div class="prop-hero">
+        <div class="prop-copy">
+          <div class="eyebrow" id="ph-eyebrow">Get in touch</div>
+          <h1 class="prop-h1" id="ph-h1">Reach a <span class="accent">real person.</span></h1>
+          <p class="prop-lede" id="ph-lede">
+            Proposal, question, or just hello — tell us what’s going on and
+            someone here gets back to you within one business day. No phone trees, no runaround.
+          </p>
+          <div class="prop-timeline" id="prop-cards">
+            <div class="prop-tl-item">
+              <span class="prop-tl-label">01</span>
+              <span class="prop-tl-nodecol"><span class="prop-tl-node"></span></span>
+              <span class="prop-tl-body"><span class="prop-tl-title">Tell us what’s going on</span><span class="prop-tl-desc">A few quick questions — we only ask what’s relevant.</span></span>
             </div>
-          </li>
-          <li class="prop-step">
-            <span class="prop-step-num">02</span>
-            <div>
-              <h3 class="prop-step-title">We talk. Mostly, we listen.</h3>
-              <p class="prop-step-body">A conversation about your community — what's working, what's not, and what you wish were different.</p>
+            <div class="prop-tl-item">
+              <span class="prop-tl-label">02</span>
+              <span class="prop-tl-nodecol"><span class="prop-tl-node"></span></span>
+              <span class="prop-tl-body"><span class="prop-tl-title">A real person, not a queue</span><span class="prop-tl-desc">No phone trees. Someone here actually replies.</span></span>
             </div>
-          </li>
-          <li class="prop-step">
-            <span class="prop-step-num">03</span>
-            <div>
-              <h3 class="prop-step-title">You get a proposal built for your community.</h3>
-              <p class="prop-step-body">Not a template. Scope, team, and pricing shaped around your community — and a clear plan for the transition.</p>
+            <div class="prop-tl-item">
+              <span class="prop-tl-label">03</span>
+              <span class="prop-tl-nodecol"><span class="prop-tl-node"></span></span>
+              <span class="prop-tl-body"><span class="prop-tl-title">We come with answers</span><span class="prop-tl-desc">We don’t just log it — we come back with a solution.</span></span>
             </div>
-          </li>
-        </ol>
-
-      </div>
-
-      <div class="prop-form-col" id="intake-root">
-        <FormWidget client:load clientName="CMGT" />
-      </div>
-    </div>
-
-    <div class="container prop-bar-wrap">
-      <div class="prop-bar">
-        <div class="prop-bar-item">
-          <span class="prop-bar-k">Call</span>
-          <a class="prop-bar-v" href="tel:2255032648">(225) 503-2648</a>
-          <span class="prop-bar-s">Mon–Fri, 8a–5p CT</span>
+          </div>
         </div>
-        <div class="prop-bar-item">
-          <span class="prop-bar-k">Markets</span>
-          <span class="prop-bar-v" style="font-size:15px;line-height:1.4;">Louisiana · Mississippi · Alabama · Florida · Texas</span>
-        </div>
-        <div class="prop-bar-item">
-          <span class="prop-bar-k">Headquarters</span>
-          <span class="prop-bar-v" style="font-size:15px;line-height:1.4;">Denham Springs, LA</span>
-          <span class="prop-bar-s">By appointment</span>
+
+        <!-- The form is the hero: top-right, immediately visible -->
+        <div class="prop-form-wrap" id="intake-root">
+          <IntakeForm client:load />
         </div>
       </div>
-      <div class="prop-portal">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        <span>Already with us? <a href="#">Log in to the portal</a> for payments, requests &amp; documents.</span>
+
+      <!-- Original 3-segment contact bar — shown only on the main (global) view -->
+      <div class="prop-contact" id="prop-contact">
+        <div class="prop-bar">
+          <div class="prop-bar-item">
+            <span class="prop-bar-k">Call</span>
+            <a class="prop-bar-v" href="tel:2255032648">(225) 503-2648</a>
+            <span class="prop-bar-s">Mon–Fri, 8:30a–4:30p CT</span>
+          </div>
+          <div class="prop-bar-item">
+            <span class="prop-bar-k">Markets</span>
+            <span class="prop-bar-v prop-bar-v-sm">Louisiana · Mississippi · Alabama · Florida · Texas</span>
+          </div>
+          <div class="prop-bar-item">
+            <span class="prop-bar-k">Headquarters</span>
+            <span class="prop-bar-v prop-bar-v-sm">Denham Springs, LA</span>
+            <span class="prop-bar-s">By appointment</span>
+          </div>
+        </div>
+        <div class="prop-portal">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>Already with us? <a href="#">Log in to the portal</a> for payments, requests &amp; documents.</span>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- The hero copy + roadmap cards adapt to the form's selected request type, and the
+       active step lights up as the user moves through the proposal wizard. SEO is
+       irrelevant on this page, so JS-driven copy is fine. Listens to the form's
+       `intake:intent` + `intake:step` events; falls back to global copy when nothing
+       is picked. The original contact bar shows only on the main (global) view. -->
+  <script is:inline>
+    (function () {
+      var COPY = {
+        _global: {
+          eyebrow: 'Get in touch',
+          h1: 'Reach a <span class="accent">real person.</span>',
+          lede: 'Proposal, question, or just hello — tell us what’s going on and someone here gets back to you within one business day. No phone trees, no runaround.',
+          cards: [
+            { label: '01', title: 'Tell us what’s going on', desc: 'A few quick questions — we only ask what’s relevant.' },
+            { label: '02', title: 'A real person, not a queue', desc: 'No phone trees. Someone here actually replies.' },
+            { label: '03', title: 'We come with answers', desc: 'We don’t just log it — we come back with a solution.' },
+          ],
+        },
+        proposal: {
+          eyebrow: 'Request a proposal',
+          h1: 'Tell us about your community.<br><span class="accent">We’ll send a proposal in one business day.</span>',
+          lede: 'The more you share, the sharper our proposal — no template, no canned pitch. Just a clear plan built around your community and what your board actually needs.',
+          cards: [
+            { label: 'Step 1', title: 'How to reach you', desc: 'Where to send the proposal. About 30 seconds.', step: 1 },
+            { label: 'Step 2', title: 'About your community', desc: 'The basics — size, type, dues, amenities.', step: 2 },
+            { label: 'Step 3', title: 'What you need most', desc: 'Your priorities and what’s not working today.', step: 3 },
+          ],
+        },
+        vendor: {
+          eyebrow: 'Vendor & contractor bids',
+          h1: 'Want to <span class="accent">work with us?</span>',
+          lede: 'We’re always meeting good vendors for the communities we manage. Tell us your trade and where you work — if it’s a fit, our team reaches out.',
+          cards: [
+            { label: '01', title: 'Your trade & area', desc: 'What you do and where you work.' },
+            { label: '02', title: 'We check the fit', desc: 'Against the communities we manage.' },
+            { label: '03', title: 'Our team reaches out', desc: 'If there’s a match, you’ll hear from us.' },
+          ],
+        },
+        general: {
+          eyebrow: 'General question',
+          h1: 'Just <span class="accent">reaching out?</span>',
+          lede: 'A question, an idea, or just hello — we’re a real team that actually answers. Tell us what’s on your mind and we’ll get it to the right person.',
+          cards: [
+            { label: '01', title: 'Ask away', desc: 'A question, an idea, or just hello.' },
+            { label: '02', title: 'Right person, fast', desc: 'We get it to the right inbox.' },
+            { label: '03', title: 'We actually reply', desc: 'Within one business day.' },
+          ],
+        },
+      };
+      var copy = document.querySelector('.prop-copy');
+      var eyebrow = document.getElementById('ph-eyebrow');
+      var h1 = document.getElementById('ph-h1');
+      var lede = document.getElementById('ph-lede');
+      var cardsEl = document.getElementById('prop-cards');
+      var contact = document.getElementById('prop-contact');
+      var curIntent = null, curStep = 0;
+
+      function applyStep() {
+        if (!cardsEl) return;
+        var active = (curIntent === 'proposal' && typeof curStep === 'number') ? curStep : 0;
+        cardsEl.querySelectorAll('.prop-tl-item').forEach(function (it) {
+          var s = parseInt(it.getAttribute('data-step') || '0', 10);
+          it.classList.toggle('is-active', active > 0 && s === active);
+          it.classList.toggle('is-done', active > 0 && s > 0 && s < active);
+        });
+      }
+      function renderCards(intent) {
+        if (!cardsEl) return;
+        var set = (COPY[intent] && COPY[intent].cards) || COPY._global.cards;
+        cardsEl.innerHTML = set.map(function (c) {
+          return '<div class="prop-tl-item"' + (c.step ? ' data-step="' + c.step + '"' : '') + '>'
+            + '<span class="prop-tl-label">' + c.label + '</span>'
+            + '<span class="prop-tl-nodecol"><span class="prop-tl-node"></span></span>'
+            + '<span class="prop-tl-body"><span class="prop-tl-title">' + c.title + '</span>'
+            + '<span class="prop-tl-desc">' + c.desc + '</span></span></div>';
+        }).join('');
+        applyStep();
+      }
+      function applyCopy(intent) {
+        var c = COPY[intent] || COPY._global;
+        if (eyebrow) eyebrow.textContent = c.eyebrow;
+        if (h1) h1.innerHTML = c.h1;
+        if (lede) lede.textContent = c.lede;
+        if (copy) { copy.classList.remove('is-swapping'); void copy.offsetWidth; copy.classList.add('is-swapping'); }
+      }
+      window.addEventListener('intake:intent', function (e) {
+        curIntent = e.detail; // null on the picker
+        applyCopy(curIntent);
+        renderCards(curIntent);
+        if (contact) contact.classList.toggle('is-hidden', !!curIntent); // main view only
+      });
+      window.addEventListener('intake:step', function (e) {
+        curStep = (e.detail === 'done') ? 0 : e.detail;
+        applyStep();
+      });
+    })();
+  </script>
 </BaseLayout>
 
 <style>
-  /* ── Request a Proposal page ─────────────────────────────────── */
-  body { background: var(--freedom-blue); }
+  /* ── Request a Proposal — light, form-as-hero ─────────────────── */
+  body { background: #F4F4FB; }
 
-  .prop-hero {
-    position: relative;
-    background: var(--freedom-blue);
-    color: #fff;
-    padding: 90px 0 110px;
-    isolation: isolate;
+  .prop {
+    background: #F4F4FB;
+    padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 8vw, 96px);
     min-height: 100vh;
   }
-  .prop-hero-deco { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
-  .prop-hero::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 18% 20%, rgba(141,189,255,.12) 0%, transparent 55%);
-    z-index: 0; pointer-events: none;
-  }
-  .prop-hero .leaf {
-    position: absolute; left: -130px; bottom: -160px;
-    width: 620px; height: 620px;
-    opacity: .07; transform: rotate(12deg);
-    z-index: 0; pointer-events: none;
-  }
-  .prop-hero .leaf img { width: 100%; height: 100%; filter: brightness(0) invert(1); }
 
-  .prop-grid {
-    position: relative; z-index: 2;
-    display: grid; grid-template-columns: minmax(0, 1fr) 560px;
-    gap: 72px; align-items: start;
+  /* Split hero: copy + stats left, form right (the form is the hero). */
+  .prop-hero {
+    display: grid; grid-template-columns: minmax(0, 1fr) 600px;
+    gap: clamp(36px, 5vw, 64px); align-items: start;
+    max-width: 1180px; margin: 0 auto;
   }
-  @media (max-width: 1100px) { .prop-grid { grid-template-columns: 1fr; gap: 56px; } }
+  @media (max-width: 1040px) { .prop-hero { grid-template-columns: 1fr; gap: 36px; max-width: 640px; } }
 
-  .prop-copy .eyebrow { color: rgba(255,255,255,.7); }
+  .prop-copy { padding-top: 6px; }
+  @media (min-width: 1041px) { .prop-copy { position: sticky; top: 28px; } }
+  .prop-copy .eyebrow {
+    font-family: var(--font-body); font-weight: 700; font-size: 12px;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue);
+    opacity: .7;
+  }
   .prop-h1 {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(44px, 5.2vw, 76px);
-    line-height: .98; letter-spacing: -.025em;
-    color: #fff;
-    margin: 22px 0 0;
-    text-wrap: balance;
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(30px, 3.6vw, 44px); line-height: 1.05; letter-spacing: -.02em;
+    color: var(--freedom-blue); margin: 14px 0 0; text-wrap: balance;
   }
-  .prop-h1 .accent { color: var(--landscaping-green); }
-  .prop-rule { width: 88px; height: 5px; background: var(--landscaping-green); border-radius: 3px; margin: 32px 0 28px; }
+  /* :global so the accent stays green after the headline is swapped via JS (innerHTML). */
+  .prop-h1 :global(.accent) { color: var(--landscaping-green); }
   .prop-lede {
-    font-size: 17.5px; line-height: 1.65;
-    color: rgba(255,255,255,.8);
-    max-width: 460px;
-    margin: 0 0 48px;
+    font-size: 16px; line-height: 1.6; color: #4A4B63;
+    max-width: 460px; margin: 16px 0 0;
   }
-  .prop-lede strong { color: #fff; font-weight: 600; }
+  /* Subtle fade when the hero copy swaps to match the selected request type. */
+  .prop-copy.is-swapping .eyebrow,
+  .prop-copy.is-swapping .prop-h1,
+  .prop-copy.is-swapping .prop-lede { animation: ph-fade .34s var(--ease-out, cubic-bezier(.2,.8,.2,1)); }
+  @keyframes ph-fade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .prop-copy.is-swapping .eyebrow, .prop-copy.is-swapping .prop-h1, .prop-copy.is-swapping .prop-lede { animation: none; } }
 
-  .prop-steps { display: flex; flex-direction: column; gap: 26px; margin: 0 0 52px; padding: 0; list-style: none; }
-  .prop-step { display: flex; gap: 18px; align-items: flex-start; max-width: 460px; }
-  .prop-step-num {
-    flex: none;
-    font-family: var(--font-display); font-weight: 300; font-style: italic;
-    font-size: 34px; line-height: 1;
-    color: var(--landscaping-green);
-    width: 44px;
-  }
-  .prop-step-title { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: #fff; margin: 0 0 5px; }
-  .prop-step-body { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.66); margin: 0; }
+  /* Vertical timeline of expectations (left column). Items are injected by JS →
+     item rules are :global. The active step's node glows green; past steps fill navy. */
+  .prop-timeline { display: flex; flex-direction: column; margin-top: 32px; max-width: 510px; }
+  :global(.prop-tl-item) { display: grid; grid-template-columns: 56px 26px 1fr; gap: 0 15px; padding-bottom: 30px; }
+  :global(.prop-tl-item:last-child) { padding-bottom: 0; }
+  :global(.prop-tl-label) { text-align: right; font-family: var(--font-display); font-weight: 700; font-size: 14px; line-height: 1.4; color: var(--freedom-blue); padding-top: 2px; transition: color .2s; }
+  :global(.prop-tl-nodecol) { position: relative; display: flex; justify-content: center; }
+  :global(.prop-tl-node) { width: 17px; height: 17px; border-radius: 50%; border: 2px solid #CFCFE2; background: #fff; margin-top: 3px; position: relative; z-index: 1; transition: border-color .2s, background .2s, box-shadow .2s; }
+  :global(.prop-tl-item:not(:last-child) .prop-tl-nodecol)::before { content: ''; position: absolute; top: 22px; bottom: -30px; left: 50%; width: 2px; transform: translateX(-50%); background: #E4E4F0; }
+  :global(.prop-tl-body) { display: flex; flex-direction: column; gap: 3px; }
+  :global(.prop-tl-title) { font-family: var(--font-display); font-weight: 700; font-size: 17px; line-height: 1.2; color: var(--freedom-blue); }
+  :global(.prop-tl-desc) { font-size: 13.5px; line-height: 1.5; color: #6A6B80; }
+  :global(.prop-tl-item.is-done .prop-tl-node) { border-color: var(--freedom-blue); background: var(--freedom-blue); }
+  :global(.prop-tl-item.is-active .prop-tl-node) { border-color: var(--landscaping-green); background: var(--landscaping-green); box-shadow: 0 0 0 5px rgba(74,207,108,.18); }
+  :global(.prop-tl-item.is-active .prop-tl-label) { color: #2FA95A; }
 
-  .prop-form-col { min-width: 0; position: sticky; top: 40px; align-self: start; }
-  .prop-form-col .ai-widget { width: 100%; }
+  /* The form is the hero — top of the right column. */
+  .prop-form-wrap { min-width: 0; }
+  .prop-form-wrap :global(.if-widget) { width: 100%; max-width: 100%; }
+  /* Pain-point cards: 2-up when the form is wide, 1-up when narrow (never crammed). */
+  .prop-form-wrap :global(.if-inner) { container-type: inline-size; }
 
-  /* full-width contact bar spanning both columns */
-  .prop-bar-wrap { position: relative; z-index: 2; margin-top: 56px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,.16); }
+  /* Original 3-segment contact bar (light) — shown only on the main/global view */
+  .prop-contact { max-width: 1180px; margin: clamp(64px, 9vw, 108px) auto 0; padding-top: 30px; border-top: 1px solid #E4E4F0; }
+  .prop-contact.is-hidden { display: none; }
   .prop-bar { display: grid; grid-template-columns: repeat(3, 1fr); }
-  @media (max-width: 720px) { .prop-bar { grid-template-columns: 1fr 1fr; gap: 26px 0; } }
+  @media (max-width: 720px) { .prop-bar { grid-template-columns: 1fr 1fr; gap: 24px 0; } }
   @media (max-width: 420px) { .prop-bar { grid-template-columns: 1fr; } }
-  .prop-bar-item { padding: 0 28px; border-left: 1px solid rgba(255,255,255,.14); }
+  .prop-bar-item { padding: 0 28px; border-left: 1px solid #E4E4F0; }
   .prop-bar-item:first-child { padding-left: 0; border-left: 0; }
   @media (max-width: 720px) { .prop-bar-item { padding: 0 0 0 24px; } .prop-bar-item:nth-child(odd) { padding-left: 0; border-left: 0; } }
-  .prop-bar-k { display: block; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); margin-bottom: 9px; }
-  .prop-bar-v { display: block; font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.25; color: #fff; }
-  a.prop-bar-v { text-decoration: none; transition: color var(--dur-base) var(--ease-out); }
+  .prop-bar-k { display: block; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #2FA95A; margin-bottom: 9px; }
+  .prop-bar-v { display: block; font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.25; color: var(--freedom-blue); text-decoration: none; }
+  .prop-bar-v-sm { font-size: 15px; line-height: 1.4; }
+  a.prop-bar-v { transition: color .2s; }
   a.prop-bar-v:hover { color: var(--landscaping-green); }
-  .prop-bar-s { display: block; font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,.55); margin-top: 5px; }
-  .prop-portal { display: inline-flex; align-items: center; gap: 9px; margin-top: 26px; font-size: 13px; color: rgba(255,255,255,.6); }
+  .prop-bar-s { display: block; font-size: 12.5px; line-height: 1.45; color: #8A8B9E; margin-top: 5px; }
+  .prop-portal { display: inline-flex; align-items: center; gap: 9px; margin-top: 22px; font-size: 13px; color: #6A6B80; }
   .prop-portal svg { flex: none; color: var(--neighborly-blue); }
-  .prop-portal a { color: #fff; font-weight: 600; text-decoration: none; border-bottom: 1.5px solid var(--landscaping-green); padding-bottom: 1px; }
+  .prop-portal a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 1.5px solid var(--landscaping-green); padding-bottom: 1px; }
+
+  /* ── Dark mode (system preference) — prototype, this page only ─────────────
+     Follows the OS setting; no toggle. Overrides the page colors + re-themes the
+     intake form via its --if-* vars (and the few #fff hardcoded in the canonical
+     form CSS). */
+  @media (prefers-color-scheme: dark) {
+    body { background: #0E0E1D; }
+    .prop { background: #0E0E1D; }
+
+    .prop-copy .eyebrow { color: #9A9CC4; opacity: 1; }
+    .prop-h1 { color: #ECEDF8; }
+    .prop-h1 :global(.accent) { color: #5BE584; }
+    .prop-lede { color: #B0B2CC; }
+
+    /* Timeline */
+    :global(.prop-tl-label) { color: #C7C9E6; }
+    :global(.prop-tl-title) { color: #ECEDF8; }
+    :global(.prop-tl-desc) { color: #9395B2; }
+    :global(.prop-tl-node) { border-color: #3A3A58; background: #18182F; }
+    :global(.prop-tl-item:not(:last-child) .prop-tl-nodecol)::before { background: #2A2A44; }
+    :global(.prop-tl-item.is-done .prop-tl-node) { border-color: #5BE584; background: #5BE584; }
+    :global(.prop-tl-item.is-active .prop-tl-node) { border-color: #5BE584; background: #5BE584; box-shadow: 0 0 0 5px rgba(91,229,132,.22); }
+    :global(.prop-tl-item.is-active .prop-tl-label) { color: #5BE584; }
+
+    /* Contact bar */
+    .prop-contact { border-top-color: #2A2A44; }
+    .prop-bar-item { border-left-color: #2A2A44; }
+    .prop-bar-k { color: #5BE584; }
+    .prop-bar-v, a.prop-bar-v { color: #ECEDF8; }
+    a.prop-bar-v:hover { color: #5BE584; }
+    .prop-bar-s { color: #8587A3; }
+    .prop-portal { color: #9395B2; }
+    .prop-portal a { color: #ECEDF8; }
+
+    /* Intake form — re-theme via its --if-* vars (defined on .if-widget) */
+    :global(.if-widget) {
+      --if-brand: #5A78E6; --if-brand-tint: #1A1A33;
+      --if-accent: #7C97F2; --if-accent-deep: #6580E6; --if-accent-tint: rgba(124,151,242,.18);
+      --if-ink: #ECEDF8; --if-body: #B9BAD0; --if-muted: #8A8CA8; --if-placeholder: #5D5F7E;
+      --if-border: #2A2A44; --if-border-strong: #3A3A58; --if-input-bg: #121226; --if-green: #43C96E;
+      background: #18182F; border-color: #2A2A44; box-shadow: 0 12px 34px rgba(0,0,0,.5);
+    }
+    /* #fff values hardcoded in the canonical form CSS that must darken */
+    :global(.if-intent-card) { background: #18182F; }
+    :global(.if-control:focus) { background: #1B1B35; }
+    :global(.if-float.has-value .if-flabel),
+    :global(.if-float:focus-within .if-flabel) { background: #18182F; }
+  }
 </style>

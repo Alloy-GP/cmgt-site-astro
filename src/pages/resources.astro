@@ -5,7 +5,7 @@ import { breadcrumbSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
-  { name: 'Home',      url: SITE.url + '/' },
+  { name: 'Home', url: SITE.url + '/' },
   { name: 'Resources', url: SITE.url + '/resources' },
 ]);
 ---
@@ -38,10 +38,10 @@ const breadcrumb = breadcrumbSchema([
           <span class="feat-tag">Featured guide</span>
           <h2 class="feat-t">Hurricane prep for Gulf South boards</h2>
           <p class="feat-d">Insurance, reserves, vendor contracts, and the homeowner communication plan — what to lock down before the season hits.</p>
-          <a class="btn btn-green feat-cta" href="/hurricane-preparedness-for-hoas">Read the guide <span class="arrow">→</span></a>
+          <a class="btn btn-green feat-cta" href="/resources/hurricane-preparedness-for-hoas">Read the guide <span class="arrow">→</span></a>
         </div>
         <div class="feat-media">
-          <ImageSlot src="/photos/resources-res-feat-photo.jpg" alt="Gulf South community preparing for storm season" shape="rect" />
+          <ImageSlot src="/photos/res-feat-photo.webp" alt="A Gulf South coastal neighborhood bracing for storm season — palm trees and rooftops under a gathering sky" shape="rect" />
         </div>
       </div>
     </div>
@@ -56,12 +56,12 @@ const breadcrumb = breadcrumbSchema([
         <p class="top-sub">Six topic areas, each a growing library of guides written for volunteers — not industry insiders.</p>
       </div>
       <div class="top-grid">
-        <div class="top-card reveal"><div class="top-count">06</div><h3 class="top-t">Finances &amp; Reserves</h3><p class="top-d">Budgets, reserve studies, dues, and delinquency — the money side, demystified.</p></div>
-        <div class="top-card reveal"><div class="top-count">05</div><h3 class="top-t">Governance &amp; Meetings</h3><p class="top-d">Board roles, quorums, voting, and running meetings that don't run long.</p></div>
-        <div class="top-card reveal"><div class="top-count">04</div><h3 class="top-t">Covenants &amp; Enforcement</h3><p class="top-d">Fair, consistent compliance and architectural review without the friction.</p></div>
-        <div class="top-card reveal"><div class="top-count">04</div><h3 class="top-t">Insurance &amp; Risk</h3><p class="top-d">Coverage types, claims, and Gulf South storm realities every board should know.</p></div>
-        <div class="top-card reveal"><div class="top-count">03</div><h3 class="top-t">Vendors &amp; Maintenance</h3><p class="top-d">Bidding, contracts, and keeping common areas in great shape.</p></div>
-        <div class="top-card reveal"><div class="top-count">05</div><h3 class="top-t">Choosing a Manager</h3><p class="top-d">Self-managed vs. professional, switching companies, and what to ask.</p></div>
+        <div class="top-card reveal"><div class="top-count">01</div><h3 class="top-t">Finances & Reserves</h3><p class="top-d">Budgets, reserve studies, dues, and delinquency — the money side, demystified.</p></div>
+        <div class="top-card reveal"><div class="top-count">02</div><h3 class="top-t">Governance & Meetings</h3><p class="top-d">Board roles, quorums, voting, and running meetings that don't run long.</p></div>
+        <div class="top-card reveal"><div class="top-count">03</div><h3 class="top-t">Covenants & Enforcement</h3><p class="top-d">Fair, consistent compliance and architectural review without the friction.</p></div>
+        <div class="top-card reveal"><div class="top-count">04</div><h3 class="top-t">Insurance & Risk</h3><p class="top-d">Coverage types, claims, and Gulf South storm realities every board should know.</p></div>
+        <div class="top-card reveal"><div class="top-count">05</div><h3 class="top-t">Vendors & Maintenance</h3><p class="top-d">Bidding, contracts, and keeping common areas in great shape.</p></div>
+        <div class="top-card reveal"><div class="top-count">06</div><h3 class="top-t">Choosing a Manager</h3><p class="top-d">Self-managed vs. professional, switching companies, and what to ask.</p></div>
       </div>
     </div>
   </section>
@@ -71,12 +71,10 @@ const breadcrumb = breadcrumbSchema([
     <div class="container">
       <div class="eyebrow eyebrow-blue reveal">Latest guides</div>
       <h2 class="guides-h reveal">Fresh from the hub.</h2>
-      <p class="guides-note reveal">Placeholder titles — swap in real board-education articles as they're published.</p>
-      <a class="guide reveal" href="/hoa-reserve-study"><span class="guide-cat">Finances</span><h3 class="guide-t">What is an HOA reserve study — and how often do you need one?</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
-      <a class="guide reveal" href="/louisiana-hoa-laws"><span class="guide-cat">Governance</span><h3 class="guide-t">The volunteer board member's first-90-days checklist</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
-      <a class="guide reveal" href="/hurricane-preparedness-for-hoas"><span class="guide-cat">Insurance</span><h3 class="guide-t">HOA insurance in hurricane country: what your policy must cover</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
-      <a class="guide reveal" href="/self-managed-hoa"><span class="guide-cat">Choosing a Manager</span><h3 class="guide-t">Self-managed HOA vs. professional management: the honest math</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
-      <a class="guide reveal" href="/hoa-collections-delinquency"><span class="guide-cat">Covenants</span><h3 class="guide-t">Enforcing covenants fairly without alienating your neighbors</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
+      <a class="guide reveal" href="/resources/hoa-budget-template"><span class="guide-cat">Finances</span><h3 class="guide-t">HOA budget templates & best practices: a board's guide</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
+      <a class="guide reveal" href="/resources/hoa-reserve-study"><span class="guide-cat">Finances</span><h3 class="guide-t">HOA reserve studies: the complete board guide</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
+      <a class="guide reveal" href="/resources/hurricane-preparedness-for-hoas"><span class="guide-cat">Insurance</span><h3 class="guide-t">Hurricane preparedness for Gulf South HOAs</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
+      <a class="guide reveal" href="/resources/hoa-rules-enforcement"><span class="guide-cat">Covenants</span><h3 class="guide-t">HOA rules enforcement & violations: what's fair for both sides</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
     </div>
   </section>
 
@@ -95,41 +93,6 @@ const breadcrumb = breadcrumbSchema([
       <p class="gloss-count reveal" id="gloss-count"></p>
       <div class="gloss-grid reveal" id="gloss-grid"></div>
     </div>
-    <script is:inline>
-      (function () {
-        var TERMS = [
-          { t: 'CC&Rs', a: 'Covenants, Conditions & Restrictions', d: 'The rulebook your community agreed to — what you can build, paint, park, and do. Recorded against every property.' },
-          { t: 'Reserve Study', a: '', d: 'A long-range plan that predicts when big shared items (roofs, roads, pools) wear out and how much to save now so you can pay for them later.' },
-          { t: 'Reserves', a: '', d: 'The savings account for major future repairs and replacements — separate from the money that runs the community day to day.' },
-          { t: 'Assessment', a: 'Dues', d: 'The regular fee each homeowner pays to fund the community — landscaping, insurance, amenities, and reserves.' },
-          { t: 'Special Assessment', a: '', d: 'A one-time charge on top of regular dues, usually when reserves fall short of a big or unexpected expense.' },
-          { t: 'Delinquency', a: '', d: 'Assessments that haven’t been paid on time. High delinquency strains the budget and shifts the burden to paying neighbors.' },
-          { t: 'Fiduciary Duty', a: '', d: 'The legal obligation board members have to act in the community’s best interest — not their own.' },
-          { t: 'Quorum', a: '', d: 'The minimum number of members who must participate for a vote or meeting to count.' },
-          { t: 'Architectural Review', a: 'ARC', d: 'The process (and committee) that approves exterior changes — additions, fences, paint colors — so the community stays consistent.' },
-          { t: 'Covenant Enforcement', a: '', d: 'Making sure everyone follows the CC&Rs — ideally consistently and compassionately, not heavy-handedly.' },
-          { t: 'Declarant', a: 'Developer', d: 'The developer who creates the community and controls the association until enough homes are sold to hand it to residents.' },
-          { t: 'Turnover', a: 'Transition', d: 'The handoff of association control from the developer to a homeowner-elected board.' },
-          { t: 'Common Area', a: '', d: 'The shared spaces every owner has rights to — clubhouses, pools, green space, private roads.' },
-          { t: 'Limited Common Element', a: 'LCE', d: 'Shared property reserved for certain units — like the balcony or parking space assigned to one condo.' },
-          { t: 'Operating Budget', a: '', d: 'The yearly plan for day-to-day income and expenses — the money that keeps the lights on and the grass cut.' },
-          { t: 'Master Policy', a: '', d: 'The association’s insurance covering shared structures and common areas — distinct from an owner’s personal policy.' },
-          { t: 'Bylaws', a: '', d: 'The operating manual for the association itself — how the board is elected, how meetings run, how decisions get made.' },
-          { t: 'Estoppel / Resale Certificate', a: '', d: 'A document issued at sale showing what a buyer is inheriting — dues owed, violations, and the community’s financial standing.' }
-        ].sort(function (a, b) { return a.t.localeCompare(b.t); });
-        var grid = document.getElementById('gloss-grid'), input = document.getElementById('gloss-input'), count = document.getElementById('gloss-count');
-        function render(q) {
-          q = (q || '').trim().toLowerCase();
-          var shown = TERMS.filter(function (x) { return !q || x.t.toLowerCase().indexOf(q) > -1 || x.a.toLowerCase().indexOf(q) > -1 || x.d.toLowerCase().indexOf(q) > -1; });
-          grid.innerHTML = shown.length ? shown.map(function (x) {
-            return '<div class="gloss-term"><h3 class="gloss-term-t">' + x.t + (x.a ? '<span class="abbr">' + x.a + '</span>' : '') + '</h3><p class="gloss-term-d">' + x.d + '</p></div>';
-          }).join('') : '<p class="gloss-empty">No match — but ask us and we’ll explain it. That’s the whole point.</p>';
-          count.textContent = q ? (shown.length + ' of ' + TERMS.length + ' terms') : (TERMS.length + ' terms and counting');
-        }
-        input.addEventListener('input', function () { render(input.value); });
-        render('');
-      })();
-    </script>
   </section>
 
   <!-- CTA -->
@@ -144,6 +107,42 @@ const breadcrumb = breadcrumbSchema([
       </div>
     </div>
   </section>
+
+  <script>
+    (function () {
+      var TERMS = [
+        { t: 'CC&Rs', a: 'Covenants, Conditions & Restrictions', d: 'The rulebook your community agreed to — what you can build, paint, park, and do. Recorded against every property.' },
+        { t: 'Reserve Study', a: '', d: 'A long-range plan that predicts when big shared items (roofs, roads, pools) wear out and how much to save now so you can pay for them later.' },
+        { t: 'Reserves', a: '', d: 'The savings account for major future repairs and replacements — separate from the money that runs the community day to day.' },
+        { t: 'Assessment', a: 'Dues', d: 'The regular fee each homeowner pays to fund the community — landscaping, insurance, amenities, and reserves.' },
+        { t: 'Special Assessment', a: '', d: 'A one-time charge on top of regular dues, usually when reserves fall short of a big or unexpected expense.' },
+        { t: 'Delinquency', a: '', d: 'Assessments that haven’t been paid on time. High delinquency strains the budget and shifts the burden to paying neighbors.' },
+        { t: 'Fiduciary Duty', a: '', d: 'The legal obligation board members have to act in the community’s best interest — not their own.' },
+        { t: 'Quorum', a: '', d: 'The minimum number of members who must participate for a vote or meeting to count.' },
+        { t: 'Architectural Review', a: 'ARC', d: 'The process (and committee) that approves exterior changes — additions, fences, paint colors — so the community stays consistent.' },
+        { t: 'Covenant Enforcement', a: '', d: 'Making sure everyone follows the CC&Rs — ideally consistently and compassionately, not heavy-handedly.' },
+        { t: 'Declarant', a: 'Developer', d: 'The developer who creates the community and controls the association until enough homes are sold to hand it to homeowners.' },
+        { t: 'Turnover', a: 'Transition', d: 'The handoff of association control from the developer to a homeowner-elected board.' },
+        { t: 'Common Area', a: '', d: 'The shared spaces every owner has rights to — clubhouses, pools, green space, private roads.' },
+        { t: 'Limited Common Element', a: 'LCE', d: 'Shared property reserved for certain units — like the balcony or parking space assigned to one condo.' },
+        { t: 'Operating Budget', a: '', d: 'The yearly plan for day-to-day income and expenses — the money that keeps the lights on and the grass cut.' },
+        { t: 'Master Policy', a: '', d: 'The association’s insurance covering shared structures and common areas — distinct from an owner’s personal policy.' },
+        { t: 'Bylaws', a: '', d: 'The operating manual for the association itself — how the board is elected, how meetings run, how decisions get made.' },
+        { t: 'Estoppel / Resale Certificate', a: '', d: 'A document issued at sale showing what a buyer is inheriting — dues owed, violations, and the community’s financial standing.' }
+      ].sort(function (a, b) { return a.t.localeCompare(b.t); });
+      var grid = document.getElementById('gloss-grid'), input = document.getElementById('gloss-input'), count = document.getElementById('gloss-count');
+      function render(q) {
+        q = (q || '').trim().toLowerCase();
+        var shown = TERMS.filter(function (x) { return !q || x.t.toLowerCase().indexOf(q) > -1 || x.a.toLowerCase().indexOf(q) > -1 || x.d.toLowerCase().indexOf(q) > -1; });
+        grid.innerHTML = shown.length ? shown.map(function (x) {
+          return '<div class="gloss-term"><h3 class="gloss-term-t">' + x.t + (x.a ? '<span class="abbr">' + x.a + '</span>' : '') + '</h3><p class="gloss-term-d">' + x.d + '</p></div>';
+        }).join('') : '<p class="gloss-empty">No match — but ask us and we’ll explain it. That’s the whole point.</p>';
+        count.textContent = q ? (shown.length + ' of ' + TERMS.length + ' terms') : (TERMS.length + ' terms and counting');
+      }
+      input.addEventListener('input', function () { render(input.value); });
+      render('');
+    })();
+  </script>
 </BaseLayout>
 
 <style>
@@ -208,7 +207,7 @@ const breadcrumb = breadcrumbSchema([
   .cta-p { font-size: 16.5px; line-height: 1.65; color: rgba(255,255,255,.75); margin: 0 0 32px; }
   .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-  /* GLOSSARY */
+  /* INTERACTIVE: Plain-English glossary */
   .gloss { background: #fff; padding: 30px 0 110px; }
   .gloss-head { max-width: 680px; margin: 0 0 32px; }
   .gloss-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
@@ -221,9 +220,9 @@ const breadcrumb = breadcrumbSchema([
   .gloss-count { font-size: 13px; color: var(--ink-400); margin: 0 0 22px; }
   .gloss-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 44px; }
   @media (max-width: 760px) { .gloss-grid { grid-template-columns: 1fr; } }
-  .gloss-term { padding: 22px 2px; border-top: 1.5px solid var(--hairline-strong); }
-  .gloss-term-t { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--freedom-blue); margin: 0 0 6px; }
-  .gloss-term-t .abbr { color: var(--landscaping-green); font-weight: 600; font-size: 14px; margin-left: 8px; }
-  .gloss-term-d { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0; }
-  .gloss-empty { font-size: 15px; color: var(--ink-400); padding: 28px 2px; border-top: 1.5px solid var(--hairline-strong); grid-column: 1 / -1; }
+  .gloss-grid :global(.gloss-term) { padding: 22px 2px; border-top: 1.5px solid var(--hairline-strong); }
+  .gloss-grid :global(.gloss-term-t) { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--freedom-blue); margin: 0 0 6px; }
+  .gloss-grid :global(.gloss-term-t .abbr) { color: var(--landscaping-green); font-weight: 600; font-size: 14px; margin-left: 8px; }
+  .gloss-grid :global(.gloss-term-d) { font-size: 14.5px; line-height: 1.65; color: var(--ink-500); margin: 0; }
+  .gloss-grid :global(.gloss-empty) { font-size: 15px; color: var(--ink-400); padding: 28px 2px; border-top: 1.5px solid var(--hairline-strong); grid-column: 1 / -1; }
 </style>

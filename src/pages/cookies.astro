@@ -1,0 +1,53 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Cookie Policy', url: SITE.url + '/cookies' },
+]);
+---
+<BaseLayout
+  title="Cookie Policy — CMGT"
+  description="CMGT's cookie policy — what cookies are, how we use essential and analytics cookies, and how you can manage or decline them in your browser."
+  pageSchema={breadcrumb}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Cookie Policy"}]'></nav>
+
+  <section class="lg-hero">
+    <div class="container lg-hero-in">
+      <div class="lg-eyebrow">Legal</div>
+      <h1 class="lg-h1">Cookie Policy</h1>
+      <p class="lg-intro">This policy explains how CMGT uses cookies and similar technologies on our website, and how you can control them.</p>
+    </div>
+  </section>
+
+  <section class="lg-body">
+    <div class="container lg-wrap">
+      <p class="lg-updated">Last updated: June 2026</p>
+      <h2 class="lg-h2">What cookies are</h2><p class="lg-p">Cookies are small text files stored on your device that help websites work and remember things about your visit. Some are essential; others help us understand how the site is used.</p><h2 class="lg-h2">How we use cookies</h2><p class="lg-p">We use essential cookies to make the site function, and analytics cookies to understand traffic and improve content. We do not use cookies to sell your personal information.</p><h2 class="lg-h2">Managing cookies</h2><p class="lg-p">Most browsers let you refuse or delete cookies through their settings. Blocking essential cookies may affect how the site works. Analytics and non-essential cookies can be declined without breaking core functionality.</p><h2 class="lg-h2">Changes to this policy</h2><p class="lg-p">We may update this policy as our practices or the law evolve. The current version is dated below.</p>
+      <div class="lg-foot">
+        Questions about this policy? Contact us at <a href="mailto:hello@cmgt.org">hello@cmgt.org</a> or <a href="/request-a-proposal">through our contact page</a>.
+        <p class="lg-note">This document is a template provided for the site build and should be reviewed by legal counsel before publication.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .lg-hero { background: var(--nb-lightest); padding: 72px 0 56px; }
+  .lg-hero-in { max-width: 760px; }
+  .lg-eyebrow { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .lg-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.4vw, 58px); line-height: 1.05; letter-spacing: -.025em; color: var(--freedom-blue); margin: 14px 0 18px; }
+  .lg-intro { font-size: 17px; line-height: 1.7; color: var(--ink-700); margin: 0; max-width: 640px; }
+  .lg-body { background: #fff; padding: 64px 0 96px; }
+  .lg-wrap { max-width: 720px; }
+  .lg-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(21px, 2.4vw, 27px); line-height: 1.2; letter-spacing: -.01em; color: var(--freedom-blue); margin: 38px 0 12px; }
+  .lg-p { font-size: 16px; line-height: 1.75; color: var(--ink-700); margin: 0; }
+  .lg-updated { font-size: 13.5px; color: var(--ink-400); margin: 0 0 8px; }
+  .lg-foot { border-top: 1px solid var(--hairline); margin-top: 48px; padding-top: 24px; font-size: 14px; line-height: 1.7; color: var(--ink-500); }
+  .lg-foot a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; }
+  .lg-note { font-size: 12.5px; color: var(--ink-400); font-style: italic; margin-top: 14px; }
+</style>
