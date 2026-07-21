@@ -47,6 +47,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Route the notification to the right inbox by intent (falls back to default).
     const notifyTo = EMAIL_CONFIG.routes[intent] ?? EMAIL_CONFIG.notify;
+    // Visible CC, per intent (vendor/general skip Jeff — see email.config.ts).
+    const notifyCc = EMAIL_CONFIG.notifyCcByIntent[intent] ?? EMAIL_CONFIG.notifyCc;
 
     // An intent with an explicitly empty route (e.g. `rental`, pending the client's
     // destination inbox) is accepted but intentionally NOT delivered anywhere yet —
@@ -89,7 +91,7 @@ export const POST: APIRoute = async ({ request }) => {
         from:    EMAIL_CONFIG.from.notifications,
         replyTo: EMAIL_CONFIG.replyTo,
         to:      notifyTo,
-        ...(EMAIL_CONFIG.notifyCc.length ? { cc: EMAIL_CONFIG.notifyCc } : {}),
+        ...(notifyCc.length ? { cc: notifyCc } : {}),
         subject: isPartial ? `Started (incomplete): ${intentCfg.label} — ${company || name}` : intentCfg.notifySubject(company || name),
         html: `
           ${isPartial ? `<p style="background:#FFF4E5;border-left:3px solid #E0902F;padding:10px 14px;margin:0 0 14px;font-size:14px;color:#7a5310"><strong>⚠️ Started but not yet submitted.</strong> This person completed the contact step of the proposal form. Reach out — they may not finish on their own.</p>` : ''}
