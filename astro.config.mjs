@@ -107,5 +107,19 @@ export default defineConfig({
     '/wheels-to-succeed-2022': '/about/cmgt-cares',
     '/project-graduation-2022': '/about/cmgt-cares',
     '/denham-springs-athletic-association': '/about/cmgt-cares',
+
+    // Old WordPress (Yoast) sitemap URLs → our real sitemap. The old index used
+    // an underscore (sitemap_index.xml); Astro generates sitemap-index.xml.
+    // Redirecting these clears the legacy 404s search tools still remember.
+    '/sitemap_index.xml': '/sitemap-index.xml',
+    '/post-sitemap.xml': '/sitemap-index.xml',
+    '/page-sitemap.xml': '/sitemap-index.xml',
+    '/category-sitemap.xml': '/sitemap-index.xml',
+    '/location-sitemap.xml': '/sitemap-index.xml',
+    '/state-sitemap.xml': '/sitemap-index.xml',
+    '/resource-sitemap.xml': '/sitemap-index.xml',
+    '/header-type-sitemap.xml': '/sitemap-index.xml',
+    '/testimonial-sitemap.xml': '/sitemap-index.xml',
+    '/author-sitemap.xml': '/sitemap-index.xml',
   },
 });
