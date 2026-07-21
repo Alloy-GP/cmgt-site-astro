@@ -30,8 +30,22 @@ export const EMAIL_CONFIG = {
   replyTo: 'info@cmgt.org',
 
   // ── Visible CC on the internal STAFF notification (every recipient there is
-  // internal, so it's safe to show them). Prod only. ──
+  // internal, so it's safe to show them). Prod only. This is the DEFAULT cc
+  // (proposals + rentals): Jeff + agency admin. ──
   notifyCc: IS_PROD ? ['jharman@cmgt.org', 'admin@alloygp.co'] : [],
+
+  // ── Per-intent CC override. Vendor bids + general questions route to info@
+  // and deliberately skip Jeff (they're not new-business); only the agency
+  // admin stays cc'd for monitoring. Intents not listed fall back to notifyCc. ──
+  notifyCcByIntent: (IS_PROD
+    ? {
+        proposal: ['jharman@cmgt.org', 'admin@alloygp.co'],
+        rental:   ['jharman@cmgt.org', 'admin@alloygp.co'],
+        vendor:   ['admin@alloygp.co'],
+        general:  ['admin@alloygp.co'],
+      }
+    : {}
+  ) as Record<string, string[]>,
 
   // ── Hidden BCC (audit copy) on SUBMITTER-facing mail — the confirmation and
   // the newsletter welcome — so we never expose internal addresses to the public
@@ -52,8 +66,8 @@ export const EMAIL_CONFIG = {
   routes: (IS_PROD
     ? {
         proposal: ['newdevelopment@cmgt.org'], // boards exploring new management
-        vendor:   ['newdevelopment@cmgt.org'], // contractor / vendor bids
-        general:  ['newdevelopment@cmgt.org'], // catch-all general inquiries
+        vendor:   ['info@cmgt.org'],           // contractor / vendor bids → general inbox
+        general:  ['info@cmgt.org'],           // catch-all general inquiries → general inbox
         rental:   ['newdevelopment@cmgt.org'], // rental management inquiries
       }
     : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY }
