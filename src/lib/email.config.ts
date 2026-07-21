@@ -79,51 +79,51 @@ export const EMAIL_CONFIG = {
     proposal: {
       label: 'Proposal Request',
       notifySubject: (who: string) => `New proposal request — ${who}`,
-      confirmSubject: 'We received your request — CMGT',
+      confirmSubject: "We've got it from here 👋",
       confirmBody: (firstName: string) =>
-        `<p>Hi ${firstName},</p>
-        <p>Thanks for reaching out to CMGT. We've received the details about your community and appreciate the chance to learn more about what your board needs.</p>
-        <p>A real person on the team for your region will review your request and follow up within one business day — with a proposal built around your community, not a template.</p>
-        <p>Talk soon,<br>The CMGT Team</p>`,
+        `<p>Hi there,</p>
+        <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: your message landed safely, and an actual human on our team is already on the way to read it and follow up personally. Because around here, "we'll look into it" actually means someone is looking into it.</p>
+        <p>We've got it from here.</p>
+        <p>— The CMGT Team<br>We Manage. You Live.</p>`,
     },
     rental: {
       label: 'Rental Management Inquiry',
       notifySubject: (who: string) => `New rental management inquiry — ${who}`,
-      confirmSubject: 'We received your rental inquiry — CMGT',
+      confirmSubject: "We've got it from here 👋",
       confirmBody: (firstName: string) =>
-        `<p>Hi ${firstName},</p>
-        <p>Thanks for reaching out about rental management. We've received the details about your property.</p>
-        <p>A member of our Greater Baton Rouge rental team will review it and follow up within two business days.</p>
-        <p>Talk soon,<br>The CMGT Team</p>`,
+        `<p>Hi there,</p>
+        <p>This is an automated reply, even the best property managers have to let a robot say hello now and then. But here's the real part: the details about your property landed safely, and a real person on our Greater Baton Rouge rental team is already on the way to review it and follow up personally.</p>
+        <p>We've got it from here.</p>
+        <p>— The CMGT Team<br>We Manage. You Live.</p>`,
     },
     vendor: {
       label: 'Vendor Bid',
       notifySubject: (who: string) => `New vendor bid — ${who}`,
-      confirmSubject: 'We received your bid — CMGT',
+      confirmSubject: "We've got it from here 👋",
       confirmBody: (firstName: string) =>
-        `<p>Hi ${firstName},</p>
-        <p>Thanks for your interest in working with CMGT. We've received your information and passed it to our procurement team.</p>
-        <p>If there's a fit for your trade and service area, someone will be in touch. We appreciate you reaching out.</p>
-        <p>Best regards,<br>The CMGT Team</p>`,
+        `<p>Hi there,</p>
+        <p>This is an automated reply, even the best management company has to let a robot say hello now and then. But here's the real part: your bid landed safely, and a real person on our procurement team is already on the way to review it. If there's a fit for your trade and service area, someone will follow up personally.</p>
+        <p>We've got it from here.</p>
+        <p>— The CMGT Team<br>We Manage. You Live.</p>`,
     },
     general: {
       label: 'General Inquiry',
       notifySubject: (who: string) => `New general inquiry — ${who}`,
-      confirmSubject: 'We received your message — CMGT',
+      confirmSubject: "We've got it from here 👋",
       confirmBody: (firstName: string) =>
-        `<p>Hi ${firstName},</p>
-        <p>Thanks for reaching out to CMGT. We've received your message and will make sure it reaches the right team.</p>
-        <p>Someone will follow up with you within one business day.</p>
-        <p>Best regards,<br>The CMGT Team</p>`,
+        `<p>Hi there,</p>
+        <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: your message landed safely, and an actual human on our team is already on the way to read it and follow up personally. Because around here, "we'll look into it" actually means someone is looking into it.</p>
+        <p>We've got it from here.</p>
+        <p>— The CMGT Team<br>We Manage. You Live.</p>`,
     },
     default: {
       label: 'Inquiry',
       notifySubject: (who: string) => `New inquiry — ${who}`,
-      confirmSubject: 'We received your message — CMGT',
+      confirmSubject: "We've got it from here 👋",
       confirmBody: (firstName: string) =>
-        `<p>Hi ${firstName},</p>
-        <p>Thanks for reaching out to CMGT. A member of our team will follow up with you within one business day.</p>
-        <p>Best regards,<br>The CMGT Team</p>`,
+        `<p>Hi there,</p>
+        <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: your message landed safely, and an actual human on our team is already on the way to read it and follow up personally. We've got it from here.</p>
+        <p>— The CMGT Team<br>We Manage. You Live.</p>`,
     },
   } as Record<string, {
     label: string;
@@ -143,11 +143,11 @@ export const EMAIL_CONFIG = {
         <p>— Skyler</p>`,
     },
     subscribe: {
-      confirmSubject: "You're on the list — CMGT",
+      confirmSubject: "You're on the list 👋",
       confirmBody: (name: string) =>
-        `<p>Hi${name ? ` ${name}` : ''},</p>
-        <p>Thanks for subscribing. We'll be in touch with useful updates, no fluff.</p>
-        <p>— Skyler</p>`,
-    },
+        `<p>Hi there,</p>
+        <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: you're officially on the list. When we've got something genuinely useful for your board — plain-English guidance on reserves, budgets, and Gulf South HOA law — a real team will send it your way. No spam, no filler, ever.</p>
+        <p>Glad to have you.</p>
+        <p>— The CMGT Team<br>We Manage. You Live.</p>`,
   },
 };
