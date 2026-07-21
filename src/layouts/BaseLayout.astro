@@ -82,7 +82,7 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/assets/icon-mark.svg" />
 
     {robots && <meta name="robots" content={robots} />}
 
@@ -107,18 +107,14 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
     <meta name="twitter:image"       content={resolvedOgImage} />
     <meta name="twitter:image:alt"   content={SITE.name} />
 
-    <!-- Font preloads — update hrefs to match client's actual font files -->
-    <!-- <link rel="preload" href="/fonts/ClientFont-Regular.woff2" as="font" type="font/woff2" crossorigin /> -->
-    <!-- <link rel="preload" href="/fonts/ClientFont-Bold.woff2" as="font" type="font/woff2" crossorigin /> -->
-
     <!-- JSON-LD: Organization (every page) -->
     <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
     {pageSchema && (
       <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
     )}
 
-    <!-- Google Analytics: deferred until after page paint to avoid forced reflow -->
-    {gaMeasurementId && (
+    <!-- Google Analytics: production only (never fires on dev/stg), deferred until after paint -->
+    {isProduction && gaMeasurementId && (
       <script is:inline define:vars={{ gaMeasurementId }}>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -148,6 +144,15 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
       <Fragment>
         <script is:inline>var $wc_load=function(a){return  JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
         <script is:inline src="//s.ksrndkehqnwntyxlhgto.com/170705.js"></script>
+      </Fragment>
+    )}
+
+    {/* WhatConverts — PRODUCTION account 169722 (the live cmgt.org account).
+        Loads ONLY on production so stg/dev never pollute the real lead data. */}
+    {isProduction && (
+      <Fragment>
+        <script is:inline>var $wc_load=function(a){return  JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
+        <script is:inline src="//s.ksrndkehqnwntyxlhgto.com/169722.js"></script>
       </Fragment>
     )}
   </head>
