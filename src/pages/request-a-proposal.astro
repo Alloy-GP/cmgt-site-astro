@@ -263,51 +263,7 @@ const breadcrumb = breadcrumbSchema([
   .prop-portal svg { flex: none; color: var(--neighborly-blue); }
   .prop-portal a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 1.5px solid var(--landscaping-green); padding-bottom: 1px; }
 
-  /* ── Dark mode (system preference) — prototype, this page only ─────────────
-     Follows the OS setting; no toggle. Overrides the page colors + re-themes the
-     intake form via its --if-* vars (and the few #fff hardcoded in the canonical
-     form CSS). */
-  @media (prefers-color-scheme: dark) {
-    body { background: #0E0E1D; }
-    .prop { background: #0E0E1D; }
-
-    .prop-copy .eyebrow { color: #9A9CC4; opacity: 1; }
-    .prop-h1 { color: #ECEDF8; }
-    .prop-h1 :global(.accent) { color: #5BE584; }
-    .prop-lede { color: #B0B2CC; }
-
-    /* Timeline */
-    :global(.prop-tl-label) { color: #C7C9E6; }
-    :global(.prop-tl-title) { color: #ECEDF8; }
-    :global(.prop-tl-desc) { color: #9395B2; }
-    :global(.prop-tl-node) { border-color: #3A3A58; background: #18182F; }
-    :global(.prop-tl-item:not(:last-child) .prop-tl-nodecol)::before { background: #2A2A44; }
-    :global(.prop-tl-item.is-done .prop-tl-node) { border-color: #5BE584; background: #5BE584; }
-    :global(.prop-tl-item.is-active .prop-tl-node) { border-color: #5BE584; background: #5BE584; box-shadow: 0 0 0 5px rgba(91,229,132,.22); }
-    :global(.prop-tl-item.is-active .prop-tl-label) { color: #5BE584; }
-
-    /* Contact bar */
-    .prop-contact { border-top-color: #2A2A44; }
-    .prop-bar-item { border-left-color: #2A2A44; }
-    .prop-bar-k { color: #5BE584; }
-    .prop-bar-v, a.prop-bar-v { color: #ECEDF8; }
-    a.prop-bar-v:hover { color: #5BE584; }
-    .prop-bar-s { color: #8587A3; }
-    .prop-portal { color: #9395B2; }
-    .prop-portal a { color: #ECEDF8; }
-
-    /* Intake form — re-theme via its --if-* vars (defined on .if-widget) */
-    :global(.if-widget) {
-      --if-brand: #5A78E6; --if-brand-tint: #1A1A33;
-      --if-accent: #7C97F2; --if-accent-deep: #6580E6; --if-accent-tint: rgba(124,151,242,.18);
-      --if-ink: #ECEDF8; --if-body: #B9BAD0; --if-muted: #8A8CA8; --if-placeholder: #5D5F7E;
-      --if-border: #2A2A44; --if-border-strong: #3A3A58; --if-input-bg: #121226; --if-green: #43C96E;
-      background: #18182F; border-color: #2A2A44; box-shadow: 0 12px 34px rgba(0,0,0,.5);
-    }
-    /* #fff values hardcoded in the canonical form CSS that must darken */
-    :global(.if-intent-card) { background: #18182F; }
-    :global(.if-control:focus) { background: #1B1B35; }
-    :global(.if-float.has-value .if-flabel),
-    :global(.if-float:focus-within .if-flabel) { background: #18182F; }
-  }
+  /* Dark mode disabled for now — light-only. The prior system-preference
+     (@media prefers-color-scheme: dark) block was removed here; recover it from
+     git history when re-adding as an explicit class-based toggle. */
 </style>
