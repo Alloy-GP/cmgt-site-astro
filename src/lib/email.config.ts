@@ -18,33 +18,36 @@ export const EMAIL_CONFIG = {
     team: 'Skyler',
   },
 
-  // ── Both addresses must be from a domain verified in Resend. ──
+  // ── All site mail (staff notifications AND submitter confirmations) sends
+  // FROM notifications@cmgt.org. Both keys point here so every form uses it.
+  // Must be from a domain verified in Resend. ──
   from: {
     notifications: 'CMGT <notifications@cmgt.org>',
-    hello:         'CMGT <hello@cmgt.org>',
+    hello:         'CMGT <notifications@cmgt.org>',
   },
 
   // ── Replies to any of our emails route to this monitored inbox. ──
   replyTo: 'info@cmgt.org',
 
   // ── Default inbox — used by unknown/unrouted intents (fallback). ──
-  notify: IS_PROD ? ['info@cmgt.org'] : NON_PROD_NOTIFY,
+  notify: IS_PROD ? ['newdevelopment@cmgt.org'] : NON_PROD_NOTIFY,
 
   // ── Failure-alert inbox. Handlers send the email-fallback alert here
   // when a notification send fails (see form-alert.ts). ──
-  alertsTo: IS_PROD ? ['info@cmgt.org'] : NON_PROD_NOTIFY,
+  alertsTo: IS_PROD ? ['newdevelopment@cmgt.org'] : NON_PROD_NOTIFY,
 
   // ── Per-intent routing. The intake form sends an `intent`; /api/lead
   // routes the staff notification to the matching list (falls back to `notify`).
-  // On non-prod everything goes to the test inbox so stg testing is safe. ──
+  // All lead forms go to newdevelopment@cmgt.org in prod (newsletter is separate,
+  // Mailchimp-only). On non-prod everything goes to the test inbox. ──
   routes: (IS_PROD
     ? {
-        proposal: ['info@cmgt.org'], // boards exploring new management
-        vendor:   ['info@cmgt.org'], // contractor / vendor bids
-        general:  ['info@cmgt.org'], // catch-all general inquiries
-        rental:   [],                // TODO(rental routing): confirm destination inbox with client. Empty = accepted but NOT delivered anywhere (see lead.ts empty-route guard).
+        proposal: ['newdevelopment@cmgt.org'], // boards exploring new management
+        vendor:   ['newdevelopment@cmgt.org'], // contractor / vendor bids
+        general:  ['newdevelopment@cmgt.org'], // catch-all general inquiries
+        rental:   ['newdevelopment@cmgt.org'], // rental management inquiries
       }
-    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: [] }
+    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY }
   ) as Record<string, string[]>,
 
   mailchimp: {
