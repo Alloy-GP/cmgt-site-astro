@@ -88,7 +88,7 @@ export const POST: APIRoute = async ({ request }) => {
         from:    EMAIL_CONFIG.from.notifications,
         replyTo: EMAIL_CONFIG.replyTo,
         to:      notifyTo,
-        ...(EMAIL_CONFIG.bcc.length ? { bcc: EMAIL_CONFIG.bcc } : {}),
+        ...(EMAIL_CONFIG.notifyCc.length ? { cc: EMAIL_CONFIG.notifyCc } : {}),
         subject: isPartial ? `Started (incomplete): ${intentCfg.label} — ${company || name}` : intentCfg.notifySubject(company || name),
         html: `
           ${isPartial ? `<p style="background:#FFF4E5;border-left:3px solid #E0902F;padding:10px 14px;margin:0 0 14px;font-size:14px;color:#7a5310"><strong>⚠️ Started but not yet submitted.</strong> This person completed the contact step of the proposal form. Reach out — they may not finish on their own.</p>` : ''}

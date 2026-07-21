@@ -29,9 +29,13 @@ export const EMAIL_CONFIG = {
   // ── Replies to any of our emails route to this monitored inbox. ──
   replyTo: 'info@cmgt.org',
 
-  // ── BCC on every form email (staff notifications, submitter confirmations,
-  // newsletter welcome). Prod only — so stg/dev test submissions never hit
-  // these real inboxes. ──
+  // ── Visible CC on the internal STAFF notification (every recipient there is
+  // internal, so it's safe to show them). Prod only. ──
+  notifyCc: IS_PROD ? ['jharman@cmgt.org', 'admin@alloygp.co'] : [],
+
+  // ── Hidden BCC (audit copy) on SUBMITTER-facing mail — the confirmation and
+  // the newsletter welcome — so we never expose internal addresses to the public
+  // submitter. Prod only. ──
   bcc: IS_PROD ? ['jharman@cmgt.org', 'admin@alloygp.co'] : [],
 
   // ── Default inbox — used by unknown/unrouted intents (fallback). ──
