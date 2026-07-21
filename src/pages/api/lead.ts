@@ -146,10 +146,11 @@ export const POST: APIRoute = async ({ request }) => {
       }
     }
 
-    // Push COMPLETE lead submissions into Pipedrive (Organization + Person + Deal).
-    // No-op on stg/dev or until PIPEDRIVE_API_TOKEN is set; never throws.
-    // Partials are skipped so a one-off abandoned form doesn't create a duplicate deal.
-    if (!isPartial) {
+    // Push COMPLETE PROPOSAL submissions into Pipedrive (Organization + Person + Deal).
+    // Proposals only — vendor bids / general questions / rentals are not sales
+    // deals, so they don't create Pipedrive records. No-op on stg/dev or until
+    // PIPEDRIVE_API_TOKEN is set; never throws. Partials are skipped too.
+    if (!isPartial && intent === 'proposal') {
       const role = detailFields.find((f) => /role/i.test(f.label))?.value || '';
       const notesText = [
         ...detailFields.map((f) => `${f.label}: ${f.value || '—'}`),
