@@ -29,6 +29,11 @@ export const EMAIL_CONFIG = {
   // ── Replies to any of our emails route to this monitored inbox. ──
   replyTo: 'info@cmgt.org',
 
+  // ── BCC on every form email (staff notifications, submitter confirmations,
+  // newsletter welcome). Prod only — so stg/dev test submissions never hit
+  // these real inboxes. ──
+  bcc: IS_PROD ? ['jharman@cmgt.org', 'admin@alloygp.co'] : [],
+
   // ── Default inbox — used by unknown/unrouted intents (fallback). ──
   notify: IS_PROD ? ['newdevelopment@cmgt.org'] : NON_PROD_NOTIFY,
 
