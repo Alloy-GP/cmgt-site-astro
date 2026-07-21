@@ -96,7 +96,8 @@ export const EMAIL_CONFIG = {
       confirmSubject: "We've got it from here 👋",
       confirmBody: (firstName: string) =>
         `<p>Hi there,</p>
-        <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: your message landed safely, and an actual human on our team is already on the way to read it and follow up personally. Because around here, "we'll look into it" actually means someone is looking into it.</p>
+        <p>This is an automated reply — even the best management company lets a robot say the first hello. But here's the real part: your proposal request just landed with us, and a real person on our team is already reviewing the details you shared about your community.</p>
+        <p>From here, we'll take a close look at what your association needs and reach out personally to walk you through what management with CMGT would look like — no generic pitch, just a straight answer on how we'd serve your community.</p>
         <p>We've got it from here.</p>
         <p>— The CMGT Team<br>We Manage. You Live.</p>`,
     },
