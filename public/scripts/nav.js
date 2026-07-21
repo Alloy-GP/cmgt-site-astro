@@ -142,16 +142,31 @@
       });
     }
 
-    /* ── footer newsletter signup (front-end only — wire to provider at build) ── */
+    /* ── footer newsletter signup → POST /api/subscribe (Mailchimp opt-in) ── */
     var nl = document.querySelector('.ft-nl');
     if (nl) {
       nl.addEventListener('submit', function (e) {
         e.preventDefault();
         var input = nl.querySelector('input');
         if (input && !input.checkValidity()) { input.reportValidity(); return; }
-        var ok = document.querySelector('.ft-nl-ok');
-        if (ok) ok.classList.add('on');
-        nl.reset();
+        var email = input ? input.value.trim() : '';
+        if (!email) return;
+        var btn = nl.querySelector('button');
+        var ok  = document.querySelector('.ft-nl-ok');
+        if (btn) btn.disabled = true;
+        var fd = new FormData();
+        fd.append('email', email);
+        fetch('/api/subscribe', { method: 'POST', body: fd })
+          .then(function (r) { if (!r.ok) throw new Error('subscribe failed'); })
+          .then(function () { if (ok) ok.classList.add('on'); nl.reset(); if (btn) btn.disabled = false; })
+          .catch(function () {
+            if (btn) btn.disabled = false;
+            if (input) {
+              input.setCustomValidity('Something went wrong — please try again.');
+              input.reportValidity();
+              setTimeout(function () { input.setCustomValidity(''); }, 1200);
+            }
+          });
       });
     }
   }

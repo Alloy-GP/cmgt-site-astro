@@ -32,11 +32,11 @@ export const POST: APIRoute = async ({ request }) => {
     // Add to Mailchimp (silently pass if already subscribed)
     if (EMAIL_CONFIG.mailchimp.enabled) {
       try {
-        await mailchimp.lists.addListMember(import.meta.env.MAILCHIMP_AUDIENCE_ID, {
+        await mailchimp.lists.addListMember(import.meta.env.MAILCHIMP_AUDIENCE_ID ?? import.meta.env.MAILCHIMP_LIST_ID, {
           email_address: email,
           status: 'subscribed',
           merge_fields: { FNAME: firstName },
-          tags: EMAIL_CONFIG.mailchimp.defaultTags,
+          tags: EMAIL_CONFIG.mailchimp.subscribeTags ?? EMAIL_CONFIG.mailchimp.defaultTags,
         });
       } catch (err: any) {
         const alreadyExists = err?.response?.body?.title === 'Member Exists';
@@ -54,6 +54,7 @@ export const POST: APIRoute = async ({ request }) => {
         () => resend.emails.send({
           from: EMAIL_CONFIG.from.hello,
           to: email,
+          ...(EMAIL_CONFIG.bcc.length ? { bcc: EMAIL_CONFIG.bcc } : {}),
           subject: EMAIL_CONFIG.copy.subscribe.confirmSubject,
           html: EMAIL_CONFIG.copy.subscribe.confirmBody(firstName),
         })
