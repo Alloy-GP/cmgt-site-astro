@@ -149,5 +149,6 @@ export const EMAIL_CONFIG = {
         <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: you're officially on the list. When we've got something genuinely useful for your board — plain-English guidance on reserves, budgets, and Gulf South HOA law — a real team will send it your way. No spam, no filler, ever.</p>
         <p>Glad to have you.</p>
         <p>— The CMGT Team<br>We Manage. You Live.</p>`,
+    },
   },
 };
