@@ -10,8 +10,10 @@
  * SSR'd DOM. The Locations map reads its per-state data from the data-*
  * attributes on each .gm-row below.
  */
+import { orderDocsUrl } from '~/lib/order-docs';
 const HOME = '/';
 const PROPOSAL = '/request-a-proposal';
+const ORDER_DOCS = orderDocsUrl();
 
 const MK = [
   { key: 'la', label: 'Louisiana',         hq: true,  q: 'Baton Rouge, LA', z: 8, view: '/hoa-management/louisiana',   dir: 'CMGT, Baton Rouge, LA' },
@@ -82,7 +84,7 @@ const NAV = [
 const UTILITY = [
   { t: 'Log In', href: '/login', hideSm: false },
   { t: 'Pay Dues', href: 'https://portal.cmgt.org/public', ext: true, hideSm: false },
-  { t: 'Order Documents', href: 'https://www.homewisedocs.com/', ext: true, hideSm: true },
+  { t: 'Order Documents', href: ORDER_DOCS, ext: true, hideSm: true },
   { t: 'Rental Management', href: '/rentals', hideSm: true },
 ] as any[];
 ---
