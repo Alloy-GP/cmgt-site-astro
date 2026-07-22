@@ -53,7 +53,7 @@ export const POST: APIRoute = async ({ request }) => {
       await sendWithAlert(
         { client: EMAIL_CONFIG.brand.name, formName: 'Contact form — confirmation', slackWebhookUrl: FORM_ALERT_SLACK_URL },
         () => resend.emails.send({
-          from: EMAIL_CONFIG.from.hello,
+          from: EMAIL_CONFIG.from.confirmations,
           to: email,
           subject: EMAIL_CONFIG.copy.contact.confirmSubject,
           html: EMAIL_CONFIG.copy.contact.confirmBody(name, EMAIL_CONFIG.brand.url),
