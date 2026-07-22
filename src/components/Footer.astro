@@ -6,8 +6,10 @@
  * The newsletter form is wired client-side by public/scripts/nav.js.
  * `ext` links render target=_blank rel="noopener noreferrer".
  */
+import { orderDocsUrl } from '~/lib/order-docs';
 const PROPOSAL = '/request-a-proposal';
 const year = new Date().getFullYear();
+const ORDER_DOCS = orderDocsUrl();
 
 const FOOTER = [
   {
@@ -51,7 +53,7 @@ const FOOTER = [
     links: [
       { t: 'Log In', href: '/login' },
       { t: 'Pay Dues', href: 'https://portal.cmgt.org/public', ext: true },
-      { t: 'Order Documents', href: 'https://www.homewisedocs.com/', ext: true },
+      { t: 'Order Documents', href: ORDER_DOCS, ext: true },
       { t: 'Submit a Maintenance Request', href: 'https://fixitsquad.org/', ext: true },
     ],
   },
