@@ -239,6 +239,10 @@ function ProposalWizard({ onBack }) {
     } else if (s === 2) {
       if (!vals.association.trim()) e.association = 'Required';
       if (!vals.location.trim()) e.location = 'Required';
+      if (!vals.units.trim()) e.units = 'Required';
+      if (!vals.type) e.type = 'Required';
+      if (!vals.mgmtStatus) e.mgmtStatus = 'Required';
+      if (!vals.dues.trim()) e.dues = 'Required';
     } else if (s === 3) {
       if (!vals.services.length && !vals.pains.length) e.services = 'Pick at least one';
       if (!vals.timeline) e.timeline = 'Required';
@@ -405,10 +409,10 @@ function ProposalWizard({ onBack }) {
           <div className="if-grid">
             <Field def={{ key: 'association', label: 'Association name', type: 'text', required: true, noName: true }} value={vals.association} error={errors.association} onChange={set} />
             <Field def={{ key: 'location', label: 'Location', type: 'text', required: true, placeholder: 'e.g. Baton Rouge, LA', noName: true }} value={vals.location} error={errors.location} onChange={set} />
-            <Field def={{ key: 'units', label: 'Number of units', type: 'text', inputMode: 'numeric', maxLength: 6, noName: true }} value={vals.units} error={errors.units} onChange={set} />
-            <Field def={{ key: 'type', label: 'Community type', type: 'select', options: V.communityType, noName: true }} value={vals.type} error={errors.type} onChange={set} />
-            <Field def={{ key: 'mgmtStatus', label: 'Current management status', type: 'select', options: V.managementStatus, noName: true }} value={vals.mgmtStatus} error={errors.mgmtStatus} onChange={set} />
-            <Field def={{ key: 'dues', label: 'Monthly dues / unit', type: 'text', inputMode: 'decimal', maxLength: 8, placeholder: 'e.g. 37.50', noName: true }} value={vals.dues} error={errors.dues} onChange={set} />
+            <Field def={{ key: 'units', label: 'Number of units', type: 'text', required: true, inputMode: 'numeric', maxLength: 6, noName: true }} value={vals.units} error={errors.units} onChange={set} />
+            <Field def={{ key: 'type', label: 'Community type', type: 'select', required: true, options: V.communityType, noName: true }} value={vals.type} error={errors.type} onChange={set} />
+            <Field def={{ key: 'mgmtStatus', label: 'Current management status', type: 'select', required: true, options: V.managementStatus, noName: true }} value={vals.mgmtStatus} error={errors.mgmtStatus} onChange={set} />
+            <Field def={{ key: 'dues', label: 'Monthly dues / unit', type: 'text', required: true, inputMode: 'decimal', maxLength: 8, placeholder: 'e.g. 37.50', noName: true }} value={vals.dues} error={errors.dues} onChange={set} />
             <div className="if-field" style={{ gridColumn: '1 / -1' }}>
               <span className="if-grouplabel">Amenities <em>(select all that apply)</em></span>
               <PillMulti options={V.amenities} value={vals.amenities} onChange={(v) => set('amenities', v)} />
