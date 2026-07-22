@@ -31,7 +31,7 @@ function Ic({ name }) { return <span className="if-ic">{I[name]}</span>; }
 // PROPOSAL_COPY, colors/fonts from the --if-* theme vars. To add a request
 // type, use EXTRA_INTENTS in the config — never fork these fields.
 const PROPOSAL_INTENT = {
-  id: 'proposal', label: 'Request a proposal', icon: 'building', tone: 'teal', hot: true,
+  id: 'proposal', label: 'Request a proposal', icon: 'building', tone: 'teal',
   blurb: PROPOSAL_COPY.blurb, forWho: PROPOSAL_COPY.forWho, routeTo: PROPOSAL_COPY.routeTo,
   fields: [
     { key: 'association', label: 'Association / community name', type: 'text', required: true, placeholder: 'e.g. Wynbrook HOA', col: 2 },
