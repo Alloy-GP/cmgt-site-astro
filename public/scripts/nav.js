@@ -147,15 +147,16 @@
     if (nl) {
       nl.addEventListener('submit', function (e) {
         e.preventDefault();
-        var input = nl.querySelector('input');
+        var input = nl.querySelector('input[type=email]');
         if (input && !input.checkValidity()) { input.reportValidity(); return; }
         var email = input ? input.value.trim() : '';
         if (!email) return;
         var btn = nl.querySelector('button');
         var ok  = document.querySelector('.ft-nl-ok');
         if (btn) btn.disabled = true;
-        var fd = new FormData();
-        fd.append('email', email);
+        // Send the whole form so the honeypot (name="website") rides along.
+        var fd = new FormData(nl);
+        fd.set('email', email);
         fetch('/api/subscribe', { method: 'POST', body: fd })
           .then(function (r) { if (!r.ok) throw new Error('subscribe failed'); })
           .then(function () { if (ok) ok.classList.add('on'); nl.reset(); if (btn) btn.disabled = false; })
