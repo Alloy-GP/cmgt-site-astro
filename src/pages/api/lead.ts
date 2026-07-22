@@ -121,17 +121,21 @@ export const POST: APIRoute = async ({ request }) => {
       if (confirmError) console.error('Resend confirm error:', confirmError);
     }
 
-    // Add / update the lead in Mailchimp on every submission — upsert so a
-    // returning contact is refreshed (name/company/tags) instead of erroring.
-    await upsertMailchimpContact({
-      email,
-      firstName: name.split(' ')[0],
-      lastName:  name.split(' ').slice(1).join(' '),
-      company,
-      tags: isPartial
-        ? [...EMAIL_CONFIG.mailchimp.defaultTags, 'proposal-incomplete']
-        : EMAIL_CONFIG.mailchimp.defaultTags,
-    });
+    // Add / update the lead in Mailchimp — PROPOSAL submissions only (including
+    // partial proposal captures). Vendor bids / general questions / rentals are
+    // deliberately NOT synced to the audience. Upsert so a returning contact is
+    // refreshed (name/company/tags) instead of erroring.
+    if (intent === 'proposal') {
+      await upsertMailchimpContact({
+        email,
+        firstName: name.split(' ')[0],
+        lastName:  name.split(' ').slice(1).join(' '),
+        company,
+        tags: isPartial
+          ? [...EMAIL_CONFIG.mailchimp.defaultTags, 'proposal-incomplete']
+          : EMAIL_CONFIG.mailchimp.defaultTags,
+      });
+    }
 
     // Push COMPLETE PROPOSAL submissions into Pipedrive (Organization + Person + Deal).
     // Proposals only — vendor bids / general questions / rentals are not sales

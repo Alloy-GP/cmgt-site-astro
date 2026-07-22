@@ -89,10 +89,12 @@ const FOOTER = [
     </div>
     <div>
       <form class="ft-nl" novalidate>
-        <input type="email" placeholder="you@email.com" aria-label="Email address" required />
+        <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required />
+        {/* Honeypot — hidden from humans; bots that fill it are silently rejected server-side. */}
+        <input type="text" name="website" class="ft-nl-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <button class="ft-nl-btn" type="submit">Subscribe <span class="arrow">→</span></button>
       </form>
-      <p class="ft-nl-ok">Thanks — you’re on the list.</p>
+      <p class="ft-nl-ok">Thanks — check your inbox to confirm your subscription.</p>
       <p class="ft-nl-note">For HOA boards &amp; homeowners. Unsubscribe anytime.</p>
     </div>
   </div></div>

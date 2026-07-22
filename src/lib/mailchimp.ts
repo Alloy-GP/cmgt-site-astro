@@ -32,6 +32,11 @@ interface MailchimpContact {
   lastName?: string;
   company?: string;
   tags?: string[];
+  // When true, NEW members are created as 'pending' so Mailchimp sends its
+  // double opt-in confirmation email — they only become 'subscribed' after
+  // clicking it. Used by the public newsletter to block bots (they can't
+  // confirm). Proposal leads omit this and land as 'subscribed' directly.
+  doubleOptIn?: boolean;
 }
 
 export async function upsertMailchimpContact(contact: MailchimpContact): Promise<void> {
@@ -54,7 +59,11 @@ export async function upsertMailchimpContact(contact: MailchimpContact): Promise
 
     // PUT = add-or-update. `status_if_new` only applies when CREATING, so an
     // existing (or previously-unsubscribed) member keeps their current status.
-    const base = { email_address: email, status_if_new: 'subscribed' as const };
+    // 'pending' triggers Mailchimp's double opt-in confirmation email.
+    const base = {
+      email_address: email,
+      status_if_new: (contact.doubleOptIn ? 'pending' : 'subscribed') as 'pending' | 'subscribed',
+    };
     try {
       await mailchimp.lists.setListMember(id, hash, {
         ...base,
