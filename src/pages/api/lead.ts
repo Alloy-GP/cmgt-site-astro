@@ -111,7 +111,7 @@ export const POST: APIRoute = async ({ request }) => {
            ${message ? `<p style="font-size:14px;margin:12px 0 0"><strong>In your words:</strong><br>${esc(message).replace(/\n/g, '<br>')}</p>` : ''}`
         : '';
       const { error: confirmError } = await resend.emails.send({
-        from:    EMAIL_CONFIG.from.hello,
+        from:    EMAIL_CONFIG.from.confirmations,
         replyTo: EMAIL_CONFIG.replyTo,
         to:      email,
         ...(EMAIL_CONFIG.bcc.length ? { bcc: EMAIL_CONFIG.bcc } : {}),

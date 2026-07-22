@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
       await sendWithAlert(
         { client: EMAIL_CONFIG.brand.name, formName: 'Subscribe form — welcome', slackWebhookUrl: FORM_ALERT_SLACK_URL },
         () => resend.emails.send({
-          from: EMAIL_CONFIG.from.hello,
+          from: EMAIL_CONFIG.from.confirmations,
           to: email,
           ...(EMAIL_CONFIG.bcc.length ? { bcc: EMAIL_CONFIG.bcc } : {}),
           subject: EMAIL_CONFIG.copy.subscribe.confirmSubject,
