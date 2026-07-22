@@ -445,6 +445,8 @@
 .ft-nl { display: flex; gap: 10px; max-width: 380px; }
 .ft-nl input { flex: 1; min-width: 0; font-family: var(--font-body); font-size: 14px; color: #fff; background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.2); border-radius: 8px; padding: 12px 14px; outline: none; transition: border-color .2s, background .2s; }
 .ft-nl input::placeholder { color: rgba(255,255,255,.5); }
+/* Honeypot: off-screen, non-interactive, zero footprint. Overrides .ft-nl input. */
+.ft-nl .ft-nl-hp { position: absolute; left: -9999px; width: 1px; height: 1px; padding: 0; border: 0; opacity: 0; flex: none; }
 .ft-nl input:focus { border-color: var(--landscaping-green, #4ACF6C); background: rgba(255,255,255,.12); }
 .ft-nl-btn { flex: none; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 700; font-size: 13px; letter-spacing: .02em; color: var(--freedom-blue, #1E1E77); background: var(--landscaping-green, #4ACF6C); border: 0; border-radius: 8px; padding: 12px 18px; cursor: pointer; transition: background .2s, transform .12s; }
 .ft-nl-btn .arrow { transition: transform .2s var(--ease-out); }
