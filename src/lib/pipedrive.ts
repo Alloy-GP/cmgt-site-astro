@@ -20,11 +20,12 @@ interface PipedriveLead {
   phone?: string;
   role?: string;
   org?: string;
+  address?: string; // property/community address — set on the Organization so it shows on the Deal card
   notes?: string;
   source: string;
 }
 
-async function upsertOrganization(base: string, qs: string, orgName: string, ownerId?: number): Promise<number | undefined> {
+async function upsertOrganization(base: string, qs: string, orgName: string, ownerId?: number, address?: string): Promise<number | undefined> {
   try {
     const searchRes = await fetch(
       `${base}/organizations/search?term=${encodeURIComponent(orgName)}&exact_match=true&${qs}`,
@@ -32,12 +33,17 @@ async function upsertOrganization(base: string, qs: string, orgName: string, own
     if (searchRes.ok) {
       const data = await searchRes.json();
       const existing = data?.data?.items?.[0]?.item?.id;
+      // Existing org — leave it as-is (staff can edit); don't overwrite a curated address.
       if (existing) return existing;
     }
     const createRes = await fetch(`${base}/organizations?${qs}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: orgName, ...(ownerId ? { owner_id: ownerId } : {}) }),
+      body: JSON.stringify({
+        name: orgName,
+        ...(address ? { address } : {}),
+        ...(ownerId ? { owner_id: ownerId } : {}),
+      }),
     });
     const created = await createRes.json();
     return created?.data?.id || undefined;
@@ -52,7 +58,7 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
   // No-op unless activated in production — keeps stg/dev from creating real deals.
   if (!apiToken || !isProduction) return;
 
-  const { email, name, phone, role, org, notes, source } = lead;
+  const { email, name, phone, role, org, address, notes, source } = lead;
   const base = 'https://api.pipedrive.com/v1';
   const qs = `api_token=${apiToken}`;
 
@@ -66,7 +72,9 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
 
   try {
     // 0. Upsert Organization so we can attach it to both Person and Deal.
-    const orgId = org ? await upsertOrganization(base, qs, org, ownerId) : undefined;
+    //    Address is stored here (Pipedrive's standard address lives on the Org),
+    //    so it surfaces on the Deal card via the linked organization.
+    const orgId = org ? await upsertOrganization(base, qs, org, ownerId, address) : undefined;
 
     // 1. Upsert Person — search by email first, create if not found.
     let personId: number | undefined;
@@ -98,7 +106,9 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
     }
 
     // 2. Create a Deal linked to the Person + Organization.
-    const dealTitle = `${name}${org ? ` — ${org}` : ''} · ${source} (cmgt.org)`;
+    //    Title is just the organization / HOA name (per Ken). Falls back to the
+    //    submitter's name only when no org was provided.
+    const dealTitle = (org && org.trim()) ? org.trim() : name;
     const dealRes = await fetch(`${base}/deals?${qs}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

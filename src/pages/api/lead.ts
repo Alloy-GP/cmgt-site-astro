@@ -143,12 +143,15 @@ export const POST: APIRoute = async ({ request }) => {
     // PIPEDRIVE_API_TOKEN is set; never throws. Partials are skipped too.
     if (!isPartial && intent === 'proposal') {
       const role = detailFields.find((f) => /role/i.test(f.label))?.value || '';
+      // Property/community address (wizard "Location" or contact form "address")
+      // → attached to the Pipedrive Organization so it shows on the Deal card.
+      const address = detailFields.find((f) => /address|location/i.test(f.label))?.value || '';
       const notesText = [
         ...detailFields.map((f) => `${f.label}: ${f.value || '—'}`),
         message ? `\nMessage:\n${message}` : '',
       ].filter(Boolean).join('\n');
       await addToPipedrive({
-        email, name, phone, role, org: company,
+        email, name, phone, role, org: company, address,
         notes: notesText,
         source: `${intentCfg.label}${ref ? ` · ${ref}` : ''}`,
       });
