@@ -12,6 +12,8 @@
 // Do NOT add/remove/rename proposal fields. See "Syncing the proposal form
 // from the starter" in CLAUDE.md.
 
+import { orderDocsUrl } from '../lib/order-docs';
+
 // Company identity. Used in the submit-error fallback message.
 export const BRAND = { name: 'CMGT', phone: '(225) 503-2648' };
 
@@ -29,8 +31,8 @@ export const PROPOSAL_OPTIONS = {
 
 // ── Proposal intent copy (brand voice — NOT the field set) ───────────────
 export const PROPOSAL_COPY = {
-  blurb:   'We’re a board exploring new management.',
-  forWho:  'Boards & volunteer leaders',
+  blurb:   'For HOA & condo boards choosing a new management company.',
+  forWho:  'Boards & volunteer leaders — not for residents',
   routeTo: 'the team for your region',
 };
 
@@ -46,7 +48,12 @@ export const PROPOSAL_FORM_VERSION = 2;
 // The v2 field SET + step order are canonical (locked in IntakeForm.jsx).
 // Only these choice lists + multi-select chips change per site.
 export const PROPOSAL_V2 = {
-  roles: ['Board President', 'Vice President', 'Treasurer', 'Secretary', 'Board Member', 'Property Owner', 'Other'],
+  roles: ['Board President', 'Vice President', 'Treasurer', 'Secretary', 'Board Member', 'Property owner / resident', 'Other'],
+  // Roles that mean "I'm not a board decision-maker." When step 1's role is one
+  // of these, the wizard shows a soft off-ramp to the resident intent (proposals
+  // are for boards). Optional + config-gated: sites without this key never show
+  // the nudge, so the canonical wizard stays inert unless a site opts in.
+  residentRoles: ['Property owner / resident'],
   communityType: ['Single-family', 'Townhomes', 'Condos', 'Mixed — townhomes & single-family', 'Master / mixed-use'],
   managementStatus: ['Self-managed by board', 'Looking to switch from current provider', 'New construction / developer-controlled', 'Other'],
   amenities: ['Community pool', 'Clubhouse', 'Walking trails', 'Pier & boat slips', 'Tot lot', 'Tennis / pickleball', 'Gated entry', 'Marina', 'Beach access', 'Common landscaping'],
@@ -85,6 +92,19 @@ export const EXTRA_INTENTS = [
       { key: 'units', label: 'Number of units', type: 'select', required: true, options: ['1', '2–4', '5–10', '10+'] },
       { key: 'occupancy', label: 'Current status', type: 'radio', required: true, options: ['Occupied', 'Vacant', 'Not yet purchased'], col: 2 },
     ],
+  },
+  {
+    id: 'resident', label: 'I’m a resident / homeowner', icon: 'home', tone: 'sage',
+    blurb: 'Dues, documents, my account, or a maintenance issue.', forWho: 'Homeowners & residents',
+    routeTo: 'the team for your community',
+    // Self-service shortcuts shown above the message box — most residents get
+    // what they need here without waiting on a reply.
+    selfHelp: [
+      { label: 'Pay dues', desc: 'Make a payment online', href: 'https://portal.cmgt.org/public', ext: true },
+      { label: 'Order documents', desc: 'Resale & closing docs', href: orderDocsUrl(), ext: true },
+      { label: 'Log in to the portal', desc: 'Account, requests & documents', href: '/login' },
+    ],
+    fields: [],
   },
   {
     id: 'vendor', label: 'Submit a bid', icon: 'hardhat', tone: 'ocean',

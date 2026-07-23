@@ -48,6 +48,22 @@
 .if-chosen-txt { display: flex; flex-direction: column; line-height: 1.3; }
 .if-chosen-txt strong { font-family: var(--if-font-heading); font-weight: 700; font-size: 15px; color: var(--if-ink); }
 .if-chosen-txt span { font-size: 12.5px; color: var(--if-muted); }
+
+/* Self-service shortcuts (resident intent) — surfaced above the message box. */
+.if-selfhelp { background: var(--if-brand-tint); border: 1px solid var(--if-border); border-radius: var(--if-radius); padding: 14px 16px; margin-bottom: 18px; }
+.if-selfhelp-head { font-family: var(--if-font-heading); font-weight: 700; font-size: 12.5px; color: var(--if-ink); margin-bottom: 10px; }
+.if-selfhelp-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.if-selfhelp-link { display: flex; flex-direction: column; gap: 2px; text-decoration: none; background: #fff; border: 1px solid var(--if-border); border-radius: var(--if-radius-sm); padding: 9px 11px; transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
+.if-selfhelp-link:hover { border-color: var(--if-accent); box-shadow: 0 6px 16px rgba(23,35,37,.08); transform: translateY(-1px); }
+.if-selfhelp-t { display: flex; align-items: center; gap: 6px; font-family: var(--if-font-heading); font-weight: 700; font-size: 13px; color: var(--if-ink); }
+.if-selfhelp-t .if-ic { width: 13px; height: 13px; color: var(--if-accent); }
+.if-selfhelp-d { font-size: 11px; line-height: 1.35; color: var(--if-muted); }
+.if-selfhelp-or { font-size: 12px; color: var(--if-muted); margin-top: 11px; }
+
+/* Off-ramp banner — a resident who picked a resident role inside the proposal wizard. */
+.if-offramp { background: #FFF6E9; border: 1px solid #F0D9A8; border-radius: var(--if-radius); padding: 13px 15px; margin-top: 16px; }
+.if-offramp p { margin: 0; font-size: 13px; line-height: 1.5; color: #6b5320; }
+.if-offramp strong { color: #4a3a12; }
 .if-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 14px; }
 .if-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .if-label { font-family: var(--if-font-heading); font-weight: 600; font-size: 12.5px; color: var(--if-ink); }
