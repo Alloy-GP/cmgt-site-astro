@@ -119,6 +119,23 @@ const breadcrumb = breadcrumbSchema([
              roles are opened/closed there; restyled below to match the site. -->
         <div id="BambooHR" data-domain="cmgt.bamboohr.com" data-version="1.0.0"></div>
         <script is:inline src="https://cmgt.bamboohr.com/js/embed.js" type="text/javascript"></script>
+        <script is:inline>
+          /* The openings list is injected async by embed.js. These links go to
+             BambooHR (off-site), so open them in a new tab. Retag on every
+             mutation so newly-injected roles are covered too. */
+          (function () {
+            var host = document.getElementById('BambooHR');
+            if (!host) return;
+            function externalize() {
+              host.querySelectorAll('a[href]').forEach(function (a) {
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+              });
+            }
+            new MutationObserver(externalize).observe(host, { childList: true, subtree: true });
+            externalize();
+          })();
+        </script>
         <p class="jobs-board-foot">
           Don't see the right fit? See every role — and apply — on our
           <a href="https://cmgt.bamboohr.com/careers" target="_blank" rel="noopener">careers page</a>.
