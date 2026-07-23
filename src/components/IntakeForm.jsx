@@ -61,6 +61,10 @@ function genId() {
 const WC_STD = { name: 'name', email: 'email', phone: 'phone', association: 'company', company: 'company' };
 const wcName = (def) => WC_STD[def.key] || def.label;
 
+// Intents whose free-text message is required (and labeled "How can we help?"
+// rather than "Anything else?") — the message is the whole point of the request.
+const MSG_REQUIRED = new Set(['service', 'resident']);
+
 function Field({ def, value, error, onChange }) {
   const span = def.col === 2 ? '1 / -1' : 'auto';
   const fid = 'if-' + def.key;
@@ -200,7 +204,7 @@ function Steps({ step }) {
 // Options come from PROPOSAL_V2, copy from PROPOSAL_COPY. Step 1 (contact) fires
 // a `stage=partial` lead the moment it's completed, so abandoned forms are still
 // captured; the final submit sends `stage=complete` with the same `ref`.
-function ProposalWizard({ onBack }) {
+function ProposalWizard({ onBack, onSwitchIntent }) {
   const V = PROPOSAL_V2;
   const [step, setStep] = useState(1);
   const [refId, setRefId] = useState(genId);
@@ -364,6 +368,10 @@ function ProposalWizard({ onBack }) {
   // capture, so the lead never got step-3 fields. Keeping the form untracked until
   // step 3 means the first (and only) capture is the complete final submit.
   const wcTracked = step === 3 && TRACKING.intents.includes('proposal');
+  // Off-ramp: a resident who wandered into the proposal wizard. Armed only when
+  // the site configures PROPOSAL_V2.residentRoles AND a target intent exists
+  // (onSwitchIntent is passed) — otherwise the canonical wizard shows nothing.
+  const showOfframp = !!onSwitchIntent && (V.residentRoles || []).includes(vals.role);
   return (
     <form
       id={wcTracked ? TRACKING.formId : 'proposal-wizard'}
@@ -396,6 +404,12 @@ function ProposalWizard({ onBack }) {
             <Field def={{ key: 'email', label: 'Email', type: 'text', required: true, noName: true }} value={vals.email} error={errors.email} onChange={set} />
             <Field def={{ key: 'phone', label: 'Phone', type: 'text', noName: true }} value={vals.phone} error={errors.phone} onChange={set} />
           </div>
+          {showOfframp && (
+            <div className="if-offramp" role="note">
+              <p><strong>Are you a resident?</strong> Proposals are for boards choosing a new management company. If you live in a community we manage, you’ll get help faster through our resident options — dues, documents, and account questions.</p>
+              <button type="button" className="if-offramp-btn" onClick={onSwitchIntent}>Switch to resident options <Ic name="arrowRight" /></button>
+            </div>
+          )}
         </div>
       )}
 
@@ -520,7 +534,7 @@ export default function IntakeForm() {
     if (!contact.email.trim()) e.email = 'Required';
     else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contact.email)) e.email = 'Enter a valid email';
     (intent.fields || []).forEach((f) => { if (f.required && !fields[f.key]) e[f.key] = 'Required'; });
-    if (intent.id === 'service' && !message.trim()) e.message = 'Required';
+    if (MSG_REQUIRED.has(intent.id) && !message.trim()) e.message = 'Required';
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -595,7 +609,10 @@ export default function IntakeForm() {
         {/* v2: the proposal intent uses the guided 3-step wizard (with partial-lead
             capture). All other intents — and v1 sites — use the flat form below. */}
         {step === 'form' && intent && PROPOSAL_FORM_VERSION === 2 && intent.id === 'proposal' && (
-          <ProposalWizard onBack={back} />
+          <ProposalWizard
+            onBack={back}
+            onSwitchIntent={intentById('resident') ? () => pick('resident') : intentById('general') ? () => pick('general') : undefined}
+          />
         )}
 
         {step === 'form' && intent && !(PROPOSAL_FORM_VERSION === 2 && intent.id === 'proposal') && (
@@ -619,6 +636,23 @@ export default function IntakeForm() {
               <span className="if-intent-icon"><Ic name={intent.icon} /></span>
               <span className="if-chosen-txt"><strong>{intent.label}</strong><span>{intent.blurb}</span></span>
             </div>
+            {/* Self-service shortcuts (residents): most get what they need here
+                without waiting on a reply. Shown only when the intent defines them. */}
+            {intent.selfHelp?.length > 0 && (
+              <div className="if-selfhelp">
+                <div className="if-selfhelp-head">Fastest way to get what you need:</div>
+                <div className="if-selfhelp-links">
+                  {intent.selfHelp.map((l) => (
+                    <a key={l.label} className="if-selfhelp-link" href={l.href}
+                      target={l.ext ? '_blank' : undefined} rel={l.ext ? 'noopener noreferrer' : undefined}>
+                      <span className="if-selfhelp-t">{l.label} <Ic name="arrowRight" /></span>
+                      <span className="if-selfhelp-d">{l.desc}</span>
+                    </a>
+                  ))}
+                </div>
+                <div className="if-selfhelp-or">Still need a person? Send us a message below.</div>
+              </div>
+            )}
             <div className="if-grid">
               <Field def={{ key: 'name', label: 'Your name', type: 'text', required: true, placeholder: 'First & last', col: 2 }} value={contact.name} error={errors.name} onChange={setC} />
               <Field def={{ key: 'email', label: 'Email', type: 'text', required: true, placeholder: 'you@email.com' }} value={contact.email} error={errors.email} onChange={setC} />
@@ -628,10 +662,10 @@ export default function IntakeForm() {
               ))}
               <div className="if-field" style={{ gridColumn: '1 / -1' }}>
                 <div className={'if-float if-float-top' + (message ? ' has-value' : '') + (errors.message ? ' is-err' : '')}>
-                  <textarea id="if-message" aria-label={intent.id === 'service' ? 'How can we help?' : 'Anything else?'} name={intent.id === 'service' ? 'How can we help?' : 'Message'} className="if-control if-textarea" rows={intent.id === 'general' ? 5 : 3}
+                  <textarea id="if-message" aria-label={MSG_REQUIRED.has(intent.id) ? 'How can we help?' : 'Anything else?'} name={MSG_REQUIRED.has(intent.id) ? 'How can we help?' : 'Message'} className="if-control if-textarea" rows={intent.id === 'general' ? 5 : 3}
                     placeholder=" "
                     value={message} onChange={(e) => { setMessage(e.target.value); setErrors((x) => ({ ...x, message: null })); }} />
-                  <label className="if-flabel" htmlFor="if-message">{intent.id === 'service' ? 'How can we help?' : 'Anything else?'}{intent.id === 'service' && <span className="if-req">*</span>}</label>
+                  <label className="if-flabel" htmlFor="if-message">{MSG_REQUIRED.has(intent.id) ? 'How can we help?' : 'Anything else?'}{MSG_REQUIRED.has(intent.id) && <span className="if-req">*</span>}</label>
                 </div>
                 {errors.message && <div className="if-err-msg">{errors.message}</div>}
               </div>
