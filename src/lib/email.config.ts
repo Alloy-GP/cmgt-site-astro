@@ -44,6 +44,7 @@ export const EMAIL_CONFIG = {
         rental:   ['admin@alloygp.co'], // rentals go to Chris Tremblay; Jeff not cc'd
         vendor:   ['admin@alloygp.co'],
         general:  ['admin@alloygp.co'],
+        resident: ['admin@alloygp.co'], // homeowner help — Jeff not cc'd
       }
     : {}
   ) as Record<string, string[]>,
