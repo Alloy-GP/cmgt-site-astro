@@ -22,8 +22,8 @@ export const EMAIL_CONFIG = {
   // FROM notifications@cmgt.org. Both keys point here so every form uses it.
   // Must be from a domain verified in Resend. ──
   from: {
-    notifications: 'CMGT <notifications@mail.cmgt.org>', // staff notification sender (dedicated sending subdomain)
-    confirmations: 'CMGT <notifications@mail.cmgt.org>', // submitter confirmation / welcome sender (dedicated sending subdomain)
+    notifications: 'CMGT <notifications@cmgt.org>', // staff notification sender (revert: prod API key not yet authorized for mail.cmgt.org)
+    confirmations: 'CMGT <notifications@cmgt.org>', // submitter confirmation / welcome sender (revert: prod API key not yet authorized for mail.cmgt.org)
   },
 
   // ── Replies to any of our emails route to this monitored inbox. ──
