@@ -114,10 +114,15 @@ const breadcrumb = breadcrumbSchema([
           <h2 class="jobs-h">Come run with us.</h2>
         </div>
       </div>
-      <div class="jobs-none reveal">
-        <h3 class="jobs-none-h">No open roles at the moment.</h3>
-        <p class="jobs-none-p">We're not hiring for a specific position right now. But good communities are built by good people, and we'd rather meet you early than miss you. If you think you belong on this team, introduce yourself — we read every note.</p>
-        <a class="jobs-none-cta" href="/request-a-proposal">Introduce yourself <span class="arrow">→</span></a>
+      <div class="jobs-board reveal" id="openings">
+        <!-- Live openings pulled from BambooHR (cmgt.bamboohr.com). Auto-updates as
+             roles are opened/closed there; restyled below to match the site. -->
+        <div id="BambooHR" data-domain="cmgt.bamboohr.com" data-version="1.0.0"></div>
+        <script is:inline src="https://cmgt.bamboohr.com/js/embed.js" type="text/javascript"></script>
+        <p class="jobs-board-foot">
+          Don't see the right fit? See every role — and apply — on our
+          <a href="https://cmgt.bamboohr.com/careers" target="_blank" rel="noopener">careers page</a>.
+        </p>
       </div>
     </div>
   </section>
@@ -130,7 +135,7 @@ const breadcrumb = breadcrumbSchema([
         <p class="cta-p">If that sounds like your kind of team, we'd love to meet you.</p>
       </div>
       <div class="reveal">
-        <a class="btn btn-blue" href="#">See all openings <span class="arrow">→</span></a>
+        <a class="btn btn-blue" href="https://cmgt.bamboohr.com/careers" target="_blank" rel="noopener">See all openings <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -224,12 +229,40 @@ const breadcrumb = breadcrumbSchema([
   .job-apply .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
   .job:hover .job-apply .arrow { transform: translateX(4px); }
   .jobs-empty { font-size: 14px; color: var(--ink-400); margin-top: 22px; }
-  .jobs-none { border-top: 1.5px solid var(--hairline-strong); border-bottom: 1.5px solid var(--hairline-strong); padding: 40px 0; max-width: 640px; }
-  .jobs-none-h { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--freedom-blue); margin: 0 0 12px; }
-  .jobs-none-p { font-size: 16px; line-height: 1.65; color: var(--ink-500); margin: 0 0 20px; }
-  .jobs-none-cta { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--freedom-blue); }
-  .jobs-none-cta .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
-  .jobs-none-cta:hover .arrow { transform: translateX(4px); }
+
+  /* Live openings — BambooHR embed, restyled to match the site.
+     The embed DOM is injected at runtime (via innerHTML), so it never carries
+     Astro's scoped-style attribute. Selectors targeting it must be :global(),
+     anchored to the static .jobs-board container. !important beats BambooHR's
+     own injected inline styles / stylesheet where they collide. */
+  .jobs-board { max-width: 760px; }
+  .jobs-board :global(#BambooHR-ATS) { font-family: var(--font-body); }
+  /* Hide BambooHR's own "Open Positions" heading — the section already has one. */
+  .jobs-board :global(#BambooHR-ATS .BambooHR-ATS-board > h2) { display: none !important; }
+  .jobs-board :global(#BambooHR-ATS ul),
+  .jobs-board :global(#BambooHR-ATS li) { list-style: none; margin: 0; padding: 0; }
+  .jobs-board :global(#BambooHR-ATS .BambooHR-ATS-Department-Header) {
+    font-family: var(--font-body) !important; font-weight: 700 !important; font-size: 12px !important;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--landscaping-green) !important;
+    border: 0 !important; padding: 0 !important; margin: 34px 0 2px !important;
+  }
+  .jobs-board :global(#BambooHR-ATS .BambooHR-ATS-Jobs-Item) {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
+    padding: 22px 4px; border-top: 1.5px solid var(--hairline-strong);
+    transition: border-color var(--dur-base) var(--ease-out);
+  }
+  .jobs-board :global(#BambooHR-ATS .BambooHR-ATS-Jobs-Item:hover) { border-top-color: var(--landscaping-green); }
+  .jobs-board :global(#BambooHR-ATS .BambooHR-ATS-Jobs-Item a) {
+    font-family: var(--font-display) !important; font-weight: 700 !important; font-size: 20px !important;
+    line-height: 1.2 !important; color: var(--freedom-blue) !important; text-decoration: none !important;
+  }
+  .jobs-board :global(#BambooHR-ATS .BambooHR-ATS-Jobs-Item a:hover) { color: var(--landscaping-green) !important; }
+  .jobs-board :global(#BambooHR-ATS .BambooHR-ATS-Location) { font-size: 13.5px !important; color: var(--ink-400) !important; white-space: nowrap; }
+  .jobs-board-foot { font-size: 15px; line-height: 1.6; color: var(--ink-500); margin: 32px 0 0; }
+  .jobs-board-foot a { color: var(--freedom-blue); font-weight: 600; }
+  @media (max-width: 560px) {
+    .jobs-board :global(#BambooHR-ATS .BambooHR-ATS-Jobs-Item) { flex-direction: column; align-items: flex-start; gap: 4px; }
+  }
 
   /* CTA */
   .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 96px 0; }
