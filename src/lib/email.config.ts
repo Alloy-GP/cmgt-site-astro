@@ -78,8 +78,8 @@ export const EMAIL_CONFIG = {
 
   mailchimp: {
     enabled:      IS_PROD,   // prod only — never add stg/dev test leads to the real audience
-    defaultTags:  ['website-lead'],        // tag applied to lead/proposal form submissions
-    subscribeTags: ['website-newsletter'], // tag applied to footer newsletter opt-ins
+    defaultTags:  ['website-lead'],        // tag applied to proposal form submissions (only intent synced to Mailchimp)
+    subscribeTags: ['newsletter-footer'],  // tag applied to footer newsletter opt-ins
   },
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -127,6 +127,17 @@ export const EMAIL_CONFIG = {
     general: {
       label: 'General Inquiry',
       notifySubject: (who: string) => `New general inquiry — ${who}`,
+      confirmSubject: "We've got it from here 👋",
+      confirmBody: (firstName: string) =>
+        `<p>Hi there,</p>
+        <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: your message landed safely, and an actual human on our team is already on the way to read it and follow up personally. Because around here, "we'll look into it" actually means someone is looking into it.</p>
+        <p>We've got it from here.</p>
+        <p>— The CMGT Team<br>We Manage. You Live.</p>`,
+    },
+    // Resident / homeowner help — reuses the general-inquiry reply (per client).
+    resident: {
+      label: 'Resident / Homeowner',
+      notifySubject: (who: string) => `New resident inquiry — ${who}`,
       confirmSubject: "We've got it from here 👋",
       confirmBody: (firstName: string) =>
         `<p>Hi there,</p>
