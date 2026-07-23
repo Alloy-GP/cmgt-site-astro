@@ -71,8 +71,9 @@ export const EMAIL_CONFIG = {
         vendor:   ['info@cmgt.org'],           // contractor / vendor bids → general inbox
         general:  ['info@cmgt.org'],           // catch-all general inquiries → general inbox
         rental:   ['christremblay@cmgt.org'], // rental management inquiries → Chris Tremblay
+        resident: ['info@cmgt.org'],           // homeowner help → general office inbox (never new development)
       }
-    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY }
+    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY, resident: NON_PROD_NOTIFY }
   ) as Record<string, string[]>,
 
   mailchimp: {
