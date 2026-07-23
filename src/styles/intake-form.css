@@ -96,6 +96,14 @@
 .if-float .if-req { color: var(--if-accent); }
 .if-caret { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--if-muted); pointer-events: none; }
 .if-caret .if-ic { width: 14px; height: 14px; }
+
+/* Location autocomplete (Google Places) — suggestion dropdown under the field. */
+.if-acwrap { position: relative; }
+.if-ac { position: absolute; z-index: 30; top: 100%; left: 0; right: 0; margin: 5px 0 0; padding: 4px;
+  list-style: none; background: #fff; border: 1px solid var(--if-border); border-radius: var(--if-radius);
+  box-shadow: 0 14px 30px rgba(23,35,37,.16); max-height: 244px; overflow-y: auto; }
+.if-ac-opt { padding: 9px 11px; font-size: 14px; line-height: 1.3; color: var(--if-ink); border-radius: 8px; cursor: pointer; }
+.if-ac-opt.on { background: var(--if-brand-tint); }
 .if-segmented { display: flex; gap: 7px; flex-wrap: wrap; }
 .if-seg { flex: 1; min-width: 64px; font-family: var(--if-font-heading); font-weight: 600; font-size: 12.5px; color: var(--if-body); cursor: pointer; background: var(--if-input-bg); border: 1.5px solid var(--if-border); border-radius: var(--if-radius-sm); padding: 10px 8px; transition: all .15s ease; }
 .if-seg:hover { border-color: var(--if-border-strong); }

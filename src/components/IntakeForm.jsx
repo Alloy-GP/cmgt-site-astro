@@ -4,7 +4,7 @@
 // identical on every AGP site. Per site, only options/copy/theme change.
 // Floating labels, `if-` CSS prefix, full WhatConverts field capture.
 // Multi-step intent picker → fields → submit → animated receipt. Posts to /api/lead.
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { BRAND, TRACKING, PROPOSAL_OPTIONS, PROPOSAL_COPY, EXTRA_INTENTS, PROPOSAL_FORM_VERSION, PROPOSAL_V2 } from './intake-form.config.js';
 
 // ── Icons (Lucide-style) ─────────────────────────────────────────
@@ -111,6 +111,119 @@ function Field({ def, value, error, onChange }) {
         )}
         <label className="if-flabel" htmlFor={fid}>{def.label}{def.required && <span className="if-req">*</span>}</label>
       </div>
+      {error && <div className="if-err-msg">{error}</div>}
+    </div>
+  );
+}
+
+// ── Google Places Autocomplete (optional) ───────────────────────────────
+// Enhances the proposal "Location" field with address suggestions. Enabled
+// only when PUBLIC_GOOGLE_MAPS_API_KEY is set (per-site opt-in) — otherwise the
+// field is a plain text input, so sites without a key are unaffected. Uses the
+// modern Places Data API (fetchAutocompleteSuggestions) with a custom dropdown
+// so the site's own floating-label styling is preserved.
+const MAPS_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
+
+function debounce(fn, ms) {
+  let t;
+  const d = (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+  d.cancel = () => clearTimeout(t);
+  return d;
+}
+
+// Lazy-load the Maps JS API once, then the 'places' library. Resolves to the
+// places library namespace. Guarded for SSR.
+let _placesPromise;
+function loadPlaces() {
+  if (typeof window === 'undefined' || !MAPS_KEY) return Promise.reject(new Error('no maps key'));
+  if (window.google?.maps?.importLibrary) return window.google.maps.importLibrary('places');
+  if (!_placesPromise) {
+    _placesPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(MAPS_KEY)}&v=weekly&loading=async&libraries=places`;
+      s.async = true;
+      s.onerror = () => { _placesPromise = null; reject(new Error('maps failed to load')); };
+      s.onload = resolve;
+      document.head.appendChild(s);
+    });
+  }
+  return _placesPromise.then(() => window.google.maps.importLibrary('places'));
+}
+
+// Location field with Places suggestions. Same markup/classes as <Field> text
+// inputs, plus a suggestion dropdown. Falls back to a plain <Field> when no key.
+function LocationField({ value, error, onChange }) {
+  const [preds, setPreds] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(-1);
+  const tokenRef = useRef(null);
+  const libRef = useRef(null);
+  const seqRef = useRef(0);
+  const boxRef = useRef(null);
+  const fid = 'if-location';
+
+  const fetchPreds = useMemo(() => debounce(async (input) => {
+    if (!input || input.trim().length < 3) { setPreds([]); setOpen(false); return; }
+    try {
+      const lib = libRef.current || (libRef.current = await loadPlaces());
+      const { AutocompleteSuggestion, AutocompleteSessionToken } = lib;
+      if (!tokenRef.current) tokenRef.current = new AutocompleteSessionToken();
+      const seq = ++seqRef.current;
+      const { suggestions } = await AutocompleteSuggestion.fetchAutocompleteSuggestions({
+        input, sessionToken: tokenRef.current, region: 'us',
+      });
+      if (seq !== seqRef.current) return; // a newer keystroke superseded this one
+      const list = (suggestions || [])
+        .map((s) => s.placePrediction).filter(Boolean)
+        .map((p) => p.text.toString());
+      setPreds(list); setActive(-1); setOpen(list.length > 0);
+    } catch { setPreds([]); setOpen(false); }
+  }, 220), []);
+
+  useEffect(() => () => fetchPreds.cancel(), [fetchPreds]);
+
+  // Close the dropdown on an outside click.
+  useEffect(() => {
+    const h = (e) => { if (boxRef.current && !boxRef.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
+  }, []);
+
+  const onInput = (v) => { onChange('location', v); fetchPreds(v); };
+  const choose = (text) => {
+    onChange('location', text);
+    setPreds([]); setOpen(false); setActive(-1);
+    tokenRef.current = null; // end the billing session after a selection
+  };
+
+  const filled = value != null && String(value) !== '';
+  return (
+    <div className="if-field if-acwrap" ref={boxRef}>
+      <div className={'if-float' + (filled ? ' has-value' : '') + (error ? ' is-err' : '')}>
+        <input id={fid} aria-label="Location" className="if-control" type="text" placeholder=" "
+          autoComplete="off" role="combobox" aria-expanded={open} aria-autocomplete="list"
+          value={value || ''}
+          onChange={(e) => onInput(e.target.value)}
+          onFocus={() => { if (preds.length) setOpen(true); }}
+          onKeyDown={(e) => {
+            if (!open || !preds.length) return;
+            if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(preds.length - 1, a + 1)); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(0, a - 1)); }
+            else if (e.key === 'Enter' && active >= 0) { e.preventDefault(); choose(preds[active]); }
+            else if (e.key === 'Escape') { setOpen(false); }
+          }} />
+        <label className="if-flabel" htmlFor={fid}>Location<span className="if-req">*</span></label>
+      </div>
+      {open && (
+        <ul className="if-ac" role="listbox" aria-label="Location suggestions">
+          {preds.map((p, i) => (
+            <li key={p + i} role="option" aria-selected={i === active}
+              className={'if-ac-opt' + (i === active ? ' on' : '')}
+              onMouseEnter={() => setActive(i)}
+              onMouseDown={(e) => { e.preventDefault(); choose(p); }}>{p}</li>
+          ))}
+        </ul>
+      )}
       {error && <div className="if-err-msg">{error}</div>}
     </div>
   );
@@ -424,7 +537,9 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
           </div>
           <div className="if-grid">
             <Field def={{ key: 'association', label: 'Association name', type: 'text', required: true, noName: true }} value={vals.association} error={errors.association} onChange={set} />
-            <Field def={{ key: 'location', label: 'Location', type: 'text', required: true, placeholder: 'e.g. Baton Rouge, LA', noName: true }} value={vals.location} error={errors.location} onChange={set} />
+            {MAPS_KEY
+              ? <LocationField value={vals.location} error={errors.location} onChange={set} />
+              : <Field def={{ key: 'location', label: 'Location', type: 'text', required: true, placeholder: 'e.g. Baton Rouge, LA', noName: true }} value={vals.location} error={errors.location} onChange={set} />}
             <Field def={{ key: 'units', label: 'Number of units', type: 'text', required: true, inputMode: 'numeric', maxLength: 6, noName: true }} value={vals.units} error={errors.units} onChange={set} />
             <Field def={{ key: 'type', label: 'Community type', type: 'select', required: true, options: V.communityType, noName: true }} value={vals.type} error={errors.type} onChange={set} />
             <Field def={{ key: 'mgmtStatus', label: 'Current management status', type: 'select', required: true, options: V.managementStatus, noName: true }} value={vals.mgmtStatus} error={errors.mgmtStatus} onChange={set} />
