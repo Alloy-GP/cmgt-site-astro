@@ -64,9 +64,6 @@
 .if-offramp { background: #FFF6E9; border: 1px solid #F0D9A8; border-radius: var(--if-radius); padding: 13px 15px; margin-top: 16px; }
 .if-offramp p { margin: 0; font-size: 13px; line-height: 1.5; color: #6b5320; }
 .if-offramp strong { color: #4a3a12; }
-.if-offramp-btn { display: inline-flex; align-items: center; gap: 7px; margin-top: 11px; font-family: var(--if-font-heading); font-weight: 700; font-size: 12.5px; color: #fff; background: #b58a2e; border: 0; border-radius: var(--if-radius-sm); padding: 9px 15px; cursor: pointer; transition: background .15s ease; }
-.if-offramp-btn:hover { background: #9a7526; }
-.if-offramp-btn .if-ic { width: 14px; height: 14px; }
 .if-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 14px; }
 .if-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .if-label { font-family: var(--if-font-heading); font-weight: 600; font-size: 12.5px; color: var(--if-ink); }

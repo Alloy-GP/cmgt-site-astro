@@ -372,6 +372,9 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   // the site configures PROPOSAL_V2.residentRoles AND a target intent exists
   // (onSwitchIntent is passed) — otherwise the canonical wizard shows nothing.
   const showOfframp = !!onSwitchIntent && (V.residentRoles || []).includes(vals.role);
+  // Carry what they've already typed into the resident form so they don't
+  // re-enter it after being routed out of the proposal.
+  const switchToResident = () => onSwitchIntent({ name: vals.name.trim(), email: vals.email.trim(), phone: vals.phone.trim() });
   return (
     <form
       id={wcTracked ? TRACKING.formId : 'proposal-wizard'}
@@ -406,8 +409,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
           </div>
           {showOfframp && (
             <div className="if-offramp" role="note">
-              <p><strong>Are you a resident?</strong> Proposals are for boards choosing a new management company. If you live in a community we manage, you’ll get help faster through our resident options — dues, documents, and account questions.</p>
-              <button type="button" className="if-offramp-btn" onClick={onSwitchIntent}>Switch to resident options <Ic name="arrowRight" /></button>
+              <p><strong>You’re a resident — this is the wrong form.</strong> Proposals are for boards choosing a new management company. <strong>Continue</strong> takes you to resident help instead — dues, documents, and account questions. Your name and email come with you.</p>
             </div>
           )}
         </div>
@@ -477,7 +479,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
           : <span className="if-wnav-spacer" />}
         <span className="if-wstepcount">Step {step} of 3</span>
         {step < 3 ? (
-          <button type="button" className="if-submit" onClick={next}>Continue <Ic name="arrowRight" /></button>
+          <button type="button" className="if-submit" onClick={showOfframp ? switchToResident : next}>Continue <Ic name="arrowRight" /></button>
         ) : (
           <button type="submit" className="if-submit" disabled={sending}>
             {sending ? 'Sending…' : 'Submit request'}{!sending && <Ic name="arrowRight" />}
@@ -523,7 +525,10 @@ export default function IntakeForm() {
     window.dispatchEvent(new CustomEvent('intake:intent', { detail: step === 'intent' ? null : intentId }));
   }, [step, intentId]);
 
-  const pick = (id) => { setIntentId(id); setFields({}); setErrors({}); setStep('form'); };
+  const pick = (id, prefill) => {
+    setIntentId(id); setFields({}); setErrors({}); setStep('form');
+    if (prefill) setContact((c) => ({ ...c, ...prefill })); // carry name/email/phone across an intent switch
+  };
   const back = () => { setStep('intent'); setErrors({}); setSendError(''); };
   const setField = (k, v) => { setFields((f) => ({ ...f, [k]: v })); setErrors((e) => ({ ...e, [k]: null })); };
   const setC = (k, v) => { setContact((c) => ({ ...c, [k]: v })); setErrors((e) => ({ ...e, [k]: null })); };
@@ -611,7 +616,7 @@ export default function IntakeForm() {
         {step === 'form' && intent && PROPOSAL_FORM_VERSION === 2 && intent.id === 'proposal' && (
           <ProposalWizard
             onBack={back}
-            onSwitchIntent={intentById('resident') ? () => pick('resident') : intentById('general') ? () => pick('general') : undefined}
+            onSwitchIntent={intentById('resident') ? (prefill) => pick('resident', prefill) : intentById('general') ? (prefill) => pick('general', prefill) : undefined}
           />
         )}
 
