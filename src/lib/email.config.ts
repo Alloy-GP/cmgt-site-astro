@@ -18,12 +18,13 @@ export const EMAIL_CONFIG = {
     team: 'Skyler',
   },
 
-  // ── All site mail (staff notifications AND submitter confirmations) sends
-  // FROM notifications@cmgt.org. Both keys point here so every form uses it.
-  // Must be from a domain verified in Resend. ──
+  // ── All site mail sends from the verified mail.cmgt.org sending subdomain.
+  // Internal staff notifications come from notifications@; customer-facing
+  // confirmations / welcomes come from the friendlier hello@. Replies to both
+  // route to info@cmgt.org (replyTo below). ──
   from: {
     notifications: 'CMGT <notifications@mail.cmgt.org>', // staff notification sender (dedicated sending subdomain)
-    confirmations: 'CMGT <notifications@mail.cmgt.org>', // submitter confirmation / welcome sender (dedicated sending subdomain)
+    confirmations: 'CMGT <hello@mail.cmgt.org>',         // customer confirmation / welcome sender (dedicated sending subdomain)
   },
 
   // ── Replies to any of our emails route to this monitored inbox. ──
