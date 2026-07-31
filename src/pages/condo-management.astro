@@ -1,18 +1,41 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Condo & Townhome Management', url: SITE.url + '/condo-management' },
 ]);
+
+// Service + area-served signal for "condo management" and the geo intent.
+// Condo runs in LA/MS/AL/TX; Florida is HOA-only (non-condo), per the FAQ below.
+const condoService = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Condominium & Townhome Management',
+  name: 'Condo Management',
+  provider: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  areaServed: ['Louisiana', 'Mississippi', 'Alabama', 'Texas'].map((s) => ({ '@type': 'State', name: s })),
+  description: 'Full-service condominium, townhome, and high-rise association management across the Gulf South — reserves, insurance monitoring, on-site teams, and storm planning for shared-building communities.',
+};
+
+// FAQ structured data mirroring the on-page FAQ (rich-result eligibility).
+const faq = faqSchema([
+  { q: `How is condo management different from HOA management?`, a: `Condos share structural elements — roofs, elevators, building envelopes — so reserves, insurance, and maintenance carry more risk and complexity. We staff condo management as its own discipline, with vendors and on-site options built for shared buildings.` },
+  { q: `Do you provide on-site staff for high-rises?`, a: `Yes. For buildings that need a daily presence, we place dedicated on-site managers and staff — backed by the same specialist team every CMGT community relies on.` },
+  { q: `Do you manage townhome associations?`, a: `Absolutely. Townhomes sit between HOA and condo realities, and the maintenance-responsibility lines are where disputes start. We set clear policies and enforce them consistently so neighbors stay neighbors.` },
+  { q: `Do you manage condos in Florida?`, a: `No — condominium regimes are the one thing we don't take on in Florida; the regulatory environment isn't a fit for the service standard we hold ourselves to. We do provide full HOA management for non-condo Florida communities, though, and condo management across our four other states.` },
+  { q: `How do you handle reserves and big-ticket repairs?`, a: `Shared systems — roofs, elevators, building envelopes — fail on their own timeline. We plan and fund reserves with full transparency, report financials to every owner by the 20th, and reassess as the building ages so a major repair doesn't become a surprise assessment.` },
+  { q: `Who's responsible for insurance — the association or the owner?`, a: `Both — and the line between a master policy and unit-owner coverage is exactly where claims go wrong. We monitor your association's coverage continuously — it's written into our agreement — and coordinate claims so nothing falls through the gap after a storm.` },
+  { q: `What about hurricane season?`, a: `We build the storm plan before June 1 — not during the warnings. That means emergency vendors lined up before they're scarce, your master insurance reviewed so coverage gaps don't surface mid-claim, and an evacuation and communication plan owners actually have in hand. When weather hits, we mobilize trusted vendors, document damage for the claim, and manage the recovery — from water mitigation to a full rebuild — because in a shared building, a slow response means water in everyone's units. Gulf South weather is the reality we manage around, not an afterthought.` },
+]);
 ---
 <BaseLayout
   title="Condo Management Built for Shared-Wall Living — CMGT"
   description="Condo management for the Gulf South — condominium associations, townhomes, and high-rises. Shared-building expertise and on-site teams where it counts."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, condoService, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Condo & Townhome Management"}]'></nav>
 
