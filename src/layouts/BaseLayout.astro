@@ -164,6 +164,11 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
         <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=803209206116832&ev=PageView&noscript=1" /></noscript>
       </Fragment>
     )}
+
+    {/* Ahrefs Web Analytics — production only. */}
+    {isProduction && (
+      <script is:inline src="https://analytics.ahrefs.com/analytics.js" data-key="uOyQqPfvGd21un93PrUDkg" async></script>
+    )}
   </head>
   <body>
     <!-- Shared CMGT chrome — server-rendered Astro components.
