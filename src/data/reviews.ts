@@ -43,7 +43,7 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
   'baton-rouge': {
     id: 'baton-rouge',
     gbpName: 'CMGT - Association, Condo, and Rental Management',
-    placeId: '',
+    placeId: 'ChIJNcLCkoG8JoYR4ECncPYIcKI',
     textQuery: 'CMGT Association Condo and Rental Management, 140 Aspen Square, Denham Springs, LA',
     rating: 4.2,
     count: 535,
@@ -52,7 +52,7 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
   shreveport: {
     id: 'shreveport',
     gbpName: 'CMGT- North Louisiana',
-    placeId: '',
+    placeId: 'ChIJF0aljwrNNoYR-IAl06KcDkU',
     textQuery: 'CMGT North Louisiana, Crockett Street, Shreveport, LA',
     rating: 4.5,
     count: 14,
@@ -61,7 +61,7 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
   lafayette: {
     id: 'lafayette',
     gbpName: 'CMGT- Southwest Louisiana',
-    placeId: '',
+    placeId: 'ChIJ1wgFszubJIYRzFHm5mWnVB4',
     textQuery: 'CMGT Southwest Louisiana, NW Evangeline Thruway, Carencro, LA',
     rating: 4.1,
     count: 18,
@@ -70,23 +70,22 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
   daphne: {
     id: 'daphne',
     gbpName: 'CMGT- Alabama Gulf Coast',
-    placeId: '',
+    placeId: 'ChIJbZ-eHQlPmogRZXIcLFkoCcE',
     textQuery: 'CMGT Alabama Gulf Coast, 26241 Equity Dr, Daphne, AL',
-    // Rating/count not yet supplied for this profile — left at 0 deliberately rather
-    // than invented. The rating rail and proof band stay hidden until /api/reviews
-    // returns live values from the profile itself.
-    rating: 0,
-    count: 0,
+    // Pulled from the profile itself (places:searchText → Place Details), not guessed.
+    // Note this is the weakest of the five — worth a look before it's promoted anywhere.
+    rating: 3.4,
+    count: 16,
     updatedAt: '2026-08-04',
   },
   biloxi: {
     id: 'biloxi',
     gbpName: 'CMGT- Mississippi Gulf Coast',
-    placeId: '',
+    placeId: 'ChIJtdwiyKURnIgR9_gMwu5E4tc',
     textQuery: 'CMGT Mississippi Gulf Coast, 770 Water St, Biloxi, MS',
-    // Same as Daphne — live pull supplies these; not guessed.
-    rating: 0,
-    count: 0,
+    // Pulled from the profile itself, same as the others.
+    rating: 4.6,
+    count: 19,
     updatedAt: '2026-08-04',
   },
 };

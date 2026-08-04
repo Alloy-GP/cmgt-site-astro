@@ -104,6 +104,12 @@ export const GET: APIRoute = async ({ url }) => {
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': key,
+        // Both of this project's Google keys are HTTP-referrer restricted (they're
+        // browser keys by design). A server-side fetch sends no referrer, which Google
+        // rejects with "Requests from referer <empty> are blocked" — the reason a live
+        // pull returns nothing even with a valid key. Sending our own origin makes the
+        // restricted key usable here. A dedicated server key would be cleaner.
+        Referer: 'https://cmgt.org/',
           'X-Goog-FieldMask': 'places.id',
         },
         body: JSON.stringify({ textQuery: loc.textQuery }),
@@ -116,6 +122,12 @@ export const GET: APIRoute = async ({ url }) => {
     const det = await fetch(`${PLACES}/places/${placeId}`, {
       headers: {
         'X-Goog-Api-Key': key,
+        // Both of this project's Google keys are HTTP-referrer restricted (they're
+        // browser keys by design). A server-side fetch sends no referrer, which Google
+        // rejects with "Requests from referer <empty> are blocked" — the reason a live
+        // pull returns nothing even with a valid key. Sending our own origin makes the
+        // restricted key usable here. A dedicated server key would be cleaner.
+        Referer: 'https://cmgt.org/',
         'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
       },
     }).then((r) => r.json());

@@ -31,6 +31,11 @@ const localBusiness = {
     "postalCode": "36526",
     "addressCountry": "US"
   },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "3.4",
+    "reviewCount": "16"
+  },
   "areaServed": [
     [
       "Daphne",
@@ -58,7 +63,29 @@ const localBusiness = {
       "opens": "08:30",
       "closes": "16:00"
     }
-  ]
+  ],
+  "sameAs": [
+    "https://www.google.com/maps/place/?q=place_id:ChIJbZ-eHQlPmogRZXIcLFkoCcE",
+    "https://cmgt.org/"
+  ],
+  "hasMap": "https://www.google.com/maps/place/?q=place_id:ChIJbZ-eHQlPmogRZXIcLFkoCcE",
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 30.60586,
+    "longitude": -87.87277
+  },
+  "image": [
+    "https://cmgt.org/photos/al-geo-hero-photo.webp",
+    "https://cmgt.org/photos/hoa-board-members-financials.webp"
+  ],
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "CMGT",
+    "url": "https://cmgt.org"
+  },
+  "priceRange": "$$",
+  "description": "HOA management in Daphne and across the Alabama Gulf Coast — a real Eastern Shore office, a local manager, and financials shared with every owner.",
+  "currenciesAccepted": "USD"
 };
 
 const breadcrumb = {
@@ -164,7 +191,13 @@ const faq = {
     </div>
     <div class="container">
       <div class="rating-rail">
-        
+        <div class="rr-score">
+          <div class="rr-num" data-rv-rating>3.4</div>
+          <div>
+            <div class="rr-stars" aria-hidden="true">★★★★★</div>
+            <div class="rr-meta"><span data-rv-count>16</span> Google reviews</div>
+          </div>
+        </div>
         
         <div class="rr-score">
           <div class="rr-num">2007</div>
@@ -184,7 +217,7 @@ const faq = {
           <div class="nap-row"><div class="nap-k">Office</div><div class="nap-v">26241 Equity Dr. Ste. 101<br>Daphne, AL 36526<span class="sub">By appointment · serving Daphne, the Eastern Shore, and the Alabama Gulf Coast</span></div></div>
           <div class="nap-row"><div class="nap-k">Phone</div><div class="nap-v"><a href="tel:2255032648">(225) 503-2648</a></div></div>
           <div class="nap-row"><div class="nap-k">Hours</div><div class="nap-v">Mon–Thu 8:30a–4:30p<br>Fri 8:30a–4:00p CT</div></div>
-          
+          <div class="nap-row"><div class="nap-k">Reviews</div><div class="nap-v">3.4★ from 16 homeowners and board members<span class="sub"><a data-rv-link href="https://www.google.com/maps/search/?api=1&amp;query=CMGT-+Alabama+Gulf+Coast" target="_blank" rel="noopener">Read them on our Google Business Profile</a></span></div></div>
         </div>
       </div>
       <div class="office-media reveal">
@@ -278,7 +311,7 @@ const faq = {
     <div class="container proof-in">
       <h2 class="proof-h">Your manager lives here. The <em>whole team</em> has their back.</h2>
       <div class="proof-grid reveal">
-        <div><div class="proof-num"><span data-count-to="" data-rv-count-to></span></div><div class="proof-label">Google reviews in this market</div></div>
+        <div><div class="proof-num"><span data-count-to="16" data-rv-count-to>16</span></div><div class="proof-label">Google reviews in this market</div></div>
         <div><div class="proof-num"><span data-count-to="96" data-suffix="%">96%</span></div><div class="proof-label">client retention, by dollar value</div></div>
         <div><div class="proof-num"><span data-prefix="~" data-count-to="10" data-suffix="%">~10%</span></div><div class="proof-label">average delinquency across our communities</div></div>
         <div><div class="proof-num">389</div><div class="proof-label">communities managed across five states</div></div>
