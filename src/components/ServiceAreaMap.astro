@@ -145,18 +145,39 @@ const id = 'svcmap-' + Math.random().toString(36).slice(2, 9);
           map.fitBounds(b, 48);
         }
         el.classList.add('is-live');
-      }).catch(function () { /* leave the idle panel visible */ });
+      }).catch(function (err) {
+        // Leave the idle panel visible, but say why — silently swallowing this
+        // made a script-ordering bug look like a Google/key problem.
+        if (window.console) console.warn('[ServiceAreaMap] map init failed:', err);
+      });
     }
 
-    var maps = document.querySelectorAll('.svcmap-canvas');
-    if (!maps.length) return;
-    if (!('IntersectionObserver' in window)) { maps.forEach(boot); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { io.unobserve(e.target); boot(e.target); }
+    function observeAll() {
+      var maps = document.querySelectorAll('.svcmap-canvas');
+      if (!maps.length) return;
+      if (!('IntersectionObserver' in window)) {
+        Array.prototype.forEach.call(maps, boot);
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { io.unobserve(e.target); boot(e.target); }
+        });
+      }, { rootMargin: '200px' });
+      Array.prototype.forEach.call(maps, function (m) {
+        if (!m.dataset.mapObserved) { m.dataset.mapObserved = '1'; io.observe(m); }
       });
-    }, { rootMargin: '200px' });
-    maps.forEach(function (m) { io.observe(m); });
+    }
+
+    // This script can execute before the canvases are in the DOM (Astro may place
+    // it ahead of the markup, and there are several instances per page), so wait
+    // for the document rather than querying immediately — that ordering bug is why
+    // the maps silently never booted.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', observeAll);
+    } else {
+      observeAll();
+    }
   })();
 </script>
 
