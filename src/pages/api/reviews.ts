@@ -39,10 +39,23 @@ function json(body: unknown, cacheable: boolean) {
   });
 }
 
+/**
+ * Env lookup that works under the Vercel adapter.
+ *
+ * import.meta.env alone is not enough: Astro inlines PUBLIC_* at build time, but a
+ * server-only secret like GOOGLE_PLACES_API_KEY is neither inlined nor present on
+ * import.meta.env at request time — it arrives on process.env. Reading only
+ * import.meta.env is why this route reported keyPresent:false on a deployment where
+ * the variable was correctly set, and silently served fallback data instead.
+ */
+function envVar(name: string): string | undefined {
+  const p = typeof process !== 'undefined' && process.env ? process.env[name] : undefined;
+  return p || (import.meta.env as Record<string, string | undefined>)[name];
+}
+
 /** Per-city Place ID override from env, e.g. GOOGLE_PLACE_ID_BATON_ROUGE. */
 function envPlaceId(city: string): string | undefined {
-  const k = 'GOOGLE_PLACE_ID_' + city.toUpperCase().replace(/-/g, '_');
-  return (import.meta.env as Record<string, string | undefined>)[k];
+  return envVar('GOOGLE_PLACE_ID_' + city.toUpperCase().replace(/-/g, '_'));
 }
 
 interface OutReview {
@@ -78,7 +91,9 @@ export const GET: APIRoute = async ({ url }) => {
     return json({ error: 'unknown city', known: Object.keys(LOCATION_REVIEWS) }, false);
   }
 
-  const key = import.meta.env.GOOGLE_PLACES_API_KEY;
+  // Accept either the server-only name or the browser key already in the project —
+  // the referrer header below makes the restricted key usable server-side.
+  const key = envVar('GOOGLE_PLACES_API_KEY') || envVar('PUBLIC_GOOGLE_MAPS_API_KEY');
   const fallback = {
     city,
     rating: loc.rating,
