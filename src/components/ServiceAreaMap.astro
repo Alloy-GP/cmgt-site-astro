@@ -86,7 +86,14 @@ const id = 'svcmap-' + Math.random().toString(36).slice(2, 9);
 
     var loading = null;
     function loadSdk(key) {
-      if (window.google && window.google.maps) return Promise.resolve();
+      // Must check for importLibrary specifically, not just google.maps: with
+      // loading=async the namespace appears before importLibrary is attached, and
+      // another script on the page (the proposal form's Places autocomplete) can
+      // put a partially-initialised google.maps there too. Short-circuiting on
+      // google.maps alone threw "importLibrary is not a function".
+      if (window.google && window.google.maps && window.google.maps.importLibrary) {
+        return Promise.resolve();
+      }
       if (loading) return loading;
       loading = new Promise(function (res, rej) {
         var s = document.createElement('script');
