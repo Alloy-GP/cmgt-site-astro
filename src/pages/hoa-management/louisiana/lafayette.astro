@@ -1,0 +1,429 @@
+---
+// Lafayette HOA management — GBP-matched city page.
+// Ported from the Alloy city-page handoff (template + city-pages-data.json) onto the
+// live framework: BaseLayout supplies Nav, Footer, canonical and shared scripts.
+//
+// GBP: CMGT- Southwest Louisiana
+// NAP MUST match the live Google listing character-for-character — do not normalize
+// the street line or abbreviate it. Rating/review count are still hardcoded from the
+// handoff; wiring them to live GBP data is the open P0 (see the dev handoff).
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://cmgt.org/hoa-management/louisiana/lafayette#localbusiness",
+  "name": "CMGT- Southwest Louisiana",
+  "url": "https://cmgt.org/hoa-management/louisiana/lafayette",
+  "telephone": "+1-225-503-2648",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3419 NW Evangeline Thruway",
+    "addressLocality": "Carencro",
+    "addressRegion": "LA",
+    "postalCode": "70520",
+    "addressCountry": "US"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.1",
+    "reviewCount": "18"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Lafayette"
+    },
+    {
+      "@type": "City",
+      "name": "Carencro"
+    },
+    {
+      "@type": "City",
+      "name": "Broussard"
+    },
+    {
+      "@type": "City",
+      "name": "Youngsville"
+    },
+    {
+      "@type": "City",
+      "name": "Lake Charles"
+    }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday"
+      ],
+      "opens": "08:30",
+      "closes": "16:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Friday",
+      "opens": "08:30",
+      "closes": "16:00"
+    }
+  ]
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://cmgt.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Louisiana",
+      "item": "https://cmgt.org/hoa-management/louisiana"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Lafayette",
+      "item": "https://cmgt.org/hoa-management/louisiana/lafayette"
+    }
+  ]
+};
+
+// Composed from the visible FAQ below — the handoff template's {FAQ_JSONLD} token had
+// no value in city-pages-data.json, so regenerating from it would emit a literal token.
+const faq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Are you actually based in the Lafayette area?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Our Southwest Louisiana office is at 3419 NW Evangeline Thruway in Carencro, just north of Lafayette, and the manager assigned to your community lives in this market."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which communities near Lafayette do you manage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We serve communities across Lafayette, Carencro, Broussard, Youngsville, and out to Lake Charles. Ask us for references near you — we would rather you hear it from a board in your own area than from us."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does CMGT handle hurricane season here?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Storm planning, vendor mobilization, and owner communication are in place before the season starts, and our Insurance &amp; Reserve department monitors coverage year-round. See our hurricane preparedness guide for HOA communities."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "We're a small community — are we too small for you?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Our Financial &amp; Administrative package was built for 30–100-home communities that want professional books and reporting without full-service overhead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When do we see our financials?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "By the 20th of every month, and we share the full P&amp;L and balance sheet with the entire membership — not just the board. Transparency is the whole point."
+      }
+    }
+  ]
+};
+---
+<BaseLayout
+  title="Lafayette HOA Management — Southwest Louisiana — CMGT"
+  description="HOA management in Lafayette and Southwest Louisiana. A local office in Carencro, a team in your market, and financials shared with every homeowner by the 20th."
+  pageSchema={[localBusiness, breadcrumb, faq]}
+>
+<nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t": "Home", "href": "/"}, {"t": "Louisiana", "href": "/hoa-management/louisiana"}, {"t": "Lafayette"}]'></nav>
+
+  <section class="city-hero" data-screen-label="Lafayette — Hero">
+    <div class="container">
+      <div class="city-hero-top">
+        <div>
+          <div class="eyebrow">Lafayette HOA Management</div>
+          <h1 class="city-hero-h">Lafayette HOA management, <em>run from right here in Acadiana.</em></h1>
+          <!-- H1 MUST contain the focus keyword: "<City> HOA management". Do not replace it with a purely evocative line. -->
+        </div>
+        <div>
+          <p class="city-hero-lede">Our Southwest Louisiana office is on the Evangeline Thruway in Carencro. <strong>Your manager lives in this market</strong> — close enough to walk your property, backed by the largest HOA management company in the state.</p>
+          <div class="city-hero-ctas">
+            <a class="btn btn-green" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+            <a class="btn btn-outline-light" href="tel:2255032648">Call (225) 503-2648</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="city-band">
+      <image-slot id="laf-city-hero-photo" shape="rect" placeholder="Drop a Lafayette community / neighborhood photo"></image-slot>
+    </div>
+    <div class="container">
+      <div class="rating-rail">
+        <div class="rr-score">
+          <div class="rr-num">4.1</div>
+          <div>
+            <div class="rr-stars" aria-hidden="true">★★★★★</div>
+            <div class="rr-meta">18 Google reviews</div>
+          </div>
+        </div>
+        
+        <div class="rr-score">
+          <div class="rr-num">2007</div>
+          <div class="rr-meta" style="max-width:170px">independently owned and Louisiana-based ever since</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="office" data-screen-label="Office / NAP">
+    <div class="container office-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">Our Southwest Louisiana office</div>
+        <h2 class="office-h">A real address, not a forwarding number.</h2>
+        <p class="office-p">Acadiana boards have long memories about companies that showed up, took the contract, and managed from a distance. Our office is in Carencro and our people are in this market — you can put a face and an address to the company you hire.</p>
+        <div class="nap">
+          <div class="nap-row"><div class="nap-k">Office</div><div class="nap-v">3419 NW Evangeline Thruway<br>Carencro, LA 70520<span class="sub">By appointment · serving Lafayette, Acadiana, and Southwest Louisiana</span></div></div>
+          <div class="nap-row"><div class="nap-k">Phone</div><div class="nap-v"><a href="tel:2255032648">(225) 503-2648</a></div></div>
+          <div class="nap-row"><div class="nap-k">Hours</div><div class="nap-v">Mon–Thu 8:30a–4:30p<br>Fri 8:30a–4:00p CT</div></div>
+          <div class="nap-row"><div class="nap-k">Reviews</div><div class="nap-v">4.1★ from 18 homeowners and board members<span class="sub">Read them on our Google Business Profile</span></div></div>
+        </div>
+      </div>
+      <div class="office-media reveal">
+        <image-slot id="laf-office-photo" shape="rounded" radius="20" placeholder="Drop a map screenshot or exterior photo of the Carencro office"></image-slot>
+      </div>
+    </div>
+  </section>
+
+  <section class="mgr" data-screen-label="Local team">
+    <div class="container mgr-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">Who you'll actually work with</div>
+        <h2 class="mgr-h">One manager who knows your community by name.</h2>
+        <p class="mgr-p">Every Lafayette community gets a dedicated Community Association Manager — <strong>not a rotating queue and not a call center.</strong> They attend your meetings, walk your property, and know which vendor already fixed the front gate last spring.</p>
+        <p class="mgr-p">Behind that one person sits the whole company: accounting, insurance and reserves, covenants, and maintenance specialists, all in-house. You get a neighbor as your point of contact and a full bench backing them up.</p>
+        <div class="mgr-card">
+          <image-slot id="laf-mgr-headshot" shape="circle" placeholder="Headshot"></image-slot>
+          <div>
+            <div class="mgr-name">Jeff Harman</div>
+            <div class="mgr-role">Your Southwest Louisiana point of contact · CEO &amp; Founder</div>
+          </div>
+        </div>
+      </div>
+      <div class="mgr-media reveal">
+        <image-slot id="laf-mgr-photo" shape="rounded" radius="20" placeholder="Drop a Lafayette team or board-meeting photo"></image-slot>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" data-screen-label="What we handle">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="eyebrow eyebrow-green">What a Lafayette board hands off</div>
+        <h2 class="sec-h">Everything that used to land on a volunteer's kitchen table.</h2>
+        <p class="sec-sub">Full-service management for communities across Lafayette, St. Landry, and Calcasieu parishes.</p>
+      </div>
+      <div class="feat-grid reveal">
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Finances &amp; reporting</h3><p class="feat-p">Full P&amp;L and balance sheet to the entire membership by the 20th of every month — written into our management agreement, not promised verbally.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Dues &amp; collections</h3><p class="feat-p">A consistent, compassionate billing process keeps our communities at roughly 10% delinquency — without souring neighbor relationships.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Covenants &amp; ARC</h3><p class="feat-p">Fair, documented enforcement and architectural review — we educate before the first violation rather than leading with a fine.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Vendors &amp; maintenance</h3><p class="feat-p">Bidding, oversight, and site visits run by people who live in Acadiana — so common areas hold up and the board isn't chasing contractors.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Homeowner communication</h3><p class="feat-p">Plain-language answers, a board portal, and an app — 70% of our owners use the portal and over half pay online.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Insurance &amp; reserves</h3><p class="feat-p">A dedicated Insurance &amp; Reserve department tracks coverage and reserve health year-round — critical in a corner of the state where a single season reset what master policies cost.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cover" data-screen-label="Coverage">
+    <div class="container">
+      <div class="eyebrow eyebrow-blue reveal">Communities we serve nearby</div>
+      <h2 class="cover-h">Across Acadiana and Southwest Louisiana.</h2>
+      <p class="cover-sub">From Lafayette and its fast-growing southern suburbs out to Lake Charles.</p>
+      <div class="geo-chips reveal"><span class="geo-chip static">Lafayette</span><span class="geo-chip static">Carencro</span><span class="geo-chip static">Broussard</span><span class="geo-chip static">Youngsville</span><span class="geo-chip static">Lake Charles</span></div>
+      <ul class="geo-svc reveal" style="margin-top:36px">
+        <li><a href="/hoa-management-services">Full-service HOA management</a></li>
+        <li><a href="/condo-management">Condo &amp; townhome management</a></li>
+        <li><a href="/hoa-financial-management">Financial &amp; Administrative Management</a></li>
+        <li><a href="/developer-hoa-management">Developer &amp; new-community services</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="proof-band" data-screen-label="Proof">
+    <div class="container proof-in">
+      <h2 class="proof-h">Your manager lives here. The <em>whole team</em> has their back.</h2>
+      <div class="proof-grid reveal">
+        <div><div class="proof-num"><span data-count-to="18">18</span></div><div class="proof-label">Google reviews in this market</div></div>
+        <div><div class="proof-num"><span data-count-to="96" data-suffix="%">96%</span></div><div class="proof-label">client retention, by dollar value</div></div>
+        <div><div class="proof-num"><span data-prefix="~" data-count-to="10" data-suffix="%">~10%</span></div><div class="proof-label">average delinquency across our communities</div></div>
+        <div><div class="proof-num">389</div><div class="proof-label">communities managed across five states</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt" data-screen-label="Market specifics">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="eyebrow eyebrow-green">Built for this market</div>
+        <h2 class="sec-h">Southwest Louisiana knows what a hard storm season costs.</h2>
+      </div>
+      <div class="prose reveal">
+        <p>CMGT opened in Denham Springs in 2007 and grew across the state one referral at a time — no acquisitions, no private-equity money. We know what a bad year does to a community here, because our own office closed for four days in the <strong>2016 flood</strong> and we spent the weeks after it working for the communities that got hit hardest. That experience is why storm planning at CMGT is operational, not a paragraph in a proposal.</p>
+        <p>Insurance is the story in this market. Coverage and reserves move every season, and a board that has not looked hard at its master policy and reserve funding can be caught badly. Our Insurance &amp; Reserve department works on that year-round, and because <strong>your manager lives in Acadiana, nobody is learning your property after the fact.</strong></p>
+        <p>Want the details? See <a href="/hoa-management-services">how full-service management works</a>, or read about <a href="/switching-hoa-management-companies">switching from your current manager</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" data-screen-label="FAQ">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="eyebrow eyebrow-green">Questions Lafayette boards ask</div>
+        <h2 class="sec-h">Straight answers, no industry-speak.</h2>
+      </div>
+      <div class="acc-list reveal">
+        <div class="acc-item"><button class="acc-q" type="button">Are you actually based in the Lafayette area?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Yes. Our Southwest Louisiana office is at 3419 NW Evangeline Thruway in Carencro, just north of Lafayette, and the manager assigned to your community lives in this market.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">Which communities near Lafayette do you manage?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">We serve communities across Lafayette, Carencro, Broussard, Youngsville, and out to Lake Charles. Ask us for references near you — we would rather you hear it from a board in your own area than from us.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">How does CMGT handle hurricane season here?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Storm planning, vendor mobilization, and owner communication are in place before the season starts, and our Insurance &amp; Reserve department monitors coverage year-round. See our <a href="/resources/hurricane-preparedness-for-hoas">hurricane preparedness guide for HOA communities</a>.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">We're a small community — are we too small for you?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">No. Our <a href="/hoa-financial-management">Financial &amp; Administrative package</a> was built for 30–100-home communities that want professional books and reporting without full-service overhead.</div></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">When do we see our financials?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in"><strong>By the 20th of every month</strong>, and we share the full P&amp;L and balance sheet with the entire membership — not just the board. Transparency is the whole point.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt" data-screen-label="Related resources">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="eyebrow eyebrow-green">Keep reading</div>
+        <h2 class="sec-h">Resources for Lafayette boards.</h2>
+      </div>
+      <div class="rel-grid reveal">
+        <a class="rel-card" href="/hoa-management/louisiana"><div class="rel-kicker">Statewide</div><h3 class="rel-h">HOA management across Louisiana</h3><p class="rel-p">Every market we serve in the state, from the Northshore through Acadiana.</p><span class="rel-go">See the state page <span class="arrow">→</span></span></a>
+        <a class="rel-card" href="/resources/hurricane-preparedness-for-hoas"><div class="rel-kicker">Seasonal</div><h3 class="rel-h">Hurricane prep for HOAs</h3><p class="rel-p">The board plan and homeowner communications that get a Gulf South community through a storm.</p><span class="rel-go">Get ready <span class="arrow">→</span></span></a>
+        <a class="rel-card" href="/resources/hoa-reserve-study"><div class="rel-kicker">Guide</div><h3 class="rel-h">HOA reserve studies, explained</h3><p class="rel-p">When to do one, how often, and how it protects your community from surprise assessments.</p><span class="rel-go">Read the guide <span class="arrow">→</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" data-screen-label="CTA">
+    <div class="leaf" aria-hidden="true"><img src="home-explorations/assets/leaf-mark.svg" alt=""></div>
+    <div class="container cta-in">
+      <div class="reveal">
+        <h2 class="cta-h">Managing a community in Acadiana?</h2>
+        <p class="cta-p">Tell us about it and a real person will reach out within two business days. No pitch deck, no pressure.</p>
+      </div>
+      <div class="cta-actions reveal">
+        <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
+        <a class="cta-phone" href="tel:2255032648">Or call (225) 503-2648 · Mon–Thu 8:30a–4:30p · Fri 8:30a–4:00p CT</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+body { background: #fff; }
+    .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+    a { color: var(--freedom-blue); }
+    a:hover { color: var(--landscaping-green); }
+
+    .city-hero { background: var(--freedom-blue); color: #fff; padding: 92px 0 0; position: relative; overflow: hidden; isolation: isolate; }
+    .city-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 16% 18%, rgba(141,189,255,.12) 0%, transparent 55%); z-index: 0; pointer-events: none; }
+    .city-hero-top { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px; align-items: end; padding-bottom: 56px; }
+    @media (max-width: 980px) { .city-hero-top { grid-template-columns: 1fr; gap: 30px; } }
+    .city-hero .eyebrow { color: rgba(255,255,255,.65); }
+    .city-hero-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(42px, 5.4vw, 80px); line-height: 1.0; letter-spacing: -.03em; margin: 20px 0 0; text-wrap: balance; }
+    .city-hero-h em { font-style: italic; font-weight: 300; color: var(--landscaping-green); }
+    .city-hero-lede { font-size: 17.5px; line-height: 1.7; color: rgba(255,255,255,.82); margin: 0 0 30px; }
+    .city-hero-lede strong { color: #fff; font-weight: 600; }
+    .city-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .city-band image-slot { display: block; width: 100%; height: clamp(280px, 32vw, 400px); position: relative; z-index: 2; }
+
+    .rating-rail { position: relative; z-index: 2; display: flex; align-items: center; gap: 34px; flex-wrap: wrap; padding: 26px 0; border-top: 1px solid rgba(255,255,255,.18); }
+    .rr-score { display: flex; align-items: baseline; gap: 10px; }
+    .rr-num { font-family: var(--font-display); font-weight: 700; font-size: 38px; line-height: 1; letter-spacing: -.02em; color: #fff; }
+    .rr-stars { color: var(--landscaping-green); font-size: 17px; letter-spacing: 2px; }
+    .rr-meta { font-size: 12.5px; color: rgba(255,255,255,.6); }
+    .rating-rail > * + * { border-left: 1px solid rgba(255,255,255,.18); padding-left: 34px; }
+    @media (max-width: 700px) { .rating-rail { gap: 22px; } .rating-rail > * + * { border-left: none; padding-left: 0; } }
+    .rr-award { display: flex; align-items: center; gap: 14px; }
+    .rr-award-badge { font-family: var(--font-display); font-weight: 900; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--freedom-blue); background: var(--landscaping-green); border-radius: 999px; padding: 7px 14px; white-space: nowrap; }
+    .rr-award-txt { font-size: 13.5px; line-height: 1.45; color: rgba(255,255,255,.82); max-width: 260px; }
+
+    .office { background: var(--nb-lightest); padding: 96px 0; }
+    .office-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 56px; align-items: center; }
+    @media (max-width: 900px) { .office-grid { grid-template-columns: 1fr; gap: 32px; } }
+    .office-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 16px; text-wrap: balance; }
+    .office-p { font-size: 16px; line-height: 1.75; color: var(--ink-500); margin: 0 0 26px; max-width: 520px; }
+    .nap { display: grid; gap: 0; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 18px; overflow: hidden; }
+    .nap-row { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 18px 24px; border-bottom: 1px solid var(--hairline); align-items: start; }
+    .nap-row:last-child { border-bottom: none; }
+    @media (max-width: 520px) { .nap-row { grid-template-columns: 1fr; gap: 4px; } }
+    .nap-k { font-family: var(--font-display); font-weight: 700; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-400, #8a8aa8); padding-top: 3px; }
+    .nap-v { font-size: 15.5px; line-height: 1.6; color: var(--ink-700); }
+    .nap-v a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+    .nap-v a:hover { border-bottom-color: var(--landscaping-green); }
+    .nap-v .sub { display: block; font-size: 13px; color: var(--ink-500); margin-top: 3px; }
+    .office-media image-slot { width: 100%; height: 440px; }
+
+    .mgr { background: #fff; padding: 100px 0; }
+    .mgr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    @media (max-width: 920px) { .mgr-grid { grid-template-columns: 1fr; gap: 32px; } }
+    .mgr-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.14; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 16px; text-wrap: balance; }
+    .mgr-p { font-size: 16px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
+    .mgr-p strong { color: var(--freedom-blue); font-weight: 600; }
+    .mgr-card { display: flex; align-items: center; gap: 20px; background: var(--nb-lightest); border-radius: 18px; padding: 22px 26px; margin-top: 26px; max-width: 480px; }
+    .mgr-card image-slot { width: 78px; height: 78px; flex: 0 0 78px; }
+    .mgr-name { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--freedom-blue); line-height: 1.2; }
+    .mgr-role { font-size: 13.5px; color: var(--ink-500); margin-top: 4px; }
+    .mgr-media image-slot { width: 100%; height: 400px; }
+
+    .cover { background: var(--nb-lightest); padding: 96px 0; }
+    .cover-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+    .cover-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0 0 36px; max-width: 620px; }
+    .geo-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+    .geo-chip { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 999px; padding: 12px 22px; text-decoration: none; }
+    .geo-chip.static { cursor: default; }
+
+    .geo-svc { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .geo-svc li { font-size: 15px; color: var(--ink-700); padding-left: 26px; position: relative; }
+    .geo-svc li::before { content: ""; position: absolute; left: 0; top: 7px; width: 9px; height: 9px; border-radius: 50%; background: var(--landscaping-green); }
+    .geo-svc a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+    .geo-svc a:hover { border-bottom-color: var(--landscaping-green); }
+
+    .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 100px 0; position: relative; overflow: hidden; }
+    .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: rotate(14deg); pointer-events: none; }
+    .cta .leaf img { filter: brightness(0) saturate(100%) invert(11%) sepia(64%) saturate(4147%) hue-rotate(238deg) brightness(85%) contrast(96%); }
+    .cta-in { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+    .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+    .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 480px; margin: 0; color: rgba(30,30,119,.82); }
+    .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
+
+/* Port fix: the handoff template was authored against its own standalone shared.css.
+   On the dark hero the light-outline button ends up with the navy body colour here,
+   which is invisible against var(--freedom-blue). Restore the intended treatment
+   explicitly rather than relying on cascade order between global.css and this
+   page's scoped styles. */
+.city-hero .btn-outline-light,
+.cta .btn-outline-light {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .7);
+}
+.city-hero .btn-outline-light:hover,
+.cta .btn-outline-light:hover { background: rgba(255, 255, 255, .12); }
+</style>
