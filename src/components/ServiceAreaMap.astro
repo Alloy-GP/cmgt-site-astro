@@ -31,8 +31,12 @@ const key = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY ?? '';
 const id = 'svcmap-' + Math.random().toString(36).slice(2, 9);
 ---
 <figure class="svcmap reveal" aria-label={ariaLabel}>
+  <!-- Height is set inline as well as in CSS: the host page's own scoped styles
+       were collapsing the canvas to content height, and an inline value can't be
+       out-ranked by them. Google's SDK needs a sized container or it renders blank. -->
   <div
     class="svcmap-canvas"
+    style="min-height:clamp(260px,32vw,380px)"
     id={id}
     data-points={JSON.stringify(points)}
     data-zoom={zoom}
@@ -120,6 +124,10 @@ const id = 'svcmap-' + Math.random().toString(36).slice(2, 9);
       if (!pts.length) return;
 
       loadSdk(key).then(function () {
+        // With loading=async the bootstrap resolves before the map library is
+        // present, so importLibrary must be awaited before constructing a Map.
+        return google.maps.importLibrary('maps');
+      }).then(function () {
         var map = new google.maps.Map(el, {
           zoom: parseInt(el.getAttribute('data-zoom'), 10) || 9,
           center: { lat: pts[0].lat, lng: pts[0].lng },
