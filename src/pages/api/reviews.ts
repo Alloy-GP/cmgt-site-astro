@@ -26,6 +26,22 @@ export const prerender = false;
 const PLACES = 'https://places.googleapis.com/v1';
 /** How many reviews to surface per page (handoff asks for 3). */
 const WANT = 3;
+/**
+ * Minimum star rating for a review to be *quoted* on the page.
+ *
+ * The Places API returns Google's "most relevant" reviews, not the best ones — in
+ * practice that meant a 1-star review was about to render inside the proof band on
+ * four of the five markets. The aggregate rating and count stay truthful and
+ * unfiltered (they mirror the GBP exactly); this only governs which review bodies
+ * get quoted, the same editorial call any testimonial section makes.
+ */
+const MIN_STARS = 4;
+/**
+ * Below this many qualifying reviews, quote none and let the page show the rating
+ * rail alone — one lonely testimonial reads worse than none, and it invites a
+ * reader to wonder what the other fifteen said.
+ */
+const MIN_TO_SHOW = 2;
 
 function json(body: unknown, cacheable: boolean) {
   return new Response(JSON.stringify(body), {
@@ -69,7 +85,7 @@ interface OutReview {
 /** Shape Places API review objects into just what the card renders. */
 function shapeReviews(raw: unknown): OutReview[] {
   if (!Array.isArray(raw)) return [];
-  return raw
+  const out = raw
     .map((r: Record<string, any>) => ({
       author: r?.authorAttribution?.displayName ?? 'Google reviewer',
       rating: typeof r?.rating === 'number' ? r.rating : 0,
@@ -77,9 +93,10 @@ function shapeReviews(raw: unknown): OutReview[] {
       relative: r?.relativePublishTimeDescription ?? '',
       publishedAt: r?.publishTime ?? null,
     }))
-    // Only render reviews that actually have something to read.
-    .filter((r) => r.text.length > 0 && r.rating > 0)
+    // Only quote reviews that have something to read and clear the quality floor.
+    .filter((r) => r.text.length > 0 && r.rating >= MIN_STARS)
     .slice(0, WANT);
+  return out.length >= MIN_TO_SHOW ? out : [];
 }
 
 export const GET: APIRoute = async ({ url }) => {
