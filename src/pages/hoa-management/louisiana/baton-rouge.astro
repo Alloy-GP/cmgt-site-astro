@@ -8,6 +8,12 @@
 // the street line or abbreviate it. Rating/review count are still hardcoded from the
 // handoff; wiring them to live GBP data is the open P0 (see the dev handoff).
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import ImageSlot from '~/components/ImageSlot.astro';
+import { LOCATION_REVIEWS } from '~/data/reviews';
+
+// Rating/count render from the committed per-location fallback so the page always
+// shows a real number, then /api/reviews swaps in the live values client-side.
+const rv = LOCATION_REVIEWS['baton-rouge'];
 
 const localBusiness = {
   "@context": "https://schema.org",
@@ -179,15 +185,15 @@ const faq = {
       </div>
     </div>
     <div class="city-band">
-      <image-slot id="br-city-hero-photo" shape="rect" placeholder="Drop a Baton Rouge community / neighborhood photo"></image-slot>
+      <ImageSlot alt="Baton Rouge community / neighborhood photo" shape="rect" />
     </div>
     <div class="container">
       <div class="rating-rail">
         <div class="rr-score">
-          <div class="rr-num">4.2</div>
+          <div class="rr-num" data-rv-rating>4.2</div>
           <div>
             <div class="rr-stars" aria-hidden="true">★★★★★</div>
-            <div class="rr-meta">535 Google reviews</div>
+            <div class="rr-meta"><span data-rv-count>535</span> Google reviews</div>
           </div>
         </div>
         <!-- IF_AWARD — Baton Rouge only. Delete this block entirely for markets with no award. -->
@@ -214,11 +220,11 @@ const faq = {
           <div class="nap-row"><div class="nap-k">Office</div><div class="nap-v">140 Aspen Square Ste H<br>Denham Springs, LA 70726<span class="sub">By appointment · serving the greater Baton Rouge area</span></div></div>
           <div class="nap-row"><div class="nap-k">Phone</div><div class="nap-v"><a href="tel:2255032648">(225) 503-2648</a></div></div>
           <div class="nap-row"><div class="nap-k">Hours</div><div class="nap-v">Mon–Thu 8:30a–4:30p<br>Fri 8:30a–4:00p CT</div></div>
-          <div class="nap-row"><div class="nap-k">Reviews</div><div class="nap-v">4.2★ from 535 homeowners and board members<span class="sub">Read them on our Google Business Profile</span></div></div>
+          <div class="nap-row"><div class="nap-k">Reviews</div><div class="nap-v">4.2★ from 535 homeowners and board members<span class="sub"><a data-rv-link href="https://www.google.com/maps/search/?api=1&amp;query=CMGT+-+Association,+Condo,+and+Rental+Management" target="_blank" rel="noopener">Read them on our Google Business Profile</a></span></div></div>
         </div>
       </div>
       <div class="office-media reveal">
-        <image-slot id="br-office-photo" shape="rounded" radius="20" placeholder="Drop a map screenshot or exterior photo of the Aspen Square office"></image-slot>
+        <ImageSlot alt="map screenshot or exterior photo of the Aspen Square office" shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -231,7 +237,7 @@ const faq = {
         <p class="mgr-p">Every Baton Rouge community gets a dedicated Community Association Manager — <strong>not a rotating queue and not a call center.</strong> They attend your meetings, walk your property, and know which vendor already fixed the front gate last spring.</p>
         <p class="mgr-p">Behind that one person sits the whole company: accounting, insurance and reserves, covenants, and maintenance specialists, all in-house. You get a neighbor as your point of contact and a full bench backing them up.</p>
         <div class="mgr-card">
-          <image-slot id="br-mgr-headshot" shape="circle" placeholder="Headshot"></image-slot>
+          <ImageSlot src="/photos/lead-jeff.webp" alt="Jeff Harman, CEO and founder of CMGT" shape="circle" />
           <div>
             <div class="mgr-name">Jeff Harman</div>
             <div class="mgr-role">Your Baton Rouge point of contact · CEO &amp; Founder</div>
@@ -239,7 +245,7 @@ const faq = {
         </div>
       </div>
       <div class="mgr-media reveal">
-        <image-slot id="br-mgr-photo" shape="rounded" radius="20" placeholder="Drop a Baton Rouge team or board-meeting photo"></image-slot>
+        <ImageSlot alt="Baton Rouge team or board-meeting photo" shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -268,6 +274,37 @@ const faq = {
       <h2 class="cover-h">Across the capital region.</h2>
       <p class="cover-sub">Our Baton Rouge team manages communities throughout East Baton Rouge, Livingston, and Ascension parishes.</p>
       <div class="geo-chips reveal"><span class="geo-chip static">Baton Rouge</span><span class="geo-chip static">Denham Springs</span><span class="geo-chip static">Prairieville</span><span class="geo-chip static">Gonzales</span><span class="geo-chip static">Zachary</span><span class="geo-chip static">Central</span><span class="geo-chip static">Walker</span></div>
+      <figure class="svcmap reveal" aria-label="Areas CMGT serves around Baton Rouge">
+        <svg class="svcmap-bg" viewBox="0 0 800 360" role="presentation" aria-hidden="true" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="svcmap-g-baton-rouge" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#F4F6FB"/><stop offset="1" stop-color="#EAF1FF"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="360" fill="url(#svcmap-g-baton-rouge)"/>
+          <g stroke="#C9D8F0" stroke-width="2" fill="none" opacity=".9">
+            <path d="M-20 250 C 160 210, 300 280, 470 235 S 700 190, 830 220"/>
+            <path d="M-20 130 C 180 165, 320 95, 500 140 S 690 175, 830 130"/>
+            <path d="M240 -20 C 265 120, 205 230, 250 380"/>
+            <path d="M580 -20 C 560 130, 620 240, 585 380"/>
+          </g>
+          <g fill="#DCE7F8" opacity=".75">
+            <path d="M60 40 L150 30 L175 95 L85 110 Z"/>
+            <path d="M640 260 L735 245 L760 320 L665 335 Z"/>
+            <path d="M330 285 L430 300 L415 350 L320 340 Z"/>
+          </g>
+        </svg>
+        <div class="svcmap-pins">
+        <div class="svcmap-pin" style="left:17.4%;top:41.1%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Baton Rouge</span></div>
+        <div class="svcmap-pin" style="left:28.3%;top:44.3%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Denham Springs</span></div>
+        <div class="svcmap-pin" style="left:39.1%;top:26.2%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Prairieville</span></div>
+        <div class="svcmap-pin" style="left:50.0%;top:36.0%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Gonzales</span></div>
+        <div class="svcmap-pin" style="left:60.9%;top:26.2%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Zachary</span></div>
+        <div class="svcmap-pin" style="left:71.7%;top:44.3%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Central</span></div>
+        <div class="svcmap-pin" style="left:82.6%;top:41.1%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Walker</span></div>
+        </div>
+        <figcaption class="svcmap-cap">Illustrative — pins mark the areas served from our Denham Springs office, not exact boundaries.</figcaption>
+      </figure>
       <ul class="geo-svc reveal" style="margin-top:36px">
         <li><a href="/hoa-management-services">Full-service HOA management</a></li>
         <li><a href="/condo-management">Condo &amp; townhome management</a></li>
@@ -277,11 +314,21 @@ const faq = {
     </div>
   </section>
 
+  
+  <section class="revs" data-screen-label="Google reviews" hidden data-city="baton-rouge">
+    <div class="container">
+      <div class="eyebrow eyebrow-blue reveal">From our Baton Rouge Google profile</div>
+      <h2 class="revs-h">What neighbors near Baton Rouge actually say.</h2>
+      <div class="revs-grid" id="revs-grid-baton-rouge"></div>
+      <a class="revs-all" id="revs-all-baton-rouge" href="#" target="_blank" rel="noopener">Read all reviews on Google <span class="arrow">→</span></a>
+    </div>
+  </section>
+
   <section class="proof-band" data-screen-label="Proof">
     <div class="container proof-in">
       <h2 class="proof-h">Your manager lives here. The <em>whole team</em> has their back.</h2>
       <div class="proof-grid reveal">
-        <div><div class="proof-num"><span data-count-to="535">535</span></div><div class="proof-label">Google reviews in this market</div></div>
+        <div><div class="proof-num"><span data-count-to="535" data-rv-count-to>535</span></div><div class="proof-label">Google reviews in this market</div></div>
         <div><div class="proof-num"><span data-count-to="96" data-suffix="%">96%</span></div><div class="proof-label">client retention, by dollar value</div></div>
         <div><div class="proof-num"><span data-prefix="~" data-count-to="10" data-suffix="%">~10%</span></div><div class="proof-label">average delinquency across our communities</div></div>
         <div><div class="proof-num">389</div><div class="proof-label">communities managed across five states</div></div>
@@ -348,6 +395,63 @@ const faq = {
   </section>
 </BaseLayout>
 
+<script is:inline>
+  /* Live Google reviews for THIS location. /api/reviews is edge-cached for 24h and
+     warmed by a daily cron, so this is a cheap cached read, not a Places call per
+     view. Rating/count are swapped in place; review cards render only when the
+     location actually returns review text. Fails silently — the committed
+     fallback rating stays on screen. */
+  (function () {
+    var citySlug = 'baton-rouge';
+    var stars = function (n) {
+      var full = Math.round(n), s = '';
+      for (var i = 0; i < 5; i++) s += i < full ? '★' : '☆';
+      return s;
+    };
+    fetch('/api/reviews?city=' + citySlug)
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || typeof d.rating !== 'number') return;
+        // Rating rail
+        document.querySelectorAll('[data-rv-rating]').forEach(function (el) {
+          el.textContent = d.rating.toFixed(1);
+        });
+        document.querySelectorAll('[data-rv-count]').forEach(function (el) {
+          el.textContent = d.count;
+        });
+        // Proof-band counter (data-count-to is animated by shared.js)
+        var pc = document.querySelector('[data-rv-count-to]');
+        if (pc) pc.setAttribute('data-count-to', d.count);
+        // "Read them on our Google Business Profile" -> the real profile link
+        if (d.reviewsUrl) {
+          document.querySelectorAll('[data-rv-link]').forEach(function (a) {
+            a.href = d.reviewsUrl;
+          });
+        }
+        // Review cards
+        var sec = document.querySelector('.revs[data-city="' + citySlug + '"]');
+        var grid = document.getElementById('revs-grid-' + citySlug);
+        if (!sec || !grid || !d.reviews || !d.reviews.length) return;
+        grid.innerHTML = d.reviews.map(function (rv) {
+          var body = rv.text.length > 320 ? rv.text.slice(0, 317) + '…' : rv.text;
+          var esc = function (s) {
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          };
+          return '<figure class="rev-card">' +
+            '<div class="rev-stars" aria-label="' + rv.rating + ' out of 5">' + stars(rv.rating) + '</div>' +
+            '<blockquote class="rev-text">' + esc(body) + '</blockquote>' +
+            '<figcaption class="rev-meta"><span class="rev-who">' + esc(rv.author) + '</span>' +
+            (rv.relative ? '<span class="rev-when">' + esc(rv.relative) + '</span>' : '') +
+            '</figcaption></figure>';
+        }).join('');
+        var all = document.getElementById('revs-all-' + citySlug);
+        if (all && d.reviewsUrl) all.href = d.reviewsUrl;
+        sec.hidden = false;
+      })
+      .catch(function () { /* keep the committed fallback on screen */ });
+  })();
+</script>
+
 <style>
 body { background: #fff; }
     .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
@@ -364,7 +468,7 @@ body { background: #fff; }
     .city-hero-lede { font-size: 17.5px; line-height: 1.7; color: rgba(255,255,255,.82); margin: 0 0 30px; }
     .city-hero-lede strong { color: #fff; font-weight: 600; }
     .city-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-    .city-band image-slot { display: block; width: 100%; height: clamp(280px, 32vw, 400px); position: relative; z-index: 2; }
+    .city-band .image-slot { display: block; width: 100%; height: clamp(280px, 32vw, 400px); position: relative; z-index: 2; }
 
     .rating-rail { position: relative; z-index: 2; display: flex; align-items: center; gap: 34px; flex-wrap: wrap; padding: 26px 0; border-top: 1px solid rgba(255,255,255,.18); }
     .rr-score { display: flex; align-items: baseline; gap: 10px; }
@@ -391,7 +495,7 @@ body { background: #fff; }
     .nap-v a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
     .nap-v a:hover { border-bottom-color: var(--landscaping-green); }
     .nap-v .sub { display: block; font-size: 13px; color: var(--ink-500); margin-top: 3px; }
-    .office-media image-slot { width: 100%; height: 440px; }
+    .office-media .image-slot { width: 100%; height: 440px; }
 
     .mgr { background: #fff; padding: 100px 0; }
     .mgr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
@@ -400,10 +504,10 @@ body { background: #fff; }
     .mgr-p { font-size: 16px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
     .mgr-p strong { color: var(--freedom-blue); font-weight: 600; }
     .mgr-card { display: flex; align-items: center; gap: 20px; background: var(--nb-lightest); border-radius: 18px; padding: 22px 26px; margin-top: 26px; max-width: 480px; }
-    .mgr-card image-slot { width: 78px; height: 78px; flex: 0 0 78px; }
+    .mgr-card .image-slot { width: 78px; height: 78px; flex: 0 0 78px; }
     .mgr-name { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--freedom-blue); line-height: 1.2; }
     .mgr-role { font-size: 13.5px; color: var(--ink-500); margin-top: 4px; }
-    .mgr-media image-slot { width: 100%; height: 400px; }
+    .mgr-media .image-slot { width: 100%; height: 400px; }
 
     .cover { background: var(--nb-lightest); padding: 96px 0; }
     .cover-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
@@ -427,6 +531,41 @@ body { background: #fff; }
     .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
     .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
 
+/* ── Port additions ─────────────────────────────────────────────────────────
+   The handoff's <image-slot> element is replaced by ImageSlot.astro, which
+   renders <img class="image-slot">, so the template's `image-slot` selectors are
+   rewritten to `.image-slot` (done in the port) and sizing carries over. */
+
+/* Manager card: real headshot beside the name. */
+.mgr-card { display: flex; align-items: center; gap: 16px; }
+.mgr-card .image-slot { width: 68px; height: 68px; flex: none; }
+
+/* Stylized service-area map — brand SVG, no third-party iframe (keeps it off LCP). */
+.svcmap { position: relative; margin: 30px 0 0; border: 1px solid var(--rule, #E2E6F0); border-radius: 14px; overflow: hidden; background: #F4F6FB; }
+.svcmap-bg { display: block; width: 100%; height: clamp(220px, 30vw, 300px); }
+.svcmap-pins { position: absolute; inset: 0; }
+.svcmap-pin { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+.svcmap-dot { width: 11px; height: 11px; border-radius: 50%; flex: none; background: var(--landscaping-green, #4ACF6C); box-shadow: 0 0 0 4px rgba(74,207,108,.28), 0 1px 3px rgba(23,23,51,.3); }
+.svcmap-label { font-family: var(--font-heading, inherit); font-weight: 700; font-size: 13px; color: var(--freedom-blue, #1E1E77); background: rgba(255,255,255,.92); border: 1px solid rgba(30,30,119,.12); border-radius: 999px; padding: 3px 10px; }
+.svcmap-cap { margin: 0; padding: 10px 14px; font-size: 12px; color: var(--muted, #5B6079); background: #fff; border-top: 1px solid var(--rule, #E2E6F0); }
+@media (max-width: 560px) {
+  .svcmap-bg { height: 300px; }
+  .svcmap-label { font-size: 12px; padding: 2px 8px; }
+}
+
+/* Live Google review cards (rendered by the script above). */
+.revs { padding: 84px 0; background: #fff; }
+.revs-h { font-family: var(--font-display, inherit); font-weight: 900; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.06; letter-spacing: -.02em; margin: 8px 0 28px; color: var(--freedom-blue, #1E1E77); text-wrap: balance; }
+.revs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.rev-card { margin: 0; background: #F4F6FB; border: 1px solid var(--rule, #E2E6F0); border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.rev-stars { color: #F0B400; font-size: 15px; letter-spacing: 2px; }
+.rev-text { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ink, #171733); }
+.rev-meta { display: flex; flex-direction: column; gap: 2px; margin-top: auto; }
+.rev-who { font-family: var(--font-heading, inherit); font-weight: 700; font-size: 13px; color: var(--freedom-blue, #1E1E77); }
+.rev-when { font-size: 12px; color: var(--muted, #5B6079); }
+.revs-all { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; font-family: var(--font-heading, inherit); font-weight: 700; font-size: 14px; color: var(--freedom-blue, #1E1E77); text-decoration: none; }
+.revs-all:hover { text-decoration: underline; }
+
 /* Port fix: the handoff template was authored against its own standalone shared.css.
    On the dark hero the light-outline button ends up with the navy body colour here,
    which is invisible against var(--freedom-blue). Restore the intended treatment
@@ -439,4 +578,10 @@ body { background: #fff; }
 }
 .city-hero .btn-outline-light:hover,
 .cta .btn-outline-light:hover { background: rgba(255, 255, 255, .12); }
+
+/* Port fix: the pre-footer CTA sits on the green band, and the template's
+   `.cta { color: var(--freedom-blue) }` was winning over global .btn-blue's own
+   colour — navy text on the navy button. Global .btn-blue is navy bg + #fff text,
+   so restore that rather than inventing a new treatment. */
+.cta .btn-blue { color: #fff; }
 </style>
