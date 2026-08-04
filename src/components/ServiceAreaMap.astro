@@ -1,0 +1,194 @@
+---
+/**
+ * ServiceAreaMap.astro — a real Google map, styled to CMGT, showing where a
+ * market's service areas actually are.
+ *
+ * Uses the Maps JavaScript API (not Static Maps): the site's existing key is
+ * already authorised for Maps JS + Places — the one we use for the proposal
+ * form's address autocomplete — whereas Static Maps is not in the key's API
+ * restrictions and 403s. This avoids asking anyone to change key settings.
+ *
+ * Kept off the critical path: the SDK is only loaded when the map scrolls into
+ * view (IntersectionObserver), so it can't block LCP the way an always-on embed
+ * iframe would — a risk the city-page handoff explicitly calls out.
+ *
+ * Styled down to the CMGT palette (off-white land, brand-blue water, quiet
+ * roads, no POI clutter) so it reads as part of the page. Markers are placed at
+ * real coordinates: the office in brand green, each coverage area in brand blue.
+ *
+ * If the key is missing or the SDK fails, the static fallback panel stays
+ * visible, so the section never renders as a broken box.
+ */
+export interface Props {
+  /** Marker points, office first. */
+  points: { name: string; lat: number; lng: number }[];
+  zoom?: number;
+  caption?: string;
+  ariaLabel: string;
+}
+const { points, zoom = 9, caption, ariaLabel } = Astro.props;
+const key = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY ?? '';
+const id = 'svcmap-' + Math.random().toString(36).slice(2, 9);
+---
+<figure class="svcmap reveal" aria-label={ariaLabel}>
+  <div
+    class="svcmap-canvas"
+    id={id}
+    data-points={JSON.stringify(points)}
+    data-zoom={zoom}
+    data-key={key}
+    role="img"
+    aria-label={`Map showing ${points.map((p) => p.name).join(', ')}`}
+  >
+    <!-- Shown until (or unless) the map initialises. -->
+    <div class="svcmap-idle">
+      <span class="svcmap-idle-t">{points[0]?.name}</span>
+      <span class="svcmap-idle-s">{points.length > 1 ? `+ ${points.length - 1} more areas` : 'Our office'}</span>
+    </div>
+  </div>
+  <ul class="svcmap-key">
+    {points.map((p, i) => (
+      <li class={i === 0 ? 'is-office' : ''}>
+        <span class="svcmap-dot" aria-hidden="true"></span>{p.name}{i === 0 ? ' — our office' : ''}
+      </li>
+    ))}
+  </ul>
+  {caption && <figcaption class="svcmap-cap">{caption}</figcaption>}
+</figure>
+
+<script is:inline>
+  /* Lazy Google map init. One shared loader for the SDK; each map boots when it
+     scrolls into view. Silent no-op without a key, leaving the idle panel up. */
+  (function () {
+    if (window.__cmgtMapInit) return;
+    window.__cmgtMapInit = true;
+
+    var STYLES = [
+      { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+      { elementType: 'labels.text.fill', stylers: [{ color: '#1E1E77' }] },
+      { elementType: 'labels.text.stroke', stylers: [{ color: '#ffffff' }] },
+      { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{ color: '#C9D8F0' }] },
+      { featureType: 'administrative.land_parcel', stylers: [{ visibility: 'off' }] },
+      { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#F4F6FB' }] },
+      { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+      { featureType: 'road', elementType: 'geometry.fill', stylers: [{ color: '#ffffff' }] },
+      { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#E2E6F0' }] },
+      { featureType: 'road.highway', elementType: 'geometry.fill', stylers: [{ color: '#EAF1FF' }] },
+      { featureType: 'road.highway', elementType: 'geometry.stroke', stylers: [{ color: '#C9D8F0' }] },
+      { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+      { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#A1C8E7' }] },
+      { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#5B6079' }] },
+    ];
+
+    var loading = null;
+    function loadSdk(key) {
+      if (window.google && window.google.maps) return Promise.resolve();
+      if (loading) return loading;
+      loading = new Promise(function (res, rej) {
+        var s = document.createElement('script');
+        s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(key) + '&loading=async&v=weekly';
+        s.async = true;
+        s.onload = res;
+        s.onerror = rej;
+        document.head.appendChild(s);
+      });
+      return loading;
+    }
+
+    function pin(map, p, isOffice) {
+      return new google.maps.Marker({
+        map: map,
+        position: { lat: p.lat, lng: p.lng },
+        title: p.name,
+        zIndex: isOffice ? 10 : 1,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: isOffice ? 9 : 6.5,
+          fillColor: isOffice ? '#4ACF6C' : '#1E1E77',
+          fillOpacity: 1,
+          strokeColor: '#ffffff',
+          strokeWeight: isOffice ? 3 : 2,
+        },
+      });
+    }
+
+    function boot(el) {
+      var key = el.getAttribute('data-key');
+      if (!key) return;
+      var pts;
+      try { pts = JSON.parse(el.getAttribute('data-points') || '[]'); } catch (e) { return; }
+      if (!pts.length) return;
+
+      loadSdk(key).then(function () {
+        var map = new google.maps.Map(el, {
+          zoom: parseInt(el.getAttribute('data-zoom'), 10) || 9,
+          center: { lat: pts[0].lat, lng: pts[0].lng },
+          styles: STYLES,
+          disableDefaultUI: true,
+          zoomControl: true,
+          gestureHandling: 'cooperative',
+          keyboardShortcuts: false,
+        });
+        pts.forEach(function (p, i) { pin(map, p, i === 0); });
+        // Frame every marker, but don't zoom past the requested level on singles.
+        if (pts.length > 1) {
+          var b = new google.maps.LatLngBounds();
+          pts.forEach(function (p) { b.extend({ lat: p.lat, lng: p.lng }); });
+          map.fitBounds(b, 48);
+        }
+        el.classList.add('is-live');
+      }).catch(function () { /* leave the idle panel visible */ });
+    }
+
+    var maps = document.querySelectorAll('.svcmap-canvas');
+    if (!maps.length) return;
+    if (!('IntersectionObserver' in window)) { maps.forEach(boot); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { io.unobserve(e.target); boot(e.target); }
+      });
+    }, { rootMargin: '200px' });
+    maps.forEach(function (m) { io.observe(m); });
+  })();
+</script>
+
+<style>
+  .svcmap {
+    margin: 30px 0 0;
+    border: 1px solid var(--rule, #E2E6F0);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #F4F6FB;
+  }
+  .svcmap-canvas {
+    position: relative;
+    width: 100%;
+    height: clamp(260px, 32vw, 380px);
+    background: linear-gradient(135deg, #F4F6FB, #EAF1FF);
+  }
+  /* Idle state: a quiet branded panel until the map boots (or if it can't). */
+  .svcmap-idle {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  }
+  .svcmap-canvas.is-live .svcmap-idle { display: none; }
+  .svcmap-idle-t {
+    font-family: var(--font-heading, inherit); font-weight: 800; font-size: 17px;
+    color: var(--freedom-blue, #1E1E77);
+  }
+  .svcmap-idle-s { font-size: 13px; color: var(--muted, #5B6079); }
+  .svcmap-key {
+    display: flex; flex-wrap: wrap; gap: 8px 18px;
+    margin: 0; padding: 14px 16px; list-style: none;
+    background: #fff; border-top: 1px solid var(--rule, #E2E6F0);
+  }
+  .svcmap-key li {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-heading, inherit); font-weight: 600;
+    font-size: 12.5px; color: var(--muted, #5B6079);
+  }
+  .svcmap-key li.is-office { color: var(--freedom-blue, #1E1E77); font-weight: 700; }
+  .svcmap-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; background: var(--freedom-blue, #1E1E77); }
+  .svcmap-key li.is-office .svcmap-dot { background: var(--landscaping-green, #4ACF6C); }
+  .svcmap-cap { margin: 0; padding: 0 16px 14px; font-size: 12px; color: var(--muted, #5B6079); background: #fff; }
+</style>

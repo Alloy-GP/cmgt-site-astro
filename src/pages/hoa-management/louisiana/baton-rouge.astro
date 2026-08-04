@@ -9,6 +9,7 @@
 // handoff; wiring them to live GBP data is the open P0 (see the dev handoff).
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import ImageSlot from '~/components/ImageSlot.astro';
+import ServiceAreaMap from '~/components/ServiceAreaMap.astro';
 import { LOCATION_REVIEWS } from '~/data/reviews';
 
 // Rating/count render from the committed per-location fallback so the page always
@@ -185,7 +186,7 @@ const faq = {
       </div>
     </div>
     <div class="city-band">
-      <ImageSlot alt="Baton Rouge community / neighborhood photo" shape="rect" />
+      <ImageSlot src="/photos/la-geo-hero-photo.webp" alt="A Louisiana community neighborhood CMGT manages near Baton Rouge" shape="rect" />
     </div>
     <div class="container">
       <div class="rating-rail">
@@ -224,7 +225,12 @@ const faq = {
         </div>
       </div>
       <div class="office-media reveal">
-        <ImageSlot alt="map screenshot or exterior photo of the Aspen Square office" shape="rounded" radius={20} />
+        <ServiceAreaMap
+        points={[{ name: "Denham Springs", lat: 30.4863, lng: -90.9559 }]}
+        zoom={13}
+        ariaLabel="Map of the CMGT Denham Springs office"
+        caption="Our Denham Springs office — 140 Aspen Square Ste H"
+      />
       </div>
     </div>
   </section>
@@ -237,7 +243,7 @@ const faq = {
         <p class="mgr-p">Every Baton Rouge community gets a dedicated Community Association Manager — <strong>not a rotating queue and not a call center.</strong> They attend your meetings, walk your property, and know which vendor already fixed the front gate last spring.</p>
         <p class="mgr-p">Behind that one person sits the whole company: accounting, insurance and reserves, covenants, and maintenance specialists, all in-house. You get a neighbor as your point of contact and a full bench backing them up.</p>
         <div class="mgr-card">
-          <ImageSlot src="/photos/lead-jeff.webp" alt="Jeff Harman, CEO and founder of CMGT" shape="circle" />
+          <ImageSlot src="/photos/lead-jeff.jpg" alt="Jeff Harman, Founder and CEO of CMGT" shape="circle" class="mgr-headshot" />
           <div>
             <div class="mgr-name">Jeff Harman</div>
             <div class="mgr-role">Your Baton Rouge point of contact · CEO &amp; Founder</div>
@@ -245,7 +251,7 @@ const faq = {
         </div>
       </div>
       <div class="mgr-media reveal">
-        <ImageSlot alt="Baton Rouge team or board-meeting photo" shape="rounded" radius={20} />
+        <ImageSlot src="/photos/hoa-board-members-financials.webp" alt="A CMGT manager reviewing financials with an HOA board in Baton Rouge" shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -274,37 +280,20 @@ const faq = {
       <h2 class="cover-h">Across the capital region.</h2>
       <p class="cover-sub">Our Baton Rouge team manages communities throughout East Baton Rouge, Livingston, and Ascension parishes.</p>
       <div class="geo-chips reveal"><span class="geo-chip static">Baton Rouge</span><span class="geo-chip static">Denham Springs</span><span class="geo-chip static">Prairieville</span><span class="geo-chip static">Gonzales</span><span class="geo-chip static">Zachary</span><span class="geo-chip static">Central</span><span class="geo-chip static">Walker</span></div>
-      <figure class="svcmap reveal" aria-label="Areas CMGT serves around Baton Rouge">
-        <svg class="svcmap-bg" viewBox="0 0 800 360" role="presentation" aria-hidden="true" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="svcmap-g-baton-rouge" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#F4F6FB"/><stop offset="1" stop-color="#EAF1FF"/>
-            </linearGradient>
-          </defs>
-          <rect width="800" height="360" fill="url(#svcmap-g-baton-rouge)"/>
-          <g stroke="#C9D8F0" stroke-width="2" fill="none" opacity=".9">
-            <path d="M-20 250 C 160 210, 300 280, 470 235 S 700 190, 830 220"/>
-            <path d="M-20 130 C 180 165, 320 95, 500 140 S 690 175, 830 130"/>
-            <path d="M240 -20 C 265 120, 205 230, 250 380"/>
-            <path d="M580 -20 C 560 130, 620 240, 585 380"/>
-          </g>
-          <g fill="#DCE7F8" opacity=".75">
-            <path d="M60 40 L150 30 L175 95 L85 110 Z"/>
-            <path d="M640 260 L735 245 L760 320 L665 335 Z"/>
-            <path d="M330 285 L430 300 L415 350 L320 340 Z"/>
-          </g>
-        </svg>
-        <div class="svcmap-pins">
-        <div class="svcmap-pin" style="left:17.4%;top:41.1%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Baton Rouge</span></div>
-        <div class="svcmap-pin" style="left:28.3%;top:44.3%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Denham Springs</span></div>
-        <div class="svcmap-pin" style="left:39.1%;top:26.2%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Prairieville</span></div>
-        <div class="svcmap-pin" style="left:50.0%;top:36.0%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Gonzales</span></div>
-        <div class="svcmap-pin" style="left:60.9%;top:26.2%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Zachary</span></div>
-        <div class="svcmap-pin" style="left:71.7%;top:44.3%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Central</span></div>
-        <div class="svcmap-pin" style="left:82.6%;top:41.1%"><span class="svcmap-dot" aria-hidden="true"></span><span class="svcmap-label">Walker</span></div>
-        </div>
-        <figcaption class="svcmap-cap">Illustrative — pins mark the areas served from our Denham Springs office, not exact boundaries.</figcaption>
-      </figure>
+      <ServiceAreaMap
+        points={[
+          { name: "Denham Springs", lat: 30.4863, lng: -90.9559 },
+          { name: "Baton Rouge", lat: 30.4515, lng: -91.1871 },
+          { name: "Prairieville", lat: 30.306, lng: -90.9773 },
+          { name: "Gonzales", lat: 30.2386, lng: -90.9201 },
+          { name: "Zachary", lat: 30.6485, lng: -91.1565 },
+          { name: "Central", lat: 30.5546, lng: -91.0367 },
+          { name: "Walker", lat: 30.4913, lng: -90.8618 }
+        ]}
+        zoom={10}
+        ariaLabel="Map of the areas CMGT serves around Baton Rouge"
+        caption="Communities we manage across this market. Marker positions are the cities themselves, not service boundaries."
+      />
       <ul class="geo-svc reveal" style="margin-top:36px">
         <li><a href="/hoa-management-services">Full-service HOA management</a></li>
         <li><a href="/condo-management">Condo &amp; townhome management</a></li>
@@ -468,7 +457,7 @@ body { background: #fff; }
     .city-hero-lede { font-size: 17.5px; line-height: 1.7; color: rgba(255,255,255,.82); margin: 0 0 30px; }
     .city-hero-lede strong { color: #fff; font-weight: 600; }
     .city-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-    .city-band .image-slot { display: block; width: 100%; height: clamp(280px, 32vw, 400px); position: relative; z-index: 2; }
+    .city-band :global(.image-slot) { display: block; width: 100%; height: clamp(280px, 32vw, 400px); position: relative; z-index: 2; }
 
     .rating-rail { position: relative; z-index: 2; display: flex; align-items: center; gap: 34px; flex-wrap: wrap; padding: 26px 0; border-top: 1px solid rgba(255,255,255,.18); }
     .rr-score { display: flex; align-items: baseline; gap: 10px; }
@@ -495,7 +484,7 @@ body { background: #fff; }
     .nap-v a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
     .nap-v a:hover { border-bottom-color: var(--landscaping-green); }
     .nap-v .sub { display: block; font-size: 13px; color: var(--ink-500); margin-top: 3px; }
-    .office-media .image-slot { width: 100%; height: 440px; }
+    .office-media :global(.image-slot) { width: 100%; height: 440px; }
 
     .mgr { background: #fff; padding: 100px 0; }
     .mgr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
@@ -504,10 +493,10 @@ body { background: #fff; }
     .mgr-p { font-size: 16px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
     .mgr-p strong { color: var(--freedom-blue); font-weight: 600; }
     .mgr-card { display: flex; align-items: center; gap: 20px; background: var(--nb-lightest); border-radius: 18px; padding: 22px 26px; margin-top: 26px; max-width: 480px; }
-    .mgr-card .image-slot { width: 78px; height: 78px; flex: 0 0 78px; }
+    .mgr-card :global(.image-slot) { width: 78px; height: 78px; flex: 0 0 78px; }
     .mgr-name { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--freedom-blue); line-height: 1.2; }
     .mgr-role { font-size: 13.5px; color: var(--ink-500); margin-top: 4px; }
-    .mgr-media .image-slot { width: 100%; height: 400px; }
+    .mgr-media :global(.image-slot) { width: 100%; height: 400px; }
 
     .cover { background: var(--nb-lightest); padding: 96px 0; }
     .cover-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
@@ -537,21 +526,15 @@ body { background: #fff; }
    rewritten to `.image-slot` (done in the port) and sizing carries over. */
 
 /* Manager card: real headshot beside the name. */
-.mgr-card { display: flex; align-items: center; gap: 16px; }
-.mgr-card .image-slot { width: 68px; height: 68px; flex: none; }
-
-/* Stylized service-area map — brand SVG, no third-party iframe (keeps it off LCP). */
-.svcmap { position: relative; margin: 30px 0 0; border: 1px solid var(--rule, #E2E6F0); border-radius: 14px; overflow: hidden; background: #F4F6FB; }
-.svcmap-bg { display: block; width: 100%; height: clamp(220px, 30vw, 300px); }
-.svcmap-pins { position: absolute; inset: 0; }
-.svcmap-pin { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 7px; white-space: nowrap; }
-.svcmap-dot { width: 11px; height: 11px; border-radius: 50%; flex: none; background: var(--landscaping-green, #4ACF6C); box-shadow: 0 0 0 4px rgba(74,207,108,.28), 0 1px 3px rgba(23,23,51,.3); }
-.svcmap-label { font-family: var(--font-heading, inherit); font-weight: 700; font-size: 13px; color: var(--freedom-blue, #1E1E77); background: rgba(255,255,255,.92); border: 1px solid rgba(30,30,119,.12); border-radius: 999px; padding: 3px 10px; }
-.svcmap-cap { margin: 0; padding: 10px 14px; font-size: 12px; color: var(--muted, #5B6079); background: #fff; border-top: 1px solid var(--rule, #E2E6F0); }
-@media (max-width: 560px) {
-  .svcmap-bg { height: 300px; }
-  .svcmap-label { font-size: 12px; padding: 2px 8px; }
+.mgr-card { display: flex; align-items: center; gap: 18px; }
+/* Square box + circle radius, so the headshot is a true circle rather than the
+   oval the flex row was stretching it into. */
+.mgr-card :global(.mgr-headshot) {
+  width: 92px; height: 92px; flex: none;
+  border-radius: 50%; object-fit: cover; object-position: 50% 22%;
 }
+
+/* (Service-area + office maps are styled inside ServiceAreaMap.astro.) */
 
 /* Live Google review cards (rendered by the script above). */
 .revs { padding: 84px 0; background: #fff; }
