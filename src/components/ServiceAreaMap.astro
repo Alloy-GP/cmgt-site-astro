@@ -27,7 +27,16 @@ export interface Props {
   ariaLabel: string;
 }
 const { points, zoom = 9, caption, ariaLabel } = Astro.props;
-const key = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY ?? '';
+
+// This project has two Google keys. The older "API key" is restricted to the
+// Places APIs only — it powers the proposal form's address autocomplete, and using
+// it for a map returns ApiTargetBlockedMapError. The "Maps Platform API Key" is the
+// one authorised for Maps JavaScript. Prefer it, and fall back to the Places key so
+// nothing hard-fails if only the one var is set.
+const key =
+  import.meta.env.PUBLIC_GOOGLE_MAPS_PLATFORM_KEY ??
+  import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY ??
+  '';
 const id = 'svcmap-' + Math.random().toString(36).slice(2, 9);
 ---
 <figure class="svcmap reveal" aria-label={ariaLabel}>
