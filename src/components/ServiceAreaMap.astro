@@ -31,12 +31,14 @@ const key = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY ?? '';
 const id = 'svcmap-' + Math.random().toString(36).slice(2, 9);
 ---
 <figure class="svcmap reveal" aria-label={ariaLabel}>
-  <!-- Height is set inline as well as in CSS: the host page's own scoped styles
-       were collapsing the canvas to content height, and an inline value can't be
-       out-ranked by them. Google's SDK needs a sized container or it renders blank. -->
+  <!-- Height is set inline as well as in CSS for two reasons: the host page's own
+       scoped styles were collapsing the canvas, and an inline value can't be
+       out-ranked. It must be `height`, not just `min-height` — the SDK's injected
+       container uses height:100%, which resolves to 0 against a parent whose
+       height is auto, so the map initialises but paints nothing. -->
   <div
     class="svcmap-canvas"
-    style="min-height:clamp(260px,32vw,380px)"
+    style="height:clamp(260px,32vw,380px)"
     id={id}
     data-points={JSON.stringify(points)}
     data-zoom={zoom}
