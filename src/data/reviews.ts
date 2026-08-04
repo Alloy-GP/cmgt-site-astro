@@ -67,6 +67,28 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
     count: 18,
     updatedAt: '2026-08-04',
   },
+  daphne: {
+    id: 'daphne',
+    gbpName: 'CMGT- Alabama Gulf Coast',
+    placeId: '',
+    textQuery: 'CMGT Alabama Gulf Coast, 26241 Equity Dr, Daphne, AL',
+    // Rating/count not yet supplied for this profile — left at 0 deliberately rather
+    // than invented. The rating rail and proof band stay hidden until /api/reviews
+    // returns live values from the profile itself.
+    rating: 0,
+    count: 0,
+    updatedAt: '2026-08-04',
+  },
+  biloxi: {
+    id: 'biloxi',
+    gbpName: 'CMGT- Mississippi Gulf Coast',
+    placeId: '',
+    textQuery: 'CMGT Mississippi Gulf Coast, 770 Water St, Biloxi, MS',
+    // Same as Daphne — live pull supplies these; not guessed.
+    rating: 0,
+    count: 0,
+    updatedAt: '2026-08-04',
+  },
 };
 
 /** Google "see all reviews" deep link for a Place ID. */
