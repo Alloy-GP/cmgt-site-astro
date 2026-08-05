@@ -335,6 +335,35 @@ const faq = {
     </div>
   </section>
 
+  <!-- ONLY-IN-BATON-ROUGE — Rentals + Fix-It Squad. Baton Rouge page ONLY. Do not port to Shreveport/Lafayette or any other market page. -->
+  <section class="only" data-screen-label="Rentals &amp; Fix-It Squad">
+    <div class="container">
+      <div class="only-head reveal">
+        <div class="eyebrow eyebrow-green">Only in Baton Rouge</div>
+        <h2 class="only-h">Two things we do here that we don't do anywhere else.</h2>
+        <p class="only-sub">Both grew out of being rooted in one place long enough to be asked. Neither is offered in our other markets — which is the clearest proof we can give you that Baton Rouge is home base, not a service area.</p>
+      </div>
+      <div class="only-grid reveal">
+        <div class="only-card">
+          <span class="only-kicker">200+ units</span>
+          <h3>CMGT Rentals</h3>
+          <p>A separate division for owners of individual rental homes and investment properties around Baton Rouge. It started thirteen years ago with twenty units and grew from there — <strong>entirely by word of mouth from owners inside the communities we already managed.</strong></p>
+          <ul class="only-list"><li>Marketing &amp; leasing</li><li>Tenant screening</li><li>Rent collection</li><li>Maintenance</li><li>Inspections</li><li>Owner portal</li></ul>
+          <p style="font-size:14px">If you own a rental inside a community we manage, one company handles both — the association and your unit.</p>
+          <div class="only-links"><a href="/rentals">How rental management works <span class="arrow">→</span></a></div>
+        </div>
+        <div class="only-card">
+          <span class="only-kicker">Since 2019</span>
+          <h3>Fix-It Squad</h3>
+          <p>Our own maintenance crew, on our own payroll. When a gate breaks or a common area needs work, <strong>the person who shows up works for the same company that manages your community</strong> — so there's no vendor to chase and no finger-pointing about who owns the problem.</p>
+          <ul class="only-list"><li>Plumbing</li><li>Electrical</li><li>Painting &amp; sheetrock</li><li>Pressure washing</li><li>HVAC</li><li>Door repairs</li><li>Debris hauling</li></ul>
+          <p style="font-size:14px">Available to CMGT-managed communities and rental properties in the Greater Baton Rouge area. Priced on labor and materials.</p>
+          <div class="only-links"><a href="/fix-it-squad">See what Fix-It Squad handles <span class="arrow">→</span></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="proof-band" data-screen-label="Proof">
     <div class="container proof-in">
       <h2 class="proof-h">Your manager lives here. The <em>whole team</em> has their back.</h2>
@@ -392,7 +421,7 @@ const faq = {
   </section>
 
   <section class="cta" data-screen-label="CTA">
-    <div class="leaf" aria-hidden="true"><img src="home-explorations/assets/leaf-mark.svg" alt=""></div>
+    <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Managing a community near Baton Rouge?</h2>
@@ -532,6 +561,26 @@ body { background: #fff; }
     .geo-svc li::before { content: ""; position: absolute; left: 0; top: 7px; width: 9px; height: 9px; border-radius: 50%; background: var(--landscaping-green); }
     .geo-svc a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
     .geo-svc a:hover { border-bottom-color: var(--landscaping-green); }
+
+    /* "Only in Baton Rouge" — Rentals + Fix-It Squad. Baton Rouge page only.
+       Cards are flex with margin-top:auto on .only-links so both link rows sit
+       flush at the card bottom regardless of unequal copy length. */
+    .only { background: #fff; padding: 100px 0; }
+    .only-head { max-width: 640px; margin-bottom: 44px; }
+    .only-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+    .only-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+    .only-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+    @media (max-width: 860px) { .only-grid { grid-template-columns: 1fr; } }
+    .only-card { background: var(--nb-lightest); border-radius: 20px; padding: 34px 36px; display: flex; flex-direction: column; }
+    .only-kicker { font-family: var(--font-display); font-weight: 900; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--freedom-blue); background: var(--landscaping-green); border-radius: 999px; padding: 6px 13px; align-self: flex-start; }
+    .only-card h3 { font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1.15; letter-spacing: -.01em; color: var(--freedom-blue); margin: 18px 0 12px; }
+    .only-card p { font-size: 15.5px; line-height: 1.72; color: var(--ink-500); margin: 0 0 14px; }
+    .only-card p strong { color: var(--freedom-blue); font-weight: 600; }
+    .only-list { list-style: none; margin: 4px 0 22px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .only-list li { font-size: 13.5px; color: var(--ink-700); background: #fff; border: 1px solid var(--hairline-strong); border-radius: 999px; padding: 7px 14px; }
+    .only-links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+    .only-links a { font-family: var(--font-display); font-weight: 700; font-size: 14.5px; color: var(--freedom-blue); text-decoration: none; border-bottom: 2px solid var(--landscaping-green); padding-bottom: 2px; }
+    .only-links a:hover { color: var(--landscaping-green); border-bottom-color: var(--freedom-blue); }
 
     .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 100px 0; position: relative; overflow: hidden; }
     .cta .leaf { position: absolute; left: -110px; bottom: -150px; width: 460px; height: 460px; opacity: .14; transform: rotate(14deg); pointer-events: none; }
