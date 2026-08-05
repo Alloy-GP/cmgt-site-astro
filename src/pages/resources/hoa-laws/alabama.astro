@@ -4,8 +4,8 @@
  *
  * Structure and chrome live in StateLaw.astro; this file is copy plus schema only.
  * All statutory points were source-verified against the Code of Alabama during
- * design. One citation is flagged inline for review — see the REVIEW FLAG comment
- * in the rules section.
+ * design. The on-site condo manager licensing carve-out is cited as § 34-27-2(b)(7),
+ * matching the exemptions subsection in the current Code.
  *
  * The cluster hub at /resources/hoa-laws is not built, so breadcrumbs are three
  * levels and nothing here links to it. When the hub ships, add the level back to
@@ -183,8 +183,12 @@ const faq = {
 >
   <div slot="take" class="law-take">
 
-          <p class="law-take-h">The short version</p>
-          <p>One date decides everything on this page: if your declaration was recorded with the judge of probate on or after January 1, 2016, the Homeowners’ Association Act governs your community. If it was recorded before that and your members never voted to opt in, it doesn’t.</p>
+          <p class="law-take-h">What governs your community</p>
+          <ul class="law-take-ref">
+            <li><strong>Homeowners’ Association Act</strong> — governs if your declaration was recorded on or after January 1, 2016, or your members voted to opt in.</li>
+            <li><strong>Your governing documents + Nonprofit Corporation Act</strong> — govern if it was recorded before then and you never opted in.</li>
+            <li><strong>Federal law</strong> — fair housing, flag display, satellite dishes, and a few others.</li>
+          </ul>
   </div>
   <Fragment slot="changed">
 <h2 class="law-h2" id="changed">What changed recently</h2>
@@ -233,7 +237,7 @@ const faq = {
               <tr><td class="q">How long do we have to record it?</td><td>Within 12 months of the date the assessment became due. This is the deadline boards miss.</td><td><span class="law-cite">35-20-12(c)</span></td></tr>
               <tr><td class="q">What has to happen before we record?</td><td>At least 30 days’ written notice by certified mail to the owner that the statement will be recorded.</td><td><span class="law-cite">35-20-12(d)</span></td></tr>
               <tr><td class="q">Does our lien outrank the mortgage?</td><td>No. It yields to ad valorem taxes, municipal improvement assessments, UCC fixture filings, mortgages, and deeds of trust.</td><td><span class="law-cite">35-20-12(b)</span></td></tr>
-              <tr><td class="q">Does our on-site condo manager need a real estate license?</td><td>Alabama exempts apartment managers from licensing but expressly does not extend that exemption to on-site managers of condominium buildings or complexes.</td><td><span class="law-cite">34-27-2(a)(7)</span></td></tr>
+              <tr><td class="q">Does our on-site condo manager need a real estate license?</td><td>Alabama exempts apartment managers from licensing but expressly does not extend that exemption to on-site managers of condominium buildings or complexes.</td><td><span class="law-cite">34-27-2(b)(7)</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -337,12 +341,7 @@ const faq = {
               <div>
                 <h3>A licensing rule specific to on-site condo managers</h3>
                 <p class="answer">Alabama exempts apartment managers from real estate licensing and expressly refuses to extend that exemption to on-site condominium managers.</p>
-        <!-- REVIEW FLAG — statute citation. The handoff notes this subsection is
-             cited as (a)(7) here but appears as 34-27-2(b)(7) in current Justia
-             text, and asks that the page be aligned to whichever the 2026 Code
-             uses. Left exactly as designed; do not change without checking the
-             Code directly. Everything else on the page is source-verified. -->
-                <span class="law-cite">Ala. Code § 34-27-2(a)(7)</span>
+                <span class="law-cite">Ala. Code § 34-27-2(b)(7)</span>
               </div>
               <span class="law-sign" aria-hidden="true"></span>
             </summary>
