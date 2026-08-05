@@ -142,6 +142,23 @@ const breadcrumb = breadcrumbSchema([
     </div>
   </section>
 
+  <!-- Dedicated law-page callout. The hub links down into the law page and the law
+       page links back up — that pairing is what builds topical authority on this hub,
+       which is the page that converts. Kept as a prominent band rather than one card
+       in the resource grid so a researching board actually sees it. -->
+  <section class="law-band">
+    <div class="container">
+      <div class="law-band-in reveal">
+        <div class="law-band-txt">
+          <div class="eyebrow eyebrow-green">Board reference</div>
+          <h2 class="law-band-h">Know the law before your next board meeting.</h2>
+          <p class="law-band-p">Our plain-English guide to the Alabama statutes that actually govern your community — whether the Homeowners' Association Act even reaches you, plus records, liens, fines, and what changed this session. Written for boards, not lawyers.</p>
+        </div>
+        <a class="btn btn-blue" href="/resources/hoa-laws/alabama">Read the Alabama HOA law reference <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
   <section class="sec sec-alt">
     <div class="container">
       <div class="sec-head reveal">
@@ -149,10 +166,7 @@ const breadcrumb = breadcrumbSchema([
         <h2 class="sec-h">Resources for Alabama boards.</h2>
       </div>
       <div class="rel-grid reveal">
-        <!-- Primary entry point for the Alabama law page — the state hub links down into
-             the law page and the law page links back up. That one-directional pairing is
-             what builds topical authority on this hub, which is the page that converts. -->
-        <a class="rel-card" href="/resources/hoa-laws/alabama"><div class="rel-kicker">Reference</div><h3 class="rel-h">Alabama HOA laws every board should know</h3><p class="rel-p">Whether the Homeowners' Association Act even reaches your community turns on one date — plus records, liens, fines, and the 2026 session.</p><span class="rel-go">Read the reference <span class="arrow">→</span></span></a>
+        <a class="rel-card" href="/switching-hoa-management-companies"><div class="rel-kicker">Guide</div><h3 class="rel-h">Switching management companies</h3><p class="rel-p">What a clean transition looks like — records, vendors, finances, and homeowner communication on a clear Day 1 to Day 90 timeline.</p><span class="rel-go">See how it works <span class="arrow">→</span></span></a>
         <a class="rel-card" href="/resources/hurricane-preparedness-for-hoas"><div class="rel-kicker">Seasonal</div><h3 class="rel-h">Hurricane prep for HOAs</h3><p class="rel-p">The board plan and homeowner communications that get a Gulf Coast community through a storm.</p><span class="rel-go">Get ready <span class="arrow">→</span></span></a>
         <a class="rel-card" href="/condo-management"><div class="rel-kicker">Service</div><h3 class="rel-h">Condo &amp; townhome management</h3><p class="rel-p">A dedicated practice for shared-wall communities — building systems, reserves, and coastal realities.</p><span class="rel-go">See the practice <span class="arrow">→</span></span></a>
         <a class="rel-card" href="/hoa-financial-management"><div class="rel-kicker">Service</div><h3 class="rel-h">Financial &amp; Administrative Management</h3><p class="rel-p">Professional books, transparent reporting, and lower delinquency for smaller communities.</p><span class="rel-go">See the package <span class="arrow">→</span></span></a>
@@ -164,8 +178,8 @@ const breadcrumb = breadcrumbSchema([
     <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
     <div class="container cta-in">
       <div class="reveal">
-        <h2 class="cta-h">Managing a community in Alabama?</h2>
-        <p class="cta-p">Tell us about it and a real person will reach out within two business days. No pitch deck, no pressure.</p>
+        <h2 class="cta-h">On the board of an Alabama community?</h2>
+        <p class="cta-p">Tell us what your community needs and we'll put together a proposal — a real person follows up within two business days. No pitch deck, no pressure.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
@@ -230,4 +244,13 @@ const breadcrumb = breadcrumbSchema([
   .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 480px; margin: 0; color: rgba(30,30,119,.82); }
   .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
   .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
+
+  /* Law-page callout band */
+  .law-band { background: #fff; padding: 0 0 96px; }
+  .law-band-in { display: flex; align-items: center; justify-content: space-between; gap: 44px; flex-wrap: wrap; background: var(--nb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 20px 20px 0; padding: 40px 44px; }
+  .law-band-txt { max-width: 640px; }
+  .law-band-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(23px, 2.7vw, 32px); line-height: 1.14; letter-spacing: -.015em; color: var(--freedom-blue); margin: 12px 0 12px; text-wrap: balance; }
+  .law-band-p { font-size: 15.5px; line-height: 1.7; color: var(--ink-700); margin: 0; }
+  .law-band .btn { flex: none; }
+  @media (max-width: 720px) { .law-band { padding: 0 0 64px; } .law-band-in { padding: 30px 26px; gap: 24px; } }
 </style>

@@ -23,10 +23,10 @@ export interface StateLawLink {
 
 export const STATE_LAW_LINKS: StateLawLink[] = [
   { name: 'Alabama',     slug: 'alabama',     hub: '/hoa-management/alabama',     lawPage: '/resources/hoa-laws/alabama' },
-  { name: 'Louisiana',   slug: 'louisiana',   hub: '/hoa-management/louisiana',   lawPage: null },
-  { name: 'Mississippi', slug: 'mississippi', hub: '/hoa-management/mississippi', lawPage: null },
-  { name: 'Texas',       slug: 'texas',       hub: '/hoa-management/texas',       lawPage: null },
-  { name: 'Florida',     slug: 'florida',     hub: '/hoa-management/florida',     lawPage: null },
+  { name: 'Louisiana',   slug: 'louisiana',   hub: '/hoa-management/louisiana',   lawPage: '/resources/hoa-laws/louisiana' },
+  { name: 'Mississippi', slug: 'mississippi', hub: '/hoa-management/mississippi', lawPage: '/resources/hoa-laws/mississippi' },
+  { name: 'Texas',       slug: 'texas',       hub: '/hoa-management/texas',       lawPage: '/resources/hoa-laws/texas' },
+  { name: 'Florida',     slug: 'florida',     hub: '/hoa-management/florida',     lawPage: '/resources/hoa-laws/florida' },
 ];
 
 /** Cards for every state except the one being viewed. */

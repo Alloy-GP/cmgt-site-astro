@@ -19,48 +19,63 @@ export interface ReviewItem {
 }
 
 export const REVIEW_ITEMS: ReviewItem[] = [
-  { label: 'Homepage',                       path: '/',                                             review: true },
+  { label: 'Homepage',                       path: '/',                                             review: false },
 
   // Management & solutions
-  { label: 'HOA Management Services',        path: '/hoa-management-services',                      review: true },
-  { label: 'On-Site Management',             path: '/on-site-management',                           review: true },
-  { label: 'Condo & Townhome Management',    path: '/condo-management',                             review: true },
-  { label: 'Developer HOA Management',       path: '/developer-hoa-management',                     review: true },
-  { label: 'Switching Management Companies', path: '/switching-hoa-management-companies',           review: true },
-  { label: 'HOA Delinquency Recovery',       path: '/hoa-delinquency-recovery',                     review: true },
-  { label: 'HOA Financial Management',       path: '/hoa-financial-management',                     review: true },
-  { label: 'Self-Managed HOA',               path: '/self-managed-hoa',                             review: true },
-  { label: 'Rentals',                        path: '/rentals',                                      review: true },
-  { label: 'Search Rentals (Listings)',      path: '/search-rentals',                               review: true },
+  { label: 'HOA Management Services',        path: '/hoa-management-services',                      review: false },
+  { label: 'On-Site Management',             path: '/on-site-management',                           review: false },
+  { label: 'Condo & Townhome Management',    path: '/condo-management',                             review: false },
+  { label: 'Developer HOA Management',       path: '/developer-hoa-management',                     review: false },
+  { label: 'Switching Management Companies', path: '/switching-hoa-management-companies',           review: false },
+  { label: 'HOA Delinquency Recovery',       path: '/hoa-delinquency-recovery',                     review: false },
+  { label: 'HOA Financial Management',       path: '/hoa-financial-management',                     review: false },
+  { label: 'Self-Managed HOA',               path: '/self-managed-hoa',                             review: false },
+  { label: 'Rentals',                        path: '/rentals',                                      review: false },
+  { label: 'Search Rentals (Listings)',      path: '/search-rentals',                               review: false },
 
   // Locations
-  { label: 'Louisiana HOA Management',       path: '/hoa-management/louisiana',                     review: true },
-  { label: 'Texas HOA Management',           path: '/hoa-management/texas',                         review: true },
-  { label: 'Mississippi HOA Management',     path: '/hoa-management/mississippi',                   review: true },
-  { label: 'Alabama HOA Management',         path: '/hoa-management/alabama',                       review: true },
-  { label: 'Florida Panhandle HOA Management', path: '/hoa-management/florida',                     review: true },
+  { label: 'Louisiana HOA Management',       path: '/hoa-management/louisiana',                     review: false },
+  { label: 'Texas HOA Management',           path: '/hoa-management/texas',                         review: false },
+  { label: 'Mississippi HOA Management',     path: '/hoa-management/mississippi',                   review: false },
+  { label: 'Alabama HOA Management',         path: '/hoa-management/alabama',                       review: false },
+  { label: 'Florida Panhandle HOA Management', path: '/hoa-management/florida',                     review: false },
+
+  // City pages — next review batch
+  { label: 'Baton Rouge HOA Management (LA)', path: '/hoa-management/louisiana/baton-rouge',          review: false },
+  { label: 'Lafayette HOA Management (LA)',   path: '/hoa-management/louisiana/lafayette',            review: false },
+  { label: 'Shreveport HOA Management (LA)',  path: '/hoa-management/louisiana/shreveport',           review: false },
+  { label: 'Daphne HOA Management (AL)',      path: '/hoa-management/alabama/daphne',                 review: false },
+  { label: 'Biloxi HOA Management (MS)',      path: '/hoa-management/mississippi/biloxi',             review: false },
+
+  // State HOA Law pages — NEW, up for review
+  { label: 'Alabama HOA Laws',               path: '/resources/hoa-laws/alabama',                   review: true },
+  { label: 'Louisiana HOA Laws',             path: '/resources/hoa-laws/louisiana',                 review: true },
+  { label: 'Mississippi HOA Laws',           path: '/resources/hoa-laws/mississippi',               review: true },
+  { label: 'Texas HOA Laws',                 path: '/resources/hoa-laws/texas',                     review: true },
+  { label: 'Florida HOA Laws',               path: '/resources/hoa-laws/florida',                   review: true },
 
   // Resources & guides
-  { label: 'Resources Hub',                  path: '/resources',                                    review: true },
-  { label: 'Hurricane Preparedness',         path: '/resources/hurricane-preparedness-for-hoas',    review: true },
-  { label: 'HOA Reserve Study',              path: '/resources/hoa-reserve-study',                  review: true },
-  { label: 'HOA Budget Template',            path: '/resources/hoa-budget-template',                review: true },
-  { label: 'HOA Rules Enforcement',          path: '/resources/hoa-rules-enforcement',              review: true },
-  { label: 'FAQ',                            path: '/faq',                                          review: true },
+  { label: 'HOA Special Assessments',        path: '/resources/hoa-special-assessments',            review: true },
+  { label: 'Resources Hub',                  path: '/resources',                                    review: false },
+  { label: 'Hurricane Preparedness',         path: '/resources/hurricane-preparedness-for-hoas',    review: false },
+  { label: 'HOA Reserve Study',              path: '/resources/hoa-reserve-study',                  review: false },
+  { label: 'HOA Budget Template',            path: '/resources/hoa-budget-template',                review: false },
+  { label: 'HOA Rules Enforcement',          path: '/resources/hoa-rules-enforcement',              review: false },
+  { label: 'FAQ',                            path: '/faq',                                          review: false },
 
   // Company
-  { label: 'About CMGT',                     path: '/about',                                        review: true },
-  { label: 'CMGT Cares',                     path: '/about/cmgt-cares',                             review: true },
-  { label: 'Team & Careers',                 path: '/about/team-careers',                           review: true },
-  { label: 'Our Story',                      path: '/our-story',                                    review: true },
-  { label: 'How We Work',                    path: '/how-we-work',                                  review: true },
-  { label: 'Testimonials',                   path: '/testimonials',                                 review: true },
-  { label: 'The Fix-It Squad',               path: '/fix-it-squad',                                 review: true },
-  { label: 'Request a Proposal',             path: '/request-a-proposal',                           review: true },
-  { label: 'Log In (Account Hub)',           path: '/login',                                        review: true },
+  { label: 'About CMGT',                     path: '/about',                                        review: false },
+  { label: 'CMGT Cares',                     path: '/about/cmgt-cares',                             review: false },
+  { label: 'Team & Careers',                 path: '/about/team-careers',                           review: false },
+  { label: 'Our Story',                      path: '/our-story',                                    review: false },
+  { label: 'How We Work',                    path: '/how-we-work',                                  review: false },
+  { label: 'Testimonials',                   path: '/testimonials',                                 review: false },
+  { label: 'The Fix-It Squad',               path: '/fix-it-squad',                                 review: false },
+  { label: 'Request a Proposal',             path: '/request-a-proposal',                           review: false },
+  { label: 'Log In (Account Hub)',           path: '/login',                                        review: false },
 
   // Legal
-  { label: 'Privacy Policy',                 path: '/privacy',                                      review: true },
-  { label: 'Terms of Service',               path: '/terms',                                        review: true },
-  { label: 'Cookie Policy',                  path: '/cookies',                                      review: true },
+  { label: 'Privacy Policy',                 path: '/privacy',                                      review: false },
+  { label: 'Terms of Service',               path: '/terms',                                        review: false },
+  { label: 'Cookie Policy',                  path: '/cookies',                                      review: false },
 ];
