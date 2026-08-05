@@ -1,0 +1,239 @@
+---
+/**
+ * StateLaw.astro — layout for the state HOA law reference pages.
+ *
+ * One page per state (AL, LA, MS, TX, FL), each the same nine sections in the same
+ * order, so the structure lives here and only copy lives in the pages. Per the
+ * handoff this layout contains no state name anywhere: the sibling grid is built
+ * from src/data/state-law-links.ts, and every piece of state-specific text arrives
+ * as a prop or a slot. A CI-style assertion for that lives in the page's tests.
+ *
+ * Content-led, not conversion-led: no imagery, one soft CTA at the end.
+ */
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { siblingsOf } from '~/data/state-law-links';
+
+export interface Props {
+  /** State display name, e.g. for the hero eyebrow. */
+  state: string;
+  /** Slug of this state, used to exclude it from the sibling grid. */
+  stateSlug: string;
+  title: string;
+  description: string;
+  /** Page H1. */
+  headline: string;
+  /** Hero standfirst. */
+  lede: string;
+  /** Human-readable review date, e.g. "August 1, 2026". */
+  reviewedDate: string;
+  /** Legislative session the content is current through. */
+  sessionThrough: string;
+  /** Jump-rail entries; `id` must match the id on that section's h2. */
+  jumpSections: { id: string; label: string }[];
+  /** Visible breadcrumb trail. Three levels — the cluster hub is not built yet. */
+  crumbs: { t: string; href?: string }[];
+  pageSchema: Record<string, unknown>[];
+}
+
+const {
+  state, stateSlug, title, description, headline, lede,
+  reviewedDate, sessionThrough, jumpSections, crumbs, pageSchema,
+} = Astro.props;
+
+const siblings = siblingsOf(stateSlug);
+---
+<BaseLayout title={title} description={description} ogType="article" pageSchema={pageSchema}>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs={JSON.stringify(crumbs)}></nav>
+
+  <article>
+    <header class="law-hero" data-screen-label={`${state} HOA laws — Hero`}>
+      <div class="container law-hero-in">
+        <div class="law-cat">Board Education · {state}</div>
+        <h1 class="law-h1">{headline}</h1>
+        <p class="law-lede">{lede}</p>
+        <div class="law-meta">
+          <span>Reviewed <b>{reviewedDate}</b></span><span class="sep"></span>
+          <span>Current through the {sessionThrough}</span><span class="sep"></span>
+          <span>Reviewed annually</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sticky jump rail. Docks below the header at 74px/64px and only rises to 0
+         when the header is actually translating away. Keep z-index 40 (the header is
+         60) and keep `top` untransitioned — a transition fought the header's
+         transform and lagged the edge. -->
+    <nav class="law-jump" aria-label="Jump to section">
+      <div class="container">
+        <ul>
+          {jumpSections.map((s) => (
+            <li><a href={`#${s.id}`}>{s.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+
+    <div class="law-body">
+      <div class="container law-wrap">
+        <slot name="take" />
+        <slot name="changed" />
+        <slot name="quick" />
+        <slot name="rules" />
+        <slot name="history" />
+        <slot name="faq" />
+        <slot name="maintained" />
+        <slot name="sources" />
+        <slot name="siblings" />
+        <div class="law-states">
+          {siblings.map((s) => (
+            <a class="law-state" href={s.href}><span>{s.name}</span><span>→</span></a>
+          ))}
+        </div>
+        <!-- Quiet italic footnote, below the content and above the CTA. It was
+             rejected as a loud badge band under the hero; it must not become a
+             callout box and must not move above the fold. -->
+        <slot name="disclaimer" />
+      </div>
+    </div>
+  </article>
+
+  <section class="law-cta" data-screen-label="CTA">
+    <div class="container law-cta-in">
+      <div>
+        <h2 class="law-cta-h">Want this handled for you?</h2>
+        <p class="law-cta-p">A real person will walk through what applies to your community — within two business days.</p>
+      </div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+
+<!--
+  is:global is required, not stylistic.
+
+  This layout owns the .law-* styles but the page supplies the body through slots,
+  and slot content is authored in the page — so Astro's scoped selectors, which are
+  rewritten to match this layout's data-astro-cid, never match any slotted element.
+  Scoped, the entire body renders unstyled: .law-h2 falls back to the browser's
+  default 24px, .law-take loses its panel, .law-rule loses its border, and the
+  disclaimer stops being italic, which the handoff makes a hard requirement.
+
+  Global is safe here because every selector in the block is .law-* prefixed, and it
+  keeps the CSS in one place for the four state pages still to come.
+-->
+<style is:global>
+body { background: #fff; }
+    /* ── Hero ─────────────────────────────────────────── */
+    .law-hero { background: var(--freedom-blue); color: #fff; padding: 76px 0 66px; position: relative; overflow: hidden; isolation: isolate; }
+    .law-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 88% 12%, rgba(141,189,255,.16) 0%, transparent 58%); z-index: 0; pointer-events: none; }
+    .law-hero-in { position: relative; z-index: 2; max-width: 780px; }
+    .law-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+    .law-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -.025em; color: #fff; margin: 16px 0 20px; text-wrap: balance; }
+    .law-lede { font-size: clamp(17px, 1.9vw, 20px); line-height: 1.6; color: rgba(255,255,255,.88); margin: 0 0 26px; text-wrap: pretty; }
+    .law-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 13.5px; color: rgba(255,255,255,.62); }
+    .law-meta b { color: rgba(255,255,255,.9); font-weight: 600; }
+    .law-meta .sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.35); }
+    /* ── Jump rail ────────────────────────────────────── */
+    .law-jump { position: sticky; top: 74px; z-index: 40; background: rgba(255,255,255,.97); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hairline); }
+    @media (max-width: 980px) { .law-jump { top: 64px; } }
+    @media (prefers-reduced-motion: no-preference) {
+      body:has(.nav-main.is-hidden) .law-jump { top: 0; }
+      @media (max-width: 980px) { body:has(.nav-main.is-hidden) .law-jump { top: 0; } }
+    }
+    .law-jump ul { display: flex; justify-content: center; gap: 30px; overflow-x: auto; list-style: none; margin: 0; padding: 16px 0 15px; -webkit-overflow-scrolling: touch; }
+    .law-jump li { flex: none; }
+    .law-jump a { display: block; font-size: 14px; font-weight: 600; color: var(--ink-500); text-decoration: none; white-space: nowrap; padding-bottom: 3px; border-bottom: 2px solid transparent; transition: color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out); }
+    .law-jump a:hover { color: var(--freedom-blue); border-bottom-color: var(--landscaping-green); }
+    /* ── Body ─────────────────────────────────────────── */
+    .law-body { padding: 66px 0 96px; }
+    .law-wrap { max-width: 800px; }
+    .law-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(25px, 2.9vw, 34px); line-height: 1.15; letter-spacing: -.018em; color: var(--freedom-blue); margin: 68px 0 12px; scroll-margin-top: 130px; text-wrap: balance; }
+    .law-h2:first-child { margin-top: 0; }
+    .law-sub { font-size: 16.5px; line-height: 1.65; color: var(--ink-500); margin: 0 0 28px; max-width: 68ch; text-wrap: pretty; }
+    .law-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+    .law-p strong { color: var(--freedom-blue); font-weight: 600; }
+    .law-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+    .law-wrap a:hover { border-bottom-color: var(--landscaping-green); }
+    /* ── What changed ─────────────────────────────────── */
+    .law-changes { border-top: 1.5px solid var(--hairline-strong); }
+    .law-change { display: grid; grid-template-columns: 128px 1fr; gap: 0 26px; align-items: start; padding: 26px 2px; border-bottom: 1.5px solid var(--hairline-strong); }
+    @media (max-width: 600px) { .law-change { grid-template-columns: 1fr; gap: 10px; } }
+    .law-when { display: flex; flex-direction: column; gap: 5px; }
+    @media (max-width: 600px) { .law-when { flex-direction: row; align-items: baseline; gap: 10px; } }
+    .law-when .yr { font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1; color: var(--freedom-blue); }
+    .law-when .st { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-400); }
+    .law-when .st.on { color: var(--landscaping-green); }
+    .law-change h3 { font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; color: var(--freedom-blue); margin: 0 0 7px; }
+    .law-change p { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+    /* ── Pull statement ───────────────────────────────── */
+    .law-take { background: var(--fb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 12px 12px 0; padding: 26px 30px; margin: 0 0 46px; }
+    .law-take-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); opacity: .6; margin: 0 0 9px; }
+    .law-take p { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0; }
+    .law-note { margin: 0 0 22px; font-size: 15.5px; line-height: 1.7; color: var(--ink-500); }
+    .law-note strong { color: var(--freedom-blue); font-weight: 600; }
+    .law-table-wrap { overflow-x: auto; border: 1.5px solid var(--hairline-strong); border-radius: 14px; }
+    .law-table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 640px; }
+    .law-table thead th { background: var(--freedom-blue); color: #fff; text-align: left; padding: 13px 18px; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .law-table td { padding: 14px 18px; border-top: 1px solid var(--hairline); vertical-align: top; line-height: 1.6; color: var(--ink-700); }
+    .law-table tbody tr:nth-child(even) td { background: var(--nb-lightest); }
+    .law-table td.q { font-weight: 600; color: var(--freedom-blue); width: 36%; }
+    .law-cite { font-family: var(--font-body); font-size: 12.5px; font-weight: 600; letter-spacing: .01em; color: var(--ink-400); white-space: nowrap; display: inline-block; }
+    /* ── Rule rows ────────────────────────────────────── */
+    .law-rules { border-top: 1.5px solid var(--hairline-strong); }
+    details.law-rule { border-bottom: 1.5px solid var(--hairline-strong); }
+    details.law-rule summary { list-style: none; cursor: pointer; padding: 26px 2px; display: grid; grid-template-columns: 1fr 26px; gap: 20px; align-items: start; }
+    details.law-rule summary::-webkit-details-marker { display: none; }
+    details.law-rule summary:focus-visible { outline: 2px solid var(--freedom-blue); outline-offset: -3px; }
+    .law-rule h3 { font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.25; color: var(--freedom-blue); margin: 0 0 8px; }
+    .law-rule .answer { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); margin: 0 0 10px; }
+    .law-sign { flex: none; width: 26px; height: 26px; position: relative; margin-top: 3px; }
+    .law-sign::before, .law-sign::after { content: ""; position: absolute; background: var(--landscaping-green); border-radius: 2px; transition: transform var(--dur-base) var(--ease-out); }
+    .law-sign::before { left: 0; right: 0; top: 12px; height: 2.5px; }
+    .law-sign::after { top: 0; bottom: 0; left: 12px; width: 2.5px; }
+    details.law-rule[open] .law-sign::after { transform: rotate(90deg); }
+    .law-rule-bd { padding: 4px 2px 28px; max-width: 740px; }
+    .law-rule-bd p { font-size: 16px; line-height: 1.75; color: var(--ink-700); margin: 0 0 16px; }
+    .law-rule-bd p:last-child { margin-bottom: 0; }
+    .law-rule-bd p strong { color: var(--freedom-blue); font-weight: 600; }
+    /* ── Session record ───────────────────────────────── */
+    details.law-session { border-bottom: 1.5px solid var(--hairline-strong); }
+    .law-sessions { border-top: 1.5px solid var(--hairline-strong); }
+    details.law-session summary { list-style: none; cursor: pointer; padding: 24px 2px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); }
+    details.law-session summary::-webkit-details-marker { display: none; }
+    details.law-session summary:focus-visible { outline: 2px solid var(--freedom-blue); outline-offset: -3px; }
+    .law-session-meta { font-family: var(--font-body); font-weight: 500; font-size: 13.5px; color: var(--ink-400); margin-left: auto; }
+    .law-session-bd { padding: 0 2px 26px; max-width: 740px; }
+    .law-session-bd h4 { font-family: var(--font-display); font-weight: 700; font-size: 16.5px; line-height: 1.4; color: var(--freedom-blue); margin: 0 0 8px; }
+    .law-session-bd p { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); margin: 0 0 12px; }
+    .law-session-bd p:last-child { margin-bottom: 0; }
+    /* ── FAQ ──────────────────────────────────────────── */
+    .law-faq { border-top: 1px solid var(--hairline); padding: 24px 0; }
+    .law-faq:last-of-type { border-bottom: 1px solid var(--hairline); }
+    .law-faq h3 { font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; color: var(--freedom-blue); margin: 0 0 8px; }
+    .law-faq p { font-size: 16px; line-height: 1.7; color: var(--ink-700); margin: 0; }
+    /* ── Sources + disclaimer ─────────────────────────── */
+    .law-sources { background: var(--nb-lightest); border-radius: 18px; padding: 28px 34px; margin-top: 40px; }
+    .law-sources h3 { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); margin: 0 0 14px; }
+    .law-sources ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+    .law-sources li { font-size: 14.5px; line-height: 1.6; color: var(--ink-500); padding-left: 18px; position: relative; }
+    .law-sources li::before { content: ""; position: absolute; left: 0; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: var(--landscaping-green); }
+    .law-disclaimer { font-size: 13.5px; line-height: 1.7; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 22px; margin: 52px 0 0; font-style: italic; }
+    .law-disclaimer strong { font-style: normal; color: var(--ink-500); font-weight: 600; }
+    /* ── Sibling states ───────────────────────────────── */
+    .law-states { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .law-state { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #fff; border: 1.5px solid var(--hairline); border-radius: 14px; padding: 20px 22px; text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+    .law-state:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
+    .law-state span:last-child { color: var(--landscaping-green); }
+    /* ── CTA ──────────────────────────────────────────── */
+    .law-cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }
+    .law-cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+    .law-cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+    .law-cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+
+/* Port fix: the design was authored against its own standalone shared.css. On the
+   green CTA band the global `.btn-blue` here inherits the section's blue text
+   colour and goes invisible against its own background, so restore the intended
+   treatment explicitly rather than relying on cascade order. */
+.law-cta .btn-blue { background: var(--freedom-blue); color: #fff; }
+.law-cta .btn-blue:hover { background: var(--ink-700); color: #fff; }
+</style>
+</BaseLayout>
