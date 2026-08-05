@@ -13,6 +13,8 @@
 //   ZENDESK_API_TOKEN        -  Zendesk API token
 // The ticket ID travels with the submission (baked into review.ts at deploy time).
 
+export const prerender = false; // API routes must run on-demand (hybrid prerenders them by default)
+
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { SITE } from '../../config/site.ts';
