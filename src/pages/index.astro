@@ -3,22 +3,14 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
 import ImageSlot from '~/components/ImageSlot.astro';
 
-const orgSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "CMGT",
-  "url": `${SITE.url}/`,
-  "logo": `${SITE.url}/assets/logo-full-color.svg`,
-  "description": "Gulf South HOA, condo, and community association management. Independently owned since 2007.",
-  "telephone": "+1-225-503-2648",
-  "areaServed": ["Louisiana", "Texas", "Mississippi", "Alabama", "Florida Panhandle"],
-  "sameAs": [],
-};
+// No Organization schema here. BaseLayout emits the canonical company node with a
+// stable @id on every page; a second Organization block on this page produced two
+// unlinked company entities. Its five-state areaServed, the one thing it had that
+// the shared node lacked, moved into SITE.org.
 ---
 <BaseLayout
   title="HOA & Community Association Management, Gulf South — CMGT"
   description="Team-based HOA, condo & community association management across Louisiana, Mississippi, Alabama & Texas. 389 communities. We Manage. You Live."
-  pageSchema={orgSchema}
 >
 
   <!-- HERO -->

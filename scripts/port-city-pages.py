@@ -348,14 +348,12 @@ for key, rec in data.items():
                        'https://cmgt.org' + PHOTOS['team'][0]]
         # Ties the five listings together as branches of one company instead of five
         # unrelated businesses that happen to share a name.
-        # Deliberately no @id here. site.ts already emits a site-wide LocalBusiness on
-        # every page (name "CMGT", url https://cmgt.org) and that node carries no @id,
-        # so any @id written here would be a dangling reference that resolves to nothing
-        # — worse than none. name+url is valid and Google reconciles on the url.
+        # References the site-wide Organization node emitted by BaseLayout. That node
+        # carries this exact @id, so the reference resolves — the six offices read as
+        # branches of one company. If the @id in BaseLayout changes, change it here too.
         lb['parentOrganization'] = {
             '@type': 'Organization',
-            'name': 'CMGT',
-            'url': 'https://cmgt.org',
+            '@id': 'https://cmgt.org/#organization',
         }
         lb['priceRange'] = '$$'
         # Reuse the page's own meta description rather than inventing a second one.
