@@ -107,7 +107,7 @@ const PORTALS = {
       <div class="lh-head">
         <div class="eyebrow eyebrow-green">Coming soon</div>
         <h2 class="lh-h2">Learning &amp; resources.</h2>
-        <p class="lh-sub">We're building a library of training and guides — right here, alongside your account. Board education, owner how-tos, and resident basics, all in one place.</p>
+        <p class="lh-sub">We're building a library of training and guides — right here, alongside your account. Board education and homeowner how-tos, all in one place.</p>
       </div>
 
       <div class="lh-res-grid">
@@ -118,14 +118,10 @@ const PORTALS = {
         </div>
         <div class="lh-res-card">
           <span class="lh-soon">Coming soon</span>
-          <h3 class="lh-res-t">Owner Guides</h3>
-          <p class="lh-res-d">Plain-language how-tos for homeowners and rental owners — dues, documents, requests, and what to expect.</p>
+          <h3 class="lh-res-t">Homeowner Guides</h3>
+          <p class="lh-res-d">Plain-language how-tos for homeowners — dues, documents, architectural requests, and what to expect from your association.</p>
         </div>
-        <div class="lh-res-card">
-          <span class="lh-soon">Coming soon</span>
-          <h3 class="lh-res-t">Resident Basics</h3>
-          <p class="lh-res-d">Quick answers for renters and residents — paying rent, submitting requests, and getting help fast.</p>
-        </div>
+
       </div>
     </div>
   </section>
@@ -224,7 +220,14 @@ const PORTALS = {
   .lh-action-ar { color: var(--landscaping-green); font-size: 18px; font-weight: 700; }
 
   /* LEARNING & RESOURCES */
-  .lh-res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  /* Two cards, not three: the third was written for an audience this page no longer
+   serves. They split the row rather than sitting at a third each with a gap where
+   the third used to be.
+
+   Keep explanatory notes in this style block, not in HTML comments — Astro emits
+   body comments to the browser, so a note describing removed copy would ship the
+   very wording that was removed. */
+.lh-res-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
   @media (max-width: 900px) { .lh-res-grid { grid-template-columns: 1fr; } }
   .lh-res-card { position: relative; background: var(--nb-lightest); border: 1.5px dashed var(--hairline-strong); border-radius: 16px; padding: 28px 26px; }
   .lh-soon { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--landscaping-green); background: rgba(74,207,108,.12); padding: 4px 11px; border-radius: 999px; margin-bottom: 14px; }
