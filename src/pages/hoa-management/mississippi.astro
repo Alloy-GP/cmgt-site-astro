@@ -59,7 +59,7 @@ const breadcrumb = breadcrumbSchema([
       <div class="eyebrow eyebrow-blue reveal">Where we work in Mississippi</div>
       <h2 class="geo-cities-h reveal">Communities along the coast.</h2>
       <p class="geo-cities-sub reveal">A snapshot of the Gulf Coast markets our teams serve — and we’re always growing.</p>
-      <div class="geo-chips reveal"><a class="geo-chip" href="#">Gulfport</a><a class="geo-chip" href="/hoa-management/mississippi/biloxi">Biloxi</a><a class="geo-chip" href="#">Bay St. Louis</a><a class="geo-chip" href="#">Ocean Springs</a></div>
+      <div class="geo-chips reveal"><span class="geo-chip geo-chip-static">Gulfport</span><a class="geo-chip" href="/hoa-management/mississippi/biloxi">Biloxi</a><span class="geo-chip geo-chip-static">Bay St. Louis</span><span class="geo-chip geo-chip-static">Ocean Springs</span></div>
     </div>
   </section>
 
@@ -219,8 +219,13 @@ const breadcrumb = breadcrumbSchema([
   .geo-cities-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
   .geo-cities-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0 0 36px; max-width: 600px; }
   .geo-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+  /* Chips for markets with no page of their own. Same pill, but not a link:
+   they were <a href="#">, which looks clickable, moves focus and jumps to the
+   top of the page when activated. Rendered as spans until those markets get
+   real pages, at which point they become <a class="geo-chip"> again. */
+  .geo-chip-static { cursor: default; }
   .geo-chip { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 999px; padding: 12px 22px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
-  .geo-chip:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
+  a.geo-chip:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
 
   .geo-why { background: #fff; padding: 104px 0; }
   .geo-why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
