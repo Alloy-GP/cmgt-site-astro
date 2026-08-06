@@ -142,23 +142,6 @@ const breadcrumb = breadcrumbSchema([
     </div>
   </section>
 
-  <!-- Dedicated law-page callout. The hub links down into the law page and the law
-       page links back up — that pairing is what builds topical authority on this hub,
-       which is the page that converts. Kept as a prominent band rather than one card
-       in the resource grid so a researching board actually sees it. -->
-  <section class="law-band">
-    <div class="container">
-      <div class="law-band-in reveal">
-        <div class="law-band-txt">
-          <div class="eyebrow eyebrow-green">Board reference</div>
-          <h2 class="law-band-h">Know the law before your next board meeting.</h2>
-          <p class="law-band-p">Our plain-English guide to the Alabama statutes that actually govern your community — whether the Homeowners' Association Act even reaches you, plus records, liens, fines, and what changed this session. Written for boards, not lawyers.</p>
-        </div>
-        <a class="btn btn-blue" href="/resources/hoa-laws/alabama">Read the Alabama HOA law reference <span class="arrow">→</span></a>
-      </div>
-    </div>
-  </section>
-
   <section class="sec sec-alt">
     <div class="container">
       <div class="sec-head reveal">
@@ -246,11 +229,5 @@ const breadcrumb = breadcrumbSchema([
   .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
 
   /* Law-page callout band */
-  .law-band { background: #fff; padding: 0 0 96px; }
-  .law-band-in { display: flex; align-items: center; justify-content: space-between; gap: 44px; flex-wrap: wrap; background: var(--nb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 20px 20px 0; padding: 40px 44px; }
-  .law-band-txt { max-width: 640px; }
-  .law-band-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(23px, 2.7vw, 32px); line-height: 1.14; letter-spacing: -.015em; color: var(--freedom-blue); margin: 12px 0 12px; text-wrap: balance; }
-  .law-band-p { font-size: 15.5px; line-height: 1.7; color: var(--ink-700); margin: 0; }
-  .law-band .btn { flex: none; }
   @media (max-width: 720px) { .law-band { padding: 0 0 64px; } .law-band-in { padding: 30px 26px; gap: 24px; } }
 </style>

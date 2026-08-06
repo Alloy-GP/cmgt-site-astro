@@ -48,14 +48,8 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Biloxi HOA Management (MS)',      path: '/hoa-management/mississippi/biloxi',             review: false },
 
   // State HOA Law pages — NEW, up for review
-  { label: 'Alabama HOA Laws',               path: '/resources/hoa-laws/alabama',                   review: true },
-  { label: 'Louisiana HOA Laws',             path: '/resources/hoa-laws/louisiana',                 review: true },
-  { label: 'Mississippi HOA Laws',           path: '/resources/hoa-laws/mississippi',               review: true },
-  { label: 'Texas HOA Laws',                 path: '/resources/hoa-laws/texas',                     review: true },
-  { label: 'Florida HOA Laws',               path: '/resources/hoa-laws/florida',                   review: true },
 
   // Resources & guides
-  { label: 'HOA Special Assessments',        path: '/resources/hoa-special-assessments',            review: true },
   { label: 'Resources Hub',                  path: '/resources',                                    review: false },
   { label: 'Hurricane Preparedness',         path: '/resources/hurricane-preparedness-for-hoas',    review: false },
   { label: 'HOA Reserve Study',              path: '/resources/hoa-reserve-study',                  review: false },
