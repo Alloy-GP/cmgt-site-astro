@@ -102,7 +102,7 @@ const PORTALS = {
   </section>
 
   <!-- LEARNING & RESOURCES (future) -->
-  <section class="lh-sec">
+  <section class="lh-sec lh-sec-divided">
     <div class="container">
       <div class="lh-head">
         <div class="eyebrow eyebrow-green">Coming soon</div>
@@ -156,6 +156,10 @@ const PORTALS = {
   /* SECTIONS */
   .lh-sec { background: #fff; padding: 96px 0; }
   .lh-sec-alt { background: var(--nb-lightest); }
+/* Both this section and the account section above it are #fff, so without a rule
+   they run together as one long block. Same treatment as the city pages use
+   between their two white sections. */
+.lh-sec-divided { border-top: 1px solid var(--hairline); }
   .lh-head { max-width: 680px; margin: 0 0 44px; }
   .lh-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 14px 0 12px; text-wrap: balance; }
   .lh-sub { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
