@@ -56,6 +56,20 @@ const breadcrumb = breadcrumbSchema([
               <span class="rn-portal-t">Resident Portal <span class="arrow">→</span></span>
             </span>
           </a>
+          <!-- Moved here from the homeowner hub. Fix-It Squad is a Baton Rouge rental
+               service, so this is the page whose audience actually uses it; HOA
+               homeowners raise requests through their community portal instead.
+               Spans the row rather than becoming a third column — at this hero width
+               three cards would squeeze each to about 165px. -->
+          <a class="rn-portal rn-portal--action" href={PORTALS.fixit} target="_blank" rel="noopener noreferrer">
+            <span class="rn-portal-ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1-5 5L4 17l3 3 5.7-5.7a4 4 0 0 0 5-5z"/></svg>
+            </span>
+            <span class="rn-portal-tx">
+              <span class="rn-portal-who">Baton Rouge · Fix-It Squad</span>
+              <span class="rn-portal-t">Submit a Maintenance Request <span class="arrow">→</span></span>
+            </span>
+          </a>
         </div>
         <p class="rn-hero-note">Looking to rent instead? <a href="/search-rentals">Browse available rentals →</a></p>
       </div>
@@ -187,6 +201,10 @@ const breadcrumb = breadcrumbSchema([
   .rn-portal:hover .rn-portal-t { color: var(--landscaping-green); }
   .rn-portal .arrow { transition: transform var(--dur-base) var(--ease-out); display: inline-block; }
   .rn-portal:hover .arrow { transform: translateX(3px); }
+  /* An action, not a portal login — spans the row and takes the neighborly-blue
+     accent so it reads as a different kind of thing from the two logins above it. */
+  .rn-portal--action { grid-column: 1 / -1; background: var(--nb-lightest); border-color: rgba(141,189,255,.62); }
+  .rn-portal--action .rn-portal-ic { background: rgba(141,189,255,.34); }
   .rn-hero-note { margin: 18px 0 0; font-size: 14.5px; color: var(--ink-500); }
   .rn-hero-note a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
   .rn-hero-note a:hover { border-bottom-color: var(--landscaping-green); }

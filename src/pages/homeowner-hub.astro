@@ -92,13 +92,9 @@ const PORTALS = {
             <span class="lh-action-ar">→</span>
           </a>
 
-          <a class="lh-action lh-action--fix" href={PORTALS.fixit} target="_blank" rel="noopener noreferrer">
-            <span class="lh-action-ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1-5 5L4 17l3 3 5.7-5.7a4 4 0 0 0 5-5z"/></svg>
-            </span>
-            <span class="lh-action-body"><span class="lh-action-t">Submit a Maintenance Request</span><span class="lh-action-d">Baton Rouge · Fix-It Squad</span></span>
-            <span class="lh-action-ar">→</span>
-          </a>
+          <!-- Submit a Maintenance Request moved to /rentals. Fix-It Squad is a
+               Baton Rouge rental service; HOA homeowners and boards raise requests
+               through the community portal above, not through it. -->
         </div>
       </div>
       <p class="lh-cross">Renting from us, or own a rental we manage? Your portals are on the <a href="/rentals">rental management page</a>.</p>
@@ -172,9 +168,16 @@ const PORTALS = {
 /* The actions column is capped, not 1fr. Left to fill the container it stretched to
    ~760px and opened a dead gap between each label and its arrow — the same wasted
    space the stacking was meant to remove, just moved. */
-.lh-two { display: grid; grid-template-columns: 380px minmax(0, 480px); gap: 28px; align-items: start; justify-content: start; }
+.lh-two { display: grid; grid-template-columns: 380px minmax(0, 480px); gap: 28px; align-items: stretch; justify-content: start; }
 @media (max-width: 900px) { .lh-two { grid-template-columns: 1fr; } }
-.lh-quick { display: flex; flex-direction: column; gap: 10px; }
+/* The two actions divide the card's height between them rather than sitting as
+   short rows with dead space beneath. Dropping the third action to /rentals left
+   the column noticeably shorter than the card; stretching is what keeps the row
+   reading as one balanced unit. Height is not forced on small screens, where the
+   columns stack and there is nothing to match. */
+.lh-quick { display: flex; flex-direction: column; gap: 12px; }
+.lh-quick .lh-action { flex: 1 1 0; }
+@media (max-width: 900px) { .lh-quick .lh-action { flex: 0 0 auto; } }
 .lh-quick-h { font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-400); margin: 2px 0 4px; }
 .lh-cross { margin: 26px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-500); }
 .lh-cross a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--landscaping-green); }
@@ -207,13 +210,13 @@ const PORTALS = {
 .lh-action--fix::before { background: var(--neighborly-blue); }
 .lh-action--fix .lh-action-ic { background: rgba(141,189,255,.34); }
   @media (max-width: 860px) {  }
-  .lh-action { display: flex; align-items: center; gap: 14px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 12px; padding: 14px 18px 14px 20px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .lh-action { display: flex; align-items: center; gap: 14px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 12px; padding: 16px 20px 16px 22px; text-decoration: none; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
   .lh-action:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
-  .lh-action-ic { flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px; background: var(--fb-lightest); color: var(--freedom-blue); display: flex; align-items: center; justify-content: center; }
-  .lh-action-ic svg { width: 21px; height: 21px; }
+  .lh-action-ic { flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; background: var(--fb-lightest); color: var(--freedom-blue); display: flex; align-items: center; justify-content: center; }
+  .lh-action-ic svg { width: 23px; height: 23px; }
   .lh-action-body { display: flex; flex-direction: column; flex-grow: 1; }
-  .lh-action-t { font-family: var(--font-display); font-weight: 700; font-size: 15.5px; color: var(--freedom-blue); line-height: 1.2; }
-  .lh-action-d { font-size: 12.5px; color: var(--ink-400); margin-top: 3px; }
+  .lh-action-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); line-height: 1.2; }
+  .lh-action-d { font-size: 13.5px; color: var(--ink-400); margin-top: 3px; }
   .lh-action-ar { color: var(--landscaping-green); font-size: 18px; font-weight: 700; }
 
   /* LEARNING & RESOURCES */
