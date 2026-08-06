@@ -102,7 +102,7 @@ export const EXTRA_INTENTS = [
     selfHelp: [
       { label: 'Pay dues', desc: 'Make a payment online', href: 'https://portal.cmgt.org/public', ext: true },
       { label: 'Order documents', desc: 'Resale & closing docs', href: orderDocsUrl(), ext: true },
-      { label: 'Log in to the portal', desc: 'Account, requests & documents', href: '/login' },
+      { label: 'Log in to the portal', desc: 'Account, requests & documents', href: '/homeowner-hub' },
     ],
     fields: [],
   },

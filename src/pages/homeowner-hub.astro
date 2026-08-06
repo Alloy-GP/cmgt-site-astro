@@ -3,7 +3,13 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import { orderDocsUrl } from '~/lib/order-docs';
 import { PORTALS as SHARED_PORTALS } from '~/config/portals';
 
-// MOCKUP — not linked from nav/footer yet. Deliberately noindex until finalized.
+// The homeowner hub — the single account-access destination in the header. It
+// replaced three separate utility links (Log In / Pay Dues / Order Documents),
+// which all landed somewhere inside this page anyway.
+//
+// Was /login and noindex while it was an unlinked mockup. Now that the header
+// points here it is indexable: a page linked from every page on the site should
+// not be telling Google to ignore it. Old URL 301s from astro.config.mjs.
 // External portal URLs live in src/config/portals.ts because /rentals deep-links
 // straight into the owner and tenant portals; keeping one copy stops the two pages
 // drifting apart. `docs` stays local — it is date-dependent, not a fixed URL.
@@ -13,11 +19,10 @@ const PORTALS = {
 };
 ---
 <BaseLayout
-  title="Log In & Account Access — CMGT"
+  title="Homeowner Hub — Log In & Account Access — CMGT"
   description="One place to log in and get things done — for CMGT homeowners, boards, rental owners, and tenants. Pay dues, manage your rental, order documents, or submit a maintenance request."
-  robots="noindex,nofollow"
 >
-  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Log In"}]'></nav>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Homeowner Hub"}]'></nav>
 
   <!-- HERO -->
   <section class="lh-hero">

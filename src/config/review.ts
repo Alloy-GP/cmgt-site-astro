@@ -72,7 +72,7 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Testimonials',                   path: '/testimonials',                                 review: false },
   { label: 'The Fix-It Squad',               path: '/fix-it-squad',                                 review: false },
   { label: 'Request a Proposal',             path: '/request-a-proposal',                           review: false },
-  { label: 'Log In (Account Hub)',           path: '/login',                                        review: false },
+  { label: 'Homeowner Hub',                  path: '/homeowner-hub',                                        review: false },
 
   // Legal
   { label: 'Privacy Policy',                 path: '/privacy',                                      review: false },

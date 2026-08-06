@@ -81,10 +81,13 @@ const NAV = [
   },
 ] as any[];
 
+// Log In / Pay Dues / Order Documents were three separate utility links that all
+// led into the same place — Pay Dues and Order Documents are quick actions on the
+// homeowner hub, and Log In was the hub itself. One labelled entry point states
+// who it is for, instead of making homeowners guess which of three doors is theirs.
+// Rental Management stays: it is a service page, not account access.
 const UTILITY = [
-  { t: 'Log In', href: '/login', hideSm: false },
-  { t: 'Pay Dues', href: 'https://portal.cmgt.org/public', ext: true, hideSm: false },
-  { t: 'Order Documents', href: ORDER_DOCS, ext: true, hideSm: true },
+  { t: 'HOA Homeowners & Boards', href: '/homeowner-hub', hideSm: false },
   { t: 'Rental Management', href: '/rentals', hideSm: true },
 ] as any[];
 ---

@@ -28,6 +28,12 @@ export default defineConfig({
   },
 
   redirects: {
+    // ── Account access consolidated onto the homeowner hub ─────────
+    // /login was the unlinked mockup URL. The header now carries a single
+    // "HOA Homeowners & Boards" entry pointing at /homeowner-hub, which
+    // replaced Log In / Pay Dues / Order Documents.
+    '/login': '/homeowner-hub',
+
     // ── Deleted pages (content pass) ──────────────────────────────
     '/resources/louisiana-hoa-laws': '/resources',
     '/louisiana-hoa-laws': '/resources',
