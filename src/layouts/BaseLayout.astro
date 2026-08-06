@@ -47,13 +47,21 @@ const {
 const canonicalUrl    = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
 const resolvedOgImage = new URL(ogImageProp ?? SITE.defaultOgImage, Astro.site ?? SITE.url).toString();
 
+// The company node, emitted on every page. The @id is what makes it addressable:
+// each city page's LocalBusiness references it as parentOrganization, so the six
+// offices resolve as branches of one company rather than six unrelated businesses
+// that happen to share a name. Anything referencing it must use this exact URI.
+//
+// description comes from SITE.org, not the page's own meta description — a node
+// with a fixed @id has to describe the same entity identically on every page.
 const orgLd = {
   '@context': 'https://schema.org',
   '@type': SITE.org.type,
+  '@id': SITE.url + '/#organization',
   name: SITE.name,
   url: SITE.url,
   logo: SITE.org.logo,
-  description,
+  description: SITE.org.description,
   address: {
     '@type': 'PostalAddress',
     addressLocality: SITE.org.addressLocality,
@@ -63,7 +71,6 @@ const orgLd = {
   telephone: SITE.org.telephone,
   email:     SITE.org.email,
   areaServed: SITE.org.areaServed,
-  priceRange: SITE.org.priceRange,
 };
 
 const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
