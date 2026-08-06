@@ -19,20 +19,23 @@ const PORTALS = {
 };
 ---
 <BaseLayout
-  title="Homeowner Hub — Log In & Account Access — CMGT"
-  description="One place to log in and get things done — for CMGT homeowners, boards, rental owners, and tenants. Pay dues, manage your rental, order documents, or submit a maintenance request."
+  title="Homeowner & Board Hub — CMGT"
+  description="One place for CMGT homeowners and board members. Pay dues, order documents, submit a maintenance request, reach your community's financials, and log in to your account."
 >
-  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Homeowner Hub"}]'></nav>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Homeowner &amp; Board Hub"}]'></nav>
 
   <!-- HERO -->
   <section class="lh-hero">
     <div class="container">
       <div class="lh-hero-in">
-        <div class="eyebrow">Account access</div>
-        <h1 class="lh-hero-h">Log in &amp; <em>get things done.</em></h1>
+        <!-- Framed as a hub, not a login screen. Logging in is one of several things
+             this page does — dues, documents, maintenance requests and, later, board
+             training all live here too, so the H1 should not narrow it to "log in". -->
+        <div class="eyebrow">Homeowners &amp; boards</div>
+        <h1 class="lh-hero-h">Dues, documents, <em>and everything else.</em></h1>
         <p class="lh-hero-p">
-          Pick the door that fits you. Whether you're a homeowner, a board member, a rental owner,
-          or a resident, your account and quick actions all live right here.
+          Everything homeowners and board members reach for — dues, documents, financials,
+          and requests — with your account and the quick actions all in one place.
         </p>
       </div>
     </div>
@@ -43,8 +46,8 @@ const PORTALS = {
     <div class="container">
       <div class="lh-head">
         <div class="eyebrow eyebrow-blue">Log in to your account</div>
-        <h2 class="lh-h2">Which one are you?</h2>
-        <p class="lh-sub">Each account lives with the team that runs it, so you land exactly where you need to be.</p>
+        <h2 class="lh-h2">Your community account.</h2>
+        <p class="lh-sub">Dues, documents, financials, and requests — all in one place, for homeowners and board members alike.</p>
       </div>
 
       <div class="lh-grid">
@@ -58,26 +61,13 @@ const PORTALS = {
           <a class="btn btn-blue" href={PORTALS.hoa} target="_blank" rel="noopener noreferrer">Log in <span class="arrow">→</span></a>
         </div>
 
-        <div class="lh-card">
-          <div class="lh-ic" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="4"/><path d="m10.8 10.8 8 8"/><path d="m16 15 2 2"/><path d="m18.5 12.5 2 2"/></svg>
-          </div>
-          <div class="lh-who">Rental owners <span class="lh-geo">· Baton Rouge</span></div>
-          <h3 class="lh-t">Owner Portal</h3>
-          <p class="lh-d">Landlords managing a CMGT-managed rental: statements, owner draws, work orders, and reports.</p>
-          <a class="btn btn-blue" href={PORTALS.owner} target="_blank" rel="noopener noreferrer">Log in <span class="arrow">→</span></a>
-        </div>
-
-        <div class="lh-card">
-          <div class="lh-ic" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>
-          </div>
-          <div class="lh-who">Tenants &amp; renters <span class="lh-geo">· Baton Rouge</span></div>
-          <h3 class="lh-t">Resident Portal</h3>
-          <p class="lh-d">Pay rent, submit maintenance requests, and manage your lease and account details.</p>
-          <a class="btn btn-blue" href={PORTALS.tenant} target="_blank" rel="noopener noreferrer">Log in <span class="arrow">→</span></a>
-        </div>
+        <!-- The Owner and Resident portal cards used to sit here. They are rental
+             products, Baton Rouge only, and this page is now the HOA homeowner and
+             board hub — so they live on /rentals instead, where that audience
+             already is. The link below is the way across for anyone who lands here
+             by mistake. -->
       </div>
+      <p class="lh-cross">Renting from us, or own a rental we manage? Your portals are on the <a href="/rentals">rental management page</a>.</p>
     </div>
   </section>
 
@@ -178,7 +168,13 @@ const PORTALS = {
   .lh-sub { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
 
   /* AUDIENCE LOGIN CARDS */
-  .lh-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  /* One card since the two rental portals moved to /rentals. Capped rather than
+   stretched full-bleed — a lone card spanning the container reads as a banner,
+   not a card. Still a grid so a second HOA-side portal can drop in later. */
+.lh-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 380px)); gap: 24px; }
+.lh-cross { margin: 26px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-500); }
+.lh-cross a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--landscaping-green); }
+.lh-cross a:hover { color: var(--landscaping-green); border-bottom-color: var(--freedom-blue); }
   @media (max-width: 900px) { .lh-grid { grid-template-columns: 1fr; } }
   .lh-card { display: flex; flex-direction: column; align-items: flex-start; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 16px; padding: 30px 28px; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
   .lh-card:hover { border-color: var(--landscaping-green); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(30,30,119,.09); }
