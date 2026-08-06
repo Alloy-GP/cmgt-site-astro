@@ -163,10 +163,11 @@ body { background: #fff; }
     .law-when .st { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-400); }
     .law-when .st.on { color: var(--landscaping-green); }
     /* Status vocabulary is shared across all five state pages: in force (green,
-       .on), effective on a future date (amber, .soon), died/vetoed (grey, the
-       default). Amber is the one colour outside the brand tokens, kept muted so it
-       reads as a status marker and not a warning. */
-    .law-when .st.soon { color: #9A5B0B; }
+       .on), effective on a future date (navy, .soon), died/vetoed (grey, the
+       default). All three are brand tokens — no new hex values. Navy rather than
+       --neighborly-blue for .soon: at 11px uppercase the light blue fails contrast
+       on white, and navy still reads as its own state against green and grey. */
+    .law-when .st.soon { color: var(--freedom-blue); }
     .law-change h3 { font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; color: var(--freedom-blue); margin: 0 0 7px; }
     .law-change p { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
     /* ── Pull statement ───────────────────────────────── */

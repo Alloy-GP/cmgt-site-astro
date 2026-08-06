@@ -1,15 +1,15 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { orderDocsUrl } from '~/lib/order-docs';
+import { PORTALS as SHARED_PORTALS } from '~/config/portals';
 
 // MOCKUP — not linked from nav/footer yet. Deliberately noindex until finalized.
-// External portal URLs are real so the client can see where each door leads.
+// External portal URLs live in src/config/portals.ts because /rentals deep-links
+// straight into the owner and tenant portals; keeping one copy stops the two pages
+// drifting apart. `docs` stays local — it is date-dependent, not a fixed URL.
 const PORTALS = {
-  hoa:     'https://portal.cmgt.org/public',
-  owner:   'https://app.propertyware.com/pw/index.html#/login/owner/cmgtproperties.org',
-  tenant:  'https://app.propertyware.com/pw/index.html#/login/tenant/cmgtproperties.org',
-  docs:    orderDocsUrl(), // flips HomeWiseDocs → CondoCerts on Aug 1, 2026
-  fixit:   'https://fixitsquad.org/',
+  ...SHARED_PORTALS,
+  docs: orderDocsUrl(), // flips HomeWiseDocs → CondoCerts on Aug 1, 2026
 };
 ---
 <BaseLayout
