@@ -5,11 +5,15 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
-import { sendWithAlert } from '~/lib/form-alert';
+import { sendWithAlert, notifySubmission, fieldsFromFormData } from '~/lib/form-alert';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 // Astro reads env via import.meta.env, so pass the Slack URL explicitly.
-const FORM_ALERT_SLACK_URL = import.meta.env.FORM_ALERT_SLACK_URL;
+// Slack destination. FORM_SLACK_WEBHOOK is this client's own channel and takes
+// precedence for BOTH submissions and failures; FORM_ALERT_SLACK_URL is the
+// shared fallback for clients without a channel of their own.
+const SLACK_WEBHOOK =
+  import.meta.env.FORM_SLACK_WEBHOOK || import.meta.env.FORM_ALERT_SLACK_URL;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -25,9 +29,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Internal notification
+    let notified = true;
     try {
       await sendWithAlert(
-        { client: EMAIL_CONFIG.brand.name, formName: 'Contact form — notification', slackWebhookUrl: FORM_ALERT_SLACK_URL },
+        { client: EMAIL_CONFIG.brand.name, formName: 'Contact form — notification', slackWebhookUrl: SLACK_WEBHOOK },
         () => resend.emails.send({
           from: EMAIL_CONFIG.from.notifications,
           to: EMAIL_CONFIG.notify,
@@ -44,13 +49,25 @@ export const POST: APIRoute = async ({ request }) => {
         })
       );
     } catch (err) {
+      notified = false;
       console.error('Resend notify error:', err);
     }
+
+    // Log the submission to the client's Slack channel. It posts even when the
+    // email failed — that message is then the only record of the enquiry.
+    await notifySubmission({
+      client: EMAIL_CONFIG.brand.name,
+      slackWebhookUrl: SLACK_WEBHOOK,
+      route: 'Contact form',
+      formName: `Contact form → ${[EMAIL_CONFIG.notify].flat().join(', ')}`,
+      delivered: notified,
+      fields: fieldsFromFormData(data),
+    });
 
     // Confirmation to sender
     try {
       await sendWithAlert(
-        { client: EMAIL_CONFIG.brand.name, formName: 'Contact form — confirmation', slackWebhookUrl: FORM_ALERT_SLACK_URL },
+        { client: EMAIL_CONFIG.brand.name, formName: 'Contact form — confirmation', slackWebhookUrl: SLACK_WEBHOOK },
         () => resend.emails.send({
           from: EMAIL_CONFIG.from.confirmations,
           to: email,

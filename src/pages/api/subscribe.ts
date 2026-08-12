@@ -4,7 +4,12 @@
 
 import type { APIRoute } from 'astro';
 import { EMAIL_CONFIG } from '~/lib/email.config';
+import { notifySubmission, fieldsFromFormData } from '~/lib/form-alert';
 import { upsertMailchimpContact } from '~/lib/mailchimp';
+
+// Slack destination — this client's own channel, then the shared fallback.
+const SLACK_WEBHOOK =
+  import.meta.env.FORM_SLACK_WEBHOOK || import.meta.env.FORM_ALERT_SLACK_URL;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -31,6 +36,17 @@ export const POST: APIRoute = async ({ request }) => {
       firstName,
       tags: EMAIL_CONFIG.mailchimp.subscribeTags ?? EMAIL_CONFIG.mailchimp.defaultTags,
       doubleOptIn: true,
+    });
+
+    // Log the sign-up to the client's Slack channel. Nobody is emailed about a
+    // newsletter opt-in on this route, so without this the only trace of it is a
+    // pending row in a Mailchimp audience.
+    await notifySubmission({
+      client: EMAIL_CONFIG.brand.name,
+      slackWebhookUrl: SLACK_WEBHOOK,
+      route: 'Newsletter sign-up',
+      formName: 'Mailchimp double opt-in — awaiting their confirmation',
+      fields: fieldsFromFormData(data),
     });
 
     // No welcome email is sent from here: Mailchimp owns the newsletter opt-in

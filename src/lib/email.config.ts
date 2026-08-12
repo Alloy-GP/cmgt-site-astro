@@ -9,6 +9,22 @@
 const IS_PROD = import.meta.env.PUBLIC_ENV === 'production';
 const NON_PROD_NOTIFY = ['skyler@alloygp.co']; // where stg/dev test leads go
 
+// ── Alloy's monitoring copy ──────────────────────────────────────────────
+// Alloy was cc'd on every staff notification and bcc'd on every confirmation,
+// so a shared inbox received a copy of everything this site produced. That copy
+// exists to keep an eye on the site, and the Slack channel does it better: it
+// carries the whole submission, and it puts no Alloy address on a thread with a
+// CMGT board, owner or vendor.
+//
+// So: empty once there is somewhere in Slack to log submissions, and unchanged
+// until then, so monitoring is never dropped silently. Non-prod is already
+// covered by NON_PROD_NOTIFY above.
+const ALLOY_MONITORING: string[] =
+  IS_PROD &&
+  !(import.meta.env.FORM_SLACK_WEBHOOK || import.meta.env.FORM_ALERT_SLACK_URL)
+    ? ['admin@alloygp.co']
+    : [];
+
 export const EMAIL_CONFIG = {
 
   // ── Client brand identity. Used in headings, signatures, and links. ──
@@ -33,18 +49,18 @@ export const EMAIL_CONFIG = {
   // ── Visible CC on the internal STAFF notification (every recipient there is
   // internal, so it's safe to show them). Prod only. This is the DEFAULT cc
   // fallback (Jeff + agency admin); per-intent overrides are below. ──
-  notifyCc: IS_PROD ? ['jharman@cmgt.org', 'admin@alloygp.co'] : [],
+  notifyCc: IS_PROD ? ['jharman@cmgt.org', ...ALLOY_MONITORING] : [],
 
   // ── Per-intent CC override. Vendor bids + general questions route to info@
   // and deliberately skip Jeff (they're not new-business); only the agency
   // admin stays cc'd for monitoring. Intents not listed fall back to notifyCc. ──
   notifyCcByIntent: (IS_PROD
     ? {
-        proposal: ['jharman@cmgt.org', 'admin@alloygp.co'],
-        rental:   ['admin@alloygp.co'], // rentals go to Chris Tremblay; Jeff not cc'd
-        vendor:   ['admin@alloygp.co'],
-        general:  ['admin@alloygp.co'],
-        resident: ['admin@alloygp.co'], // homeowner help — Jeff not cc'd
+        proposal: ['jharman@cmgt.org', ...ALLOY_MONITORING],
+        rental:   [...ALLOY_MONITORING], // rentals go to Chris Tremblay; Jeff not cc'd
+        vendor:   [...ALLOY_MONITORING],
+        general:  [...ALLOY_MONITORING],
+        resident: [...ALLOY_MONITORING], // homeowner help — Jeff not cc'd
       }
     : {}
   ) as Record<string, string[]>,
@@ -52,7 +68,7 @@ export const EMAIL_CONFIG = {
   // ── Hidden BCC (audit copy) on SUBMITTER-facing mail — the confirmation and
   // the newsletter welcome — so we never expose internal addresses to the public
   // submitter. Prod only. ──
-  bcc: IS_PROD ? ['admin@alloygp.co'] : [],
+  bcc: ALLOY_MONITORING,
 
   // ── Default inbox — used by unknown/unrouted intents (fallback). ──
   notify: IS_PROD ? ['newdevelopment@cmgt.org'] : NON_PROD_NOTIFY,
