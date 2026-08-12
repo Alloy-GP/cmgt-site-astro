@@ -1,18 +1,28 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Mississippi', url: SITE.url + '/hoa-management/mississippi' },
 ]);
+
+// The city pages under this state carry the GBP-matched LocalBusiness for each
+// office. A state page isn't a physical location, so it carries the Service
+// being offered and the state it's offered in.
+const service = serviceSchema({
+  name: 'HOA Management in Mississippi',
+  description: 'HOA management across Mississippi — full-service community association management with a specialist bench behind every community.',
+  url: SITE.url + '/hoa-management/mississippi',
+  areaServed: 'Mississippi',
+});
 ---
 <BaseLayout
   title="Mississippi Gulf Coast HOA Management, Local Teams — CMGT"
   description="Mississippi Gulf Coast HOA management — Gulfport, Biloxi, Bay St. Louis, and Ocean Springs. The first state CMGT ever expanded into. Full-service."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Mississippi"}]'></nav>
 

@@ -1,18 +1,28 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Texas', url: SITE.url + '/hoa-management/texas' },
 ]);
+
+// The city pages under this state carry the GBP-matched LocalBusiness for each
+// office. A state page isn't a physical location, so it carries the Service
+// being offered and the state it's offered in.
+const service = serviceSchema({
+  name: 'HOA Management in Texas',
+  description: 'HOA management across Texas — full-service community association management with financials shared openly with every homeowner.',
+  url: SITE.url + '/hoa-management/texas',
+  areaServed: 'Texas',
+});
 ---
 <BaseLayout
   title="Texas HOA Management — Local Teams, Growing Presence — CMGT"
   description="Texas HOA management with Gulf South roots and a local, team-based approach — a small, growing East Texas presence. Full-service, financials by the 20th."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Texas"}]'></nav>
 

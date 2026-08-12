@@ -1,18 +1,28 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Louisiana', url: SITE.url + '/hoa-management/louisiana' },
 ]);
+
+// The city pages under this state carry the GBP-matched LocalBusiness for each
+// office. A state page isn't a physical location, so it carries the Service
+// being offered and the state it's offered in.
+const service = serviceSchema({
+  name: 'HOA Management in Louisiana',
+  description: 'HOA management across Louisiana — full-service community association management from a specialist bench, with open financial reporting.',
+  url: SITE.url + '/hoa-management/louisiana',
+  areaServed: 'Louisiana',
+});
 ---
 <BaseLayout
   title="Louisiana HOA Management — Rooted Here Since 2007 — CMGT"
   description="Louisiana HOA management from a team that started here — 300+ communities across Baton Rouge, New Orleans, Lafayette and beyond. Local roots, statewide."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Louisiana"}]'></nav>
 
