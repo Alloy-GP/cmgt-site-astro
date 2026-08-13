@@ -25,6 +25,9 @@
   --ink-700: #444444;
   --ink-500: #666666;
   --ink-400: #888888;
+  /* Disabled/placeholder text. Cooler than the neutral ramp above on purpose —
+     this is the value the Resources library design uses for a "soon" pill. */
+  --ink-300: #A8AEBB;
   --hairline: #EEEEEE;
   --hairline-strong: #DDDDDD;
 
@@ -37,6 +40,9 @@
   --shadow-1: 0 1px 2px rgba(30, 30, 119, 0.06);
   --shadow-2: 0 4px 14px rgba(30, 30, 119, 0.08);
   --shadow-3: 0 18px 40px rgba(30, 30, 119, 0.14);
+  /* Lifted content card (Resources library). Wider spread than --shadow-2 at the
+     same 8% — freedom-blue, matching the rest of this scale. */
+  --shadow-card: 0 14px 34px rgba(30, 30, 119, 0.08);
 
   --max-w-page: 1240px;
 }

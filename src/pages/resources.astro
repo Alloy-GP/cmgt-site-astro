@@ -3,28 +3,27 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
 import { breadcrumbSchema, collectionPageSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
+import { GUIDES, PILLS, type TopicId } from '~/data/guides';
 
 const HUB_DESC = 'The CMGT Board Education Hub — plain-English guides on reserves, budgets, covenants, insurance, and Gulf South HOA law. No industry-speak, ever.';
+
+const total    = GUIDES.length;
+const labelFor = (id: TopicId) => PILLS.find((p) => p.id === id)!.label;
+const featured = GUIDES.find((g) => g.featured);
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Resources', url: SITE.url + '/resources' },
 ]);
 
-// Sitemap spec assigns CollectionPage to this hub. The ItemList has to list the
-// guides in the order a reader meets them — featured card first, then the
-// "Latest guides" rows — so keep it in step when a guide is added or reordered.
+// Sitemap spec assigns CollectionPage to this hub. Derived from GUIDES rather
+// than hand-listed so the ItemList can't drift from the cards on the page —
+// card order is the list order.
 const collection = collectionPageSchema({
   name: 'Board Education Hub',
   description: HUB_DESC,
   url: SITE.url + '/resources',
-  items: [
-    { name: 'HOA special assessments: what they are, and how boards avoid them', url: SITE.url + '/resources/hoa-special-assessments' },
-    { name: "HOA budget templates & best practices: a board's guide",            url: SITE.url + '/resources/hoa-budget-template' },
-    { name: 'HOA reserve studies: the complete board guide',                     url: SITE.url + '/resources/hoa-reserve-study' },
-    { name: 'Hurricane preparedness for Gulf South HOAs',                        url: SITE.url + '/resources/hurricane-preparedness-for-hoas' },
-    { name: "HOA rules enforcement & violations: what's fair for both sides",    url: SITE.url + '/resources/hoa-rules-enforcement' },
-  ],
+  items: GUIDES.map((g) => ({ name: g.title, url: SITE.url + g.slug })),
 });
 ---
 <BaseLayout
@@ -48,51 +47,69 @@ const collection = collectionPageSchema({
     </div>
   </section>
 
-  <!-- FEATURED -->
-  <section class="feat">
-    <div class="container">
-      <div class="feat-card reveal">
-        <div class="feat-body">
-          <span class="feat-tag">Featured guide</span>
-          <h2 class="feat-t">Special assessments, and how boards avoid them</h2>
-          <p class="feat-d">What a special assessment is, when a board can levy one, your options if you're facing one, and the planning that keeps them rare.</p>
-          <a class="btn btn-green feat-cta" href="/resources/hoa-special-assessments">Read the guide <span class="arrow">→</span></a>
+  <!-- FEATURED — the one guide carrying a `featured` block in src/data/guides.ts -->
+  {featured && (
+    <section class="feat">
+      <div class="container">
+        <div class="feat-card reveal">
+          <div class="feat-body">
+            <span class="feat-tag">Featured guide</span>
+            <h2 class="feat-t">{featured.title}</h2>
+            <p class="feat-d">{featured.featured!.dek}</p>
+            <a class="btn btn-green feat-cta" href={featured.slug}>Read the guide <span class="arrow">→</span></a>
+          </div>
+          <div class="feat-media">
+            <ImageSlot src={featured.featured!.image} alt={featured.featured!.alt} shape="rect" />
+          </div>
         </div>
-        <div class="feat-media">
-          <ImageSlot src="/photos/hoa-clubhouse-roof-replacement.webp" alt="Roof replacement underway on an HOA clubhouse" shape="rect" />
+      </div>
+    </section>
+  )}
+
+  <!-- LIBRARY — filters + guide cards -->
+  <section class="lib" data-screen-label="Latest guides">
+    <div class="container">
+      <div class="lib-head reveal">
+        <div>
+          <div class="eyebrow eyebrow-blue">Latest guides</div>
+          <h2 class="lib-h">Fresh from the press.</h2>
         </div>
+        <p class="lib-sub">Written for volunteer boards, not industry insiders. Filter by what your community is dealing with.</p>
       </div>
-    </div>
-  </section>
 
-  <!-- TOPICS -->
-  <section class="top">
-    <div class="container">
-      <div class="top-head reveal">
-        <div class="eyebrow eyebrow-blue">Browse by topic</div>
-        <h2 class="top-h">Start where your board needs help.</h2>
-        <p class="top-sub">Six topic areas, each a growing library of guides written for volunteers — not industry insiders.</p>
+      <div class="lib-filters reveal" id="lib-filters" role="group" aria-label="Filter guides by topic">
+        <button class="fpill" type="button" data-topic="all" aria-pressed="true">All guides <span class="n">{total}</span></button>
+        {PILLS.map((t) => (
+          <button
+            class="fpill"
+            type="button"
+            data-topic={t.id}
+            aria-pressed="false"
+            disabled={t.n === 0}
+            title={t.n === 0 ? 'Guides in the works' : undefined}
+          >
+            {t.label}
+            <span class="n">{t.n === 0 ? 'soon' : t.n}</span>
+          </button>
+        ))}
       </div>
-      <div class="top-grid">
-        <div class="top-card reveal"><div class="top-count">01</div><h3 class="top-t">Finances & Reserves</h3><p class="top-d">Budgets, reserve studies, dues, and delinquency — the money side, demystified.</p></div>
-        <div class="top-card reveal"><div class="top-count">02</div><h3 class="top-t">Governance & Meetings</h3><p class="top-d">Board roles, quorums, voting, and running meetings that don't run long.</p></div>
-        <div class="top-card reveal"><div class="top-count">03</div><h3 class="top-t">Covenants & Enforcement</h3><p class="top-d">Fair, consistent compliance and architectural review without the friction.</p></div>
-        <div class="top-card reveal"><div class="top-count">04</div><h3 class="top-t">Insurance & Risk</h3><p class="top-d">Coverage types, claims, and Gulf South storm realities every board should know.</p></div>
-        <div class="top-card reveal"><div class="top-count">05</div><h3 class="top-t">Vendors & Maintenance</h3><p class="top-d">Bidding, contracts, and keeping common areas in great shape.</p></div>
-        <div class="top-card reveal"><div class="top-count">06</div><h3 class="top-t">Choosing a Manager</h3><p class="top-d">Self-managed vs. professional, switching companies, and what to ask.</p></div>
-      </div>
-    </div>
-  </section>
+      <p class="lib-count" id="lib-count">Showing all {total} guides</p>
 
-  <!-- GUIDES -->
-  <section class="guides">
-    <div class="container">
-      <div class="eyebrow eyebrow-blue reveal">Latest guides</div>
-      <h2 class="guides-h reveal">Fresh from the hub.</h2>
-      <a class="guide reveal" href="/resources/hoa-budget-template"><span class="guide-cat">Finances</span><h3 class="guide-t">HOA budget templates & best practices: a board's guide</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
-      <a class="guide reveal" href="/resources/hoa-reserve-study"><span class="guide-cat">Finances</span><h3 class="guide-t">HOA reserve studies: the complete board guide</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
-      <a class="guide reveal" href="/resources/hurricane-preparedness-for-hoas"><span class="guide-cat">Insurance</span><h3 class="guide-t">Hurricane preparedness for Gulf South HOAs</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
-      <a class="guide reveal" href="/resources/hoa-rules-enforcement"><span class="guide-cat">Covenants</span><h3 class="guide-t">HOA rules enforcement & violations: what's fair for both sides</h3><span class="guide-read">Read <span class="arrow">→</span></span></a>
+      <div class="lib-grid" id="lib-grid">
+        {GUIDES.map((g) => (
+          <a class="post reveal" data-topic={g.topic} href={g.slug}>
+            <div class="post-thumb">
+              <span class="post-cat">{labelFor(g.topic)}</span>
+              <ImageSlot src={g.thumb} alt={g.alt} shape="rect" ratio="16 / 10" />
+            </div>
+            <div class="post-body">
+              <h3 class="post-t">{g.title}</h3>
+              <p class="post-d">{g.dek}</p>
+              <span class="post-read">Read the guide <span class="arrow">→</span></span>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -125,6 +142,37 @@ const collection = collectionPageSchema({
       </div>
     </div>
   </section>
+
+  <script>
+    // Guide-library filtering. Six cards, so this stays client-side — no router,
+    // no query params, no island. Revisit around 30 guides, when the library
+    // wants pagination and becomes a content collection.
+    const libWrap  = document.getElementById('lib-filters');
+    const libGrid  = document.getElementById('lib-grid');
+    const libCount = document.getElementById('lib-count');
+    if (libWrap && libGrid && libCount) {
+      const pills = [...libWrap.querySelectorAll('.fpill')] as HTMLButtonElement[];
+      const posts = [...libGrid.querySelectorAll('.post')] as HTMLElement[];
+      libWrap.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement).closest('.fpill') as HTMLButtonElement | null;
+        if (!btn || btn.disabled) return;
+        const topic = btn.dataset.topic;
+        let shown = 0;
+        pills.forEach((p) => p.setAttribute('aria-pressed', String(p === btn)));
+        posts.forEach((p) => {
+          const match = topic === 'all' || p.dataset.topic === topic;
+          p.hidden = !match;
+          // shared.js unobserves elements once revealed, so a card filtered out
+          // before it ever entered the viewport would come back at opacity 0.
+          if (match) { p.classList.add('is-visible'); shown++; }
+        });
+        const label = btn.textContent!.replace(/\s*(\d+|soon)\s*$/, '').trim();
+        libCount.textContent = topic === 'all'
+          ? `Showing all ${shown} guides`
+          : `Showing ${shown} ${shown === 1 ? 'guide' : 'guides'} in ${label}`;
+      });
+    }
+  </script>
 
   <script>
     (function () {
@@ -188,33 +236,38 @@ const collection = collectionPageSchema({
   .feat-cta { align-self: flex-start; position: relative; }
   .feat-media :global(.image-slot) { width: 100%; height: 100%; min-height: 320px; }
 
-  /* TOPICS */
-  .top { background: #fff; padding: 80px 0 40px; }
-  .top-head { max-width: 680px; margin: 0 0 48px; }
-  .top-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
-  .top-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; }
-  .top-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-  @media (max-width: 880px) { .top-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .top-grid { grid-template-columns: 1fr; } }
-  .top-card { border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 26px 26px; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
-  .top-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); }
-  .top-count { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 26px; color: var(--landscaping-green); }
-  .top-t { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); margin: 8px 0 8px; }
-  .top-d { font-size: 13.5px; line-height: 1.6; color: var(--ink-500); margin: 0; }
-
-  /* GUIDES LIST */
-  .guides { background: var(--nb-lightest); padding: 100px 0; }
-  .guides-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 8px; }
-  .guides-note { font-size: 13.5px; color: var(--ink-400); margin: 0 0 40px; }
-  .guide { display: grid; grid-template-columns: 84px 1fr auto; gap: 24px; align-items: center; padding: 24px 4px; border-top: 1.5px solid var(--hairline-strong); text-decoration: none; transition: border-color var(--dur-base) var(--ease-out); }
-  .guide:last-of-type { border-bottom: 1.5px solid var(--hairline-strong); }
-  .guide:hover { border-top-color: var(--landscaping-green); }
-  @media (max-width: 680px) { .guide { grid-template-columns: 60px 1fr; } .guide-read { display: none; } }
-  .guide-cat { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-400); }
-  .guide-t { font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.25; color: var(--freedom-blue); margin: 0; }
-  .guide-read { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 14px; color: var(--freedom-blue); white-space: nowrap; }
-  .guide-read .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
-  .guide:hover .guide-read .arrow { transform: translateX(4px); }
+  /* LIBRARY — filters + guide cards */
+  .lib { background: var(--nb-lightest); padding: 84px 0 100px; }
+  .lib-head { display: grid; grid-template-columns: 1fr auto; gap: 24px 48px; align-items: end; }
+  @media (max-width: 780px) { .lib-head { grid-template-columns: 1fr; align-items: start; } }
+  .lib-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 0; }
+  .lib-sub { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); margin: 0; max-width: 340px; }
+  .lib-filters { display: flex; flex-wrap: wrap; gap: 10px; margin: 34px 0 12px; padding: 0 0 26px; border-bottom: 1.5px solid var(--hairline-strong); }
+  .fpill { font-family: var(--font-body); font-size: 13.5px; font-weight: 600; color: var(--freedom-blue); background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 999px; padding: 9px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out); }
+  .fpill:hover:not([disabled]) { border-color: var(--landscaping-green); }
+  .fpill .n { font-size: 11.5px; font-weight: 700; color: var(--ink-400); }
+  .fpill[aria-pressed="true"] { background: var(--freedom-blue); border-color: var(--freedom-blue); color: #fff; }
+  .fpill[aria-pressed="true"] .n { color: rgba(255,255,255,.6); }
+  .fpill[disabled] { color: var(--ink-300); background: transparent; border-style: dashed; border-color: var(--hairline); cursor: not-allowed; }
+  .fpill[disabled] .n { color: var(--ink-300); font-weight: 600; font-style: italic; }
+  .lib-count { font-size: 13px; color: var(--ink-400); margin: 0 0 26px; }
+  .lib-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 26px; }
+  @media (max-width: 900px) { .lib-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 580px) { .lib-grid { grid-template-columns: 1fr; } }
+  .post { display: flex; flex-direction: column; text-decoration: none; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 16px; overflow: hidden; transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .post:hover { border-color: var(--landscaping-green); transform: translateY(-3px); box-shadow: var(--shadow-card); }
+  /* Reduced motion keeps the border/shadow affordance and drops the lift only. */
+  @media (prefers-reduced-motion: reduce) { .post:hover { transform: none; } }
+  .post-thumb { position: relative; aspect-ratio: 16 / 10; background: var(--nb-lightest); }
+  .post-thumb :global(.image-slot) { width: 100%; height: 100%; }
+  .post-cat { position: absolute; left: 12px; top: 12px; z-index: 2; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--freedom-blue); background: rgba(255,255,255,.94); border-radius: 999px; padding: 6px 11px; }
+  .post-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+  .post-t { font-family: var(--font-display); font-weight: 700; font-size: 19.5px; line-height: 1.22; color: var(--freedom-blue); margin: 0 0 9px; text-wrap: pretty; }
+  .post-d { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0 0 18px; }
+  .post-read { margin-top: auto; display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 13.5px; color: var(--freedom-blue); }
+  .post-read .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
+  .post:hover .post-read .arrow { transform: translateX(4px); }
+  .post[hidden] { display: none; }
 
   /* CTA */
   .cta { background: var(--freedom-blue); color: #fff; padding: 100px 0; position: relative; overflow: hidden; }
