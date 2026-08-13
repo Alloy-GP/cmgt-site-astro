@@ -47,7 +47,14 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Daphne HOA Management (AL)',      path: '/hoa-management/alabama/daphne',                 review: false },
   { label: 'Biloxi HOA Management (MS)',      path: '/hoa-management/mississippi/biloxi',             review: false },
 
-  // State HOA Law pages — NEW, up for review
+  // State HOA Law pages — staging only, still awaiting sign-off. These are the
+  // reason the widget renders at all right now; everything else on this list has
+  // shipped to production. Held back by ae232cb and deliberately not merged to main.
+  { label: 'Alabama HOA Laws',               path: '/resources/hoa-laws/alabama',                   review: true },
+  { label: 'Louisiana HOA Laws',             path: '/resources/hoa-laws/louisiana',                 review: true },
+  { label: 'Mississippi HOA Laws',           path: '/resources/hoa-laws/mississippi',               review: true },
+  { label: 'Texas HOA Laws',                 path: '/resources/hoa-laws/texas',                     review: true },
+  { label: 'Florida HOA Laws',               path: '/resources/hoa-laws/florida',                   review: true },
 
   // Resources & guides
   { label: 'HOA Special Assessments',        path: '/resources/hoa-special-assessments',            review: false },
