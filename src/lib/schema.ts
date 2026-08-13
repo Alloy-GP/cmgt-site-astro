@@ -123,20 +123,51 @@ export function articleSchema(opts: {
     '@type': 'Article',
     headline: opts.headline,
     description: opts.description,
+    url: opts.url,
     datePublished: opts.datePublished,
     dateModified: opts.dateModified ?? opts.datePublished,
-    author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
-    publisher: {
-      '@type': 'Organization',
-      name: SITE.name,
-      logo: { '@type': 'ImageObject', url: SITE.org.logo },
-    },
-    mainEntityOfPage: opts.url,
+    // Reference the Organization node BaseLayout already emits on every page
+    // instead of repeating name/logo inline. Two anonymous copies of the same
+    // company read as two entities; one @id resolves to one.
+    author:    { '@type': 'Organization', '@id': SITE.url + '/#organization' },
+    publisher: { '@type': 'Organization', '@id': SITE.url + '/#organization' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': opts.url },
     inLanguage: 'en-US',
     ...(opts.image ? { image: opts.image } : {}),
     ...(opts.about
       ? { about: opts.about.map((name) => ({ '@type': 'Thing', name })) }
       : {}),
+  };
+}
+
+// ── CollectionPage ────────────────────────────────────────────────────────────
+// Use on hub pages whose job is to list other pages (e.g. /resources).
+// items: the listed pages, in the order a reader meets them on the page.
+
+export function collectionPageSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+  items: Array<{ name: string; url: string }>;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    inLanguage: 'en-US',
+    publisher: { '@type': 'Organization', '@id': SITE.url + '/#organization' },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: opts.items.length,
+      itemListElement: opts.items.map((item, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: item.name,
+        url: item.url,
+      })),
+    },
   };
 }
 

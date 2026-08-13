@@ -1,18 +1,36 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, collectionPageSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
+
+const HUB_DESC = 'The CMGT Board Education Hub — plain-English guides on reserves, budgets, covenants, insurance, and Gulf South HOA law. No industry-speak, ever.';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Resources', url: SITE.url + '/resources' },
 ]);
+
+// Sitemap spec assigns CollectionPage to this hub. The ItemList has to list the
+// guides in the order a reader meets them — featured card first, then the
+// "Latest guides" rows — so keep it in step when a guide is added or reordered.
+const collection = collectionPageSchema({
+  name: 'Board Education Hub',
+  description: HUB_DESC,
+  url: SITE.url + '/resources',
+  items: [
+    { name: 'HOA special assessments: what they are, and how boards avoid them', url: SITE.url + '/resources/hoa-special-assessments' },
+    { name: "HOA budget templates & best practices: a board's guide",            url: SITE.url + '/resources/hoa-budget-template' },
+    { name: 'HOA reserve studies: the complete board guide',                     url: SITE.url + '/resources/hoa-reserve-study' },
+    { name: 'Hurricane preparedness for Gulf South HOAs',                        url: SITE.url + '/resources/hurricane-preparedness-for-hoas' },
+    { name: "HOA rules enforcement & violations: what's fair for both sides",    url: SITE.url + '/resources/hoa-rules-enforcement' },
+  ],
+});
 ---
 <BaseLayout
   title="Board Education Hub — CMGT | Resources for HOA Boards"
-  description="The CMGT Board Education Hub — plain-English guides on reserves, budgets, covenants, insurance, and Gulf South HOA law. No industry-speak, ever."
-  pageSchema={breadcrumb}
+  description={HUB_DESC}
+  pageSchema={[breadcrumb, collection]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources"}]'></nav>
 
@@ -27,6 +45,23 @@ const breadcrumb = breadcrumbSchema([
         Plain-language guides for volunteer leaders — reserves, budgets, covenants, insurance,
         and the Gulf South specifics. <strong>No industry-speak, no sales pitch.</strong>
       </p>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="feat">
+    <div class="container">
+      <div class="feat-card reveal">
+        <div class="feat-body">
+          <span class="feat-tag">Featured guide</span>
+          <h2 class="feat-t">Special assessments, and how boards avoid them</h2>
+          <p class="feat-d">What a special assessment is, when a board can levy one, your options if you're facing one, and the planning that keeps them rare.</p>
+          <a class="btn btn-green feat-cta" href="/resources/hoa-special-assessments">Read the guide <span class="arrow">→</span></a>
+        </div>
+        <div class="feat-media">
+          <ImageSlot src="/photos/hoa-clubhouse-roof-replacement.webp" alt="Roof replacement underway on an HOA clubhouse" shape="rect" />
+        </div>
+      </div>
     </div>
   </section>
 

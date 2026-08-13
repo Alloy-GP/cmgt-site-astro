@@ -50,6 +50,7 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   // State HOA Law pages — NEW, up for review
 
   // Resources & guides
+  { label: 'HOA Special Assessments',        path: '/resources/hoa-special-assessments',            review: false },
   { label: 'Resources Hub',                  path: '/resources',                                    review: false },
   { label: 'Hurricane Preparedness',         path: '/resources/hurricane-preparedness-for-hoas',    review: false },
   { label: 'HOA Reserve Study',              path: '/resources/hoa-reserve-study',                  review: false },
