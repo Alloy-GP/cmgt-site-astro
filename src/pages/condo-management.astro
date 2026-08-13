@@ -16,7 +16,7 @@ const condoService = {
   '@type': 'Service',
   serviceType: 'Condominium & Townhome Management',
   name: 'Condo Management',
-  provider: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  provider: { '@type': 'Organization', '@id': SITE.url + '/#organization' },
   areaServed: ['Louisiana', 'Mississippi', 'Alabama', 'Texas'].map((s) => ({ '@type': 'State', name: s })),
   description: 'Full-service condominium, townhome, and high-rise association management across the Gulf South — reserves, insurance monitoring, on-site teams, and storm planning for shared-building communities.',
 };
@@ -61,7 +61,7 @@ const faq = faqSchema([
       </div>
     </div>
     <div class="ph-hero-band">
-      <ImageSlot src="/photos/condo-hero-photo.webp" alt="A Gulf South condominium and townhome community — a mid-rise building with balconies and shared grounds under a clear coastal sky" shape="rect" />
+      <ImageSlot priority src="/photos/condo-hero-photo.webp" alt="A Gulf South condominium and townhome community — a mid-rise building with balconies and shared grounds under a clear coastal sky" shape="rect" />
     </div>
     <div class="container">
       <div class="ph-hero-stats">

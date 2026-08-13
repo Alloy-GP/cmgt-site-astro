@@ -8,6 +8,7 @@
 // the street line or abbreviate it. Rating/review count are still hardcoded from the
 // handoff; wiring them to live GBP data is the open P0 (see the dev handoff).
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
 import ImageSlot from '~/components/ImageSlot.astro';
 import ServiceAreaMap from '~/components/ServiceAreaMap.astro';
 import { LOCATION_REVIEWS } from '~/data/reviews';
@@ -164,7 +165,7 @@ const faq = {
 <BaseLayout
   title="Daphne HOA Management — Alabama Gulf Coast — CMGT"
   description="HOA management in Daphne and across the Alabama Gulf Coast — a real Eastern Shore office, a local manager, and financials shared with every owner."
-  pageSchema={[localBusiness, breadcrumb, faq]}
+  pageSchema={[breadcrumb, localBusiness, faq]}
 >
 <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t": "Home", "href": "/"}, {"t": "Alabama", "href": "/hoa-management/alabama"}, {"t": "Daphne"}]'></nav>
 
@@ -186,7 +187,7 @@ const faq = {
       </div>
     </div>
     <div class="city-band">
-      <ImageSlot src="/photos/al-geo-hero-photo.webp" alt="An Alabama Gulf Coast community CMGT manages near Daphne" shape="rect" />
+      <ImageSlot priority src="/photos/al-geo-hero-photo.webp" alt="An Alabama Gulf Coast community CMGT manages near Daphne" shape="rect" />
     </div>
     <div class="container">
       <div class="rating-rail">

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+import { articleSchema, breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -28,18 +28,29 @@ const faq = faqSchema([
     a: 'In most cases, community associations are not eligible for the individual assistance FEMA provides to households, though limited exceptions and other federal programs can apply. Insurance and reserves, not federal aid, are your primary recovery tools. Check official FEMA and Ready.gov guidance for current eligibility.',
   },
 ]);
+// Article, matching every other board-education spoke. Dates are this page's
+// own visible "Updated" line — a schema date a reader can't see gets flagged.
+const article = articleSchema({
+  headline: "Hurricane preparedness for Gulf South HOAs: a board's storm-season plan",
+  description: "A board-ready HOA hurricane plan for Gulf South communities: pre-season prep, storm communication, and insurance — from a manager who's lived it.",
+  url: SITE.url + '/resources/hurricane-preparedness-for-hoas',
+  datePublished: '2026-06-01',
+  image: SITE.url + '/photos/og/hurricane-hero-photo.jpg',
+  about: ['Hurricane preparedness', 'HOA insurance', 'Gulf South storm season'],
+});
+
 ---
 <BaseLayout
   title="Hurricane Preparedness for Gulf South HOAs (2026) | CMGT"
   description="A board-ready HOA hurricane plan for Gulf South communities: pre-season prep, storm communication, and insurance — from a manager who's lived it."
   ogType="article"
-  pageSchema={[breadcrumb, faq]}
+  pageSchema={[breadcrumb, article, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Insurance & Risk"}]'></nav>
 
   <article>
     <header class="art-hero">
-      <ImageSlot src="/photos/hurricane-hero-photo.webp" alt="A Gulf South community standing intact under a dramatic, storm-darkened sky as a hurricane approaches the coast" shape="rect" />
+      <ImageSlot priority src="/photos/hurricane-hero-photo.webp" alt="A Gulf South community standing intact under a dramatic, storm-darkened sky as a hurricane approaches the coast" shape="rect" />
       <div class="container art-hero-in">
         <div class="art-cat">Insurance &amp; Risk</div>
         <h1 class="art-h1">Hurricane preparedness for Gulf South HOAs: a board’s storm-season plan.</h1>

@@ -1,18 +1,27 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Texas', url: SITE.url + '/hoa-management/texas' },
 ]);
+// Service, per the sitemap spec's schema-by-type. areaServed is the geography this
+// page actually claims; the company itself stays the one Organization node.
+const service = serviceSchema({
+  name: 'HOA Management in Texas',
+  description: 'Texas HOA management with Gulf South roots and a local, team-based approach — a small, growing East Texas presence. Full-service, financials by the 20th.',
+  url: SITE.url + '/hoa-management/texas',
+  areaServed: 'Texas',
+});
+
 ---
 <BaseLayout
   title="Texas HOA Management — Local Teams, Growing Presence — CMGT"
   description="Texas HOA management with Gulf South roots and a local, team-based approach — a small, growing East Texas presence. Full-service, financials by the 20th."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Texas"}]'></nav>
 
@@ -33,7 +42,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
     </div>
     <div class="geo-band">
-      <ImageSlot src="/photos/tx-geo-hero-photo.webp" alt="A newer master-planned East Texas neighborhood with modern single-family homes, wide streets, and open Texas sky" shape="rect" />
+      <ImageSlot priority src="/photos/tx-geo-hero-photo.webp" alt="A newer master-planned East Texas neighborhood with modern single-family homes, wide streets, and open Texas sky" shape="rect" />
     </div>
     <div class="container">
       <div class="geo-stats">

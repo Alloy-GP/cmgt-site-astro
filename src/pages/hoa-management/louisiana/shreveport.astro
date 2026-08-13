@@ -8,6 +8,7 @@
 // the street line or abbreviate it. Rating/review count are still hardcoded from the
 // handoff; wiring them to live GBP data is the open P0 (see the dev handoff).
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
 import ImageSlot from '~/components/ImageSlot.astro';
 import ServiceAreaMap from '~/components/ServiceAreaMap.astro';
 import { LOCATION_REVIEWS } from '~/data/reviews';
@@ -169,7 +170,7 @@ const faq = {
 <BaseLayout
   title="Shreveport HOA Management — North Louisiana — CMGT"
   description="HOA management in Shreveport and North Louisiana — a local office, a local team, and full-service management backed by nearly 400 communities."
-  pageSchema={[localBusiness, breadcrumb, faq]}
+  pageSchema={[breadcrumb, localBusiness, faq]}
 >
 <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t": "Home", "href": "/"}, {"t": "Louisiana", "href": "/hoa-management/louisiana"}, {"t": "Shreveport"}]'></nav>
 
@@ -191,7 +192,7 @@ const faq = {
       </div>
     </div>
     <div class="city-band">
-      <ImageSlot src="/photos/la-geo-hero-photo.webp" alt="A Louisiana community neighborhood CMGT manages near Shreveport" shape="rect" />
+      <ImageSlot priority src="/photos/la-geo-hero-photo.webp" alt="A Louisiana community neighborhood CMGT manages near Shreveport" shape="rect" />
     </div>
     <div class="container">
       <div class="rating-rail">

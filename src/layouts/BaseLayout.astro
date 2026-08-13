@@ -19,6 +19,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../config/site.ts';
 import { REVIEW_ITEMS, PASTEL_BASE, TICKET_ID } from '../config/review.ts';
+import { OG_IMAGES } from '../data/og-images.ts';
 
 interface Props {
   /** <title> tag. Keep ≤ 60 chars. Required. */
@@ -27,8 +28,15 @@ interface Props {
   description: string;
   /** og:type. Default: 'website'. Use 'article' for blog/resource pages. */
   ogType?: 'website' | 'article';
-  /** Per-page OG image path from /public. Default: SITE.defaultOgImage. Must be 1200×630 PNG. */
+  /** Per-page OG image path from /public. Default: SITE.defaultOgImage. Must be 1200×630. */
   ogImage?: string;
+  /**
+   * Alt text for the OG/Twitter image, read aloud by screen readers on X and
+   * shown when the image fails to load. Default: SITE.name, which is fine for
+   * the brand card but says nothing about a per-page photo — pass a real
+   * description whenever you pass ogImage.
+   */
+  ogImageAlt?: string;
   /** robots meta. Omit for normal indexed pages. Use 'noindex,nofollow' for thank-you pages etc. */
   robots?: string;
   /** Page-specific JSON-LD schema. Pass a single object or array. */
@@ -40,12 +48,28 @@ const {
   description,
   ogType = 'website',
   ogImage: ogImageProp,
+  ogImageAlt,
   robots,
   pageSchema,
 } = Astro.props;
 
-const canonicalUrl    = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
-const resolvedOgImage = new URL(ogImageProp ?? SITE.defaultOgImage, Astro.site ?? SITE.url).toString();
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
+
+// Social card, in order of preference: what the page passed, then that route's own
+// hero from OG_IMAGES, then the generic brand card. Falling straight through to the
+// brand card meant every page shared one preview image.
+const routeOg      = OG_IMAGES[Astro.url.pathname.replace(/\/$/, '') || '/'];
+const resolvedOgImage = new URL(ogImageProp ?? routeOg?.image ?? SITE.defaultOgImage, Astro.site ?? SITE.url).toString();
+
+// og:image:type has to match the bytes actually served. It was hardcoded to
+// image/png, so any page passing a .jpg advertised the wrong MIME type and some
+// scrapers drop the preview rather than sniff it.
+const ogImageType =
+  /\.jpe?g$/i.test(resolvedOgImage) ? 'image/jpeg' :
+  /\.webp$/i.test(resolvedOgImage) ? 'image/webp' :
+  'image/png';
+
+const resolvedOgImageAlt = ogImageAlt ?? routeOg?.alt ?? SITE.name;
 
 // The company node, emitted on every page. The @id is what makes it addressable:
 // each city page's LocalBusiness references it as parentOrganization, so the six
@@ -101,18 +125,21 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
     <meta property="og:site_name"   content={SITE.name} />
     <meta property="og:locale"      content={SITE.locale} />
     <meta property="og:image"       content={resolvedOgImage} />
-    <meta property="og:image:type"  content="image/png" />
+    <meta property="og:image:type"  content={ogImageType} />
     <meta property="og:image:width" content={SITE.ogImageWidth} />
     <meta property="og:image:height" content={SITE.ogImageHeight} />
-    <meta property="og:image:alt"   content={SITE.name} />
+    <meta property="og:image:alt"   content={resolvedOgImageAlt} />
 
-    <!-- Twitter / X -->
+    <!-- Twitter / X.
+         No twitter:site — SITE.twitterHandle is still the kickoff placeholder (@cmgt),
+         and CMGT's only social assets are Facebook and LinkedIn. Crediting an account
+         we may not own is worse than omitting the tag; the large-image card renders
+         without it. Add it back once a real handle is confirmed. -->
     <meta name="twitter:card"        content="summary_large_image" />
-    <meta name="twitter:site"        content={SITE.twitterHandle} />
     <meta name="twitter:title"       content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image"       content={resolvedOgImage} />
-    <meta name="twitter:image:alt"   content={SITE.name} />
+    <meta name="twitter:image:alt"   content={resolvedOgImageAlt} />
 
     <!-- JSON-LD: Organization (every page) -->
     <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />

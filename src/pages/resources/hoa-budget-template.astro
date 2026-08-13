@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+import { articleSchema, breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -43,18 +43,29 @@ const faq = faqSchema([
     a: 'The reserve contribution should follow your community’s reserve study, not a guess, because underfunding reserves is the leading cause of surprise special assessments. The study sets a target so your reserve fund tracks toward a healthy percent funded over time.',
   },
 ]);
+// Article, matching every other board-education spoke. Dates are this page's
+// own visible "Updated" line — a schema date a reader can't see gets flagged.
+const article = articleSchema({
+  headline: "HOA budget templates and best practices: a board's guide",
+  description: 'A plain-English guide to building an HOA budget: the structure, line items, sample budgets by community size, and how to set up your own budget template.',
+  url: SITE.url + '/resources/hoa-budget-template',
+  datePublished: '2026-06-01',
+  image: SITE.url + '/photos/og/budget-hero-photo.jpg',
+  about: ['HOA budget', 'Homeowners association budgeting', 'HOA assessments'],
+});
+
 ---
 <BaseLayout
   title="HOA Budget Template & Best Practices: Board Guide | CMGT"
   description="A plain-English guide to building an HOA budget: the structure, line items, sample budgets by community size, and how to set up your own budget template."
   ogType="article"
-  pageSchema={[breadcrumb, howTo, faq]}
+  pageSchema={[breadcrumb, article, howTo, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Finances & Reserves"}]'></nav>
 
   <article>
     <header class="art-hero">
-      <ImageSlot src="/photos/budget-hero-photo.webp" alt="An HOA board treasurer working on community finances at a clubhouse table with a laptop open" shape="rect" />
+      <ImageSlot priority src="/photos/budget-hero-photo.webp" alt="An HOA board treasurer working on community finances at a clubhouse table with a laptop open" shape="rect" />
       <div class="container art-hero-in">
         <div class="art-cat">Finances &amp; Reserves</div>
         <h1 class="art-h1">HOA budget templates and best practices: a board's guide.</h1>

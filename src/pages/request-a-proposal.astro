@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, contactPageSchema } from '~/lib/schema';
 import IntakeForm from '~/components/IntakeForm.jsx';
 import '~/styles/intake-form.theme.css'; // per-site brand colors/fonts (edit this)
 import '~/styles/intake-form.css';       // canonical structure (synced from starter)
@@ -10,11 +10,19 @@ const breadcrumb = breadcrumbSchema([
   { name: 'Home',                url: SITE.url + '/' },
   { name: 'Request a Proposal',  url: SITE.url + '/request-a-proposal' },
 ]);
+// ContactPage, per the sitemap spec — this is the site's single contact route
+// (/contact 301s here).
+const contact = contactPageSchema({
+  name: 'Request a Proposal',
+  description: 'Request a proposal from CMGT. Tell us about your community and a real person reaches out within one business day — no pitch deck, no pressure.',
+  url: SITE.url + '/request-a-proposal',
+});
+
 ---
 <BaseLayout
   title="Request a Proposal — Contact CMGT for Your Community"
   description="Request a proposal from CMGT. Tell us about your community and a real person reaches out within one business day — no pitch deck, no pressure."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, contact]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Contact"}]'></nav>
 

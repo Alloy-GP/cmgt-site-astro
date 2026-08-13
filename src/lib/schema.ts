@@ -96,13 +96,47 @@ export function serviceSchema(opts: {
     name: opts.name,
     description: opts.description,
     url: opts.url,
-    provider: {
-      '@type': SITE.org.type,
-      name: SITE.name,
-      url: SITE.url,
-    },
+    // Same @id as the node BaseLayout emits, so every service resolves to the one
+    // company rather than to a fresh anonymous provider per page.
+    provider: { '@type': 'Organization', '@id': SITE.url + '/#organization' },
     areaServed: opts.areaServed ?? SITE.org.areaServed,
     ...(opts.image ? { image: opts.image } : {}),
+  };
+}
+
+// ── AggregateRating on the company ────────────────────────────────────────────
+// Merges into the Organization node by @id. Only use where the same figures are
+// visible on the page — Google discards review markup a reader can't see.
+
+export function orgRatingSchema(opts: {
+  ratingValue: string;
+  reviewCount: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': SITE.url + '/#organization',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: opts.ratingValue,
+      reviewCount: opts.reviewCount,
+      bestRating: '5',
+      worstRating: '1',
+    },
+  };
+}
+
+// ── ContactPage ───────────────────────────────────────────────────────────────
+
+export function contactPageSchema(opts: { name: string; description: string; url: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    inLanguage: 'en-US',
+    about: { '@type': 'Organization', '@id': SITE.url + '/#organization' },
   };
 }
 

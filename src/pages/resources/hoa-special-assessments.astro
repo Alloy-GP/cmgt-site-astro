@@ -1,13 +1,30 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+import { articleSchema, breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
+
+const PAGE_URL  = SITE.url + '/resources/hoa-special-assessments';
+const OG_IMAGE  = '/photos/og/hoa-clubhouse-roof-replacement.jpg';
+const OG_ALT    = 'Crews replacing the roof on an HOA clubhouse — the kind of capital expense a special assessment pays for';
+const META_DESC = "What an HOA special assessment is, when a board can levy one, your options if you can't pay, and how strong budgeting and reserves keep them rare.";
+
+// Sitemap spec assigns Article to every board-education spoke. Dates are the
+// launch date and must stay in step with the visible "Updated" line in the hero —
+// Google flags a schema date that no reader can see on the page.
+const article = articleSchema({
+  headline: 'HOA special assessments: what they are, and how boards avoid them',
+  description: META_DESC,
+  url: PAGE_URL,
+  datePublished: '2026-08-13',
+  image: SITE.url + OG_IMAGE,
+  about: ['HOA special assessment', 'HOA reserve funding', 'Homeowners association budgeting'],
+});
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Resources', url: SITE.url + '/resources' },
-  { name: 'Finances & Reserves', url: SITE.url + '/resources/hoa-special-assessments' },
+  { name: 'Finances & Reserves', url: PAGE_URL },
 ]);
 
 const faq = faqSchema([
@@ -30,22 +47,23 @@ const faq = faqSchema([
 ]);
 ---
 <BaseLayout
-  title="HOA Special Assessments: What They Are & How to Avoid Them | CMGT"
-  description="What an HOA special assessment is, when a board can levy one, your options if you can't pay, and how strong budgeting and reserves keep them rare."
+  title="HOA Special Assessments: Rules & How to Avoid Them | CMGT"
+  description={META_DESC}
   ogType="article"
-  ogImage="/photos/hoa-clubhouse-roof-replacement-og.png"
-  pageSchema={[breadcrumb, faq]}
+  ogImage={OG_IMAGE}
+  ogImageAlt={OG_ALT}
+  pageSchema={[breadcrumb, article, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Finances & Reserves"}]'></nav>
 
   <article>
     <header class="art-hero">
-      <ImageSlot src="/photos/hoa-clubhouse-roof-replacement.webp" alt="Roof replacement underway on an HOA clubhouse" shape="rect" />
+      <ImageSlot priority src="/photos/hoa-clubhouse-roof-replacement.webp" alt="Roof replacement underway on an HOA clubhouse" shape="rect" />
       <div class="container art-hero-in">
         <div class="art-cat">Finances &amp; Reserves</div>
         <h1 class="art-h1">HOA special assessments: what they are, and how boards avoid them.</h1>
         <p class="art-lede">The notice arrives and the number is bigger than a month of dues. Here's what a special assessment actually is, your options if you're facing one, and why the best-run communities almost never need one.</p>
-        <div class="art-meta"><span>6 min read</span><span class="dot"></span><span>Finances &amp; Reserves</span></div>
+        <div class="art-meta"><span>6 min read</span><span class="dot"></span><span>2026 Edition &middot; Updated August 2026</span></div>
       </div>
     </header>
 

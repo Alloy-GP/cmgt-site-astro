@@ -1,18 +1,26 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'HOA Financial Management', url: SITE.url + '/hoa-financial-management' },
 ]);
+// Service, per the sitemap spec's schema-by-type. areaServed is the geography this
+// page actually claims; the company itself stays the one Organization node.
+const service = serviceSchema({
+  name: 'HOA Financial & Administrative Management',
+  description: 'HOA financial management, accounting & bookkeeping for smaller communities — full P&L to every member, financials by the 20th, ~10% delinquency.',
+  url: SITE.url + '/hoa-financial-management',
+});
+
 ---
 <BaseLayout
   title="HOA Financial Management & Accounting, Open Books — CMGT"
   description="HOA financial management, accounting & bookkeeping for smaller communities — full P&L to every member, financials by the 20th, ~10% delinquency."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"HOA Financial Management"}]'></nav>
 
@@ -38,7 +46,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
     </div>
     <div class="ph-hero-band">
-      <ImageSlot src="/photos/homeowner-porch-hoa-financials.webp" alt="A homeowner relaxing on a Gulf South front porch, checking their HOA's financial summary on a phone" shape="rect" />
+      <ImageSlot priority src="/photos/homeowner-porch-hoa-financials.webp" alt="A homeowner relaxing on a Gulf South front porch, checking their HOA's financial summary on a phone" shape="rect" />
     </div>
     <div class="container">
       <div class="ph-hero-stats">
