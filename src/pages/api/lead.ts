@@ -5,13 +5,17 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
-import { sendWithAlert } from '~/lib/form-alert';
+import { sendWithAlert, notifySubmission, fieldsFromFormData } from '~/lib/form-alert';
 import { addToPipedrive } from '~/lib/pipedrive';
 import { upsertMailchimpContact } from '~/lib/mailchimp';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 // Astro reads env via import.meta.env, so pass the Slack URL explicitly.
-const FORM_ALERT_SLACK_URL = import.meta.env.FORM_ALERT_SLACK_URL;
+// Slack destination. FORM_SLACK_WEBHOOK is this client's own channel and takes
+// precedence for BOTH submissions and failures; FORM_ALERT_SLACK_URL is the
+// shared fallback for clients without a channel of their own.
+const SLACK_WEBHOOK =
+  import.meta.env.FORM_SLACK_WEBHOOK || import.meta.env.FORM_ALERT_SLACK_URL;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -73,32 +77,52 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Internal notification — alerts Slack + email if the send fails (then re-throws → 500).
     // Partial leads get a distinct subject + banner so staff can chase abandoned forms.
-    await sendWithAlert(
-      {
-        client: EMAIL_CONFIG.brand.name,
-        formName: `${intentCfg.label}${intent ? ` (${intent})` : ''}${isPartial ? ' — partial' : ''}`,
-        slackWebhookUrl: FORM_ALERT_SLACK_URL,
-        alertEmail: { apiKey: import.meta.env.RESEND_API_KEY, to: EMAIL_CONFIG.alertsTo, from: EMAIL_CONFIG.from.notifications },
-      },
-      () => resend.emails.send({
-        from:    EMAIL_CONFIG.from.notifications,
-        replyTo: EMAIL_CONFIG.replyTo,
-        to:      notifyTo,
-        ...(notifyCc.length ? { cc: notifyCc } : {}),
-        subject: isPartial ? `Started (incomplete): ${intentCfg.label} — ${company || name}` : intentCfg.notifySubject(company || name),
-        html: `
-          ${isPartial ? `<p style="background:#FFF4E5;border-left:3px solid #E0902F;padding:10px 14px;margin:0 0 14px;font-size:14px;color:#7a5310"><strong>⚠️ Started but not yet submitted.</strong> This person completed the contact step of the proposal form. Reach out — they may not finish on their own.</p>` : ''}
-          <h2>${esc(intentCfg.label)}${isPartial ? ' (incomplete)' : ''}</h2>
-          <p><strong>Name:</strong> ${esc(name)}</p>
-          <p><strong>Email:</strong> ${esc(email)}</p>
-          ${phone   ? `<p><strong>Phone:</strong> ${esc(phone)}</p>` : ''}
-          ${company ? `<p><strong>Company:</strong> ${esc(company)}</p>` : ''}
-          ${detailRows ? `<table style="border-collapse:collapse;margin:14px 0;font-size:14px">${detailRows}</table>` : ''}
-          ${message ? `<p><strong>Message:</strong><br>${esc(message).replace(/\n/g, '<br>')}</p>` : ''}
-          <hr><p style="color:#888;font-size:12px">${ref ? `Ref ${esc(ref)} · ` : ''}Form: ${esc(intent || 'lead')}${isPartial ? ' · stage: partial' : ''}${source ? ` · Source ${esc(source)}` : ''}</p>
-        `,
-      })
-    );
+    // The error is held rather than thrown so the Slack log below still runs;
+    // it is re-thrown straight after, so the form still gets its 500.
+    let notifyError: unknown = null;
+    try {
+      await sendWithAlert(
+        {
+          client: EMAIL_CONFIG.brand.name,
+          formName: `${intentCfg.label}${intent ? ` (${intent})` : ''}${isPartial ? ' — partial' : ''}`,
+          slackWebhookUrl: SLACK_WEBHOOK,
+          alertEmail: { apiKey: import.meta.env.RESEND_API_KEY, to: EMAIL_CONFIG.alertsTo, from: EMAIL_CONFIG.from.notifications },
+        },
+        () => resend.emails.send({
+          from:    EMAIL_CONFIG.from.notifications,
+          replyTo: EMAIL_CONFIG.replyTo,
+          to:      notifyTo,
+          ...(notifyCc.length ? { cc: notifyCc } : {}),
+          subject: isPartial ? `Started (incomplete): ${intentCfg.label} — ${company || name}` : intentCfg.notifySubject(company || name),
+          html: `
+            ${isPartial ? `<p style="background:#FFF4E5;border-left:3px solid #E0902F;padding:10px 14px;margin:0 0 14px;font-size:14px;color:#7a5310"><strong>⚠️ Started but not yet submitted.</strong> This person completed the contact step of the proposal form. Reach out — they may not finish on their own.</p>` : ''}
+            <h2>${esc(intentCfg.label)}${isPartial ? ' (incomplete)' : ''}</h2>
+            <p><strong>Name:</strong> ${esc(name)}</p>
+            <p><strong>Email:</strong> ${esc(email)}</p>
+            ${phone   ? `<p><strong>Phone:</strong> ${esc(phone)}</p>` : ''}
+            ${company ? `<p><strong>Company:</strong> ${esc(company)}</p>` : ''}
+            ${detailRows ? `<table style="border-collapse:collapse;margin:14px 0;font-size:14px">${detailRows}</table>` : ''}
+            ${message ? `<p><strong>Message:</strong><br>${esc(message).replace(/\n/g, '<br>')}</p>` : ''}
+            <hr><p style="color:#888;font-size:12px">${ref ? `Ref ${esc(ref)} · ` : ''}Form: ${esc(intent || 'lead')}${isPartial ? ' · stage: partial' : ''}${source ? ` · Source ${esc(source)}` : ''}</p>
+          `,
+        })
+      );
+    } catch (err) {
+      notifyError = err;
+    }
+
+    // Log the lead to the client's Slack channel — see contact.ts for why this
+    // posts even when the email failed.
+    await notifySubmission({
+      client: EMAIL_CONFIG.brand.name,
+      slackWebhookUrl: SLACK_WEBHOOK,
+      route: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}`,
+      formName: `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`,
+      delivered: !notifyError,
+      fields: fieldsFromFormData(data),
+    });
+
+    if (notifyError) throw notifyError;
 
     // Confirmation to submitter — only on a COMPLETE submit (don't confirm a half-finished form).
     if (!isPartial) {
