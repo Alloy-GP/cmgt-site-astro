@@ -1,18 +1,26 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'HOA Delinquency Recovery', url: SITE.url + '/hoa-delinquency-recovery' },
 ]);
+// Service, per the sitemap spec's schema-by-type. areaServed is the geography this
+// page actually claims; the company itself stays the one Organization node.
+const service = serviceSchema({
+  name: 'HOA Delinquency Recovery & Collections',
+  description: 'HOA delinquency recovery from CMGT — a fair, consistent, done-for-you collections process that brings unpaid assessments current and keeps them there.',
+  url: SITE.url + '/hoa-delinquency-recovery',
+});
+
 ---
 <BaseLayout
   title="HOA Delinquency Recovery — Bring Collections Current — CMGT"
   description="HOA delinquency recovery from CMGT — a fair, consistent, done-for-you collections process that brings unpaid assessments current and keeps them there."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"HOA Delinquency Recovery"}]'></nav>
 
@@ -33,7 +41,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
       <div class="sol-hero-media">
         <div class="block" aria-hidden="true"></div>
-        <ImageSlot src="/photos/dq-hero-photo.webp" alt="A healthy, well-kept Gulf South neighborhood where dues stay current and common areas are cared for" shape="rounded" radius={20} />
+        <ImageSlot priority src="/photos/dq-hero-photo.webp" alt="A healthy, well-kept Gulf South neighborhood where dues stay current and common areas are cared for" shape="rounded" radius={20} />
       </div>
     </div>
   </section>

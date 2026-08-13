@@ -14,7 +14,7 @@ const service = {
   '@type': 'Service',
   name: 'On-Site HOA & Condo Management',
   serviceType: 'On-site community association management',
-  provider: { '@type': 'Organization', name: 'CMGT', url: SITE.url + '/' },
+  provider: { '@type': 'Organization', '@id': SITE.url + '/#organization' },
   areaServed: [
     { '@type': 'AdministrativeArea', name: 'Louisiana' },
     { '@type': 'AdministrativeArea', name: 'Mississippi' },
@@ -56,7 +56,7 @@ const service = {
       </div>
     </div>
     <div class="ph-hero-band">
-      <ImageSlot src="/photos/on-site-management-showing-clubhouse.webp" alt="A CMGT on-site community manager with a tablet showing a resident around a Gulf South clubhouse community" shape="rect" />
+      <ImageSlot priority src="/photos/on-site-management-showing-clubhouse.webp" alt="A CMGT on-site community manager with a tablet showing a resident around a Gulf South clubhouse community" shape="rect" />
     </div>
     <div class="container">
       <div class="ph-hero-stats">

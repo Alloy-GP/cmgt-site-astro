@@ -1,17 +1,21 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, orgRatingSchema } from '~/lib/schema';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Testimonials', url: SITE.url + '/testimonials' },
 ]);
+// Matches the 4.2 across 535+ reviews shown in the hero. Merges into the
+// Organization node by @id rather than declaring a second company.
+const rating = orgRatingSchema({ ratingValue: '4.2', reviewCount: '535' });
+
 ---
 <BaseLayout
   title="CMGT Testimonials — What Gulf South HOA Boards Say"
   description="What boards and homeowners say about CMGT — 4.2 stars across 535+ reviews. Real words from the Gulf South communities we manage across five states."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, rating]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Testimonials"}]'></nav>
 

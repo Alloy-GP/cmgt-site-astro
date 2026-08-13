@@ -1,18 +1,26 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Self-Managed HOA vs. Professional', url: SITE.url + '/self-managed-hoa' },
 ]);
+// Service, per the sitemap spec's schema-by-type. areaServed is the geography this
+// page actually claims; the company itself stays the one Organization node.
+const service = serviceSchema({
+  name: 'Support for Self-Managed HOAs',
+  description: 'Self-managed HOA or professional management? An honest comparison for volunteer boards — real costs, breaking points, and a financial-only middle path.',
+  url: SITE.url + '/self-managed-hoa',
+});
+
 ---
 <BaseLayout
   title="Self-Managed HOA vs. Professional Management — CMGT"
   description="Self-managed HOA or professional management? An honest comparison for volunteer boards — real costs, breaking points, and a financial-only middle path."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Self-Managed HOA vs. Professional"}]'></nav>
 
@@ -34,7 +42,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
       <div class="sol-hero-media">
         <div class="block" aria-hidden="true"></div>
-        <ImageSlot src="/photos/sm-hero-photo.webp" alt="Volunteer HOA board members meeting around a kitchen table, reviewing community paperwork together" shape="rounded" radius={20} />
+        <ImageSlot priority src="/photos/sm-hero-photo.webp" alt="Volunteer HOA board members meeting around a kitchen table, reviewing community paperwork together" shape="rounded" radius={20} />
       </div>
     </div>
   </section>

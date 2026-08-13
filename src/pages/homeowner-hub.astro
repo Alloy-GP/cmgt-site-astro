@@ -1,7 +1,14 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
 import { orderDocsUrl } from '~/lib/order-docs';
 import { PORTALS as SHARED_PORTALS } from '~/config/portals';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Homeowner & Board Hub', url: SITE.url + '/homeowner-hub' },
+]);
 
 // The homeowner hub — the single account-access destination in the header. It
 // replaced three separate utility links (Log In / Pay Dues / Order Documents),
@@ -20,7 +27,8 @@ const PORTALS = {
 ---
 <BaseLayout
   title="Homeowner & Board Hub — CMGT"
-  description="One place for CMGT homeowners and board members. Pay dues, order documents, submit a maintenance request, reach your community's financials, and log in to your account."
+  description="One place for CMGT homeowners and board members: pay dues, order documents, submit a maintenance request, and reach your community's financials."
+  pageSchema={breadcrumb}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Homeowner &amp; Board Hub"}]'></nav>
 
