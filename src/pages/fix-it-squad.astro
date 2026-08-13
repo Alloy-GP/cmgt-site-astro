@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -9,11 +9,19 @@ const breadcrumb = breadcrumbSchema([
   { name: 'How We Work', url: SITE.url + '/how-we-work' },
   { name: 'The Fix-It Squad', url: SITE.url + '/fix-it-squad' },
 ]);
+// Service, per the sitemap spec's schema-by-type. areaServed is the geography this
+// page actually claims; the company itself stays the one Organization node.
+const service = serviceSchema({
+  name: 'The Fix-It Squad — In-House Maintenance',
+  description: "The Fix-It Squad is CMGT's in-house maintenance team — trusted technicians, fast response, and fair pricing, accountable to the same standard. Since 2019.",
+  url: SITE.url + '/fix-it-squad',
+});
+
 ---
 <BaseLayout
   title="The Fix-It Squad — CMGT's In-House Maintenance Team"
   description="The Fix-It Squad is CMGT's in-house maintenance team — trusted technicians, fast response, and fair pricing, accountable to the same standard. Since 2019."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"How We Work","href":"/how-we-work"},{"t":"The Fix-It Squad"}]'></nav>
 

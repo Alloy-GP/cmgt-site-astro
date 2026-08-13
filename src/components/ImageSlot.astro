@@ -22,6 +22,13 @@ export interface Props {
   fit?: 'cover' | 'contain' | 'fill';
   position?: string;          // object-position
   class?: string;
+  /**
+   * Set priority on the one above-the-fold image that is the page's LCP — almost
+   * always the hero. Everything defaults to lazy, which is right for the other 60-odd
+   * slots but was wrong for heroes: a lazy hero isn't fetched until layout and is
+   * deprioritised by the browser, so it delayed LCP on every page.
+   */
+  priority?: boolean;
 }
 const {
   src = '/photos/placeholder.svg',
@@ -32,6 +39,7 @@ const {
   fit = 'cover',
   position = '50% 50%',
   class: className = '',
+  priority = false,
 } = Astro.props;
 
 const r = shape === 'circle' ? '50%' : shape === 'pill' ? '999px' : shape === 'rounded' ? `${radius}px` : '0';
@@ -42,4 +50,13 @@ const style = [
   ratio ? `aspect-ratio:${ratio}` : '',
 ].filter(Boolean).join(';') + ';';
 ---
-<img class={`image-slot ${className}`.trim()} src={src} alt={alt} loading="lazy" decoding="async" style={style} onerror="this.onerror=null;this.src='/photos/placeholder.svg'" />
+<img
+  class={`image-slot ${className}`.trim()}
+  src={src}
+  alt={alt}
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : undefined}
+  decoding={priority ? 'sync' : 'async'}
+  style={style}
+  onerror="this.onerror=null;this.src='/photos/placeholder.svg'"
+/>

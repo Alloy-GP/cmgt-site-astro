@@ -5,7 +5,7 @@ import { articleSchema, breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const PAGE_URL  = SITE.url + '/resources/hoa-special-assessments';
-const OG_IMAGE  = '/photos/hoa-clubhouse-roof-replacement-og.jpg';
+const OG_IMAGE  = '/photos/og/hoa-clubhouse-roof-replacement.jpg';
 const OG_ALT    = 'Crews replacing the roof on an HOA clubhouse — the kind of capital expense a special assessment pays for';
 const META_DESC = "What an HOA special assessment is, when a board can levy one, your options if you can't pay, and how strong budgeting and reserves keep them rare.";
 
@@ -58,7 +58,7 @@ const faq = faqSchema([
 
   <article>
     <header class="art-hero">
-      <ImageSlot src="/photos/hoa-clubhouse-roof-replacement.webp" alt="Roof replacement underway on an HOA clubhouse" shape="rect" />
+      <ImageSlot priority src="/photos/hoa-clubhouse-roof-replacement.webp" alt="Roof replacement underway on an HOA clubhouse" shape="rect" />
       <div class="container art-hero-in">
         <div class="art-cat">Finances &amp; Reserves</div>
         <h1 class="art-h1">HOA special assessments: what they are, and how boards avoid them.</h1>

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 import { PORTALS } from '~/config/portals';
 
@@ -9,11 +9,20 @@ const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Rentals', url: SITE.url + '/rentals' },
 ]);
+// Service, per the sitemap spec's schema-by-type. areaServed is the geography this
+// page actually claims; the company itself stays the one Organization node.
+const service = serviceSchema({
+  name: 'Residential Rental Property Management',
+  description: 'Rental property management in Greater Baton Rouge — leasing, screening, rent collection, and maintenance handled. Hands-off ownership for investors.',
+  url: SITE.url + '/rentals',
+  areaServed: 'Greater Baton Rouge',
+});
+
 ---
 <BaseLayout
   title="Rental Property Management in Greater Baton Rouge — CMGT"
   description="Rental property management in Greater Baton Rouge — leasing, screening, rent collection, and maintenance handled. Hands-off ownership for investors."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Rentals"}]'></nav>
 
@@ -75,7 +84,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
       <div class="rn-hero-media">
         <div class="block" aria-hidden="true"></div>
-        <ImageSlot src="/photos/rn-hero-photo.webp" alt="A well-kept single-family rental home in the Greater Baton Rouge area with a tidy lawn and inviting front porch" shape="rounded" radius={20} />
+        <ImageSlot priority src="/photos/rn-hero-photo.webp" alt="A well-kept single-family rental home in the Greater Baton Rouge area with a tidy lawn and inviting front porch" shape="rounded" radius={20} />
       </div>
     </div>
   </section>

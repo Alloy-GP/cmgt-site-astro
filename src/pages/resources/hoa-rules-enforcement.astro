@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+import { articleSchema, breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -31,18 +31,29 @@ const faq = faqSchema([
   { q: 'Can you sue an HOA for not enforcing rules?', a: 'Sometimes, when an association enforces selectively or fails its duties, but it is a last resort after the internal dispute and hearing process. This is general information rather than legal advice, so consult an attorney about your situation.' },
   { q: 'Can an HOA change the rules without a vote?', a: 'It depends on the rule and your governing documents. Some changes, especially to the recorded CC&Rs, require a membership vote, while boards can often adopt operating rules within their authority. Your governing documents and state law spell out which is which.' },
 ]);
+// Article, matching every other board-education spoke. Dates are this page's
+// own visible "Updated" line — a schema date a reader can't see gets flagged.
+const article = articleSchema({
+  headline: "HOA rules enforcement and violations: what's fair for both sides",
+  description: 'How HOA violations really work — the notice and hearing process, and your right to dispute a fine. A fair, plain guide for Gulf South boards.',
+  url: SITE.url + '/resources/hoa-rules-enforcement',
+  datePublished: '2026-07-01',
+  image: SITE.url + '/photos/og/enforce-hero-photo.jpg',
+  about: ['HOA rules enforcement', 'HOA violations', 'Covenant compliance'],
+});
+
 ---
 <BaseLayout
   title="HOA Rules Enforcement & Violations: Board Guide | CMGT"
   description="How HOA violations really work — the notice and hearing process, and your right to dispute a fine. A fair, plain guide for Gulf South boards."
   ogType="article"
-  pageSchema={[breadcrumb, howTo, faq]}
+  pageSchema={[breadcrumb, article, howTo, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Covenants & Enforcement"}]'></nav>
 
   <article>
     <header class="art-hero">
-      <ImageSlot src="/photos/enforce-hero-photo.webp" alt="A CMGT community manager and a homeowner talking easily on a front porch — enforcement handled through conversation, not confrontation" shape="rect" />
+      <ImageSlot priority src="/photos/enforce-hero-photo.webp" alt="An overgrown front lawn on an otherwise tidy residential street — the kind of upkeep issue covenant enforcement exists to address" shape="rect" />
       <div class="container art-hero-in">
         <div class="art-cat">Covenants &amp; Enforcement</div>
         <h1 class="art-h1">HOA rules enforcement and violations: what's fair for both sides.</h1>

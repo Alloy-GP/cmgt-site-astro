@@ -1,18 +1,26 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Switching Management Companies', url: SITE.url + '/switching-hoa-management-companies' },
 ]);
+// Service, per the sitemap spec's schema-by-type. areaServed is the geography this
+// page actually claims; the company itself stays the one Organization node.
+const service = serviceSchema({
+  name: 'HOA Management Company Transition',
+  description: 'Switching HOA management companies without the trauma — a clear Day 1 to Day 90 transition. We handle records, vendors, finances, and communication.',
+  url: SITE.url + '/switching-hoa-management-companies',
+});
+
 ---
 <BaseLayout
   title="Switching HOA Management Companies, Without Trauma — CMGT"
   description="Switching HOA management companies without the trauma — a clear Day 1 to Day 90 transition. We handle records, vendors, finances, and communication."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Switching Management Companies"}]'></nav>
 
@@ -34,7 +42,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
       <div class="sol-hero-media">
         <div class="block" aria-hidden="true"></div>
-        <ImageSlot src="/photos/sw-hero-photo.webp" alt="A relieved HOA board member shaking hands with a calm, capable CMGT community manager outside a community clubhouse — the feeling of weight lifted and trust earned" shape="rounded" radius={20} />
+        <ImageSlot priority src="/photos/sw-hero-photo.webp" alt="A relieved HOA board member shaking hands with a calm, capable CMGT community manager outside a community clubhouse — the feeling of weight lifted and trust earned" shape="rounded" radius={20} />
       </div>
     </div>
   </section>

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, faqSchema } from '~/lib/schema';
+import { articleSchema, breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -28,18 +28,29 @@ const faq = faqSchema([
     a: 'Generally no. These states don’t broadly mandate reserve studies for HOAs the way California and Florida do. That said, your governing documents or a lender may still expect one, and skipping it leaves the community exposed to surprise special assessments. Because state law changes, confirm your community’s current obligations with your association counsel.',
   },
 ]);
+// Article, matching every other board-education spoke. Dates are this page's
+// own visible "Updated" line — a schema date a reader can't see gets flagged.
+const article = articleSchema({
+  headline: 'HOA reserve studies: a complete guide for boards',
+  description: 'What an HOA reserve study is, why your board needs one, what it costs, and how to turn the findings into a funding plan. A plain-English guide for boards.',
+  url: SITE.url + '/resources/hoa-reserve-study',
+  datePublished: '2026-06-01',
+  image: SITE.url + '/photos/og/reserve-hero-photo.jpg',
+  about: ['HOA reserve study', 'HOA reserve funding', 'Capital replacement planning'],
+});
+
 ---
 <BaseLayout
   title="HOA Reserve Studies: The Complete Board Guide (2026) | CMGT"
   description="What an HOA reserve study is, why your board needs one, what it costs, and how to turn the findings into a funding plan. A plain-English guide for boards."
   ogType="article"
-  pageSchema={[breadcrumb, faq]}
+  pageSchema={[breadcrumb, article, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Finances & Reserves"}]'></nav>
 
   <article>
     <header class="art-hero">
-      <ImageSlot src="/photos/reserve-hero-photo.webp" alt="A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan" shape="rect" />
+      <ImageSlot priority src="/photos/reserve-hero-photo.webp" alt="A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan" shape="rect" />
       <div class="container art-hero-in">
         <div class="art-cat">Finances &amp; Reserves</div>
         <h1 class="art-h1">HOA reserve studies: a complete guide for boards.</h1>

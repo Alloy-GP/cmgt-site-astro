@@ -1,18 +1,27 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
   { name: 'Louisiana', url: SITE.url + '/hoa-management/louisiana' },
 ]);
+// Service, per the sitemap spec's schema-by-type. areaServed is the geography this
+// page actually claims; the company itself stays the one Organization node.
+const service = serviceSchema({
+  name: 'HOA Management in Louisiana',
+  description: 'Louisiana HOA management from a team that started here — 300+ communities across Baton Rouge, New Orleans, Lafayette and beyond. Local roots, statewide.',
+  url: SITE.url + '/hoa-management/louisiana',
+  areaServed: 'Louisiana',
+});
+
 ---
 <BaseLayout
   title="Louisiana HOA Management — Rooted Here Since 2007 — CMGT"
   description="Louisiana HOA management from a team that started here — 300+ communities across Baton Rouge, New Orleans, Lafayette and beyond. Local roots, statewide."
-  pageSchema={breadcrumb}
+  pageSchema={[breadcrumb, service]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Louisiana"}]'></nav>
 
@@ -33,7 +42,7 @@ const breadcrumb = breadcrumbSchema([
       </div>
     </div>
     <div class="geo-band">
-      <ImageSlot src="/photos/la-geo-hero-photo.webp" alt="An established Louisiana residential community near Baton Rouge with mature oaks, well-kept homes, and manicured common areas under a bright Gulf South sky" shape="rect" />
+      <ImageSlot priority src="/photos/la-geo-hero-photo.webp" alt="An established Louisiana residential community near Baton Rouge with mature oaks, well-kept homes, and manicured common areas under a bright Gulf South sky" shape="rect" />
     </div>
     <div class="container">
       <div class="geo-stats">
