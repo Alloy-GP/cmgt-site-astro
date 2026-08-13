@@ -115,7 +115,17 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/assets/icon-mark.svg" />
 
-    {robots && <meta name="robots" content={robots} />}
+    {/*
+      Staging must never be indexable. stg serves canonicals pointing at cmgt.org
+      (site is set to the production domain), and it also carries pages held back
+      from production — so a held page on stg canonicalises to a production URL that
+      404s. Left open, stg was crawlable: 200, no auth, robots.txt Allow: /, no
+      noindex. Same PUBLIC_ENV gate the review widget uses, so production is
+      untouched and still honours a page's own robots prop.
+    */}
+    {!isProduction
+      ? <meta name="robots" content="noindex,nofollow" />
+      : robots && <meta name="robots" content={robots} />}
 
     <!-- Open Graph -->
     <meta property="og:title"       content={title} />
