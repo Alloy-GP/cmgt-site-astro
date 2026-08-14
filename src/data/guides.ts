@@ -51,17 +51,25 @@ export interface Guide {
 // seasonal — move that object up during storm season rather than editing copy.
 export const GUIDES: Guide[] = [
   {
+    slug: '/resources/hoa-financial-statements',
+    topic: 'finances',
+    title: 'HOA financial statements explained in plain English',
+    dek: 'The four core reports — balance sheet, income statement, cash flow, and budget comparison.',
+    thumb: '/photos/resources/hoa-financial-statements.webp',
+    alt: 'A homeowner reviewing HOA financial statements on a laptop at her kitchen table',
+    featured: {
+      dek: 'The four core HOA financial statements every board and homeowner should know — what each shows, what to question, and how to get copies.',
+      image: '/photos/hoa-financial-statements.webp',
+      alt: 'A homeowner reviewing HOA financial statements on a laptop at her kitchen table',
+    },
+  },
+  {
     slug: '/resources/hoa-special-assessments',
     topic: 'finances',
     title: 'Special assessments, and how boards avoid them',
     dek: "What a special assessment is, when a board can levy one, and the planning that keeps them rare.",
     thumb: '/photos/resources/special-assessments.webp',
     alt: 'Roof replacement underway on an HOA clubhouse',
-    featured: {
-      dek: "What a special assessment is, when a board can levy one, your options if you're facing one, and the planning that keeps them rare.",
-      image: '/photos/hoa-clubhouse-roof-replacement.webp',
-      alt: 'Roof replacement underway on an HOA clubhouse',
-    },
   },
   {
     slug: '/resources/hoa-rules-enforcement',

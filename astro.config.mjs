@@ -14,7 +14,12 @@ export default defineConfig({
 
   integrations: [
     react(),
-    sitemap(), // auto-generates /sitemap-index.xml on every build — no manual sitemap.xml needed
+    // auto-generates /sitemap-index.xml on every build — no manual sitemap.xml needed.
+    // filter: keep embargoed / not-yet-published posts out of the sitemap. Remove the
+    // entry (and the page's robots="noindex,nofollow") when the post goes live.
+    sitemap({
+      filter: (page) => !page.includes('/resources/hoa-master-insurance-policy'),
+    }),
   ],
 
   prefetch: { prefetchAll: true },

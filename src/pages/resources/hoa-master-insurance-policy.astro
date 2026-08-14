@@ -1,0 +1,222 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EMBARGOED — scheduled to publish at a later date.
+// Until then this page is robots="noindex,nofollow" (below) and excluded from
+// the sitemap (see astro.config.mjs sitemap filter). It is intentionally not
+// linked from the Resources hub, the "Latest guides" list, or the nav dropdown.
+// TO PUBLISH: remove the robots prop below, drop the sitemap filter entry in
+// astro.config.mjs, set datePublished to the real date, and add it to the hub.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const pageUrl = SITE.url + '/resources/hoa-master-insurance-policy';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Resources', url: SITE.url + '/resources' },
+  { name: 'Insurance & Risk', url: pageUrl },
+]);
+
+const article = articleSchema({
+  headline: "HOA Master Insurance Policy: What It Covers (and What It Doesn't)",
+  description:
+    'What an HOA or condo master insurance policy covers, where your own coverage has to start, and how Gulf South boards handle wind, flood, and deductibles.',
+  url: pageUrl,
+  datePublished: '2026-08-14',
+  image: new URL('/photos/og/hoa-master-insurance-policy.jpg', SITE.url).toString(),
+  about: ['HOA master insurance policy', 'condo insurance', 'HO-6 policy', 'named-storm deductible', 'flood insurance'],
+});
+
+const faq = faqSchema([
+  {
+    q: 'What does an HOA master insurance policy cover?',
+    a: 'An HOA master insurance policy typically covers common areas, general liability, directors and officers coverage for the board, and fidelity coverage for association funds. In condo and townhome communities it usually covers the building structure as well, though how far it reaches inward depends on whether the policy is written bare walls, walls-in, or all-in. Premiums are funded through assessments.',
+  },
+  {
+    q: 'What is the difference between a master policy and an HO-6?',
+    a: "The HOA master insurance policy is the association's coverage for shared property and building elements, while an HO-6 is an individual owner's policy covering interior finishes, personal belongings, and liability inside the unit. They are designed to work together, and the seam between them is set by the master policy type and your governing documents. Most HO-6 policies can also add loss assessment coverage.",
+  },
+  {
+    q: 'Does an HOA master policy cover hurricane or flood damage?',
+    a: 'Wind damage is often covered, but usually under a separate named-storm deductible calculated as a percentage of insured value rather than a flat amount. Flood is almost never covered by a master policy and requires separate coverage through the National Flood Insurance Program or a private flood carrier. In coastal communities, both details are worth confirming in writing before storm season.',
+  },
+  {
+    q: "How do I get a copy of my HOA's master insurance policy?",
+    a: 'Submit a written request to your board or management company asking for the HOA master insurance policy or a certificate of insurance. Lenders commonly require the certificate at closing or refinance, so most management companies produce them quickly. If you want the full policy rather than the certificate, say so in the request, since the two documents are not the same thing.',
+  },
+]);
+---
+<BaseLayout
+  title="HOA Master Insurance Policy: What It Covers & Doesn't | CMGT"
+  description="What an HOA or condo master insurance policy covers, where your own coverage has to start, and how Gulf South boards handle wind, flood, and deductibles."
+  ogType="article"
+  robots="noindex,nofollow"
+  pageSchema={[breadcrumb, article, faq]}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Insurance & Risk"}]'></nav>
+
+  <article>
+    <header class="art-hero">
+      <ImageSlot priority src="/photos/hoa-master-insurance-policy.webp" alt="A well-kept Gulf South community with townhomes, a pool, and landscaped common areas covered by an HOA master insurance policy" shape="rect" />
+      <div class="container art-hero-in">
+        <div class="art-cat">Insurance &amp; Risk</div>
+        <h1 class="art-h1">HOA master insurance policy: what it covers (and what it doesn&rsquo;t).</h1>
+        <p class="art-lede">Most homeowners assume the association insures everything, right up until something breaks. Here&rsquo;s where the master policy stops, where yours starts, and how wind, flood, and deductibles work in the Gulf South.</p>
+        <div class="art-meta"><span>7 min read</span><span class="dot"></span><span>Insurance &amp; Risk</span></div>
+      </div>
+    </header>
+
+    <div class="art-body">
+      <div class="container art-wrap">
+        <div class="art-take reveal">
+          <p class="art-take-h">The short version</p>
+          <p class="art-take-p">The association&rsquo;s master policy covers shared property, and in condos part of the building. Your belongings, interior finishes, and liability inside the home are yours to insure. In the Gulf South, read the wind and flood terms closely.</p>
+        </div>
+
+        <p class="art-p">Most homeowners assume the association insures everything, right up until something breaks and they find out otherwise. A pipe fails inside a wall. A storm peels back part of a roof. Suddenly the only question is where the association&rsquo;s coverage stops and yours starts. An HOA master insurance policy covers a great deal, but it does not cover everything, and the gap catches people every year. This guide walks through what an HOA master insurance policy typically covers, where your own policy has to pick up, and how wind, flood, and deductibles work in Gulf South communities, where those details matter more than almost anywhere else.</p>
+
+        <h2 class="art-h2">What is an HOA master insurance policy?</h2>
+        <p class="art-p">An HOA master insurance policy is the association&rsquo;s own insurance, purchased by the board and paid for through assessments, that covers shared property and, depending on the community, parts of the buildings themselves. The association holds the policy as an entity, so no individual homeowner is the policyholder, and the premium shows up as a line in the annual budget rather than on anyone&rsquo;s personal bill.</p>
+        <p class="art-p">What it reaches depends on the kind of community. In a single-family HOA, a master insurance policy for homeowners associations usually covers the common areas: the clubhouse, pool, gates, signage, fences, private streets, and the association&rsquo;s liability for what happens there. Each home is insured by its owner. In a condo or townhome community, a condo association master insurance policy usually extends to the building structure as well. <strong>How far into the building it reaches comes down to three phrases you will see in the policy: bare walls, walls-in, or all-in.</strong></p>
+
+        <h2 class="art-h2">What an HOA master insurance policy typically covers</h2>
+        <p class="art-p">An HOA master insurance policy bundles several kinds of HOA insurance coverage into one program rather than a single line of protection. The usual components:</p>
+        <ul class="art-ul">
+          <li><strong>Property coverage</strong> for common elements and, in condo communities, some or all of the building structure, usually at replacement cost</li>
+          <li><strong>General liability</strong> for injuries and damage that happen on association property</li>
+          <li><strong>Directors and officers (D&amp;O)</strong> coverage, which protects volunteer board members against claims arising from their decisions</li>
+          <li><strong>Fidelity or crime coverage</strong> for theft or misuse of association funds</li>
+          <li><strong>Umbrella coverage</strong> in many communities, sitting above the liability limits</li>
+        </ul>
+        <p class="art-p"><strong>The single most consequential detail in the property section is how far building coverage extends, because that is what decides whether your drywall, cabinets, and flooring are the association&rsquo;s problem or yours.</strong> Bare walls stops at the structure. Walls-in reaches inward to include original fixtures and finishes. All-in goes furthest, often covering improvements too. Your governing documents and the policy settle which applies to your community.</p>
+
+        <h2 class="art-h2">Where the master policy ends and yours begins</h2>
+        <p class="art-p">An HOA master insurance policy generally stops at the boundary of your home or unit. Interior finishes, personal belongings, liability for what happens inside, additional living expenses if you are displaced, and loss assessments are usually yours to insure. Condo and townhome owners handle this with an HO-6 policy. Single-family owners in an HOA carry a standard homeowners policy, since the association was never insuring the house to begin with.</p>
+        <p class="art-p">Loss assessment coverage deserves its own mention because so few owners carry enough of it. It pays your share when the association levies a <a href="/resources/hoa-special-assessments">special assessment</a> after a covered loss, which is exactly what happens when a large deductible has to be funded. It is usually an inexpensive add-on, and in a coastal community one of the most useful dollars an owner can spend.</p>
+
+        <div class="art-table-wrap reveal">
+          <table class="art-table">
+            <thead>
+              <tr>
+                <th>Usually the association&rsquo;s master policy</th>
+                <th>Usually your own policy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Clubhouse, pool, gates, fences, signage, private streets</td>
+                <td>Personal belongings: furniture, clothing, electronics</td>
+              </tr>
+              <tr>
+                <td>Roof, exterior walls, and structure (condo and townhome communities)</td>
+                <td>Interior finishes: flooring, cabinets, paint, fixtures</td>
+              </tr>
+              <tr>
+                <td>Liability for injuries in common areas</td>
+                <td>Liability for what happens inside your home</td>
+              </tr>
+              <tr>
+                <td>Board members&rsquo; decisions (D&amp;O)</td>
+                <td>Your share of a special assessment (loss assessment coverage)</td>
+              </tr>
+              <tr>
+                <td>Theft of association funds (fidelity)</td>
+                <td>Temporary housing while your home is repaired</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="art-p"><strong>Treat that table as a starting point, not an answer, because the real dividing line is set by your master policy type and your governing documents.</strong> Read both, and ask your insurance agent to walk you through the seam between the two policies. This is general information, not insurance advice.</p>
+
+        <h2 class="art-h2">Wind, flood, and deductibles in Gulf South communities</h2>
+        <p class="art-p">Two things surprise Gulf South boards and homeowners more than anything else: named-storm deductibles are usually a percentage of insured value rather than a flat dollar amount, and flood is almost never part of an HOA master insurance policy. Both are worth understanding before a storm, not after.</p>
+        <p class="art-p">Louisiana, Mississippi, Alabama, Texas, and Florida all permit <a href="https://content.naic.org/article/consumer-insight-what-are-named-storm-deductibles" target="_blank" rel="nofollow noopener">named-storm and hurricane deductibles</a>, which typically run between 1% and 10% of insured value and can apply per event, per season, or per calendar year depending on the policy. <strong>On a building insured for $4 million, an illustrative 5% named-storm deductible means the association covers $200,000 before the carrier pays anything.</strong> That money comes from somewhere, usually reserves or a special assessment, which is why deductibles belong in the same conversation as your <a href="/resources/hoa-reserve-study">reserve study</a>.</p>
+        <p class="art-p">Flood is a separate purchase. Standard property policies exclude it, so communities in or near a flood zone need coverage through the <a href="https://www.floodsmart.gov" target="_blank" rel="nofollow noopener">National Flood Insurance Program</a> (NFIP) or a private flood carrier. Coverage costs across the Gulf South have eased from their crisis peak as reinsurance pricing has fallen and carriers have started writing again, though an HOA master insurance policy prices off different inputs than a personal homeowners policy and rebuilding costs keep climbing. Review coverage and deductibles at every renewal rather than budgeting from last year&rsquo;s premium, and pair that review with the community&rsquo;s <a href="/resources/hurricane-preparedness-for-hoas">hurricane preparedness plan</a>.</p>
+
+        <h2 class="art-h2">How to get a copy, and how boards should manage the policy</h2>
+        <p class="art-p">Homeowners can request the HOA master insurance policy or a certificate of insurance from the board or management company, and boards should review the policy in full every year at renewal. If you are wondering how to get a copy of an HOA master insurance policy, a written request usually does it, and the certificate often arrives within days because mortgage lenders routinely require one at closing.</p>
+        <p class="art-p">For boards, that review is more than glancing at the premium. Check that property limits still reflect replacement cost rather than a number set years ago. Compare the named-storm deductible against what the association actually has in reserves. Confirm D&amp;O and fidelity limits still fit the community. <strong>Then write down what you reviewed and what you decided, because the board that documents its insurance decisions is the board that can defend them later.</strong> The <a href="https://www.caionline.org" target="_blank" rel="nofollow noopener">Community Associations Institute</a> publishes risk management resources for boards. CMGT carries insurance monitoring in its management agreement and runs renewals and claims through a dedicated Insurance and Reserve department, so boards are not tracking policy dates and claim paperwork alone. In <a href="/condo-management">condo and townhome communities</a>, where the master policy reaches furthest into the buildings, coordinating master and unit-owner coverage is most of the work.</p>
+
+        <h2 class="art-h2">Frequently asked questions</h2>
+        <h3 class="art-h3">What does an HOA master insurance policy cover?</h3>
+        <p class="art-p">An HOA master insurance policy typically covers common areas, general liability, directors and officers coverage for the board, and fidelity coverage for association funds. In condo and townhome communities it usually covers the building structure as well, though how far it reaches inward depends on whether the policy is written bare walls, walls-in, or all-in. Premiums are funded through assessments.</p>
+        <h3 class="art-h3">What is the difference between a master policy and an HO-6?</h3>
+        <p class="art-p">The HOA master insurance policy is the association&rsquo;s coverage for shared property and building elements, while an HO-6 is an individual owner&rsquo;s policy covering interior finishes, personal belongings, and liability inside the unit. They are designed to work together, and the seam between them is set by the master policy type and your governing documents. Most HO-6 policies can also add loss assessment coverage.</p>
+        <h3 class="art-h3">Does an HOA master policy cover hurricane or flood damage?</h3>
+        <p class="art-p">Wind damage is often covered, but usually under a separate named-storm deductible calculated as a percentage of insured value rather than a flat amount. Flood is almost never covered by a master policy and requires separate coverage through the National Flood Insurance Program or a private flood carrier. In coastal communities, both details are worth confirming in writing before storm season.</p>
+        <h3 class="art-h3">How do I get a copy of my HOA&rsquo;s master insurance policy?</h3>
+        <p class="art-p">Submit a written request to your board or management company asking for the HOA master insurance policy or a certificate of insurance. Lenders commonly require the certificate at closing or refinance, so most management companies produce them quickly. If you want the full policy rather than the certificate, say so in the request, since the two documents are not the same thing.</p>
+
+        <h2 class="art-h2">Know where the coverage line falls before you need to</h2>
+        <p class="art-p">An HOA master insurance policy protects the community, but no policy protects an owner who assumed it covered more than it does. Learn where the association&rsquo;s coverage ends, insure the rest yourself, and in the Gulf South, read the wind and flood terms closely. Boards that review the policy every year and write down what they found are rarely the ones caught off guard. CMGT coordinates renewals, claims, and certificates so your board is not chasing paperwork after a storm. If you want that kind of oversight, you can <a href="/request-a-proposal">request a proposal</a> any time.</p>
+
+        <p class="art-disclaimer">This article is general information for HOA boards and homeowners, not insurance, legal, or financial advice. Coverage terms, deductibles, and market conditions change over time &mdash; confirm your community&rsquo;s specifics with your governing documents, your insurance agent, and your association counsel.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="rel">
+    <div class="container">
+      <h2 class="rel-h">Keep reading.</h2>
+      <div class="rel-grid"><a class="rel-card" href="/resources/hurricane-preparedness-for-hoas"><span class="rel-t">Hurricane Preparedness for HOAs</span><span class="rel-ar">&rarr;</span></a><a class="rel-card" href="/resources/hoa-special-assessments"><span class="rel-t">HOA Special Assessments</span><span class="rel-ar">&rarr;</span></a><a class="rel-card" href="/condo-management"><span class="rel-t">Condo &amp; Townhome Management</span><span class="rel-ar">&rarr;</span></a></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container cta-in">
+      <div><h2 class="cta-h">Want a manager who actually watches the insurance?</h2><p class="cta-p">A real person will walk through your community&rsquo;s coverage and renewals &mdash; within two business days.</p></div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">&rarr;</span></a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+  .art-hero { position: relative; background: var(--freedom-blue); color: #fff; padding: 104px 0 88px; overflow: hidden; isolation: isolate; }
+  .art-hero > :global(.image-slot) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .art-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(30,30,119,.66) 0%, rgba(30,30,119,.84) 100%); pointer-events: none; }
+  .art-hero-in { position: relative; z-index: 2; max-width: 820px; }
+  .art-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .art-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.025em; color: #fff; margin: 16px 0 20px; text-wrap: balance; }
+  .art-lede { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; color: rgba(255,255,255,.9); margin: 0 0 24px; text-wrap: pretty; }
+  .art-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: rgba(255,255,255,.65); }
+  .art-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.4); }
+  .art-body { background: #fff; padding: 70px 0 100px; }
+  .art-wrap { max-width: 720px; }
+  .art-take { background: var(--fb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 0 0 44px; }
+  .art-take-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); opacity: .6; margin: 0 0 8px; }
+  .art-take-p { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0; }
+  .art-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 32px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 44px 0 16px; text-wrap: balance; }
+  .art-h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(19px, 2.2vw, 23px); line-height: 1.25; color: var(--freedom-blue); margin: 30px 0 10px; }
+  .art-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+  .art-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-ul { margin: 0 0 20px; padding-left: 22px; }
+  .art-ul li { font-size: 17px; line-height: 1.65; color: var(--ink-700); margin: 0 0 9px; }
+  .art-ul li strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-table-wrap { margin: 26px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .art-table { width: 100%; border-collapse: collapse; min-width: 480px; font-size: 15px; }
+  .art-table th { background: var(--freedom-blue); color: #fff; text-align: left; font-family: var(--font-body); font-weight: 700; font-size: 12.5px; letter-spacing: .02em; padding: 12px 14px; vertical-align: bottom; }
+  .art-table td { padding: 12px 14px; border: 1px solid var(--hairline-strong); color: var(--ink-700); line-height: 1.5; vertical-align: top; width: 50%; }
+  .art-table tbody tr:nth-child(even) td { background: var(--fb-lightest); }
+  .art-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .art-wrap a:hover { border-bottom-color: var(--landscaping-green); }
+  .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
+  .rel { background: var(--nb-lightest); padding: 90px 0; }
+  .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
+  .rel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .rel-grid { grid-template-columns: 1fr; } }
+  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; box-shadow: 0 2px 8px rgba(30,30,119,.05); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,30,119,.10); }
+  .rel-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .rel-ar { color: var(--landscaping-green); font-size: 18px; }
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+</style>
