@@ -1,0 +1,228 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+const pageUrl = SITE.url + '/resources/hoa-financial-statements';
+
+// Sitemap spec assigns Article to every board-education spoke. Dates are the
+// launch date and must stay in step with the visible "Updated" line in the hero —
+// Google flags a schema date that no reader can see on the page.
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Resources', url: SITE.url + '/resources' },
+  { name: 'Finances & Reserves', url: pageUrl },
+]);
+
+const article = articleSchema({
+  headline: 'HOA Financial Statements Explained in Plain English',
+  description:
+    'The four HOA financial statements every board and homeowner should know: balance sheet, income statement, cash flow, and budget comparison, in plain English.',
+  url: pageUrl,
+  datePublished: '2026-08-19',
+  image: new URL('/photos/og/hoa-financial-statements.jpg', SITE.url).toString(),
+  about: ['HOA financial statements', 'HOA balance sheet', 'HOA income statement', 'HOA budget comparison'],
+});
+
+const faq = faqSchema([
+  {
+    q: 'Are HOAs required to provide financial statements?',
+    a: "In most cases, yes. Associations are generally required to maintain financial records and make them available to members, though the exact obligation depends on your state's statute and your governing documents. Texas, Florida, Louisiana, and Alabama each address association records and HOA financial statements in state law, with different triggers and timelines, while Mississippi relies mainly on the governing documents and general nonprofit corporation law. CMGT sends full monthly financials to every homeowner regardless of the minimum requirement.",
+  },
+  {
+    q: "How do I request my HOA's financial statements?",
+    a: 'Submit a written request to your board or management company naming the specific reports and time period you want. Many communities also post monthly HOA financial statements to a homeowner portal, which is faster than a formal request. Expect a reasonable turnaround rather than same-day access, since records may need to be pulled and reviewed.',
+  },
+  {
+    q: 'What does an HOA balance sheet show?',
+    a: "An HOA balance sheet shows the association's assets, liabilities, and equity on a specific date, meaning what the community owns, what it owes, and what remains. Assets typically include operating cash, reserve fund cash, and accounts receivable. Liabilities include unpaid vendor invoices, prepaid assessments, and any loans.",
+  },
+  {
+    q: 'How long must an HOA keep financial records?',
+    a: 'Retention periods for HOA financial statements vary by state and by governing documents, but multiple years is typical and many associations keep them longer. Check your governing documents and state statute for the specific requirement, and confirm anything you plan to act on with association counsel or a CPA.',
+  },
+]);
+---
+<BaseLayout
+  title="HOA Financial Statements Explained in Plain English | CMGT"
+  description="The four HOA financial statements every board and homeowner should know: balance sheet, income statement, cash flow, and budget comparison, in plain English."
+  ogType="article"
+  pageSchema={[breadcrumb, article, faq]}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Finances & Reserves"}]'></nav>
+
+  <article>
+    <header class="art-hero">
+      <ImageSlot priority src="/photos/hoa-financial-statements.webp" alt="A homeowner reviewing HOA financial statements on a laptop at her kitchen table" shape="rect" />
+      <div class="container art-hero-in">
+        <div class="art-cat">Finances &amp; Reserves</div>
+        <h1 class="art-h1">HOA financial statements, explained in plain English.</h1>
+        <p class="art-lede">A set of financial statements lands in your inbox and nobody ever walked you through them. Here are the four core HOA financial statements: what each one shows, what to question, and how to get copies.</p>
+        <div class="art-meta"><span>7 min read</span><span class="dot"></span><span>2026 Edition &middot; Updated August 2026</span></div>
+      </div>
+    </header>
+
+    <div class="art-body">
+      <div class="container art-wrap">
+        <div class="art-take reveal">
+          <p class="art-take-h">The short version</p>
+          <p class="art-take-p">Four reports do the work: the balance sheet, the income statement, the cash flow and ledger detail, and the budget comparison. Each answers a different question, and reading them together turns a stack of numbers into a real picture of your community.</p>
+        </div>
+
+        <p class="art-p">You joined the board this year, and by the second week of the month a set of HOA financial statements lands in your inbox: a balance sheet, an income statement, a budget comparison, and pages of numbers nobody walked you through. Or maybe you&rsquo;re a homeowner who wants to know where your assessments go. Either way, understanding your community&rsquo;s money shouldn&rsquo;t require an accounting degree. This guide walks through the four core HOA financial statements in plain English: what each shows, what to look for, and how to get copies.</p>
+
+        <h2 class="art-h2">What are HOA financial statements?</h2>
+        <p class="art-p">HOA financial statements are the monthly and annual reports that show a community association&rsquo;s financial health: what it owns, what it owes, what it earned and spent, and how actual results compare to the budget the board approved. They are sometimes called HOA financial reports, and in most communities the management company prepares them monthly for the board.</p>
+        <p class="art-p">Four reports do most of the work inside a standard set of HOA financial statements: the balance sheet, the income statement, the cash flow and general ledger detail, and the budget comparison. <strong>Each one answers a different question, and reading them together is what turns a stack of numbers into a real picture of your community&rsquo;s finances.</strong></p>
+
+        <h2 class="art-h2">The HOA balance sheet: what the community owns and owes</h2>
+        <p class="art-p">The HOA balance sheet is usually the first page of a set of HOA financial statements: a snapshot of your association&rsquo;s financial position on one date. It lists assets (what the community owns), liabilities (what it owes), and equity (the difference, often labeled fund balance). Assets usually include operating cash, reserve fund cash, and accounts receivable, meaning money homeowners owe but haven&rsquo;t paid. Liabilities include accounts payable (approved vendor invoices not yet paid), prepaid assessments, and any loans.</p>
+        <p class="art-p"><strong>The most useful habit on a balance sheet is checking that reserve fund cash is reported separately from operating cash and is tracking with your reserve study.</strong> That separation is the heart of sound HOA reserve fund accounting. Two things deserve a question at the next meeting: reserve money quietly used to cover operating shortfalls, and a receivables balance that climbs month after month, the first visible sign of a delinquency problem. Our <a href="/resources/hoa-reserve-study">HOA reserve study guide</a> covers how reserve targets get set.</p>
+
+        <h2 class="art-h2">The HOA income statement (P&amp;L): money in vs. money out</h2>
+        <p class="art-p">The HOA income statement shows income and expenses over a period, usually the month and the year to date, and whether the association finished with a surplus or a deficit. It is the report most people picture when they think about HOA financial statements. Assessments do nearly all the lifting on the income side, with smaller amounts from interest, transfer charges, and amenity income. The expense side shows the real cost of running a community: landscaping, insurance, utilities, common area maintenance, management, and the monthly contribution to reserves.</p>
+        <p class="art-p">One naming quirk worth clearing up: your association is almost certainly a nonprofit corporation, so it isn&rsquo;t trying to earn a profit. The label P&amp;L, short for profit and loss, is borrowed from for-profit accounting, and most software simply prints it that way. Audited statements usually call the same report a statement of revenues and expenses, and the bottom line is a surplus or deficit, not a profit or a loss.</p>
+        <p class="art-p"><strong>Read every expense line against its budgeted amount rather than against last month, and separate one-time costs from recurring ones before drawing a conclusion.</strong> A single storm cleanup can make a month look alarming when nothing is wrong. The pattern is what matters: a deficit that repeats quarter after quarter, or a category over budget every month, which usually means the budget assumption was wrong, not that the community had a bad month.</p>
+
+        <h2 class="art-h2">Cash flow and the budget comparison report</h2>
+        <p class="art-p">Two more reports round out a complete set of HOA financial statements. In a monthly package the cash flow piece is usually a check register and general ledger detail rather than a formal statement of cash flows: what was actually paid and collected, plus the accounts receivable aging of who owes what and for how long. The budget comparison report puts budgeted and actual amounts side by side, with the variance between them, and it is the earliest warning system a board has. If you&rsquo;re setting one up from scratch, our <a href="/resources/hoa-budget-template">HOA budget template</a> lays out every line.</p>
+        <p class="art-p"><strong>Variances aren&rsquo;t the problem; unexplained variances are.</strong> A well-prepared budget comparison arrives with notes on anything meaningful. Watch for large swings nobody can account for, and for an aging report where balances keep sliding past 90 days, your collections signal long before it becomes a cash problem.</p>
+
+        <p class="art-p">Here is how the four HOA financial statements compare at a glance:</p>
+
+        <div class="art-table-wrap reveal">
+          <table class="art-table">
+            <thead>
+              <tr>
+                <th>Report</th>
+                <th>What it shows</th>
+                <th>What to look for</th>
+                <th>Red flag</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Balance sheet</strong></td>
+                <td>Assets, liabilities and equity on one date</td>
+                <td>Reserves separated and tracking with the reserve study</td>
+                <td>Reserves covering operating costs; rising receivables</td>
+              </tr>
+              <tr>
+                <td><strong>Income statement (P&amp;L)</strong></td>
+                <td>Income and expenses over a period; surplus or deficit</td>
+                <td>Actual vs. budget on every line; one-time vs. recurring</td>
+                <td>Repeat deficits; a category over budget every month</td>
+              </tr>
+              <tr>
+                <td><strong>Cash flow / general ledger</strong></td>
+                <td>Transaction detail: what was paid and collected</td>
+                <td>Vendors paid on terms; clean accounts payable</td>
+                <td>Aging receivables sliding past 90 days</td>
+              </tr>
+              <tr>
+                <td><strong>Budget comparison</strong></td>
+                <td>Budget vs. actual, with variances</td>
+                <td>Variances that come with an explanation</td>
+                <td>Large swings nobody can account for</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="art-h2">How often you should get them, and how to request them</h2>
+        <p class="art-p">Boards should receive HOA financial statements every month, and homeowners generally have a right to review their association&rsquo;s financial records on request. The specifics come from your governing documents and your state&rsquo;s association statutes.</p>
+        <p class="art-p">Across CMGT&rsquo;s markets the picture varies more than most guides admit. Texas and Florida have the most developed frameworks, covering both records access and association financial reporting (Texas Property Code Chapter 209 and <a href="https://www.flsenate.gov/Laws/Statutes/2024/Chapter720" target="_blank" rel="nofollow noopener">Florida Statutes Chapter 720</a>). Louisiana&rsquo;s <a href="https://www.legis.la.gov/legis/Law.aspx?d=106629" target="_blank" rel="nofollow noopener">Planned Community Act</a>, effective January 2025, requires associations to keep financial statements and tax returns for the past three years and to make requested records available for examination and copying, without overriding what pre-2025 community documents already say. Alabama&rsquo;s Homeowners&rsquo; Association Act covers declarations recorded on or after January 1, 2016, plus older associations that vote to opt in, and requires the current budget, reserve funds, and last year&rsquo;s financial statements within 30 days of a written request. Mississippi has no comparable act, so access there runs through the governing documents and general nonprofit corporation law.</p>
+        <p class="art-p">Many associations also produce an annual compilation, review, or audit from a CPA, depending on their documents, size, and state law. <strong>If you&rsquo;re wondering how to request HOA financial statements, check your homeowner portal first, since in many communities the reports are already there, then send a written request naming the reports and period you want.</strong> Confirm your community&rsquo;s obligations with your governing documents, association counsel, or a CPA. This is general information, not legal advice.</p>
+
+        <h2 class="art-h2">What good HOA financial reporting looks like</h2>
+        <p class="art-p">Strong HOA financial reporting is timely, consistent, easy to read, and shared openly, not something homeowners have to fight to see. The hallmarks are simple:</p>
+        <ul class="art-ul">
+          <li>A predictable delivery date every month</li>
+          <li>Budget and actual side by side, with notes on anything unusual</li>
+          <li>Reserve funds reported separately from operating funds</li>
+          <li>Plain-language summaries for board members who aren&rsquo;t accountants</li>
+          <li>Access for the entire membership, not just the board</li>
+        </ul>
+        <p class="art-p"><strong>The clearest test of a management company&rsquo;s transparency is who gets the HOA financial statements, not how polished they look.</strong> CMGT was one of the first management companies in the country to send full monthly P&amp;L statements and balance sheets to every homeowner, not just the board. Financials and bank reconciliations go out by the 20th, written into the management agreement, a process that earned a 2024 Vanty Award. The <a href="https://www.caionline.org" target="_blank" rel="noopener">Community Associations Institute</a> publishes reporting resources for boards, and our <a href="/hoa-financial-management">HOA financial management</a> page explains how the monthly close works.</p>
+
+        <h2 class="art-h2">Frequently asked questions</h2>
+        <h3 class="art-h3">Are HOAs required to provide financial statements?</h3>
+        <p class="art-p">In most cases, yes. Associations are generally required to maintain financial records and make them available to members, though the exact obligation depends on your state&rsquo;s statute and your governing documents. Texas, Florida, Louisiana, and Alabama each address association records and HOA financial statements in state law, with different triggers and timelines, while Mississippi relies mainly on the governing documents and general nonprofit corporation law. CMGT sends full monthly financials to every homeowner regardless of the minimum requirement.</p>
+        <h3 class="art-h3">How do I request my HOA&rsquo;s financial statements?</h3>
+        <p class="art-p">Submit a written request to your board or management company naming the specific reports and time period you want. Many communities also post monthly HOA financial statements to a homeowner portal, which is faster than a formal request. Expect a reasonable turnaround rather than same-day access, since records may need to be pulled and reviewed.</p>
+        <h3 class="art-h3">What does an HOA balance sheet show?</h3>
+        <p class="art-p">An HOA balance sheet shows the association&rsquo;s assets, liabilities, and equity on a specific date, meaning what the community owns, what it owes, and what remains. Assets typically include operating cash, reserve fund cash, and accounts receivable. Liabilities include unpaid vendor invoices, prepaid assessments, and any loans.</p>
+        <h3 class="art-h3">How long must an HOA keep financial records?</h3>
+        <p class="art-p">Retention periods for HOA financial statements vary by state and by governing documents, but multiple years is typical and many associations keep them longer. Check your governing documents and state statute for the specific requirement, and confirm anything you plan to act on with association counsel or a CPA.</p>
+
+        <h2 class="art-h2">Reading your community&rsquo;s numbers shouldn&rsquo;t be a guessing game</h2>
+        <p class="art-p">Once you know what each report shows, HOA financial statements stop being a monthly mystery and start being a tool. The balance sheet tells you where the community stands, the income statement tells you how the year is going, and the budget comparison tells you what to ask next. Transparency is what makes it work, for boards and homeowners alike. CMGT delivers full monthly HOA financial statements to every homeowner, on schedule, in every community we manage. If your board wants reporting the whole community can actually read, you can <a href="/request-a-proposal">request a proposal</a> any time.</p>
+
+        <p class="art-disclaimer">This article is general information for HOA boards and homeowners, not legal, tax, or accounting advice. State statutes, records-access rules, and reporting requirements change over time &mdash; confirm your community&rsquo;s current obligations with your governing documents, association counsel, or a CPA.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="rel">
+    <div class="container">
+      <h2 class="rel-h">Keep reading.</h2>
+      <div class="rel-grid"><a class="rel-card" href="/resources/hoa-budget-template"><span class="rel-t">HOA Budget Template</span><span class="rel-ar">&rarr;</span></a><a class="rel-card" href="/resources/hoa-reserve-study"><span class="rel-t">HOA Reserve Study Guide</span><span class="rel-ar">&rarr;</span></a><a class="rel-card" href="/hoa-financial-management"><span class="rel-t">HOA Financial Management</span><span class="rel-ar">&rarr;</span></a></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container cta-in">
+      <div><h2 class="cta-h">Want financial reporting your whole community can read?</h2><p class="cta-p">A real person will walk through your community&rsquo;s financials and reporting &mdash; within two business days.</p></div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">&rarr;</span></a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+  .art-hero { position: relative; background: var(--freedom-blue); color: #fff; padding: 104px 0 88px; overflow: hidden; isolation: isolate; }
+  .art-hero > :global(.image-slot) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .art-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(30,30,119,.66) 0%, rgba(30,30,119,.84) 100%); pointer-events: none; }
+  .art-hero-in { position: relative; z-index: 2; max-width: 820px; }
+  .art-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .art-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.025em; color: #fff; margin: 16px 0 20px; text-wrap: balance; }
+  .art-lede { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; color: rgba(255,255,255,.9); margin: 0 0 24px; text-wrap: pretty; }
+  .art-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: rgba(255,255,255,.65); }
+  .art-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.4); }
+  .art-body { background: #fff; padding: 70px 0 100px; }
+  .art-wrap { max-width: 720px; }
+  .art-take { background: var(--fb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 0 0 44px; }
+  .art-take-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); opacity: .6; margin: 0 0 8px; }
+  .art-take-p { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0; }
+  .art-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 32px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 44px 0 16px; text-wrap: balance; }
+  .art-h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(19px, 2.2vw, 23px); line-height: 1.25; color: var(--freedom-blue); margin: 30px 0 10px; }
+  .art-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+  .art-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-ul { margin: 0 0 20px; padding-left: 22px; }
+  .art-ul li { font-size: 17px; line-height: 1.65; color: var(--ink-700); margin: 0 0 9px; }
+  .art-ul li strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-table-wrap { margin: 26px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .art-table { width: 100%; border-collapse: collapse; min-width: 560px; font-size: 14.5px; }
+  .art-table th { background: var(--freedom-blue); color: #fff; text-align: left; font-family: var(--font-body); font-weight: 700; font-size: 12.5px; letter-spacing: .02em; padding: 12px 14px; vertical-align: bottom; }
+  .art-table td { padding: 12px 14px; border: 1px solid var(--hairline-strong); color: var(--ink-700); line-height: 1.5; vertical-align: top; }
+  .art-table td strong { color: var(--freedom-blue); font-weight: 700; }
+  .art-table tbody tr:nth-child(even) td { background: var(--fb-lightest); }
+  .art-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .art-wrap a:hover { border-bottom-color: var(--landscaping-green); }
+  .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
+  .rel { background: var(--nb-lightest); padding: 90px 0; }
+  .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
+  .rel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .rel-grid { grid-template-columns: 1fr; } }
+  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; box-shadow: 0 2px 8px rgba(30,30,119,.05); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,30,119,.10); }
+  .rel-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .rel-ar { color: var(--landscaping-green); font-size: 18px; }
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+</style>

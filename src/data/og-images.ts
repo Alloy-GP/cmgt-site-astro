@@ -166,4 +166,8 @@ export const OG_IMAGES: Record<string, OgImage> = {
     image: '/photos/og/homeowner-porch-hoa-financials.jpg',
     alt: 'A homeowner on a Gulf South front porch checking their HOA financials on a phone',
   },
+  '/resources/hoa-financial-statements': {
+    image: '/photos/og/hoa-financial-statements.jpg',
+    alt: 'A homeowner reviewing HOA financial statements on a laptop at her kitchen table',
+  },
 };
