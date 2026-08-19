@@ -191,7 +191,7 @@ const service = serviceSchema({
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">When do we get our financial statements?<span class="faq-sign" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-in"><strong>By the 20th of every month</strong> — it's a commitment written into our management agreement. And we share the full P&amp;L and balance sheet with the entire membership, not just the board.</div></div>
+          <div class="faq-a"><div class="faq-a-in"><strong>By the 20th of every month</strong> — it's a commitment written into our management agreement. And we share the full P&amp;L and balance sheet with the entire membership, not just the board. New to reading them? Our guide to <a href="/resources/hoa-financial-statements">HOA financial statements</a> walks through all four reports in plain English.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">Can financial management help with delinquency?<span class="faq-sign" aria-hidden="true"></span></button>
@@ -351,6 +351,10 @@ const service = serviceSchema({
   .faq-a { max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
   .faq-a-in { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); padding: 0 2px 24px; max-width: 640px; }
   .faq-a-in strong { color: var(--freedom-blue); font-weight: 600; }
+  /* global.css sets `a { color: inherit }`, so a link in here needs its own rule
+     or it renders as plain ink-500 body text. Matches the .art-wrap a convention. */
+  .faq-a-in a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .faq-a-in a:hover { border-bottom-color: var(--landscaping-green); }
 
   /* Delinquency estimator */
   .calc { background: #fff; padding: 112px 0; }
