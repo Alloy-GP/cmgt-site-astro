@@ -1,0 +1,372 @@
+---
+/**
+ * Florida HOA laws — board-education reference. Fourth of five state law pages.
+ *
+ * Structure and chrome live in StateLaw.astro; this file is copy plus schema only.
+ * Florida's spine is VOLATILITY: three stacked chapters (720 for HOAs, 718 for
+ * condos, 617 the corporate floor), amended nearly every year, with two laws that
+ * took effect July 1 2026. The page leads on recency because here recency is the
+ * story.
+ *
+ * Two things make this page different from the others in the set:
+ *   1. It uses the shared .law-scopenote callout inside the condominium card to
+ *      state plainly that CMGT does NOT manage Florida condominium regimes.
+ *   2. It deliberately does NOT link to /condo-management — the one page in the set
+ *      where that link must not appear, because the FL condo exclusion above it
+ *      would make the link contradict itself. Do not "fix" this by adding the link.
+ *
+ * Status vocabulary follows the shared spec — in force (green .on), phasing in on a
+ * future date (amber .soon), died/vetoed (grey default).
+ *
+ * The cluster hub at /resources/hoa-laws is not built, so breadcrumbs are three
+ * levels and nothing here links to it.
+ *
+ *   pubDate 2026-08-01 · updatedDate 2026-08-01 · reviewedDate 2026-08-01
+ *   reviewCadence annual post-session (target April) + mid-year check each July 1
+ *   contentType reference · cluster state-hoa-laws · focusKeyword "florida hoa laws"
+ */
+import StateLaw from '~/layouts/StateLaw.astro';
+
+const article = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Florida HOA Laws: A Board Member's Reference",
+  "datePublished": "2026-08-01",
+  "dateModified": "2026-08-01",
+  "author": { "@type": "Organization", "name": "CMGT" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CMGT",
+    "logo": { "@type": "ImageObject", "url": "https://cmgt.org/assets/logo-full-color.svg" }
+  },
+  "mainEntityOfPage": "https://cmgt.org/resources/hoa-laws/florida",
+  "about": {
+    "@type": "Legislation",
+    "name": "Florida Homeowners' Association Act",
+    "legislationIdentifier": "Fla. Stat. ch. 720"
+  },
+  "spatialCoverage": { "@type": "State", "name": "Florida" }
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cmgt.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://cmgt.org/resources" },
+    { "@type": "ListItem", "position": 3, "name": "Florida HOA Laws", "item": "https://cmgt.org/resources/hoa-laws/florida" }
+  ]
+};
+
+// Every answer below matches the visible FAQ copy verbatim.
+const faq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much can a Florida HOA fine a homeowner?",
+      "acceptedAnswer": { "@type": "Answer", "text": "$100 per violation and $1,000 in the aggregate for a continuing violation, unless the governing documents provide otherwise. A fine of less than $1,000 cannot become a lien against the parcel." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a Florida HOA board impose a fine by itself?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. A fine or suspension requires at least 14 days notice and an opportunity for a hearing before a committee of at least three members who are not officers, directors, or employees of the association, or their close relatives. If that committee does not approve the fine by majority vote, it cannot be imposed." }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a Florida HOA have to provide records?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ten business days after receiving a written request. Failure creates a rebuttable presumption of willful non-compliance, with minimum damages of $50 per calendar day for up to 10 days, beginning on the 11th business day after the request was received." }
+    },
+    {
+      "@type": "Question",
+      "name": "How long before a Florida HOA can lien or foreclose?",
+      "acceptedAnswer": { "@type": "Answer", "text": "45 days written notice before recording a claim of lien, then a separate 45-day notice of intent to foreclose that cannot be sent until the first period has run. The two run in sequence." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a Florida HOA require a building permit before architectural review?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Since July 1, 2026, HB 803 amended section 720.3035 to prohibit an association or its architectural review committee from requiring a government-issued permit as a prerequisite to reviewing a proposed improvement. The association may still review, apply its standards, and deny." }
+    },
+    {
+      "@type": "Question",
+      "name": "Did Florida pass new HOA laws in 2026?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Two reach associations, both effective July 1, 2026: HB 797, a comprehensive revision of the Chapter 617 nonprofit corporation statute that governs associations where Chapters 718 and 720 are silent, and HB 803, which bars requiring a building permit before architectural review. The major association bill, HB 657, passed the House and died in Senate committee." }
+    }
+  ]
+};
+---
+<StateLaw
+  state="Florida"
+  stateSlug="florida"
+  title="Florida HOA Laws: A Board Member's Reference (2026) | CMGT"
+  description="Florida HOA law in plain English: fine limits and the hearing committee, the two 45-day lien clocks, records deadlines, and what changed on July 1, 2026."
+  headline="Florida HOA laws: a board member’s reference."
+  lede="Florida regulates community associations more heavily than any state in the region, and changes them almost every year. Two laws took effect on July 1, 2026. One of them rewrote the corporate statute sitting underneath every association in the state."
+  reviewedDate="August 1, 2026"
+  sessionThrough="2026 regular session"
+  jumpSections={[
+    { id: "changed", label: "What changed" },
+    { id: "quick",   label: "Quick answers" },
+    { id: "rules",   label: "The rules" },
+    { id: "history", label: "Session record" },
+    { id: "faq",     label: "FAQ" },
+    { id: "sources", label: "Sources" }
+  ]}
+  crumbs={[
+    { t: "Home", href: "/" },
+    { t: "Resources", href: "/resources" },
+    { t: "Florida HOA Laws" }
+  ]}
+  pageSchema={[article, breadcrumb, faq]}
+>
+  <div slot="take" class="law-take">
+    <p class="law-take-h">What governs your community</p>
+    <ul class="law-take-ref">
+      <li><strong>Chapter 720</strong> — the Homeowners’ Association Act, the main statute for HOAs. Most of this page comes from it.</li>
+      <li><strong>Chapter 718</strong> — the Condominium Act. Condominium regimes only, and a heavier set of rules.</li>
+      <li><strong>Chapter 617</strong> — the Nonprofit Corporation Act. It steps in wherever 720 or 718 is silent.</li>
+      <li><strong>Federal law</strong> — fair housing, flag display, and a short list more.</li>
+    </ul>
+  </div>
+
+  <Fragment slot="changed">
+    <h2 class="law-h2" id="changed">What changed recently</h2>
+    <p class="law-sub">Florida’s 2026 session ran January 13 to March 13. The headline association bill failed, but two enacted laws reach associations and both took effect July 1, 2026.</p>
+    <div class="law-changes">
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2026</span><span class="st on">In force Jul 2026</span></div>
+        <div>
+          <h3>HB 797 rewrote the corporate statute underneath your association</h3>
+          <p>A comprehensive revision of Chapter 617, renamed the Florida Nonprofit Corporation Act and realigned with the ABA Model Nonprofit Corporation Act. It is not an association bill, but nearly every Florida association is a Chapter 617 nonprofit, and Chapter 617 governs wherever Chapter 718 or 720 is silent. It reworks director and officer standards of care and conflicts, member inspection rights, remote participation, and derivative actions.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2026</span><span class="st on">In force Jul 2026</span></div>
+        <div>
+          <h3>HB 803 — you can no longer require a permit before architectural review</h3>
+          <p>Chapter 2026-63. Amends section 720.3035 so an association, architectural review committee, or similar committee may not require a government-issued building permit as a prerequisite to reviewing an owner’s proposed construction or improvements. You can still review, apply your standards, and deny. You cannot gatekeep the review behind a permit.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2026</span><span class="st">Bill died</span></div>
+        <div>
+          <h3>HB 657 would have been the largest overhaul in years</h3>
+          <p>Sweeping changes to termination, meetings, board duties, dispute resolution, and how governing documents get amended, including amendment by minority vote and termination on a petition of 20% of residents, plus a dedicated community association court. It passed the House and died in Senate committee after organized industry opposition.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2025</span><span class="st soon">Phasing in</span></div>
+        <div>
+          <h3>The 2025 condominium reform package is still landing</h3>
+          <p>Most of the 2025 omnibus took effect July 1, 2025, expanding reserve requirements, inspections, governance standards, and manager accountability. Expanded records and online access requirements phased in on January 1, 2026, reaching considerably smaller associations than before.</p>
+        </div>
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="quick">
+    <h2 class="law-h2" id="quick">Quick answers</h2>
+    <p class="law-sub">The questions Florida boards ask most. Chapter 720 answers unless noted.</p>
+    <p class="law-note"><strong>Read these alongside your governing documents.</strong> Each answer notes the statute it comes from, so you and your attorney can go to the source.</p>
+    <div class="law-table-wrap">
+      <table class="law-table">
+        <thead><tr><th>Question</th><th>Short answer</th><th>Citation</th></tr></thead>
+        <tbody>
+          <tr><td class="q">Which chapter governs us?</td><td>Chapter 720 for homeowners’ associations, Chapter 718 for condominiums, and Chapter 617 for corporate matters where the others are silent.</td><td><span class="law-cite">720 · 718 · 617</span></td></tr>
+          <tr><td class="q">How much can we fine?</td><td>$100 per violation and $1,000 in the aggregate for a continuing violation, unless your governing documents provide otherwise.</td><td><span class="law-cite">720.305(2)</span></td></tr>
+          <tr><td class="q">Can the board impose a fine on its own?</td><td>No. A fine or suspension needs at least 14 days’ notice and a hearing before a committee of at least three people who are not officers, directors, employees, or their close relatives.</td><td><span class="law-cite">720.305(2)</span></td></tr>
+          <tr><td class="q">What if that committee votes no?</td><td>The fine cannot be imposed. The committee confirms or rejects; it does not renegotiate.</td><td><span class="law-cite">720.305(2)</span></td></tr>
+          <tr><td class="q">What if the owner cures first?</td><td>If the violation is cured before the hearing, or as specified in the written notice, no fine or suspension may be imposed.</td><td><span class="law-cite">720.305(2)</span></td></tr>
+          <tr><td class="q">Can a small fine become a lien?</td><td>No. A fine of less than $1,000 may not become a lien against a parcel.</td><td><span class="law-cite">720.305(2)</span></td></tr>
+          <tr><td class="q">How long before we can record an assessment lien?</td><td>45 days. You must first send written notice giving the owner 45 days to pay.</td><td><span class="law-cite">720.3085(4)</span></td></tr>
+          <tr><td class="q">And before foreclosing?</td><td>A second, separate 45 days, and that notice cannot go out until the first 45 days have run.</td><td><span class="law-cite">720.3085(5)</span></td></tr>
+          <tr><td class="q">How fast must we produce records?</td><td>Within 10 business days of a written request. Miss it and a presumption of willful non-compliance attaches, with minimum damages of $50 per day up to 10 days.</td><td><span class="law-cite">720.303(5)</span></td></tr>
+          <tr><td class="q">How much notice for a board meeting?</td><td>Posted at least 48 hours in advance.</td><td><span class="law-cite">720.303(2)</span></td></tr>
+          <tr><td class="q">And for an annual or budget meeting?</td><td>14 days.</td><td><span class="law-cite">720.306 · 720.303(6)</span></td></tr>
+          <tr><td class="q">Can we require a building permit before ARC review?</td><td>No, not since July 1, 2026.</td><td><span class="law-cite">720.3035</span></td></tr>
+          <tr><td class="q">Does our manager need a license?</td><td>Florida licenses community association managers through the state. Verify any manager or firm you engage.</td><td><span class="law-cite">ch. 468, pt. VIII</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </Fragment>
+
+  <Fragment slot="rules">
+    <h2 class="law-h2" id="rules">The rules, in more detail</h2>
+    <p class="law-sub">Six areas that come up most. Open any one for the detail behind the short answer.</p>
+    <div class="law-rules">
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Which law applies to your community</h3>
+            <p class="answer">Three chapters stack. Chapter 720 or 718 depending on your community type, with Chapter 617 filling the gaps in both.</p>
+            <span class="law-cite">Fla. Stat. ch. 720 · 718 · 617</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p><strong>Chapter 720</strong>, the Homeowners’ Association Act, governs residential homeowners’ associations. Most of this page comes from it.</p>
+          <p><strong>Chapter 718</strong>, the Condominium Act, governs condominium associations and is a separate regime with its own reserve, inspection, and records rules. Chapter 719 covers cooperatives.</p>
+          <p><strong>Chapter 617</strong>, now the Florida Nonprofit Corporation Act, governs almost every association as a corporate entity and applies wherever Chapter 720 or 718 is silent. This is the one boards forget, and it matters more this year than usual because HB 797 rewrote it effective July 1, 2026. Director and officer standards of care, conflicts of interest, remote participation, member inspection rights that cannot be stripped by bylaws, and a new derivative action framework all changed. Where Chapter 720 gives a specific rule it still controls. Where it does not, the new Chapter 617 default now applies.</p>
+          <p>Florida also licenses <strong>community association managers</strong> under Chapter 468, Part VIII. Unlike most states in the region, management here is a licensed occupation, and it is worth confirming the licensure of any firm or individual you engage.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Fines and enforcement</h3>
+            <p class="answer">Florida gives boards the least unilateral fining power in the region. An independent committee has to approve, and it can say no.</p>
+            <span class="law-cite">Fla. Stat. § 720.305</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>An association may levy reasonable fines for violations of the declaration, bylaws, or reasonable rules. A fine may not exceed <strong>$100 per violation</strong>, and a fine levied for each day of a continuing violation may not exceed <strong>$1,000 in the aggregate</strong>, in both cases unless the governing documents provide otherwise. <strong>A fine of less than $1,000 may not become a lien</strong> against a parcel.</p>
+          <p><strong>The committee is the part boards get wrong.</strong> A fine or suspension cannot be imposed without at least 14 days’ notice and an opportunity for a hearing before a committee of at least three members appointed by the board who are not officers, directors, or employees of the association, nor the spouse, parent, child, brother, or sister of one. If that committee does not approve the proposed fine by majority vote, it may not be imposed. The committee’s role is to confirm or reject what the board levied, not to substitute its own penalty.</p>
+          <p>Within seven days after the hearing the committee provides written notice of its findings to the owner at the designated mailing or email address in the official records, including how to cure the violation or fulfil a suspension, or the date a fine must be paid.</p>
+          <p><strong>Curing ends it.</strong> If the violation is cured before the hearing, or in the manner specified in the written notice, a fine or suspension may not be imposed at all. In any action to recover a fine, the prevailing party is entitled to reasonable attorney fees and costs.</p>
+          <p>A board that fines by vote of the board alone, without a properly constituted committee, is outside the statute. <a href="/resources/hoa-rules-enforcement">Our guide to fair-process enforcement</a> covers building a compliant process.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Assessments and liens</h3>
+            <p class="answer">Two separate 45-day clocks, run in sequence. They cannot overlap.</p>
+            <span class="law-cite">Fla. Stat. § 720.3085</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>An association may not record a claim of lien for unpaid assessments unless it has first sent the owner written notice or demand giving <strong>45 days to pay</strong>. The lien can be recorded on day 46.</p>
+          <p>Foreclosure requires a <strong>second and separate 45-day notice</strong> of intent to foreclose, and that notice may not be given until the first 45 days have already run. The two periods run in sequence, not in parallel, which puts the practical floor at roughly three months from first notice to a foreclosure filing.</p>
+          <p>The lien secures unpaid assessments plus interest, late fees, and collection costs as provided by statute and the governing documents. Remember the interaction with the fines rule: a fine under $1,000 cannot become a lien at all, so a delinquency built mostly of small fines is not a lien candidate.</p>
+          <p><a href="/hoa-delinquency-recovery">How CMGT approaches delinquency recovery</a> covers the operational side of running these clocks without losing the file.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Records and access</h3>
+            <p class="answer">Ten business days, and Florida attaches statutory damages to missing the deadline.</p>
+            <span class="law-cite">Fla. Stat. § 720.303(4), (5)</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>Official records must be made available to a member or their authorized representative within <strong>10 business days</strong> after receipt of a written request. Florida is unusual in putting a number and a penalty on this rather than a reasonableness standard.</p>
+          <p>Failure to comply creates a <strong>rebuttable presumption of willful non-compliance</strong>, with minimum damages of <strong>$50 per calendar day for up to 10 days</strong>, calculated from the 11th business day after receipt of the request. That is a small number that becomes a real one when a board treats records requests as optional.</p>
+          <p>Chapter 720 sets out what counts as an official record and what may be withheld. Note the new interaction with Chapter 617: as revised by HB 797, an association cannot eliminate a member’s statutory inspection right through its articles or bylaws. Where Chapter 720 gives a more specific rule it controls, but the corporate floor is now firmer than it was.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Meetings, notice, and architectural review</h3>
+            <p class="answer">48 hours for board meetings, 14 days for member and budget meetings, and as of July 2026 you cannot demand a permit before reviewing an application.</p>
+            <span class="law-cite">Fla. Stat. § 720.303 · 720.306 · 720.3035</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>Board meetings require notice posted at least <strong>48 hours</strong> in advance. Annual member meetings and budget meetings require <strong>14 days</strong>. Members have the right to speak on designated agenda items, subject to reasonable rules the association adopts.</p>
+          <p>Architectural review authority under section 720.3035 rests on what the declaration or governing documents actually authorize. An association may only enforce standards that are stated in the governing documents with sufficient specificity, which is a recurring source of disputes where a committee has been applying unwritten preferences.</p>
+          <p><strong>New since July 1, 2026:</strong> an association, architectural review committee, or similar committee may not require a government-issued building permit as a prerequisite to reviewing an owner’s proposed construction or improvements. The association can still conduct its review, apply its aesthetic standards, and approve, condition, or deny. What it can no longer do is refuse to look at the application until the owner produces a permit. Boards whose ARC intake checklist starts with “attach your permit” need to update that checklist.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Condominiums are a different regime</h3>
+            <p class="answer">Chapter 718 is its own statute, reshaped after Surfside, and the compliance load is heavier than Chapter 720’s.</p>
+            <span class="law-cite">Fla. Stat. ch. 718</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>Florida condominium law is governed by Chapter 718, not Chapter 720, and the two diverge in ways that matter. Fines in condominiums cannot become liens at all. Reserve, inspection, and records obligations are substantially heavier.</p>
+          <p>Since Surfside, Florida has layered on milestone structural inspections and structural integrity reserve study requirements, and has progressively restricted the ability of boards and members to waive or underfund reserves. The 2025 reform package expanded reserve requirements, inspections, governance standards, and manager accountability, with most provisions effective July 1, 2025 and expanded records and online access requirements phasing in on January 1, 2026 for a wider set of associations than before.</p>
+          <p>This area moves faster than anything else in Florida association law and is under active regulatory work, including a state task force revising the standard structural integrity reserve study form. Any condominium board should be working from current counsel guidance rather than any published summary, including this one.</p>
+          <div class="law-scopenote">
+            <h3>A note on what CMGT does in Florida</h3>
+            <p>We provide full management for Florida communities that are not condominium regimes: single-family homeowners’ associations, master-planned communities, and On-Site engagements. <strong>We do not manage condominium regimes in Florida.</strong> The regulatory load under Chapter 718 is heavy enough that we would rather say so plainly than take on communities we are not set up to serve well here.</p>
+            <p>We manage condominium associations in every other state we operate in. Florida is the one exclusion, and it is a deliberate one. We have included Chapter 718 on this page anyway, because a board searching for Florida association law deserves an accurate picture of both regimes whether or not we are the right fit for them.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </Fragment>
+
+  <Fragment slot="history">
+    <h2 class="law-h2" id="history">Full session record</h2>
+    <p class="law-sub">Florida meets annually and files a lot. In 2026 the industry tracked 68 bills of relevance. Most of the consequential ones died.</p>
+    <div class="law-sessions">
+      <details class="law-session">
+        <summary>2026 Regular Session <span class="law-session-meta">Jan 13 – Mar 13 · 2 enacted reaching associations</span></summary>
+        <div class="law-session-bd">
+          <h4>HB 797 — Florida Nonprofit Corporation Act · effective July 1, 2026</h4>
+          <p>Passed both chambers unanimously. A comprehensive revision of Chapter 617 aligning Florida with the ABA Model Nonprofit Corporation Act, including renaming the chapter. Relevant changes for associations include statutory standards of care for directors, updated conflict of interest provisions, expanded and clarified remote participation and electronic notice, a new derivative action framework at sections 617.0741 through 617.0747 with a “qualified director” concept and court approval for settlements, confirmation that member inspection rights cannot be eliminated by the articles or bylaws, and expanded corporate powers including authority to impose fines or penalties where the governing documents allow.</p>
+          <h4>HB 803 — Building permits and inspections · Chapter 2026-63 · effective July 1, 2026</h4>
+          <p>Signed May 6, 2026. Principally a building permit reform, exempting qualifying single-family residential work valued under $7,500 from permitting subject to a written request and documentation, with electrical, plumbing, structural, mechanical, and gas work still requiring permits. Section 9 amends section 720.3035 to prohibit an association or its architectural review committee from requiring a building permit as a prerequisite to its review.</p>
+          <h4>HB 657 — Community Associations · passed House, died in Senate committee</h4>
+          <p>The session’s major association bill. Would have changed termination rules, meeting procedures, board duties, dispute resolution, and amendment procedures; allowed governing documents to be amended by a minority vote of owners; allowed termination on petition of 20% of residents; created a community association court program; eliminated presuit mediation; and required associations to adopt or vote on so-called Kaufman language subjecting them to future statutory changes.</p>
+          <h4>Also died in committee</h4>
+          <p><strong>HB 465 / SB 822</strong> on community association management, which as originally filed would have required associations with annual revenues of $500,000 or more to contract with a management firm. <strong>SB 1498</strong> on reserve study definitions, common areas, and inspection rights. <strong>SB 1744 and HB 1541</strong> on audioconferenced meetings and recordings. <strong>HB 255 / SB 638</strong> on condominium turnover certificates and a statewide turnover database.</p>
+        </div>
+      </details>
+      <details class="law-session">
+        <summary>2025 Regular Session <span class="law-session-meta">Condominium reform package</span></summary>
+        <div class="law-session-bd">
+          <h4>2025 condominium reform package · most provisions effective July 1, 2025</h4>
+          <p>A large omnibus focused on condominiums, expanding reserve requirements, inspection obligations, governance standards, and manager accountability. Expanded records and online access requirements phased in on January 1, 2026, extending to smaller associations than the previous thresholds reached.</p>
+          <p><em>Note:</em> this page describes the package at a general level. The specific thresholds and the bill number should be confirmed with counsel before a condominium board relies on them, and Chapter 718 boards in particular should work from current legal guidance rather than any summary.</p>
+        </div>
+      </details>
+    </div>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <h2 class="law-h2" id="faq">Common questions</h2>
+    <div class="law-faq"><h3>How much can a Florida HOA fine a homeowner?</h3><p>$100 per violation and $1,000 in the aggregate for a continuing violation, unless the governing documents provide otherwise. A fine of less than $1,000 cannot become a lien against the parcel.</p></div>
+    <div class="law-faq"><h3>Can a Florida HOA board impose a fine by itself?</h3><p>No. A fine or suspension requires at least 14 days’ notice and an opportunity for a hearing before a committee of at least three members who are not officers, directors, or employees of the association, or their close relatives. If that committee does not approve the fine by majority vote, it cannot be imposed.</p></div>
+    <div class="law-faq"><h3>How long does a Florida HOA have to provide records?</h3><p>Ten business days after receiving a written request. Failure creates a rebuttable presumption of willful non-compliance, with minimum damages of $50 per calendar day for up to 10 days, beginning on the 11th business day after the request was received.</p></div>
+    <div class="law-faq"><h3>How long before a Florida HOA can lien or foreclose?</h3><p>45 days’ written notice before recording a claim of lien, then a separate 45-day notice of intent to foreclose that cannot be sent until the first period has run. The two run in sequence.</p></div>
+    <div class="law-faq"><h3>Can a Florida HOA require a building permit before architectural review?</h3><p>No. Since July 1, 2026, HB 803 amended section 720.3035 to prohibit an association or its architectural review committee from requiring a government-issued permit as a prerequisite to reviewing a proposed improvement. The association may still review, apply its standards, and deny.</p></div>
+    <div class="law-faq"><h3>Did Florida pass new HOA laws in 2026?</h3><p>Two reach associations, both effective July 1, 2026: HB 797, a comprehensive revision of the Chapter 617 nonprofit corporation statute that governs associations where Chapters 718 and 720 are silent, and HB 803, which bars requiring a building permit before architectural review. The major association bill, HB 657, passed the House and died in Senate committee.</p></div>
+  </Fragment>
+
+  <Fragment slot="maintained">
+    <h2 class="law-h2">How this page is maintained</h2>
+    <p class="law-p">Every citation here was checked against the Florida Statutes and legislative records. Florida is the hardest state in this series to keep current, because it amends association law nearly every year and because condominium requirements have been rewritten repeatedly since Surfside. We review this page after each session adjourns, and more often when something material takes effect mid-year, as two laws did on July 1, 2026.</p>
+    <p class="law-p">The condominium material here is deliberately shorter than the homeowners’ association material and should be treated as orientation rather than compliance guidance. When something on this page touches a real decision in your community, take it to a Florida attorney who practices community association law. That is what we tell the boards we manage.</p>
+  </Fragment>
+
+  <Fragment slot="sources">
+    <div class="law-sources" id="sources">
+      <h3>Primary sources</h3>
+      <ul>
+        <li><a href="https://www.flsenate.gov/laws/statutes/2023/720.305" target="_blank" rel="noopener">Fla. Stat. § 720.305</a> — fines and suspension of use rights</li>
+        <li><a href="https://www.hopb.co/florida-homeowners-association-act-chapter-720" target="_blank" rel="noopener">Fla. Stat. ch. 720</a> — Homeowners’ Association Act, full text</li>
+        <li><a href="https://www.flsenate.gov/Session/Bill/2026/803" target="_blank" rel="noopener">HB 803 (2026)</a> — bill record and House staff analysis</li>
+        <li><a href="https://www.flsenate.gov/Session/Bill/2026/657" target="_blank" rel="noopener">HB 657 (2026)</a> — bill record and staff analyses</li>
+        <li><a href="https://advocacy.caionline.org/2026fleos/" target="_blank" rel="noopener">CAI 2026 Florida End of Session Report</a></li>
+        <li><a href="https://beckerlawyers.com/review-of-the-outcome-of-the-2026-legislative-session-news-press/" target="_blank" rel="noopener">Becker &amp; Poliakoff</a> — 2026 session outcome and HB 797 analysis</li>
+      </ul>
+    </div>
+  </Fragment>
+
+  <Fragment slot="siblings">
+    <h2 class="law-h2">HOA laws in the other states we serve</h2>
+    <p class="law-sub">Each state page follows the same structure, so you can compare what your community is actually held to.</p>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p class="law-disclaimer"><strong>We manage communities. We don’t practice law.</strong> This is plain-English guidance, not legal advice. Florida splits association law across at least three chapters and amends them frequently, so the answers depend on which one governs you and on when you are asking. Some of these statutes are clearer than others, and legal professionals may disagree about what they require. Before you rely on or act on anything here, run it by your association’s attorney — that’s what we tell the boards we manage.</p>
+  </Fragment>
+</StateLaw>
