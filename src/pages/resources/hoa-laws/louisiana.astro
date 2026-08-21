@@ -1,0 +1,389 @@
+---
+/**
+ * Louisiana HOA laws — board-education reference. Third of five state law pages.
+ *
+ * Structure and chrome live in StateLaw.astro; this file is copy plus schema only.
+ * Louisiana is the opposite of Mississippi: it HAS a statute, the Planned Community
+ * Act (R.S. 9:1141.1 et seq., overhauled by Act 158 effective Jan 1 2025), so this
+ * page runs seven rule cards and thirteen quick answers and leans on citations
+ * throughout rather than on the absence of them.
+ *
+ * Status vocabulary follows the shared spec — in force (green .on), effective on a
+ * future date (amber .soon), died/vetoed (grey default). Prose carries zero em
+ * dashes by the source copy's own convention; the em dash appears only as a label
+ * separator in bill headings and sources.
+ *
+ * The cluster hub at /resources/hoa-laws is not built, so breadcrumbs are three
+ * levels and nothing here links to it.
+ *
+ *   pubDate 2026-08-01 · updatedDate 2026-08-01 · reviewedDate 2026-08-01
+ *   reviewCadence annual, post-session (target August)
+ *   contentType reference · cluster state-hoa-laws · focusKeyword "louisiana hoa laws"
+ */
+import StateLaw from '~/layouts/StateLaw.astro';
+
+const article = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Louisiana HOA Laws: A Board Member's Reference",
+  "datePublished": "2026-08-01",
+  "dateModified": "2026-08-01",
+  "author": { "@type": "Organization", "name": "CMGT" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CMGT",
+    "logo": { "@type": "ImageObject", "url": "https://cmgt.org/assets/logo-full-color.svg" }
+  },
+  "mainEntityOfPage": "https://cmgt.org/resources/hoa-laws/louisiana",
+  "about": {
+    "@type": "Legislation",
+    "name": "Louisiana Planned Community Act",
+    "legislationIdentifier": "La. R.S. 9:1141.1 et seq."
+  },
+  "spatialCoverage": { "@type": "State", "name": "Louisiana" }
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cmgt.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://cmgt.org/resources" },
+    { "@type": "ListItem", "position": 3, "name": "Louisiana HOA Laws", "item": "https://cmgt.org/resources/hoa-laws/louisiana" }
+  ]
+};
+
+// Every answer below matches the visible FAQ copy verbatim.
+const faq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Did the Planned Community Act replace our CC&Rs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. It does not affect the validity or superiority of any provision in a community document filed before January 1, 2025, and applies to existing communities only where their documents are silent. It does not require an existing association to amend anything. Communities may conform voluntarily." }
+    },
+    {
+      "@type": "Question",
+      "name": "How much notice for a Louisiana HOA board meeting?",
+      "acceptedAnswer": { "@type": "Answer", "text": "At least 30 days to every director and owner, stating time, date, place, and agenda, unless the meeting was on a schedule already provided or addresses an emergency. Board meetings are open to owners except during executive session." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a Louisiana HOA lien my house for unpaid dues?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, though Louisiana calls it a privilege. The association must make written demand, wait 30 days, then file a sworn detailed statement of privilege in the parish mortgage records. Courts may award the prevailing party costs and reasonable attorney fees." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can our HOA ban the American flag?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Since August 1, 2025, R.S. 9:1114 prohibits any restriction on displaying a removable, portable United States flag. Reasonable size, time, place, and manner rules are still allowed, and violations expose the association to court costs and attorney fees." }
+    },
+    {
+      "@type": "Question",
+      "name": "Did Louisiana pass new HOA laws in 2026?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Two, both effective January 1, 2027: Act 708 expanding property disclosures, and Act 765 preempting association construction standards for manufactured and modular homes. HB 817, the Homeowner Bill of Rights, did not advance and was withdrawn by its sponsor." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do Louisiana HOAs have to do reserve studies?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The statute does not require one. It does require the budget summary sent to owners to include any reserves and explain the basis on which they are calculated and funded, which is difficult to answer honestly without a study. Your declaration may require more." }
+    }
+  ]
+};
+---
+<StateLaw
+  state="Louisiana"
+  stateSlug="louisiana"
+  title="Louisiana HOA Laws: A Board Member's Reference (2026) | CMGT"
+  description="Louisiana HOA law in plain English: meeting notice, records, budgets, liens, and enforcement under the Planned Community Act, plus what the 2026 session changed."
+  headline="Louisiana HOA laws: a board member’s reference."
+  lede="Louisiana HOA law lives in two places at once. Your community’s own documents, and the Planned Community Act. Knowing which one controls a given question is most of the job."
+  reviewedDate="August 1, 2026"
+  sessionThrough="2026 regular session"
+  jumpSections={[
+    { id: "changed", label: "What changed" },
+    { id: "quick",   label: "Quick answers" },
+    { id: "rules",   label: "The rules" },
+    { id: "history", label: "Session record" },
+    { id: "faq",     label: "FAQ" },
+    { id: "sources", label: "Sources" }
+  ]}
+  crumbs={[
+    { t: "Home", href: "/" },
+    { t: "Resources", href: "/resources" },
+    { t: "Louisiana HOA Laws" }
+  ]}
+  pageSchema={[article, breadcrumb, faq]}
+>
+  <div slot="take" class="law-take">
+    <p class="law-take-h">What governs your community</p>
+    <ul class="law-take-ref">
+      <li><strong>Your governing documents</strong> — your declaration, articles, and bylaws. For communities formed before January 1, 2025, these come first.</li>
+      <li><strong>Planned Community Act</strong> — the state’s HOA statute. It steps in wherever your documents are silent.</li>
+      <li><strong>Condominium Act</strong> — a separate statute, for condominium regimes only.</li>
+      <li><strong>Federal law</strong> — fair housing, flag display, satellite dishes, and a few others.</li>
+    </ul>
+  </div>
+
+  <Fragment slot="changed">
+    <h2 class="law-h2" id="changed">What changed recently</h2>
+    <p class="law-sub">Louisiana’s 2026 regular session adjourned June 1. Two laws affecting community associations passed, and the big one did not.</p>
+    <div class="law-changes">
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2026</span><span class="st soon">Effective Jan 2027</span></div>
+        <div>
+          <h3>Act 708 — Property disclosures expand to vacant lots</h3>
+          <p>Sellers must disclose HOA membership and restrictive covenant status on vacant residential property, not just improved lots. Expect resale document requests earlier and more often.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2026</span><span class="st soon">Effective Jan 2027</span></div>
+        <div>
+          <h3>Act 765 — State standards preempt yours on manufactured homes</h3>
+          <p>Associations may not impose construction or installation requirements on manufactured and modular homes beyond the state standard. Worth reviewing your CC&Rs before January.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2026</span><span class="st">Bill died</span></div>
+        <div>
+          <h3>HB 817 — Homeowner Bill of Rights, expected back</h3>
+          <p>Would have applied to every association regardless of age and required rewriting existing governing documents. The sponsor withdrew it and has said he will return with related legislation next session.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2025</span><span class="st on">In force</span></div>
+        <div>
+          <h3>Act 224 — You cannot ban the American flag</h3>
+          <p>The statute bars associations from adopting or enforcing provisions that restrict display of a removable, portable U.S. flag, and provides for court costs and attorney fees. Worth reviewing your declaration against it with counsel.</p>
+        </div>
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="quick">
+    <h2 class="law-h2" id="quick">Quick answers</h2>
+    <p class="law-sub">The thirteen questions Louisiana boards ask most.</p>
+    <p class="law-note"><strong>Read these alongside your governing documents.</strong> Each answer notes the statute it comes from, so you and your attorney can go to the source.</p>
+    <div class="law-table-wrap">
+      <table class="law-table">
+        <thead><tr><th>Question</th><th>Short answer</th><th>Citation</th></tr></thead>
+        <tbody>
+          <tr><td class="q">Notice for an annual or special meeting?</td><td>30 to 60 days when the bylaws are silent. Notice must state the agenda.</td><td><span class="law-cite">9:1141.26(A)</span></td></tr>
+          <tr><td class="q">What is a quorum?</td><td>20% of voting interest unless the bylaws say otherwise. 10% in an emergency.</td><td><span class="law-cite">9:1141.27</span></td></tr>
+          <tr><td class="q">Can homeowners attend board meetings?</td><td>Yes, except executive session. No final vote may be taken in executive session.</td><td><span class="law-cite">9:1141.26(B)</span></td></tr>
+          <tr><td class="q">Can homeowners force a special meeting?</td><td>Owners holding 20% can. The secretary must call it within 30 days.</td><td><span class="law-cite">9:1141.26(A)(2)</span></td></tr>
+          <tr><td class="q">What records can owners see?</td><td>Eleven categories on request. Seven categories may be withheld.</td><td><span class="law-cite">9:1141.36</span></td></tr>
+          <tr><td class="q">How does a budget get adopted?</td><td>Over 25 lots: summary to owners in 30 days, ratification meeting 10 to 60 days later, majority vote.</td><td><span class="law-cite">9:1141.34(A)</span></td></tr>
+          <tr><td class="q">Can the board levy a special assessment alone?</td><td>Not normally. Same ratification path as the budget. Emergencies excepted, by two-thirds of directors present.</td><td><span class="law-cite">9:1141.34(B)(C)</span></td></tr>
+          <tr><td class="q">How soon can we lien a delinquent lot?</td><td>Written demand, then 30 days, then file the sworn statement of privilege.</td><td><span class="law-cite">9:1146</span></td></tr>
+          <tr><td class="q">How do we apply a partial payment?</td><td>Assessments first, then late charges, then attorney fees, then everything else. Not your choice.</td><td><span class="law-cite">9:1146(B)(2)</span></td></tr>
+          <tr><td class="q">What can we never suspend?</td><td>Access to the owner’s own lot, and any service whose loss endangers health, safety, or property.</td><td><span class="law-cite">9:1141.20(A)(2)(q)</span></td></tr>
+          <tr><td class="q">Can we adopt a rule at tonight’s meeting?</td><td>No. Owners get advance notice with the text and a chance to comment first.</td><td><span class="law-cite">9:1141.37(A)</span></td></tr>
+          <tr><td class="q">Can we restrict the American flag?</td><td>You cannot prohibit it. Reasonable size, time, place, and manner provisions are allowed.</td><td><span class="law-cite">9:1114</span></td></tr>
+          <tr><td class="q">How many directors do we need?</td><td>At least three, each an owner or an owner’s representative.</td><td><span class="law-cite">9:1141.21(A)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </Fragment>
+
+  <Fragment slot="rules">
+    <h2 class="law-h2" id="rules">The rules, in more detail</h2>
+    <p class="law-sub">Seven areas that come up weekly. Open any one for the detail behind the short answer.</p>
+    <div class="law-rules">
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Which law applies to your community</h3>
+            <p class="answer">The Planned Community Act did not rewrite the rules for your existing community. It fills gaps.</p>
+            <span class="law-cite">R.S. 9:1141.3</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>Plenty of what has been published about Act 158 says Louisiana HOA law was replaced on January 1, 2025, and that every association now has to operate differently. That is not what the statute says.</p>
+          <p>The Act does not affect the validity or superiority of any provision in a community document filed before January 1, 2025. It applies to existing communities <strong>only to the extent their documents are silent</strong>. The legislature’s own revision comments say the Act was written for newly formed communities and was not meant to make existing ones change their documents, their budgeting, or how they allocate assessments.</p>
+          <p>In practice this cuts both ways. Many Louisiana declarations written in the 1990s and 2000s say nothing about records access, electronic voting, or budget ratification. For those communities the Act quietly supplies the procedure, without anyone having amended anything. Communities formed after January 1, 2025 are governed by it directly.</p>
+          <p>Condominiums are outside all of this. <a href="/condo-management">Louisiana condo regimes</a> run on the Condominium Act at R.S. 9:1121.101 and following, though the collections rules below reach both.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Meetings and notice</h3>
+            <p class="answer">Board meetings need at least 30 days’ notice. Membership meetings need 30 to 60 days when your bylaws are silent, which is a window, not just a floor.</p>
+            <span class="law-cite">R.S. 9:1141.26 · 1141.27</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>Membership meetings run on 30 to 60 days’ notice absent a bylaw provision. Both ends bind: a meeting noticed 90 days out is as far outside the window as one noticed in 10 days. Notice states time, date, place, and agenda, and the agenda must spell out any proposed amendment to the community documents, any budget changes, and any proposal to remove a director. Owners get a reasonable opportunity to comment on anything affecting the community.</p>
+          <p>Board meetings work differently. They need at least 30 days’ notice to directors and owners stating time, date, place, and agenda, with no stated ceiling. Materials sent to the board beforehand must be reasonably available to owners, including by website posting, with unapproved minutes and executive session materials excepted.</p>
+          <p>Executive session is available only during a regular or special meeting, and only for legal advice, litigation, labor and personnel matters, contracts under negotiation, and privacy matters. No final vote or action may be taken there.</p>
+          <p>One safeguard worth knowing: actions taken without following these rules stay valid unless a court sets them aside, and a challenge must be brought within 60 days of minutes being approved or notice going out.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Records and transparency</h3>
+            <p class="answer">Eleven categories must be kept and produced on request. Seven may be withheld.</p>
+            <span class="law-cite">R.S. 9:1141.36</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p><strong>Must be kept:</strong> accounting records, minutes of owner and board meetings other than executive sessions, owner names and communication addresses with voting interest shown, organizational documents and current rules, three years of financial statements and tax returns, current directors and officers, the latest Secretary of State annual report, financial records detailed enough to produce the required resale disclosures, current contracts, records of every architectural approval and denial, and ballots and proxies for one year.</p>
+          <p><strong>May be withheld:</strong> personnel and medical records, contracts under negotiation, litigation and mediation materials, attorney-client communications, anything whose disclosure would break the law, executive session records, and other owners’ individual lot files.</p>
+          <p>The association may charge a reasonable fee for copies and for supervising an inspection, and is not obligated to compile or synthesize anything. It only has to produce what it already has.</p>
+          <p>Nothing stops a community from going further. Sending full monthly financials to every homeowner rather than just the board is not required in Louisiana, and it is the most effective thing a community can do to build confidence in its own governance.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Budgets and assessments</h3>
+            <p class="answer">Communities over 25 lots follow a fixed ratification sequence, and the budget summary must explain your reserves.</p>
+            <span class="law-cite">R.S. 9:1141.34 · 1141.32</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>The board proposes a budget at least annually. Within 30 days of adopting the proposal it sends every owner a summary that includes any reserves <strong>and a statement of the basis on which those reserves are calculated and funded</strong>. It sets a ratification meeting 10 to 60 days out. A majority ratifies. If owners do not ratify, the last ratified budget stays in force.</p>
+          <p>There is no required budget format. There is a required reserve disclosure, which is hard to answer honestly without a current <a href="/resources/hoa-reserve-study">reserve study</a>. Our <a href="/resources/hoa-budget-template">budget guide</a> walks the sequence.</p>
+          <p>Special assessments follow the same path. The exception is an emergency: a two-thirds vote of directors present makes it effective immediately, with prompt notice to owners and spending limited to the stated purpose.</p>
+          <p>Assessments are levied at least annually against the budget, and owners are personally liable for assessments during their ownership. Late fees and interest are allowed at a rate the association sets, capped at the rate permitted under the collections provisions.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Delinquency and liens</h3>
+            <p class="answer">Louisiana calls it a privilege. Written demand, 30 days, then file. Miss a step and you lose.</p>
+            <span class="law-cite">R.S. 9:1145–1148</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>Written demand goes out by mail or courier to the owner’s designated address, by email to a designated address, by hand delivery to the lot if neither was designated, or by any method reasonably calculated to give notice. The owner then has 30 days. Only after that may the association file the sworn detailed statement of privilege in the parish mortgage records.</p>
+          <p><strong>Partial payments are applied in statutory order:</strong> unpaid assessments, then late charges, then reasonable attorney fees and collection costs, then all other fees, fines, penalties, and interest. An association that applies a partial payment to fines first, leaving the assessment open so the delinquency stays alive, is not following the statute. This one gets missed constantly.</p>
+          <p><strong>Two different clocks.</strong> A privilege for unpaid dues or assessments dies as to third parties unless a notice of pendency of action is recorded within five years. A privilege for charges tied to alleged covenant violations dies in <strong>one year</strong>. Fine-based liens have a fifth of the runway.</p>
+          <p>If an owner misses assessments for three months or more within any eight-month period after notice of delinquency, the association may accelerate twelve months and file for the accelerated amount.</p>
+          <p>Separately, when an owner requests a payoff figure in a record, you have ten business days and <strong>the number you send is binding on the association</strong>. A payoff sent to a closing attorney is not an estimate. <a href="/hoa-delinquency-recovery">How CMGT handles delinquency recovery</a> covers the operational side.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Enforcement, rules, and fines</h3>
+            <p class="answer">You have real authority, bounded by three limits: notice before adopting rules, no arbitrary enforcement, and penalties you may never impose.</p>
+            <span class="law-cite">R.S. 9:1141.37 · 1141.20</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>Before adopting, amending, or repealing a rule, the board gives all owners notice of the proposed action, the text, and the date it will act after considering comments. Afterward it notifies owners of what it did. Every rule must be reasonable, and board rulemaking on residential lots is bounded: rules may implement the declaration or address behavior that violates it or harms others’ use and enjoyment. A rule floating free of the declaration is vulnerable.</p>
+          <p>The association decides whether to pursue or decline enforcement and has discretion depending on circumstances. But it <strong>shall not be arbitrary or capricious</strong> in that decision. Selective enforcement is not just a bad look in Louisiana. It is a statutory exposure, and the answer is a written policy you apply consistently and can produce on demand. Our <a href="/resources/hoa-rules-enforcement">fair-process enforcement guide</a> covers building one.</p>
+          <p>Reasonable fines are allowed, including interest and attorney fees, and rights or privileges may be suspended for nonpayment or violations. Two hard limits: you may not deny an owner access to their own lot, and you may not withhold a service if losing it would endanger anyone’s health, safety, or property.</p>
+          <p>On architectural standards, tightening design criteria takes a two-thirds vote rather than the supermajority other restrictions need. But no tighter standard can force an owner to alter what is already built, and only exterior work increasing the lot’s improvement value by more than 40% has to meet the new standard.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Limits on board authority</h3>
+            <p class="answer">Six things your board cannot do without a membership vote, plus two obligations most communities never adopted.</p>
+            <span class="law-cite">R.S. 9:1141.21 · 1141.20</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p><strong>The board cannot</strong> amend the declaration, amend the bylaws, terminate the planned community, elect directors (though it may fill vacancies for an unexpired term), determine the qualifications, powers, duties, or terms of directors, or impose rules inconsistent with the declaration.</p>
+          <p>That list surprises new boards regularly. If your board changed the bylaws without a membership vote, that action is exposed.</p>
+          <p><strong>Two things the association must have</strong> and most do not: reasonable procedures for addressing and resolving written complaints from owners, and a reasonable method, which can be electronic, for owners to communicate with the board. Both are required. Neither exists by default.</p>
+          <p>Owners may remove any director or officer they elected, with or without cause, by majority vote at a properly noticed meeting with a quorum. The person facing removal gets a chance to speak first. Directors appointed by the developer cannot be removed during declarant control.</p>
+        </div>
+      </details>
+    </div>
+  </Fragment>
+
+  <Fragment slot="history">
+    <h2 class="law-h2" id="history">Full session record</h2>
+    <p class="law-sub">Bill numbers, sponsors, and effective dates for anything that moved. Useful when you need to hand a citation to counsel, or check a session that produced nothing.</p>
+    <div class="law-sessions">
+      <details class="law-session">
+        <summary>2026 Regular Session <span class="law-session-meta">2 enacted · 1 died</span></summary>
+        <div class="law-session-bd">
+          <h4>Act 708 (HB 1166) — Property disclosures · effective Jan 1, 2027</h4>
+          <p>Rep. Carver. Amends R.S. 9:3196 et seq. Extends the residential property disclosure regime to vacant residential property, including whether a property is subject to an HOA or restrictive covenants.</p>
+          <h4>Act 765 (SB 398) — Manufactured and modular housing · effective Jan 1, 2027</h4>
+          <p>Sets state licensing, construction, and warranty standards for manufactured and modular housing, and preempts association covenants imposing construction or installation requirements beyond that standard.</p>
+          <h4>HB 817 — Louisiana Homeowner Bill of Rights · did not pass</h4>
+          <p>Would have created R.S. 9:1141.51 applying to all associations regardless of creation date, required converting existing governing documents to conform, and mandated an online homeowner portal, board composition and meeting requirements, vendor bidding thresholds, budget and surplus controls, and new limits on liens and fines.</p>
+          <p>It was referred to House Civil Law and Procedure and scheduled for April. After organized opposition from CAI and Louisiana advocates, the sponsor chose not to move it and said he intends to introduce related concepts next session. Communities already running an owner portal, publishing financials to the full membership, and documenting enforcement decisions would have had relatively little to change.</p>
+        </div>
+      </details>
+      <details class="law-session">
+        <summary>2025 Regular Session <span class="law-session-meta">1 enacted · 1 vetoed</span></summary>
+        <div class="law-session-bd">
+          <h4>Act 224 (HB 56) — Freedom to display the U.S. flag · effective Aug 1, 2025</h4>
+          <p>Adds R.S. 9:1114. Planned communities, condominium associations, and lessors may not adopt or enforce any provision restricting display of a removable, portable United States flag. Reasonable size, time, place, and manner rules remain allowed. Violations carry injunctive relief, court costs, and reasonable attorney fees.</p>
+          <h4>HB 343 — Homestead exemption exception · vetoed</h4>
+          <p>Would have excluded unpaid condominium assessments from the homestead exemption from seizure. It passed both chambers and was vetoed in June 2025, on the reasoning that associations already have adequate tools through the privilege, acceleration, and attorney fee recovery. The homestead exemption remains a real constraint on Louisiana collections.</p>
+        </div>
+      </details>
+      <details class="law-session">
+        <summary>2024 Regular Session <span class="law-session-meta">The session that reshaped the statute</span></summary>
+        <div class="law-session-bd">
+          <h4>Act 158 (SB 23) — Louisiana Planned Community Act · effective Jan 1, 2025</h4>
+          <p>Recommended by the Louisiana State Law Institute after a decade of study. Expanded R.S. 9:1141 from nine sections to fifty, modeled on the Uniform Common Interest Ownership Act, and rewrote the collections provisions. Renamed the Louisiana Homeowners Association Act and amended Civil Code Article 783 to match. See the applicability note above for what it means for existing communities.</p>
+        </div>
+      </details>
+    </div>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <h2 class="law-h2" id="faq">Common questions</h2>
+    <div class="law-faq"><h3>Did the Planned Community Act replace our CC&Rs?</h3><p>No. It does not affect the validity or superiority of any provision in a community document filed before January 1, 2025, and applies to existing communities only where their documents are silent. It does not require an existing association to amend anything. Communities may conform voluntarily.</p></div>
+    <div class="law-faq"><h3>How much notice for a Louisiana HOA board meeting?</h3><p>At least 30 days to every director and owner, stating time, date, place, and agenda, unless the meeting was on a schedule already provided or addresses an emergency. Board meetings are open to owners except during executive session.</p></div>
+    <div class="law-faq"><h3>Can a Louisiana HOA lien my house for unpaid dues?</h3><p>Yes, though Louisiana calls it a privilege. The association must make written demand, wait 30 days, then file a sworn detailed statement of privilege in the parish mortgage records. Courts may award the prevailing party costs and reasonable attorney fees.</p></div>
+    <div class="law-faq"><h3>Can our HOA ban the American flag?</h3><p>No. Since August 1, 2025, R.S. 9:1114 prohibits any restriction on displaying a removable, portable United States flag. Reasonable size, time, place, and manner rules are still allowed, and violations expose the association to court costs and attorney fees.</p></div>
+    <div class="law-faq"><h3>Did Louisiana pass new HOA laws in 2026?</h3><p>Two, both effective January 1, 2027: Act 708 expanding property disclosures, and Act 765 preempting association construction standards for manufactured and modular homes. HB 817, the Homeowner Bill of Rights, did not advance and was withdrawn by its sponsor.</p></div>
+    <div class="law-faq"><h3>Do Louisiana HOAs have to do reserve studies?</h3><p>The statute does not require one. It does require the budget summary sent to owners to include any reserves and explain the basis on which they are calculated and funded, which is difficult to answer honestly without a study. Your declaration may require more.</p></div>
+  </Fragment>
+
+  <Fragment slot="maintained">
+    <h2 class="law-h2">How this page is maintained</h2>
+    <p class="law-p">Every citation here was checked against the Louisiana Revised Statutes and the legislature’s own bill records, not against other articles. Where a secondary source was the only thing available, it is named in the sources below. We review the page each August after the regular session adjourns, and we update the reviewed date even in years when nothing changed.</p>
+    <p class="law-p">The law still moves between reviews, and a court reading a statute can change what it means without a word of it being rewritten. When something here touches a real decision in your community, take it to a Louisiana attorney who practices community association law. That is what we tell the boards we manage.</p>
+  </Fragment>
+
+  <Fragment slot="sources">
+    <div class="law-sources" id="sources">
+      <h3>Primary sources</h3>
+      <ul>
+        <li><a href="https://www.legis.la.gov/legis/Law.aspx?d=106629" target="_blank" rel="noopener">Louisiana Planned Community Act, R.S. 9:1141.1 et seq.</a></li>
+        <li><a href="https://legis.la.gov/legis/ViewDocument.aspx?d=1379426" target="_blank" rel="noopener">Act 158 (SB 23), 2024</a> — full enrolled text and revision comments</li>
+        <li><a href="https://legis.la.gov/Legis/LawPrint.aspx?d=106638" target="_blank" rel="noopener">R.S. 9:1145 et seq.</a> — association privileges</li>
+        <li><a href="https://legis.la.gov/legis/ViewDocument.aspx?d=1427894" target="_blank" rel="noopener">Act 224 (HB 56), 2025</a> — digest</li>
+        <li><a href="https://legis.la.gov/LEGIS/BillInfo.aspx?i=250717" target="_blank" rel="noopener">HB 817, 2026</a> — bill history</li>
+        <li><a href="https://advocacy.caionline.org/2026-louisiana-end-of-legislative-session-report/" target="_blank" rel="noopener">CAI 2026 Louisiana End of Session Report</a></li>
+      </ul>
+    </div>
+  </Fragment>
+
+  <Fragment slot="siblings">
+    <h2 class="law-h2">HOA laws in the other states we serve</h2>
+    <p class="law-sub">Each state page follows the same structure, so you can compare what your community is actually held to.</p>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p class="law-disclaimer"><strong>We manage communities. We don’t practice law.</strong> This is plain-English guidance, not legal advice. Much of Louisiana’s Planned Community Act defers to your own governing documents and applies only where those documents are silent; other provisions apply regardless. Some of these statutes are clearer than others, and legal professionals may disagree about what they require. Before you rely on or act on anything here, run it by your association’s attorney — that’s what we tell the boards we manage.</p>
+  </Fragment>
+</StateLaw>

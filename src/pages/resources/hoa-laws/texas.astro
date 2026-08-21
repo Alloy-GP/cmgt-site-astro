@@ -1,0 +1,373 @@
+---
+/**
+ * Texas HOA laws — board-education reference. Fifth and last of the state law pages.
+ *
+ * Structure and chrome live in StateLaw.astro; this file is copy plus schema only.
+ * Texas's spine is PROCEDURE: the most prescriptive statute in the region (Chapter
+ * 209, the Residential Property Owners Protection Act), which tells boards exactly
+ * what to do and in what order. So the mistakes are procedural, and the page leads
+ * on recency and process rather than applicability.
+ *
+ * Status vocabulary: green only. Every 2025 law is already in force and nothing is
+ * pending or dead, so there is no amber or slate here — correct, not an omission.
+ *
+ * Two Texas-specific constraints, both from the client brief:
+ *   1. Texas legislates biennially (odd years only) — the page says so plainly,
+ *      because the stability until 2027 is a feature worth stating.
+ *   2. CMGT's Texas footprint is Orange only, East Texas working westward. Name NO
+ *      metros (no Houston/Dallas/Austin/Woodlands). The generic template CTA already
+ *      respects this; do not add a metro anywhere on the page.
+ *
+ * The cluster hub at /resources/hoa-laws is not built, so breadcrumbs are three
+ * levels and nothing here links to it.
+ *
+ *   pubDate 2026-08-01 · updatedDate 2026-08-01 · reviewedDate 2026-08-01
+ *   reviewCadence biennial, post-session (next mid-2027)
+ *   contentType reference · cluster state-hoa-laws · focusKeyword "texas hoa laws"
+ */
+import StateLaw from '~/layouts/StateLaw.astro';
+
+const article = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Texas HOA Laws: A Board Member's Reference",
+  "datePublished": "2026-08-01",
+  "dateModified": "2026-08-01",
+  "author": { "@type": "Organization", "name": "CMGT" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CMGT",
+    "logo": { "@type": "ImageObject", "url": "https://cmgt.org/assets/logo-full-color.svg" }
+  },
+  "mainEntityOfPage": "https://cmgt.org/resources/hoa-laws/texas",
+  "about": {
+    "@type": "Legislation",
+    "name": "Texas Residential Property Owners Protection Act",
+    "legislationIdentifier": "Tex. Prop. Code ch. 209"
+  },
+  "spatialCoverage": { "@type": "State", "name": "Texas" }
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cmgt.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://cmgt.org/resources" },
+    { "@type": "ListItem", "position": 3, "name": "Texas HOA Laws", "item": "https://cmgt.org/resources/hoa-laws/texas" }
+  ]
+};
+
+// Every answer below matches the visible FAQ copy verbatim.
+const faq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the new Texas HOA laws for 2025?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Five. SB 711 on websites, management certificates, architectural review committee selection, and fencing. SB 2629 adding electronic voting. HB 621 protecting political gatherings in common areas. HB 517 suspending vegetation enforcement during watering restrictions. HB 431 adding solar roof tiles to protected solar energy devices. All took effect September 1, 2025 except HB 431, which took effect May 29." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a Texas HOA foreclose for unpaid fines?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Under section 209.009 an association may not foreclose its assessment lien where the debt consists solely of fines, or of attorney fees incurred solely in connection with fines. Foreclosure is generally judicial, and the owner has 180 days after the sale to redeem." }
+    },
+    {
+      "@type": "Question",
+      "name": "How must a Texas HOA notify a homeowner before levying a fine?",
+      "acceptedAnswer": { "@type": "Answer", "text": "By certified mail, in writing, describing the violation and stating any amount due, and informing the owner of a reasonable period to cure where the violation is curable and not a health or safety threat, and of the right to request a hearing on or before the 30th day after the notice was mailed." }
+    },
+    {
+      "@type": "Question",
+      "name": "How does a Texas HOA have to apply a homeowner's payment?",
+      "acceptedAnswer": { "@type": "Answer", "text": "In statutory order under section 209.0063: delinquent assessments, current assessments, attorney fees and collection costs tied to assessments, other attorney fees, fines, then any other amount owed. If the owner is in default on a payment plan the order does not bind the association, but fines still may not take priority over other amounts." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does my Texas HOA have to have a website?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The 2025 website requirement in section 82.1142 applies to condominium associations with at least 60 units or those contracting with a management company. It sits in the condominium chapter, so a single-family community should check with counsel before assuming it applies." }
+    },
+    {
+      "@type": "Question",
+      "name": "Did Texas pass new HOA laws in 2026?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Texas holds a regular legislative session only in odd-numbered years. The last was the 89th, which adjourned June 2, 2025. The next convenes in January 2027." }
+    }
+  ]
+};
+---
+<StateLaw
+  state="Texas"
+  stateSlug="texas"
+  title="Texas HOA Laws: A Board Member's Reference (2026) | CMGT"
+  description="What Texas HOA law requires: notice and hearings, payment priority, foreclosure limits, records, and the five laws that took effect in 2025 under Chapter 209."
+  headline="Texas HOA laws: a board member’s reference."
+  lede="Texas has the most detailed HOA statute in the Gulf South, and it legislates only in odd years. Five laws took effect in 2025. Nothing changes again until the legislature returns in January 2027."
+  reviewedDate="August 1, 2026"
+  sessionThrough="89th Legislature"
+  jumpSections={[
+    { id: "changed", label: "What changed" },
+    { id: "quick",   label: "Quick answers" },
+    { id: "rules",   label: "The rules" },
+    { id: "history", label: "Session record" },
+    { id: "faq",     label: "FAQ" },
+    { id: "sources", label: "Sources" }
+  ]}
+  crumbs={[
+    { t: "Home", href: "/" },
+    { t: "Resources", href: "/resources" },
+    { t: "Texas HOA Laws" }
+  ]}
+  pageSchema={[article, breadcrumb, faq]}
+>
+  <div slot="take" class="law-take">
+    <p class="law-take-h">What governs your community</p>
+    <ul class="law-take-ref">
+      <li><strong>Chapter 209</strong> — the Residential Property Owners Protection Act, the main statute for HOAs. Most of this page comes from it.</li>
+      <li><strong>Chapter 82</strong> — the Uniform Condominium Act. Condominium regimes only, with separate disclosure and resale rules.</li>
+      <li><strong>Chapter 202</strong> — restrictive covenants generally. Sits on top of both, and holds the list of things a covenant can’t restrict.</li>
+      <li><strong>Business Organizations Code</strong> — corporate mechanics, since most associations are also nonprofit corporations.</li>
+      <li><strong>Federal law</strong> — fair housing, flag display, satellite dishes, and a few others.</li>
+    </ul>
+  </div>
+
+  <Fragment slot="changed">
+    <h2 class="law-h2" id="changed">What changed recently</h2>
+    <p class="law-sub">The 89th Legislature adjourned June 2, 2025 and passed five laws affecting associations. Texas meets in regular session only in odd-numbered years, so this is the current picture until 2027.</p>
+    <div class="law-changes">
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2025</span><span class="st on">In force Sep 2025</span></div>
+        <div>
+          <h3>SB 711 — websites, management certificates, ARC selection, fencing</h3>
+          <p>The largest of the five. Condominium associations with 60 or more units, or any association under contract with a management company, must publish their recorded dedicatory instruments on a website. Management certificates gained new required disclosures. Resale certificate fees for condominiums were capped. Associations with more than 40 lots must now solicit architectural review committee candidates through a formal process.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2025</span><span class="st on">In force Sep 2025</span></div>
+        <div>
+          <h3>SB 2629 — electronic voting became a permitted method</h3>
+          <p>An association must offer owners at least one of an electronic ballot, an absentee ballot, or a proxy. Condominium associations may meet and vote electronically without amending their dedicatory instruments first.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2025</span><span class="st on">In force Sep 2025</span></div>
+        <div>
+          <h3>HB 517 and HB 621 — two new limits on enforcement</h3>
+          <p>Associations must suspend enforcement of grass and green vegetation requirements while a property is under a residential watering restriction, and for 60 days after it lifts. Separately, associations may not prohibit an owner or resident from inviting government officials or election candidates to meet with members in common areas.</p>
+        </div>
+      </div>
+      <div class="law-change">
+        <div class="law-when"><span class="yr">2025</span><span class="st on">In force May 2025</span></div>
+        <div>
+          <h3>HB 431 — solar roof tiles became protected devices</h3>
+          <p>Solar roof tiles were added to the statutory definition of a solar energy device, which brings them under the existing limits on restricting solar installations. This one took effect immediately rather than in September.</p>
+        </div>
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="quick">
+    <h2 class="law-h2" id="quick">Quick answers</h2>
+    <p class="law-sub">The questions Texas boards ask most.</p>
+    <p class="law-note"><strong>Read these alongside your governing documents.</strong> Each answer notes the statute it comes from, so you and your attorney can go to the source.</p>
+    <div class="law-table-wrap">
+      <table class="law-table">
+        <thead><tr><th>Question</th><th>Short answer</th><th>Citation</th></tr></thead>
+        <tbody>
+          <tr><td class="q">Which chapter governs us?</td><td>Chapter 209 for residential property owners’ associations. Chapter 82 for condominiums. Chapter 202 reaches restrictive covenants generally and applies on top.</td><td><span class="law-cite">209.003 · 82 · 202</span></td></tr>
+          <tr><td class="q">Must we give notice before fining?</td><td>Yes. Written notice by certified mail describing the violation and stating any amount due, before a fine, a common-area suspension, a damage charge, most suits, or a credit report.</td><td><span class="law-cite">209.006(a)</span></td></tr>
+          <tr><td class="q">How long does an owner have to ask for a hearing?</td><td>On or before the 30th day after the notice was mailed. The 30 days is the hearing window, not a blanket waiting period.</td><td><span class="law-cite">209.006(b)(2)(B)</span></td></tr>
+          <tr><td class="q">Do we have to allow a cure?</td><td>A reasonable period, where the violation is curable and does not threaten public health or safety. If it is cured in time, no fine may be assessed.</td><td><span class="law-cite">209.006(b)(2)(A), (e)</span></td></tr>
+          <tr><td class="q">What about a repeat violation?</td><td>The notice requirements do not apply where the owner was given notice and the chance to exercise these rights for the same violation in the preceding six months.</td><td><span class="law-cite">209.006(d)</span></td></tr>
+          <tr><td class="q">How do we apply a payment?</td><td>A fixed six-step order: delinquent assessments, current assessments, collection-related attorney fees, other attorney fees, fines, then everything else.</td><td><span class="law-cite">209.0063(a)</span></td></tr>
+          <tr><td class="q">What if the owner is in default on a payment plan?</td><td>The order does not bind you, but a fine still may not be given priority over any other amount owed.</td><td><span class="law-cite">209.0063(b)</span></td></tr>
+          <tr><td class="q">Can we foreclose over unpaid fines?</td><td>No. Not where the debt consists solely of fines, or of attorney fees tied solely to fines.</td><td><span class="law-cite">209.009</span></td></tr>
+          <tr><td class="q">Is foreclosure judicial?</td><td>Generally yes, subject to the exceptions in the section.</td><td><span class="law-cite">209.0092</span></td></tr>
+          <tr><td class="q">Is there a redemption period?</td><td>Yes. An owner may redeem within 180 days after the association’s foreclosure sale.</td><td><span class="law-cite">209.011</span></td></tr>
+          <tr><td class="q">Do we file a management certificate?</td><td>Yes, in the county real property records and with the Texas Real Estate Commission.</td><td><span class="law-cite">209.004</span></td></tr>
+          <tr><td class="q">Do we need a website?</td><td>Condominium associations with 60 or more units, or under contract with a management company, must publish recorded dedicatory instruments online.</td><td><span class="law-cite">82.1142</span></td></tr>
+          <tr><td class="q">Can we fine for brown grass in a drought?</td><td>No. Enforcement is suspended while a residential watering restriction applies and for 60 days after it lifts.</td><td><span class="law-cite">202.008</span></td></tr>
+          <tr><td class="q">Can we prohibit political gatherings in common areas?</td><td>No, though you may apply the same rules you apply to any other gathering, including fees, deposits, reservations, and occupancy limits.</td><td><span class="law-cite">202.013</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </Fragment>
+
+  <Fragment slot="rules">
+    <h2 class="law-h2" id="rules">The rules, in more detail</h2>
+    <p class="law-sub">Six areas that come up most. Open any one for the detail behind the short answer.</p>
+    <div class="law-rules">
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Which law applies to your community</h3>
+            <p class="answer">Texas spreads association law across three chapters, and the answers change depending on which one you sit under.</p>
+            <span class="law-cite">Tex. Prop. Code ch. 209 · 82 · 202</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p><strong>Chapter 209</strong>, the Texas Residential Property Owners Protection Act, is the main statute for residential property owners’ associations with mandatory membership. Most of what follows on this page comes from it.</p>
+          <p><strong>Chapter 82</strong>, the Texas Uniform Condominium Act, governs condominium regimes. Several 2025 changes, including the website requirement and the resale certificate fee cap, land in Chapter 82 rather than Chapter 209, so a single-family board and a condominium board reading the same headline about SB 711 are often reading about different obligations. <a href="/condo-management">CMGT manages condominium associations</a> under that separate chapter.</p>
+          <p><strong>Chapter 202</strong> governs the construction and enforcement of restrictive covenants generally, and it sits on top of the others. Three of the five 2025 laws amended Chapter 202, which is why they reach both HOAs and condominium associations. This is also where the limits on what a covenant can restrict live: solar devices, flags, religious items, rainwater harvesting, and now brown grass during drought and political gatherings.</p>
+          <p>Associations are also usually nonprofit corporations under the Business Organizations Code, which supplies corporate mechanics the property code does not address.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Notice, hearings, and enforcement</h3>
+            <p class="answer">Certified mail first, a real chance to cure, and a 30-day window for the owner to demand a hearing. Skipping a step is how fines get voided.</p>
+            <span class="law-cite">Tex. Prop. Code § 209.006 · 209.007 · 209.0061</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>Before an association may suspend an owner’s right to use a common area, file suit against an owner other than to collect an assessment or foreclose, charge an owner for property damage, levy a fine, or report a delinquency to a credit reporting service, it must give the owner written notice <strong>by certified mail</strong>.</p>
+          <p>The notice has to describe the violation or damage that is the basis for the action and state any amount due. It also has to tell the owner two things: that they are entitled to a reasonable period to cure, where the violation is curable and does not pose a threat to public health or safety, and that they may request a hearing under section 209.007 <strong>on or before the 30th day after the notice was mailed</strong>.</p>
+          <p>That 30 days is widely described as a waiting period before enforcement. It is not. It is the window in which the owner can demand a hearing. The cure period is separate and is measured by what is reasonable for the violation in question.</p>
+          <p><strong>Two provisions boards should know in the other direction.</strong> If the owner cures before the cure period expires, a fine may not be assessed at all. And the notice requirements do not apply to a violation for which the owner was already given notice and the opportunity to exercise these rights within the preceding six months, which is what makes documenting the first notice worth the effort.</p>
+          <p>A fine policy has to be adopted and made available under section 209.0061, and the hearing itself runs under section 209.007, which also addresses alternative dispute resolution. <a href="/resources/hoa-rules-enforcement">Our guide to fair-process enforcement</a> covers building a process around this.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Assessments, payment priority, and liens</h3>
+            <p class="answer">Texas dictates exactly how a payment gets applied, in six steps, with fines last.</p>
+            <span class="law-cite">Tex. Prop. Code § 209.0063 · 209.0094 · 209.008</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>A payment received from an owner is applied to the debt in this order: <strong>any delinquent assessment; any current assessment; reasonable attorney fees or third-party collection costs associated solely with assessments or another charge that could support foreclosure; any other reasonable attorney fees; reasonable fines; and any other reasonable amount owed.</strong></p>
+          <p>Fines sit fifth of six. An association cannot apply an owner’s payment to fines first and leave the assessment balance open, which is the practice that keeps a delinquency alive and eventually supports a foreclosure that should never have been available.</p>
+          <p>There is one exception. Where the owner is in default under a payment plan at the time the payment arrives, the association is not bound to that order. Even then, a fine may not be given priority over any other amount owed.</p>
+          <p>Section 209.0062 requires associations to offer an alternative payment schedule for certain assessments, and section 209.0064 governs what happens when a third-party collection agent is involved. Attorney fee recovery is governed by section 209.008, and assessment lien filings by section 209.0094. <a href="/hoa-delinquency-recovery">How CMGT approaches delinquency recovery</a> covers the operational side.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Foreclosure limits and redemption</h3>
+            <p class="answer">You cannot foreclose over fines. Foreclosure is generally judicial. And the owner has 180 days to buy the property back.</p>
+            <span class="law-cite">Tex. Prop. Code § 209.009 · 209.0092 · 209.011</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>An association may not foreclose its assessment lien where the debt securing the lien consists solely of fines assessed by the association, or of attorney fees incurred solely in connection with those fines. Read alongside the payment priority rule, the effect is deliberate: Texas has built its statute so that fines do not become a path to taking someone’s home.</p>
+          <p>Foreclosure is generally judicial under section 209.0092, subject to the exceptions stated there, and section 209.0093 lets a community remove or adopt foreclosure authority in its dedicatory instruments. Section 209.0091 requires notice and an opportunity to cure for certain other lienholders before the association forecloses.</p>
+          <p>After a sale, the association must give notice to the former owner and lienholders under section 209.010, and the owner has a <strong>180-day right of redemption</strong> under section 209.011. A Texas association foreclosure is not final on the courthouse steps, and boards should plan on that half-year tail rather than be surprised by it.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>Records, management certificates, and websites</h3>
+            <p class="answer">Texas puts association contact and fee information into public databases, and 2025 added a website duty for some associations.</p>
+            <span class="law-cite">Tex. Prop. Code § 209.004 · 209.005 · 82.1142</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p>An association records a management certificate in the county real property records and files it with the Texas Real Estate Commission, which maintains a public online database. SB 711 expanded what the certificate must disclose, adding declaration amendments, the management company’s phone number and email address, the website address where documents are available, and the amount and description of any transfer-related fee.</p>
+          <p>The filing deadline carries teeth. Where a condominium association fails to file its certificate with the Commission within the required window after recording, it cannot collect attorney fees or interest on unpaid assessments for that period. An administrative lapse turns directly into lost recovery.</p>
+          <p>Owner access to association records is governed by section 209.005, which sets out what must be produced, what may be withheld, and the process for requesting.</p>
+          <p><strong>New in 2025:</strong> a condominium association with at least 60 units, or one that has contracted with a management company, must make the current version of its recorded dedicatory instruments available on a website maintained by the association or by the management company on its behalf. Section 82.1142 sits in the condominium chapter, so read carefully before assuming it reaches a single-family community.</p>
+        </div>
+      </details>
+
+      <details class="law-rule">
+        <summary>
+          <div>
+            <h3>What Texas says you cannot restrict</h3>
+            <p class="answer">Chapter 202 carves out a growing list of things a covenant cannot reach, and 2025 added two more.</p>
+            <span class="law-cite">Tex. Prop. Code § 202.008 · 202.010 · 202.013 · 202.023</span>
+          </div>
+          <span class="law-sign" aria-hidden="true"></span>
+        </summary>
+        <div class="law-rule-bd">
+          <p><strong>Brown grass during drought.</strong> Section 202.008, added in 2025, requires an association to suspend enforcement of any restriction requiring an owner to plant or install grass or turf, maintain green vegetation or turf, or prohibiting discolored or brown vegetation, while the property is subject to a residential watering restriction imposed by a municipality or water supplier as a drought conservation measure, and until the 60th day after that restriction is lifted.</p>
+          <p><strong>Political gatherings in common areas.</strong> Section 202.013, also added in 2025, bars an association from adopting or enforcing a restriction that prohibits an owner or resident from inviting government officials or election candidates to address or meet with members, residents, or their invitees in common areas. The association may still impose whatever requirements it applies to any other gathering, including rental fees, deposits, reservations, and occupancy limits, and the section does not reach areas closed for seasonal use or reserved for association meetings. Associations with 501(c)(3) status are excluded.</p>
+          <p><strong>Solar energy devices.</strong> Section 202.010 already limited restrictions on solar installations. In 2025, HB 431 added solar roof tiles to the definition, closing an argument some associations had been making about tiles being an aesthetic choice rather than a device.</p>
+          <p><strong>Security fencing.</strong> SB 711 expanded what an association may restrict under section 202.023, allowing prohibitions on fencing that obstructs a licensed area, a public sidewalk, or a drainage easement, and on fencing forward of a dwelling’s front-most building line, with carve-outs including fencing installed before September 1, 2025 and homes whose addresses are exempt from public disclosure.</p>
+          <p>Chapter 202 also protects flags, religious displays, rainwater harvesting, and standby generators, among others. The list grows most sessions, which is the main reason a Texas covenant enforcement policy needs a scheduled legal review rather than a one-time drafting.</p>
+        </div>
+      </details>
+    </div>
+  </Fragment>
+
+  <Fragment slot="history">
+    <h2 class="law-h2" id="history">Full session record</h2>
+    <p class="law-sub">Texas holds a regular session only in odd-numbered years. The 89th adjourned June 2, 2025. The 90th convenes January 2027.</p>
+    <div class="law-sessions">
+      <details class="law-session">
+        <summary>89th Regular Session (2025) <span class="law-session-meta">5 enacted</span></summary>
+        <div class="law-session-bd">
+          <h4>SB 711 — Property owners’ associations; websites, certificates, ARC, fencing · effective Sept 1, 2025</h4>
+          <p>Amends both Chapter 82 and Chapter 209, described by its own analysis as a refinement of SB 1588 from the 87th Legislature. Adds section 82.1142 requiring condominium associations of at least 60 units, or those contracting with a management company, to publish recorded dedicatory instruments online. Expands management certificate disclosures and the Texas Real Estate Commission filing framework. Caps condominium resale certificate fees at $375 under section 82.157. Adds sections 209.00506 and 209.00507 governing architectural review committee candidate solicitation, requiring at least 10 days’ notice of a vacancy for associations with more than 40 lots. Supplements section 202.023 on security fencing.</p>
+          <h4>SB 2629 — Electronic meetings and voting · effective Sept 1, 2025</h4>
+          <p>Adds electronic ballots to the permitted voting methods, so an association must offer an owner at least one of an electronic ballot, an absentee ballot, or a proxy. Condominium associations may meet and vote electronically without first amending their dedicatory instruments.</p>
+          <h4>HB 621 — Common areas and political gatherings · effective Sept 1, 2025</h4>
+          <p>Adds section 202.013. Prohibits restrictions barring an owner or resident from inviting governmental officials and election candidates to address or meet with members, residents, or invitees in common areas, subject to the same requirements the association applies to other gatherings. Does not apply to associations qualifying under section 501(c)(3).</p>
+          <h4>HB 517 — Watering restrictions and vegetation enforcement · effective Sept 1, 2025</h4>
+          <p>Adds section 202.008. Suspends enforcement of grass, turf, and green vegetation requirements while a residential watering restriction applies, and through the 60th day after it is lifted.</p>
+          <h4>HB 431 — Solar roof tiles · effective May 29, 2025</h4>
+          <p>Amends section 202.010(a)(2) to include solar roof tiles within the definition of a solar energy device. Took effect immediately on passage rather than on the September date the others share.</p>
+        </div>
+      </details>
+      <details class="law-session">
+        <summary>2026 <span class="law-session-meta">No regular session</span></summary>
+        <div class="law-session-bd">
+          <h4>Texas legislates biennially</h4>
+          <p>There is no regular session in even-numbered years. No association-specific legislation was enacted in 2026, and the next regular opportunity for change is the 90th Legislature convening in January 2027. Called sessions can occur and occasionally carry unrelated property measures, but the association framework is stable until then.</p>
+          <p><em>Planning note:</em> this makes Texas the most predictable state in the region for compliance purposes. A policy review completed after September 2025 holds until spring 2027.</p>
+        </div>
+      </details>
+    </div>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <h2 class="law-h2" id="faq">Common questions</h2>
+    <div class="law-faq"><h3>What are the new Texas HOA laws for 2025?</h3><p>Five. SB 711 on websites, management certificates, architectural review committee selection, and fencing. SB 2629 adding electronic voting. HB 621 protecting political gatherings in common areas. HB 517 suspending vegetation enforcement during watering restrictions. HB 431 adding solar roof tiles to protected solar energy devices. All took effect September 1, 2025 except HB 431, which took effect May 29.</p></div>
+    <div class="law-faq"><h3>Can a Texas HOA foreclose for unpaid fines?</h3><p>No. Under section 209.009 an association may not foreclose its assessment lien where the debt consists solely of fines, or of attorney fees incurred solely in connection with fines. Foreclosure is generally judicial, and the owner has 180 days after the sale to redeem.</p></div>
+    <div class="law-faq"><h3>How must a Texas HOA notify a homeowner before levying a fine?</h3><p>By certified mail, in writing, describing the violation and stating any amount due, and informing the owner of a reasonable period to cure where the violation is curable and not a health or safety threat, and of the right to request a hearing on or before the 30th day after the notice was mailed.</p></div>
+    <div class="law-faq"><h3>How does a Texas HOA have to apply a homeowner’s payment?</h3><p>In statutory order under section 209.0063: delinquent assessments, current assessments, attorney fees and collection costs tied to assessments, other attorney fees, fines, then any other amount owed. If the owner is in default on a payment plan the order does not bind the association, but fines still may not take priority over other amounts.</p></div>
+    <div class="law-faq"><h3>Does my Texas HOA have to have a website?</h3><p>The 2025 website requirement in section 82.1142 applies to condominium associations with at least 60 units or those contracting with a management company. It sits in the condominium chapter, so a single-family community should check with counsel before assuming it applies.</p></div>
+    <div class="law-faq"><h3>Did Texas pass new HOA laws in 2026?</h3><p>No. Texas holds a regular legislative session only in odd-numbered years. The last was the 89th, which adjourned June 2, 2025. The next convenes in January 2027.</p></div>
+  </Fragment>
+
+  <Fragment slot="maintained">
+    <h2 class="law-h2">How this page is maintained</h2>
+    <p class="law-p">Every citation here was checked against the Texas Property Code and legislative records, not against other articles. That mattered on one point in particular: several widely circulated summaries describe section 209.006 as requiring 30 days’ notice before enforcement. The statute uses those 30 days differently, as the window for the owner to request a hearing, with the cure period measured separately by what is reasonable. We have stated it the way the statute does.</p>
+    <p class="law-p">Because Texas legislates biennially, this page moves on a two-year rhythm rather than an annual one. We review it after each regular session adjourns, next in mid-2027, and update the reviewed date in between when anything else changes. When something here touches a real decision in your community, take it to a Texas attorney who practices community association law. That is what we tell the boards we manage.</p>
+  </Fragment>
+
+  <Fragment slot="sources">
+    <div class="law-sources" id="sources">
+      <h3>Primary sources</h3>
+      <ul>
+        <li><a href="https://law.justia.com/codes/texas/property-code/title-11/chapter-209/" target="_blank" rel="noopener">Texas Property Code ch. 209</a> — Texas Residential Property Owners Protection Act</li>
+        <li><a href="https://law.justia.com/codes/texas/property-code/title-11/chapter-209/section-209-0063/" target="_blank" rel="noopener">Tex. Prop. Code § 209.0063</a> — priority of payments</li>
+        <li><a href="https://law.justia.com/codes/texas/property-code/title-11/chapter-209/section-209-006/" target="_blank" rel="noopener">Tex. Prop. Code § 209.006</a> — notice required before enforcement action</li>
+        <li><a href="https://capitol.texas.gov/tlodocs/89R/analysis/html/SB00711F.htm" target="_blank" rel="noopener">SB 711, 89th Legislature</a> — bill analysis</li>
+        <li><a href="https://texas.public.law/statutes/tex._prop._code_title_11_chapter_209" target="_blank" rel="noopener">Chapter 209 section index</a></li>
+      </ul>
+    </div>
+  </Fragment>
+
+  <Fragment slot="siblings">
+    <h2 class="law-h2">HOA laws in the other states we serve</h2>
+    <p class="law-sub">Each state page follows the same structure, so you can compare what your community is actually held to.</p>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p class="law-disclaimer"><strong>We manage communities. We don’t practice law.</strong> This is plain-English guidance, not legal advice. Texas splits its association law across several chapters, and which one governs you changes the answers. Some of these statutes are clearer than others, and legal professionals may disagree about what they require. Before you rely on or act on anything here, run it by your association’s attorney — that’s what we tell the boards we manage.</p>
+  </Fragment>
+</StateLaw>
