@@ -51,17 +51,25 @@ export interface Guide {
 // seasonal — move that object up during storm season rather than editing copy.
 export const GUIDES: Guide[] = [
   {
+    slug: '/resources/hoa-master-insurance-policy',
+    topic: 'insurance',
+    title: "HOA master insurance policy: what it covers, and what it doesn't",
+    dek: "What the association's policy covers, where yours has to start, and how wind, flood, and deductibles work.",
+    thumb: '/photos/resources/hoa-master-insurance-policy.webp',
+    alt: 'A well-kept Gulf South community with townhomes, a pool, and landscaped common areas covered by an HOA master insurance policy',
+    featured: {
+      dek: 'What an HOA or condo master insurance policy covers, where your own coverage has to start, and how Gulf South boards handle wind, flood, and deductibles.',
+      image: '/photos/hoa-master-insurance-policy.webp',
+      alt: 'A well-kept Gulf South community with townhomes, a pool, and landscaped common areas covered by an HOA master insurance policy',
+    },
+  },
+  {
     slug: '/resources/hoa-financial-statements',
     topic: 'finances',
     title: 'HOA financial statements explained in plain English',
     dek: 'The four core reports — balance sheet, income statement, cash flow, and budget comparison.',
     thumb: '/photos/resources/hoa-financial-statements.webp',
     alt: 'A homeowner reviewing HOA financial statements on a laptop at her kitchen table',
-    featured: {
-      dek: 'The four core HOA financial statements every board and homeowner should know — what each shows, what to question, and how to get copies.',
-      image: '/photos/hoa-financial-statements.webp',
-      alt: 'A homeowner reviewing HOA financial statements on a laptop at her kitchen table',
-    },
   },
   {
     slug: '/resources/hoa-special-assessments',

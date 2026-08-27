@@ -4,14 +4,10 @@ import { SITE } from '~/config/site';
 import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// EMBARGOED — scheduled to publish at a later date.
-// Until then this page is robots="noindex,nofollow" (below) and excluded from
-// the sitemap (see astro.config.mjs sitemap filter). It is intentionally not
-// linked from the Resources hub, the "Latest guides" list, or the nav dropdown.
-// TO PUBLISH: remove the robots prop below, drop the sitemap filter entry in
-// astro.config.mjs, set datePublished to the real date, and add it to the hub.
-// ─────────────────────────────────────────────────────────────────────────────
+// Published on staging: featured on the Resources hub and the nav dropdown.
+// NOTE: intentionally kept OUT of production for now (stg only). When promoting
+// to prod, bring this page + its images + the guides.ts/Nav.astro/og-images.ts
+// entries; it carries no robots restriction, so it will be indexable on prod.
 
 const pageUrl = SITE.url + '/resources/hoa-master-insurance-policy';
 
@@ -54,7 +50,6 @@ const faq = faqSchema([
   title="HOA Master Insurance Policy: What It Covers & Doesn't | CMGT"
   description="What an HOA or condo master insurance policy covers, where your own coverage has to start, and how Gulf South boards handle wind, flood, and deductibles."
   ogType="article"
-  robots="noindex,nofollow"
   pageSchema={[breadcrumb, article, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Insurance & Risk"}]'></nav>
