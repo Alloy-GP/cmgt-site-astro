@@ -170,4 +170,8 @@ export const OG_IMAGES: Record<string, OgImage> = {
     image: '/photos/og/hoa-financial-statements.jpg',
     alt: 'A homeowner reviewing HOA financial statements on a laptop at her kitchen table',
   },
+  '/resources/hoa-master-insurance-policy': {
+    image: '/photos/og/hoa-master-insurance-policy.jpg',
+    alt: 'A well-kept Gulf South community with townhomes, a pool, and landscaped common areas covered by an HOA master insurance policy',
+  },
 };
