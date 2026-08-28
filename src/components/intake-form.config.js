@@ -57,7 +57,12 @@ export const PROPOSAL_V2 = {
   communityType: ['Single-family', 'Townhomes', 'Condos', 'Mixed — townhomes & single-family', 'Master / mixed-use'],
   managementStatus: ['Self-managed by board', 'Looking to switch from current provider', 'New construction / developer-controlled', 'Other'],
   amenities: ['Community pool', 'Clubhouse', 'Walking trails', 'Pier & boat slips', 'Tot lot', 'Tennis / pickleball', 'Gated entry', 'Marina', 'Beach access', 'Common landscaping'],
-  services: ['Full financial management', 'Vendor coordination', 'Compliance & insurance', 'Board meeting support', 'Resident communication', 'Collections / delinquency', 'Reserve planning', 'After-hours emergency', 'Maintenance coordination'],
+  // 'On-site staff' is the only option here that points at a DIFFERENT tier: the
+  // portal recommends On-Site Management when a board ticks it (see the portal's
+  // camProfiles.js -> serviceTiers). Everything else describes work inside
+  // full-service. Renaming one of these breaks that mapping for future leads, so
+  // the portal keeps old labels as aliases — change both together.
+  services: ['Full financial management', 'Vendor coordination', 'Compliance & insurance', 'Board meeting support', 'Resident communication', 'Collections / delinquency', 'Reserve planning', 'After-hours emergency', 'Maintenance coordination', 'On-site staff'],
   painPoints: [
     'Slow communication — missed calls, no follow-through',
     'Delinquency creeping up — collections aren’t working',
@@ -75,6 +80,22 @@ export const PROPOSAL_V2 = {
   ],
   budget: ['Open — looking for the right fit, not the cheapest', 'Cost-sensitive — need a lean option', 'Tight budget — financial only', 'Premium — full service expected'],
   timeline: ['Immediately', 'Within 60 days', 'Engage by Q3 2026', 'Engage by Q4 2026', 'Just exploring'],
+  // ── Where this CAM actually operates ───────────────────────────────────────
+  // The Location field's suggestions are restricted to these states. Without it
+  // the Places API happily offers the whole planet: typing "baton" returned
+  // "Bátonyterenye, Hungary", "Barton Malow, Sterling, VA" and an airport, so a
+  // board could file its community in a country CMGT has never worked in.
+  //
+  // Three mechanisms, because no single one is both precise and complete:
+  //   markets       — the only state codes a suggestion may carry. Exact, ours.
+  //   placesBounds  — a coarse box over those states, sent to the API so the five
+  //                   suggestions it returns are mostly usable before filtering.
+  //                   Wider than the states themselves; `markets` does precision.
+  //   (cities)      — set in IntakeForm.jsx: cities, not businesses or addresses.
+  // Verified against the live API: "bangkok" now returns nothing, "phoenix"
+  // returns only Phenix City, AL and Phoenix, LA.
+  markets: ['LA', 'MS', 'AL', 'FL', 'TX', 'TN'],
+  placesBounds: { south: 24.4, west: -106.7, north: 36.75, east: -80.0 },
 };
 
 // ── Extra intents (FULLY customizable per site) ──────────────────────────
