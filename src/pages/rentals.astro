@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 import { PORTALS } from '~/config/portals';
 
@@ -13,16 +13,63 @@ const breadcrumb = breadcrumbSchema([
 // page actually claims; the company itself stays the one Organization node.
 const service = serviceSchema({
   name: 'Residential Rental Property Management',
-  description: 'Rental property management in Greater Baton Rouge — leasing, screening, rent collection, and maintenance handled. Hands-off ownership for investors.',
+  description: 'Baton Rouge property management for single-family rentals and small investors: leasing, screening, rent collection, and maintenance by our own in-house crew. A Baton Rouge company since 2007.',
   url: SITE.url + '/rentals',
   areaServed: 'Greater Baton Rouge',
 });
 
+// Owner FAQ. Rendered in the accordion below and emitted as FAQPage schema from
+// this same array so the two cannot drift. Answers may carry inline HTML; the
+// schema copy strips the tags.
+const FAQ = [
+  {
+    q: 'What areas do you cover?',
+    a: 'Rental management is offered in the <strong>Greater Baton Rouge area only</strong>, the same capital-region footprint as our community management: East Baton Rouge, Livingston, and Ascension parishes, including Baton Rouge, Denham Springs, Walker, Prairieville, Gonzales, Zachary, and Central. It’s a separate service from our HOA management, built for individual owners and small investors, not associations.',
+  },
+  {
+    q: 'How much does property management cost in Baton Rouge?',
+    a: 'Most Baton Rouge property management companies charge a percentage of the monthly rent plus a leasing fee when a new tenant is placed. We quote each property straightforwardly based on its size and needs, with no buried fees. Tell us about your rental and we’ll come back with a clear number within two business days.',
+  },
+  {
+    q: 'What does CMGT actually do each month as my property manager?',
+    a: 'Collect the rent and post it to your account, field tenant questions and maintenance requests, coordinate repairs through our <a href="/fix-it-squad">Fix-It Squad</a> with your approval on the larger jobs, send your owner statement, and watch lease dates so renewals and notices go out on time. You get a named contact, not a ticket queue.',
+  },
+  {
+    q: 'What kinds of properties do you manage?',
+    a: 'Single-family homes and small residential investment properties in Greater Baton Rouge. We’re built for individual owners and small investors rather than large apartment communities.',
+  },
+  {
+    q: 'How do you screen tenants?',
+    a: 'Every applicant goes through credit, background, income, and rental-history checks before signing, so the right renter ends up in your property.',
+  },
+  {
+    q: 'How long does it take to lease a vacant property?',
+    a: 'It depends on the home, its condition, and how it’s priced. We price to the current Baton Rouge market, get make-ready done quickly through the Fix-It Squad, and start showings as soon as the listing is live. We’d rather place a well-screened tenant in a few weeks than a risky one in a few days.',
+  },
+  {
+    q: 'Who handles repairs and after-hours emergencies?',
+    a: 'Our in-house <a href="/fix-it-squad">Fix-It Squad</a> coordinates maintenance, fast, fair, and documented with photos, with your approval required on the larger jobs. Because the crew is on our payroll rather than a vendor list, there’s no one to chase.',
+  },
+  {
+    q: 'How and when do I get paid?',
+    a: 'Rent is deposited to your account each month with a clear owner statement, so you always know what came in and what went out.',
+  },
+  {
+    q: 'How is CMGT different from other Baton Rouge property management companies?',
+    a: 'We’re a Baton Rouge company with a local office in Denham Springs, an in-house maintenance crew instead of a subcontractor list, and nearly two decades of managing the communities many of these rentals sit in. If your rental is inside an association we manage, one company handles both the community and your unit.',
+  },
+  {
+    q: 'Do you manage rentals outside the Baton Rouge area?',
+    a: 'No. Rental management is Greater Baton Rouge only. In our other markets across Louisiana, Texas, Mississippi, Alabama, and the Florida Panhandle we provide <a href="/hoa-management-services">HOA and condo management</a>.',
+  },
+];
+const faq = faqSchema(FAQ.map((f) => ({ q: f.q, a: f.a.replace(/<[^>]+>/g, '') })));
+
 ---
 <BaseLayout
-  title="Rental Property Management in Greater Baton Rouge — CMGT"
-  description="Rental property management in Greater Baton Rouge — leasing, screening, rent collection, and maintenance handled. Hands-off ownership for investors."
-  pageSchema={[breadcrumb, service]}
+  title="Baton Rouge Property Management for Rental Owners — CMGT"
+  description="Baton Rouge property management for single-family rentals and small investors: leasing, screening, rent collection, and maintenance by our own in-house crew. A Baton Rouge company since 2007."
+  pageSchema={[breadcrumb, service, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Rentals"}]'></nav>
 
@@ -31,10 +78,10 @@ const service = serviceSchema({
     <div class="container rn-hero-grid">
       <div>
         <span class="rn-loc"><span class="pin"></span> Greater Baton Rouge only</span>
-        <h1 class="rn-hero-display">Own the property. <span class="u">Skip the headaches.</span></h1>
+        <h1 class="rn-hero-display">Baton Rouge property management, <span class="u">without the headaches.</span></h1>
         <p class="rn-hero-lede">
-          Full-service rental management for single-family and small residential investors in
-          the Baton Rouge area. <strong>We handle leasing, rent, and maintenance</strong> —
+          CMGT Rentals manages single-family homes and small residential investments across
+          Greater Baton Rouge. <strong>We handle leasing, rent, and maintenance</strong> —
           you collect the deposit and keep your weekends.
         </p>
         <div class="rn-hero-ctas">
@@ -129,6 +176,31 @@ const service = serviceSchema({
     </div>
   </section>
 
+  <!-- WHY CMGT — local proof for owners comparing Baton Rouge property managers -->
+  <section class="sec why" data-screen-label="Why CMGT">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="eyebrow eyebrow-blue">Baton Rouge property management</div>
+        <h2 class="sec-h">A local property manager, not a national call center.</h2>
+      </div>
+      <div class="why-grid reveal">
+        <div class="prose why-copy">
+          <p>CMGT has managed communities across the capital region since 2007, and CMGT Rentals grew out of that work: owners inside the associations we already managed asked us to look after their rental homes too. Thirteen years and 200-plus units later, the division still grows the same way, by referral from Baton Rouge owners.</p>
+          <p>Most Baton Rouge property management companies subcontract repairs. We don’t. Our <a href="/fix-it-squad">Fix-It Squad</a> is on our own payroll, so a water heater that fails on a Friday night gets a CMGT technician, documented with photos, and you approve anything beyond the routine. Rent posts to your account each month with an owner statement you can actually read, and the <a href={PORTALS.owner} target="_blank" rel="noopener noreferrer">owner portal</a> keeps every lease, inspection report, and invoice in one place.</p>
+          <p>If you own a rental inside a community we manage, one company handles both the association and your unit. That means one phone number when something needs attention, and a manager who already knows the neighborhood’s rules.</p>
+        </div>
+        <aside class="why-areas">
+          <h3 class="why-areas-h">Where we manage rentals</h3>
+          <p class="why-areas-p">Greater Baton Rouge, the same capital-region footprint as our community management: East Baton Rouge, Livingston, and Ascension parishes.</p>
+          <ul class="why-areas-list">
+            <li>Baton Rouge</li><li>Denham Springs</li><li>Walker</li><li>Prairieville</li><li>Gonzales</li><li>Zachary</li><li>Central</li>
+          </ul>
+          <p class="why-areas-p">Not sure your property is inside our area? <a href="/request-a-proposal?intent=rental">Ask us</a>. If it’s a fit, we’ll tell you the rent it should command.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <!-- OWNER PROOF -->
   <section class="op">
     <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
@@ -149,11 +221,12 @@ const service = serviceSchema({
         <h2 class="sec-h">What Baton Rouge owners ask.</h2>
       </div>
       <div class="acc-list reveal">
-        <div class="acc-item"><button class="acc-q" type="button">What areas do you cover?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Rental management is offered in the <strong>Greater Baton Rouge area only</strong>, and it’s a separate service from our HOA community management — built for individual owners and small investors, not associations.</div></div></div>
-        <div class="acc-item"><button class="acc-q" type="button">How much does rental management cost?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">We quote each property straightforwardly based on its size and needs — no buried fees. Tell us about your rental and we’ll come back with a clear number within two business days.</div></div></div>
-        <div class="acc-item"><button class="acc-q" type="button">How do you screen tenants?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Every applicant goes through credit, background, income, and rental-history checks before signing — so the right renter ends up in your property.</div></div></div>
-        <div class="acc-item"><button class="acc-q" type="button">Who handles repairs and after-hours emergencies?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Our in-house <a href="/fix-it-squad">Fix-It Squad</a> coordinates maintenance — fast, fair, and documented — with your approval required on the larger jobs.</div></div></div>
-        <div class="acc-item"><button class="acc-q" type="button">How and when do I get paid?<span class="acc-sign" aria-hidden="true"></span></button><div class="acc-panel"><div class="acc-panel-in">Rent is deposited to your account each month with a clear owner statement, so you always know what came in and what went out.</div></div></div>
+        {FAQ.map((f) => (
+          <div class="acc-item">
+            <button class="acc-q" type="button">{f.q}<span class="acc-sign" aria-hidden="true"></span></button>
+            <div class="acc-panel"><div class="acc-panel-in" set:html={f.a}></div></div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -270,4 +343,15 @@ const service = serviceSchema({
   .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 480px; margin: 0; color: rgba(30,30,119,.82); }
   .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
   .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
+  /* WHY — local proof + service area */
+  .why { background: #fff; }
+  .why-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: start; }
+  @media (max-width: 860px) { .why-grid { grid-template-columns: 1fr; gap: 28px; } }
+  .why-copy p a { color: var(--freedom-blue); font-weight: 600; }
+  .why-areas { background: var(--nb-lightest); border: 1.5px solid var(--hairline-strong); border-radius: 16px; padding: 26px 28px; }
+  .why-areas-h { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--freedom-blue); margin: 0 0 10px; }
+  .why-areas-p { font-size: 15px; line-height: 1.65; color: var(--ink-500); margin: 0 0 14px; }
+  .why-areas-p:last-child { margin-bottom: 0; }
+  .why-areas-list { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .why-areas-list li { font-size: 13.5px; font-weight: 600; color: var(--freedom-blue); background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 999px; padding: 6px 12px; }
 </style>

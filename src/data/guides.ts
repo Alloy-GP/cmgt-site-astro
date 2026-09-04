@@ -16,7 +16,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type TopicId = 'finances' | 'governance' | 'covenants'
-                   | 'insurance' | 'vendors' | 'manager';
+                   | 'insurance' | 'vendors' | 'manager' | 'law';
 
 /** The six topic areas, in the order the retired "Browse by topic" grid used. */
 export const TOPICS: { id: TopicId; label: string }[] = [
@@ -26,6 +26,10 @@ export const TOPICS: { id: TopicId; label: string }[] = [
   { id: 'insurance',  label: 'Insurance & Risk' },
   { id: 'vendors',    label: 'Vendors & Maintenance' },
   { id: 'manager',    label: 'Choosing a Manager' },
+  // Added 2026-09 when the five state law references joined the hub. Until then
+  // they were reachable only from each state's management page, and Google was
+  // crediting 'louisiana hoa laws' to the hub URL instead of the law page.
+  { id: 'law',        label: 'State HOA Law' },
 ];
 
 export interface Guide {
@@ -79,6 +83,49 @@ export const GUIDES: Guide[] = [
     thumb: '/photos/resources/special-assessments.webp',
     alt: 'Roof replacement underway on an HOA clubhouse',
   },
+  // State law references. All five were reviewed 2026-08-01. No 16:10 thumbs were
+  // shot for them (the pages themselves carry no imagery), so the cards reuse each
+  // state hub's hero photo; the card slot crops it to 16:10 with object-fit: cover.
+  {
+    slug: '/resources/hoa-laws/louisiana',
+    topic: 'law',
+    title: "Louisiana HOA laws: a board member's reference",
+    dek: 'Meeting notice, records, budgets, liens, and enforcement under the Planned Community Act, plus what 2026 changed.',
+    thumb: '/photos/la-geo-hero-photo.webp',
+    alt: 'An established Louisiana residential community near Baton Rouge with mature oaks, well-kept homes, and manicured common areas under a bright Gulf South sky',
+  },
+  {
+    slug: '/resources/hoa-laws/texas',
+    topic: 'law',
+    title: "Texas HOA laws: a board member's reference",
+    dek: 'Notice and hearings, payment priority, foreclosure limits, records, and the five 2025 changes to Chapter 209.',
+    thumb: '/photos/tx-geo-hero-photo.webp',
+    alt: 'A newer master-planned East Texas neighborhood with modern single-family homes, wide streets, and open Texas sky',
+  },
+  {
+    slug: '/resources/hoa-laws/mississippi',
+    topic: 'law',
+    title: "Mississippi HOA laws: a board member's reference",
+    dek: 'Mississippi has no HOA statute. What actually governs: your covenants, the Nonprofit Corporation Act, and federal law.',
+    thumb: '/photos/ms-geo-hero-photo.webp',
+    alt: 'A Mississippi Gulf Coast neighborhood near Gulfport with coastal homes, palm-lined streets, and well-kept common areas',
+  },
+  {
+    slug: '/resources/hoa-laws/alabama',
+    topic: 'law',
+    title: "Alabama HOA laws: a board member's reference",
+    dek: "The HOA Act only covers declarations recorded after 2016. What applies to yours: records, liens, fines, and the 2026 session.",
+    thumb: '/photos/al-geo-hero-photo.webp',
+    alt: 'An established single-family neighborhood along the Alabama Gulf Coast with manicured lawns, mature trees, and Gulf Coast homes under a clear sky',
+  },
+  {
+    slug: '/resources/hoa-laws/florida',
+    topic: 'law',
+    title: "Florida HOA laws: a board member's reference",
+    dek: 'Fine limits and the hearing committee, the two 45-day lien clocks, records deadlines, and the July 1, 2026 changes.',
+    thumb: '/photos/fl-geo-hero-photo.webp',
+    alt: 'A Florida Panhandle master-planned community near Pensacola with single-family homes and lush coastal landscaping',
+  },
   {
     slug: '/resources/hoa-rules-enforcement',
     topic: 'covenants',
@@ -101,8 +148,9 @@ export const GUIDES: Guide[] = [
   {
     slug: '/resources/hoa-reserve-study',
     topic: 'finances',
-    title: 'HOA reserve studies: the complete board guide',
-    dek: 'What a reserve study is, what it costs, and how to turn the findings into a funding plan.',
+    // Singular on purpose: 'hoa reserve study' is the head term this guide targets.
+    title: 'HOA reserve study: the complete board guide',
+    dek: 'What an HOA reserve study is, what one costs, what the report should contain, and how to fund it.',
     thumb: '/photos/resources/reserve-study.webp',
     alt: 'A well-maintained HOA common area kept in good repair by a funded reserve plan',
   },
