@@ -34,9 +34,11 @@ export default defineConfig({
     // replaced Log In / Pay Dues / Order Documents.
     '/login': '/homeowner-hub',
 
-    // ── Deleted pages (content pass) ──────────────────────────────
-    '/resources/louisiana-hoa-laws': '/resources',
-    '/louisiana-hoa-laws': '/resources',
+    // ── Louisiana HOA law: these old slugs were parked on the hub while the law
+    //    page was held back. It shipped 2026-08-21, so they now go straight there.
+    //    ('louisiana hoa laws' was ranking on the hub URL because of this.)
+    '/resources/louisiana-hoa-laws': '/resources/hoa-laws/louisiana',
+    '/louisiana-hoa-laws': '/resources/hoa-laws/louisiana',
 
     // ── Condo page moved to design-canonical route ────────────────
     '/condo-and-townhome-management': '/condo-management',
@@ -113,6 +115,58 @@ export default defineConfig({
     '/wheels-to-succeed-2022': '/about/cmgt-cares',
     '/project-graduation-2022': '/about/cmgt-cares',
     '/denham-springs-athletic-association': '/about/cmgt-cares',
+
+    // ── 2026-W36 backlink audit: legacy slugs (WordPress era and the older ASP
+    //    site) that still carry referring domains and were returning 404. URL
+    //    *families* that need a pattern (/cm/*, *.asp, /20xx/mm/dd/*, /wp-content/*)
+    //    live in src/middleware.ts; these are the exact slugs.
+    '/association-management': '/hoa-management-services',
+    '/services': '/hoa-management-services',
+    '/association-management-contact': '/request-a-proposal',
+    '/property-management-contact': '/request-a-proposal',
+    '/request-for-proposal': '/request-a-proposal',
+    '/property-management': '/rentals',
+    '/category/propertymanagement': '/rentals',
+    '/category/multifamilymanagement': '/resources',
+    '/category/associatemanagement': '/resources',
+    '/re-sale-documents': '/homeowner-hub',
+    '/association-management-forms': '/homeowner-hub',
+    '/association-management-form': '/homeowner-hub',
+    '/association-management-faq': '/faq',
+    '/community-association-manager': '/how-we-work',
+    // Old job postings
+    '/careers': '/about/team-careers',
+    '/our-team': '/about/team-careers',
+    '/community-manager': '/about/team-careers',
+    '/assistant-community-manager': '/about/team-careers',
+    '/assistant-property-manager': '/about/team-careers',
+    '/site-visit-specialist': '/about/team-careers',
+    '/customer-service-representative-csr': '/about/team-careers',
+    '/hvac-maintenance-technician': '/about/team-careers',
+    '/architectural-control-specialist': '/about/team-careers',
+    '/accounts-receivable-support-team-member': '/about/team-careers',
+    // Old flat geo slugs
+    '/baton-rouge': '/hoa-management/louisiana/baton-rouge',
+    '/biloxi': '/hoa-management/mississippi/biloxi',
+    '/new-orleans': '/hoa-management/louisiana',
+    '/louisiana': '/hoa-management/louisiana',
+    '/mississippi': '/hoa-management/mississippi',
+    '/alabama': '/hoa-management/alabama',
+    '/association-management-louisiana': '/hoa-management/louisiana',
+    '/association-management-mississippi': '/hoa-management/mississippi',
+    '/association-management-alabama': '/hoa-management/alabama',
+    '/association-management-florida': '/hoa-management/florida',
+    // Community roots from the old ASP portal; their *.asp children are caught by
+    // the middleware pattern. Keys are lowercase because the middleware lowercases
+    // mixed-case paths (e.g. /SUGARLANDESTATES) before they can match here.
+    '/willowgrove': '/homeowner-hub',
+    '/riverranch': '/homeowner-hub',
+    '/carterplantation': '/homeowner-hub',
+    '/springlake': '/homeowner-hub',
+    '/lexingtonestates': '/homeowner-hub',
+    '/jeffersonhills': '/homeowner-hub',
+    '/sugarlandestates': '/homeowner-hub',
+    '/woodlandcrossingii': '/homeowner-hub',
 
     // Old WordPress (Yoast) sitemap URLs → our real sitemap. The old index used
     // an underscore (sitemap_index.xml); Astro generates sitemap-index.xml.

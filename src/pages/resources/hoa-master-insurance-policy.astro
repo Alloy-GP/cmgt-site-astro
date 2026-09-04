@@ -4,10 +4,10 @@ import { SITE } from '~/config/site';
 import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
-// Published on staging: featured on the Resources hub and the nav dropdown.
-// NOTE: intentionally kept OUT of production for now (stg only). When promoting
-// to prod, bring this page + its images + the guides.ts/Nav.astro/og-images.ts
-// entries; it carries no robots restriction, so it will be indexable on prod.
+// Published: featured on the Resources hub and the nav dropdown, indexable
+// (no robots restriction). Wired into the internal link hierarchy — links up to
+// the condo-management pillar and across to the hurricane, reserve-study, and
+// special-assessments guides; the condo pillar and hurricane guide link back.
 
 const pageUrl = SITE.url + '/resources/hoa-master-insurance-policy';
 
