@@ -1,0 +1,20 @@
+---
+/**
+ * Catch-all for every URL no other route claims. Two outcomes:
+ *
+ * 1. A legacy-URL pattern matches (old ASP portal, WordPress archives/uploads, or a
+ *    mixed-case path) → 301 to the modern URL. See src/lib/legacy-redirects.ts for
+ *    the rules and for why this lives in a route rather than middleware.
+ * 2. Nothing matches → hand back an empty 404 so Astro renders src/pages/404.astro
+ *    with a real 404 status, exactly as it did before this route existed.
+ *
+ * Dynamic, so @astrojs/sitemap ignores it. Static routes and /api/* are more
+ * specific and always win over this one.
+ */
+import { legacyRedirectTarget } from '~/lib/legacy-redirects';
+
+const target = legacyRedirectTarget(Astro.url);
+if (target) return Astro.redirect(target, 301);
+
+return new Response(null, { status: 404 });
+---
