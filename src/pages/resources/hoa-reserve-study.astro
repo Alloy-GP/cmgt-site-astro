@@ -27,22 +27,27 @@ const faq = faqSchema([
     q: 'Is a reserve study required in Louisiana, Mississippi, or Alabama?',
     a: 'Generally no. These states don’t broadly mandate reserve studies for HOAs the way California and Florida do. That said, your governing documents or a lender may still expect one, and skipping it leaves the community exposed to surprise special assessments. Because state law changes, confirm your community’s current obligations with your association counsel.',
   },
+  {
+    q: 'Is there an HOA reserve study template I can use instead of hiring a provider?',
+    a: 'A template can organize your component list and show the board what a complete report looks like, but it cannot replace the inspection and cost estimating a credentialed reserve specialist provides. Use the checklist in this guide to prepare, then commission a full study. Lenders, insurers, and buyers give weight to the professional report, not to a spreadsheet.',
+  },
 ]);
 // Article, matching every other board-education spoke. Dates are this page's
 // own visible "Updated" line — a schema date a reader can't see gets flagged.
 const article = articleSchema({
-  headline: 'HOA reserve studies: a complete guide for boards',
-  description: 'What an HOA reserve study is, why your board needs one, what it costs, and how to turn the findings into a funding plan. A plain-English guide for boards.',
+  headline: 'HOA reserve study: the complete guide for boards',
+  description: 'What an HOA reserve study is, what one costs, what the finished report should contain, and how to turn it into a funding plan. A plain-English guide for boards.',
   url: SITE.url + '/resources/hoa-reserve-study',
   datePublished: '2026-06-01',
+  dateModified: '2026-09-04',
   image: SITE.url + '/photos/og/reserve-hero-photo.jpg',
-  about: ['HOA reserve study', 'HOA reserve funding', 'Capital replacement planning'],
+  about: ['HOA reserve study', 'HOA reserve study cost', 'HOA reserve study template', 'HOA reserve funding', 'Capital replacement planning'],
 });
 
 ---
 <BaseLayout
-  title="HOA Reserve Studies: The Complete Board Guide (2026) | CMGT"
-  description="What an HOA reserve study is, why your board needs one, what it costs, and how to turn the findings into a funding plan. A plain-English guide for boards."
+  title="HOA Reserve Study Guide: Cost, Template & Funding Plan (2026) | CMGT"
+  description="What an HOA reserve study is, what one costs, what the finished report should contain, and how to turn it into a funding plan. A plain-English guide for boards."
   ogType="article"
   pageSchema={[breadcrumb, article, faq]}
 >
@@ -53,9 +58,9 @@ const article = articleSchema({
       <ImageSlot priority src="/photos/reserve-hero-photo.webp" alt="A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan" shape="rect" />
       <div class="container art-hero-in">
         <div class="art-cat">Finances &amp; Reserves</div>
-        <h1 class="art-h1">HOA reserve studies: a complete guide for boards.</h1>
-        <p class="art-lede">The clubhouse roof gives out, the quote is $180,000, and the reserve fund has $40,000 in it. A reserve study is how a board keeps that scenario out of every homeowner’s mailbox. Here’s what it is, whether you need one, what it costs, and the part most guides skip.</p>
-        <div class="art-meta"><span>6 min read</span><span class="dot"></span><span>2026 Edition · Updated June 2026</span></div>
+        <h1 class="art-h1">HOA reserve study: the complete guide for boards.</h1>
+        <p class="art-lede">The clubhouse roof gives out, the quote is $180,000, and the reserve fund has $40,000 in it. A reserve study is how a board keeps that scenario out of every homeowner’s mailbox. Here’s what it is, what it costs, what the finished report should contain, and the part most guides skip.</p>
+        <div class="art-meta"><span>8 min read</span><span class="dot"></span><span>2026 Edition · Updated September 2026</span></div>
       </div>
     </header>
 
@@ -81,13 +86,42 @@ const article = articleSchema({
         </div>
         <p class="art-p"><strong>The single number to watch is “percent funded”: how much your community has saved compared to what the study says it should have on hand at this point.</strong> A community sitting at 15% funded is a special assessment waiting to happen; one at 70% or higher is generally considered strong. The study gives you that number and, more importantly, a plan to improve it.</p>
 
+        <h2 class="art-h2">How much does an HOA reserve study cost, and how often do you need one?</h2>
+        <p class="art-p">Most HOA reserve studies cost roughly $2,500 to $5,000, and boards should refresh them every three to five years. The exact HOA reserve study cost depends on community size, number of components, and whether a site visit is included, so a large community with lots of amenities runs higher than a small single-family HOA. (Treat these as general industry figures; pricing varies by provider and market.)</p>
+        <p class="art-p">There are two common formats. A <strong>full study</strong> includes an on-site inspection of every component and is the most thorough, which is why boards commission one every three to five years. An <strong>update</strong>, sometimes done without a site visit, refreshes the numbers in between for less. A light annual review between studies keeps the funding plan honest as costs and conditions change. Some states set their own intervals, so how often an HOA should do a reserve study can be a legal question, but every three to five years for a full study is the widely accepted standard.</p>
+
+        <h2 class="art-h2">HOA reserve study template: what a finished report should contain</h2>
+        <p class="art-p">Boards often search for an HOA reserve study template hoping for a fill-in-the-blanks spreadsheet. Use one with care. A credible study depends on a qualified specialist inspecting your components and pricing their replacement, and no template does that. What a template <em>is</em> good for is knowing what to expect, so the board can tell a thorough report from a thin one and ask better questions before signing off.</p>
+        <p class="art-p">Every reserve study that follows the National Reserve Study Standards includes the same core pieces. Use this as your checklist:</p>
+        <div class="art-callout reveal">
+          <p class="art-callout-h">Reserve study template: the sections to expect</p>
+          <ol>
+            <li><strong>Executive summary.</strong> The percent-funded figure, the current reserve balance, the recommended annual contribution, and whether the community is on track.</li>
+            <li><strong>Component inventory.</strong> Every shared asset the association is responsible for, with quantities and a brief description of each.</li>
+            <li><strong>Condition and life estimates.</strong> Each component’s useful life, remaining useful life, and current condition, backed by the site visit.</li>
+            <li><strong>Replacement cost estimates.</strong> Today’s cost to repair or replace each component, with the inflation and interest assumptions spelled out.</li>
+            <li><strong>Funding plan and scenarios.</strong> A 20- to 30-year cash-flow projection under at least two funding approaches, usually baseline and full funding, showing where the balance lands each year.</li>
+            <li><strong>Methodology and assumptions.</strong> Which funding method was used, the credentials of the analyst, and the date of the site inspection.</li>
+          </ol>
+        </div>
+        <p class="art-p">The component table is the heart of the document, and it is the one part a board can sketch for itself before the provider arrives. A simple version looks like this:</p>
+        <div class="art-table-wrap reveal">
+          <table class="art-table">
+            <thead><tr><th>Component</th><th>Useful life</th><th>Remaining life</th><th>Replacement cost</th><th>Annual set-aside</th></tr></thead>
+            <tbody>
+              <tr><td>Clubhouse roof</td><td>25 yrs</td><td>4 yrs</td><td>$180,000</td><td>$45,000</td></tr>
+              <tr><td>Pool resurfacing</td><td>12 yrs</td><td>7 yrs</td><td>$42,000</td><td>$6,000</td></tr>
+              <tr><td>Private road overlay</td><td>20 yrs</td><td>10 yrs</td><td>$260,000</td><td>$26,000</td></tr>
+              <tr><td>Perimeter fencing</td><td>15 yrs</td><td>2 yrs</td><td>$28,000</td><td>$14,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="art-p">Illustrative figures only. The annual set-aside is simply replacement cost divided by remaining life, which is how a straight-line component method arrives at a contribution. Real studies pool the components so one big-ticket year does not swamp the plan. Walking your common areas with this table in hand is the best preparation a board can do; hand the draft list to your provider and they will correct it against what they find on site.</p>
+        <p class="art-p">Once the study is in hand, the funding plan needs a home in the annual budget. Our <a href="/resources/hoa-budget-template">HOA budget template</a> shows where the reserve contribution line sits and how to model it.</p>
+
         <h2 class="art-h2">Does your HOA actually need one? (Even if your state doesn’t require it)</h2>
         <p class="art-p">Nearly every community benefits from an HOA reserve study, and a growing number of states now legally require them, but Louisiana, Mississippi, and Alabama generally do not. That gap is exactly why so many Gulf South communities get caught off guard. Reserve study requirements by state vary widely: California requires a full study every three years, and Florida now mandates structural integrity reserve studies for older condo buildings after the 2021 Surfside collapse. Much of the Gulf South has no such mandate.</p>
         <p class="art-p"><strong>Not legally required does not mean not needed.</strong> Underfunded reserves are the leading cause of surprise special assessments, and the risk shows up before any repair does. Lenders and buyers increasingly scrutinize reserve health: <a href="https://www.fanniemae.com" target="_blank" rel="noopener">Fannie Mae</a>, for example, generally expects a condo budget to put at least 10% of income toward reserves for units to qualify for financing. A thin reserve fund can quietly make a community harder to sell and harder to insure. An HOA reserve study replaces guesswork with a plan, which is the whole point of proactive, transparent management: solve the problem before a homeowner ever knows it exists.</p>
-
-        <h2 class="art-h2">How much does a reserve study cost, and how often do you need one?</h2>
-        <p class="art-p">Most HOA reserve studies cost roughly $2,500 to $5,000, and boards should refresh them every three to five years. The exact HOA reserve study cost depends on community size, number of components, and whether a site visit is included, so a large community with lots of amenities runs higher than a small single-family HOA. (Treat these as general industry figures; pricing varies by provider and market.)</p>
-        <p class="art-p">There are two common formats. A <strong>full study</strong> includes an on-site inspection of every component and is the most thorough, which is why boards commission one every three to five years. An <strong>update</strong>, sometimes done without a site visit, refreshes the numbers in between for less. A light annual review between studies keeps the funding plan honest as costs and conditions change. Some states set their own intervals, so how often an HOA should do a reserve study can be a legal question, but every three to five years for a full study is the widely accepted standard.</p>
 
         <h2 class="art-h2">How to choose a reserve study provider</h2>
         <p class="art-p">Look for an independent, credentialed reserve specialist who holds the Reserve Specialist (RS) or Professional Reserve Analyst (PRA) designation and follows the National Reserve Study Standards. The best HOA reserve study companies do exactly this work and have no financial stake in the repairs they recommend. A quick vetting checklist:</p>
@@ -113,6 +147,9 @@ const article = articleSchema({
         <h3 class="art-h3">Is a reserve study required in Louisiana, Mississippi, or Alabama?</h3>
         <p class="art-p">Generally no. These states don’t broadly mandate reserve studies for HOAs the way California and Florida do. That said, your governing documents or a lender may still expect one, and skipping it leaves the community exposed to surprise special assessments. Because state law changes, confirm your community’s current obligations with your association counsel.</p>
 
+        <h3 class="art-h3">Is there an HOA reserve study template I can use instead of hiring a provider?</h3>
+        <p class="art-p">A template can organize your component list and show the board what a complete report looks like, but it cannot replace the inspection and cost estimating a credentialed reserve specialist provides. Use the checklist above to prepare, then commission a full study. Lenders, insurers, and buyers give weight to the professional report, not to a spreadsheet.</p>
+
         <h2 class="art-h2">A reserve study tells you what’s coming, and how to pay for it</h2>
         <p class="art-p">An HOA reserve study gives your community two things it can’t get any other way: an honest look at what will need repair or replacement, and a realistic plan to pay for it without a special assessment surprise. The board that acts on its study and folds the funding plan into a sustainable budget never has to send that dreaded letter. You don’t have to figure it out alone: CMGT helps boards commission the right study and turn its findings into a transparent, fundable budget.</p>
 
@@ -124,7 +161,7 @@ const article = articleSchema({
   <section class="rel">
     <div class="container">
       <h2 class="rel-h">Keep reading.</h2>
-      <div class="rel-grid"><a class="rel-card" href="/hoa-financial-management"><span class="rel-t">HOA Financial Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/hoa-management-services"><span class="rel-t">Full-Service HOA Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/request-a-proposal"><span class="rel-t">Talk to our team</span><span class="rel-ar">→</span></a></div>
+      <div class="rel-grid"><a class="rel-card" href="/hoa-financial-management"><span class="rel-t">HOA Financial Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/hoa-management-services"><span class="rel-t">Full-Service HOA Management</span><span class="rel-ar">→</span></a><a class="rel-card" href="/resources/hoa-budget-template"><span class="rel-t">HOA Budget Template</span><span class="rel-ar">→</span></a></div>
     </div>
   </section>
 
@@ -181,4 +218,10 @@ const article = articleSchema({
   .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
   .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
   .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+  /* Component table (same rules as the insurance guide) */
+  .art-table-wrap { margin: 26px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .art-table { width: 100%; border-collapse: collapse; min-width: 480px; font-size: 15px; }
+  .art-table th { background: var(--freedom-blue); color: #fff; text-align: left; font-family: var(--font-body); font-weight: 700; font-size: 12.5px; letter-spacing: .02em; padding: 12px 14px; vertical-align: bottom; }
+  .art-table td { padding: 12px 14px; border: 1px solid var(--hairline-strong); color: var(--ink-700); line-height: 1.5; vertical-align: top; width: 50%; }
+  .art-table tbody tr:nth-child(even) td { background: var(--fb-lightest); }
 </style>
