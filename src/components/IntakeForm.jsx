@@ -391,6 +391,21 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
       if (!vals.name.trim()) e.name = 'Required';
       if (!vals.email.trim()) e.email = 'Required';
       else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(vals.email)) e.email = 'Enter a valid email';
+      // Phone is required on the PROPOSAL wizard (only). The sales process is a
+      // discovery call: without a number the rep has to email a board volunteer
+      // and wait, and a lead with no phone was the one case they could not work.
+      // The other intents keep it optional — a resident asking about dues should
+      // not be forced to hand over a number.
+      //
+      // Note the `required: true` on the field above is only the asterisk; step 1
+      // validates by hand, so this is what actually enforces it.
+      if (!vals.phone.trim()) e.phone = 'Required';
+      // Loose on formatting, strict on substance: any punctuation is fine, but
+      // "n/a" and "555" are not a phone number. 10 digits, or 11 with a US 1.
+      else {
+        const d = vals.phone.replace(/\D/g, '');
+        if (!(d.length === 10 || (d.length === 11 && d.startsWith('1')))) e.phone = 'Enter a full phone number';
+      }
     } else if (s === 2) {
       if (!vals.association.trim()) e.association = 'Required';
       if (!vals.location.trim()) e.location = 'Required';
@@ -556,7 +571,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
             <Field def={{ key: 'name', label: 'Your name', type: 'text', required: true, noName: true }} value={vals.name} error={errors.name} onChange={set} />
             <Field def={{ key: 'role', label: 'Your role', type: 'select', options: V.roles, noName: true }} value={vals.role} error={errors.role} onChange={set} />
             <Field def={{ key: 'email', label: 'Email', type: 'text', required: true, noName: true }} value={vals.email} error={errors.email} onChange={set} />
-            <Field def={{ key: 'phone', label: 'Phone', type: 'text', noName: true }} value={vals.phone} error={errors.phone} onChange={set} />
+            <Field def={{ key: 'phone', label: 'Phone', type: 'text', required: true, noName: true }} value={vals.phone} error={errors.phone} onChange={set} />
           </div>
           {showOfframp && (
             <div className="if-offramp" role="note">
