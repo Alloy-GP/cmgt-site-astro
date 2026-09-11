@@ -55,9 +55,9 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Florida HOA Laws',               path: '/resources/hoa-laws/florida',                   review: false },
 
   // Resources & guides
-  // New blog posts — up for review
-  { label: 'HOA Financial Statements',       path: '/resources/hoa-financial-statements',           review: true },
-  { label: 'HOA Master Insurance Policy',    path: '/resources/hoa-master-insurance-policy',         review: true },
+  // Nothing under active review right now — all false, so the widget stays hidden.
+  { label: 'HOA Financial Statements',       path: '/resources/hoa-financial-statements',           review: false },
+  { label: 'HOA Master Insurance Policy',    path: '/resources/hoa-master-insurance-policy',         review: false },
   { label: 'HOA Special Assessments',        path: '/resources/hoa-special-assessments',            review: false },
   { label: 'Resources Hub',                  path: '/resources',                                    review: false },
   { label: 'Hurricane Preparedness',         path: '/resources/hurricane-preparedness-for-hoas',    review: false },
