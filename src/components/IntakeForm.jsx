@@ -391,6 +391,18 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
       if (!vals.name.trim()) e.name = 'Required';
       if (!vals.email.trim()) e.email = 'Required';
       else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(vals.email)) e.email = 'Enter a valid email';
+      // Required on the PROPOSAL wizard only: the sales process is a discovery
+      // call, and a lead with no number is the one shape a rep can't work. The
+      // other intents keep it optional — a resident asking about dues shouldn't
+      // have to hand over a number to ask a question.
+      //
+      // Presence only, deliberately no format or digit-count rule: "555" and any
+      // punctuation must pass, both so testing isn't obstructed and so a board
+      // president typing their own number never has to guess at a format.
+      //
+      // The `required: true` on the field above is ONLY the asterisk — step 1
+      // validates by hand, so this line is what actually enforces it.
+      if (!vals.phone.trim()) e.phone = 'Required';
     } else if (s === 2) {
       if (!vals.association.trim()) e.association = 'Required';
       if (!vals.location.trim()) e.location = 'Required';
@@ -556,7 +568,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
             <Field def={{ key: 'name', label: 'Your name', type: 'text', required: true, noName: true }} value={vals.name} error={errors.name} onChange={set} />
             <Field def={{ key: 'role', label: 'Your role', type: 'select', options: V.roles, noName: true }} value={vals.role} error={errors.role} onChange={set} />
             <Field def={{ key: 'email', label: 'Email', type: 'text', required: true, noName: true }} value={vals.email} error={errors.email} onChange={set} />
-            <Field def={{ key: 'phone', label: 'Phone', type: 'text', noName: true }} value={vals.phone} error={errors.phone} onChange={set} />
+            <Field def={{ key: 'phone', label: 'Phone', type: 'text', required: true, noName: true }} value={vals.phone} error={errors.phone} onChange={set} />
           </div>
           {showOfframp && (
             <div className="if-offramp" role="note">
