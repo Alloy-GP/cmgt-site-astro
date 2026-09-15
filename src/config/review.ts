@@ -40,12 +40,12 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Alabama HOA Management',         path: '/hoa-management/alabama',                       review: false },
   { label: 'Florida Panhandle HOA Management', path: '/hoa-management/florida',                     review: false },
 
-  // City pages — next review batch
-  { label: 'Baton Rouge HOA Management (LA)', path: '/hoa-management/louisiana/baton-rouge',          review: false },
-  { label: 'Lafayette HOA Management (LA)',   path: '/hoa-management/louisiana/lafayette',            review: false },
-  { label: 'Shreveport HOA Management (LA)',  path: '/hoa-management/louisiana/shreveport',           review: false },
-  { label: 'Daphne HOA Management (AL)',      path: '/hoa-management/alabama/daphne',                 review: false },
-  { label: 'Biloxi HOA Management (MS)',      path: '/hoa-management/mississippi/biloxi',             review: false },
+  // City pages — up for review (refreshed local team, headshots, and imagery)
+  { label: 'Baton Rouge HOA Management (LA)', path: '/hoa-management/louisiana/baton-rouge',          review: true },
+  { label: 'Lafayette HOA Management (LA)',   path: '/hoa-management/louisiana/lafayette',            review: true },
+  { label: 'Shreveport HOA Management (LA)',  path: '/hoa-management/louisiana/shreveport',           review: true },
+  { label: 'Daphne HOA Management (AL)',      path: '/hoa-management/alabama/daphne',                 review: true },
+  { label: 'Biloxi HOA Management (MS)',      path: '/hoa-management/mississippi/biloxi',             review: true },
 
   // State HOA Law pages — off review for now; this batch is the two new blog posts.
   { label: 'Alabama HOA Laws',               path: '/resources/hoa-laws/alabama',                   review: false },

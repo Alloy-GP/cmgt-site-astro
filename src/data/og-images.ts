@@ -67,8 +67,8 @@ export const OG_IMAGES: Record<string, OgImage> = {
     alt: 'An established single-family neighborhood along the Alabama Gulf Coast — manicured lawns, mature trees, and Gulf Coast homes under a clear sky',
   },
   '/hoa-management/alabama/daphne': {
-    image: '/photos/og/al-geo-hero-photo.jpg',
-    alt: 'An Alabama Gulf Coast community CMGT manages near Daphne',
+    image: '/photos/og/daphne-hoa-management-og.jpg',
+    alt: 'Aerial view of a waterfront residential community on the Alabama Gulf Coast near Daphne',
   },
   '/hoa-management/florida': {
     image: '/photos/og/fl-geo-hero-photo.jpg',
@@ -79,24 +79,24 @@ export const OG_IMAGES: Record<string, OgImage> = {
     alt: 'An established Louisiana residential community near Baton Rouge with mature oaks, well-kept homes, and manicured common areas under a bright Gulf South sky',
   },
   '/hoa-management/louisiana/baton-rouge': {
-    image: '/photos/og/la-geo-hero-photo.jpg',
-    alt: 'A Louisiana community neighborhood CMGT manages near Baton Rouge',
+    image: '/photos/og/baton-rouge-hoa-management-og.jpg',
+    alt: 'Aerial view of a lakeside Baton Rouge neighborhood with brick homes and mature trees',
   },
   '/hoa-management/louisiana/lafayette': {
-    image: '/photos/og/la-geo-hero-photo.jpg',
-    alt: 'A Louisiana community neighborhood CMGT manages near Lafayette',
+    image: '/photos/og/lafayette-hoa-management-og.jpg',
+    alt: 'Aerial view of an Acadiana neighborhood with brick homes along a bayou near Lafayette',
   },
   '/hoa-management/louisiana/shreveport': {
-    image: '/photos/og/la-geo-hero-photo.jpg',
-    alt: 'A Louisiana community neighborhood CMGT manages near Shreveport',
+    image: '/photos/og/shreveport-hoa-management-og.jpg',
+    alt: 'Aerial view of a wooded North Louisiana neighborhood with brick homes near Shreveport',
   },
   '/hoa-management/mississippi': {
     image: '/photos/og/ms-geo-hero-photo.jpg',
     alt: 'A Mississippi Gulf Coast neighborhood near Gulfport with coastal homes, palm-lined streets, and well-kept common areas',
   },
   '/hoa-management/mississippi/biloxi': {
-    image: '/photos/og/ms-geo-hero-photo.jpg',
-    alt: 'A Mississippi Gulf Coast community CMGT manages near Biloxi',
+    image: '/photos/og/biloxi-hoa-management-og.jpg',
+    alt: 'Aerial view of a Biloxi waterfront neighborhood along the Mississippi Gulf Coast',
   },
   '/hoa-management/texas': {
     image: '/photos/og/tx-geo-hero-photo.jpg',

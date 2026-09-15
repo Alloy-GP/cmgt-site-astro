@@ -97,8 +97,8 @@ const localBusiness = {
     "longitude": -90.95374
   },
   "image": [
-    "https://cmgt.org/photos/la-geo-hero-photo.webp",
-    "https://cmgt.org/photos/hoa-board-members-financials.webp"
+    "https://cmgt.org/photos/baton-rouge-hoa-management-hero.webp",
+    "https://cmgt.org/photos/baton-rouge-community.webp"
   ],
   "parentOrganization": {
     "@type": "Organization",
@@ -208,7 +208,7 @@ const faq = {
       </div>
     </div>
     <div class="city-band">
-      <ImageSlot priority src="/photos/la-geo-hero-photo.webp" alt="A Louisiana community neighborhood CMGT manages near Baton Rouge" shape="rect" />
+      <ImageSlot priority src="/photos/baton-rouge-hoa-management-hero.webp" alt="Aerial view of a lakeside Baton Rouge neighborhood with brick homes and mature trees" shape="rect" />
     </div>
     <div class="container">
       <div class="rating-rail">
@@ -219,12 +219,14 @@ const faq = {
             <div class="rr-meta"><span data-rv-count>535</span> Google reviews</div>
           </div>
         </div>
-        <!-- IF_AWARD — Baton Rouge only. Delete this block entirely for markets with no award. -->
+        {/* IF_AWARD — Baton Rouge only. Verified against CMGT Master Brief v2.3 (§7.2 Awards,
+            §8.5): CMGT won GOLD / #1 Best Property Management Company in Baton Rouge, 2026 (Best
+            of Baton Rouge). The silver was the COMPETITOR's (Legacies) — do not confuse the two.
+            Jeff wants the gold award promoted (as text, without the paid official logo). */}
         <div class="rr-award">
           <span class="rr-award-badge">Gold · 2026</span>
           <span class="rr-award-txt">#1 Best Property Management Company in Baton Rouge</span>
         </div>
-        <!-- /IF_AWARD -->
         <div class="rr-score">
           <div class="rr-num">2007</div>
           <div class="rr-meta" style="max-width:170px">managing communities in this market ever since</div>
@@ -265,15 +267,15 @@ const faq = {
         <p class="mgr-p">Every Baton Rouge community gets a dedicated Community Association Manager — <strong>not a rotating queue and not a call center.</strong> They attend your meetings, walk your property, and know which vendor already fixed the front gate last spring.</p>
         <p class="mgr-p">Behind that one person sits the whole company: accounting, insurance and reserves, covenants, and maintenance specialists, all in-house. You get a neighbor as your point of contact and a full bench backing them up.</p>
         <div class="mgr-card">
-          <ImageSlot src="/photos/lead-jeff.jpg" alt="Jeff Harman, Founder and CEO of CMGT" shape="circle" class="mgr-headshot" />
+          <ImageSlot src="/photos/amanda-roubique-cmgt.webp" alt="Amanda Roubique, CAM Supervisor for CMGT in Baton Rouge" shape="circle" class="mgr-headshot" />
           <div>
-            <div class="mgr-name">Jeff Harman</div>
-            <div class="mgr-role">Your Baton Rouge point of contact · CEO &amp; Founder</div>
+            <div class="mgr-name">Amanda Roubique</div>
+            <div class="mgr-role">Your Baton Rouge point of contact · CAM Supervisor</div>
           </div>
         </div>
       </div>
       <div class="mgr-media reveal">
-        <ImageSlot src="/photos/hoa-board-members-financials.webp" alt="A CMGT manager reviewing financials with an HOA board in Baton Rouge" shape="rounded" radius={20} />
+        <ImageSlot src="/photos/baton-rouge-community.webp" alt="A live-oak-canopied Baton Rouge street of brick homes with crape myrtles in bloom" shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -291,7 +293,7 @@ const faq = {
         <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Covenants &amp; ARC</h3><p class="feat-p">Fair, documented enforcement and architectural review — we educate before the first violation rather than leading with a fine.</p></div>
         <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Vendors &amp; maintenance</h3><p class="feat-p">Local vendor relationships built over eighteen years here, plus site visits so the board isn't the one chasing contractors.</p></div>
         <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Homeowner communication</h3><p class="feat-p">Plain-language answers, a board portal, and an app — 70% of our owners use the portal and over half pay online.</p></div>
-        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Insurance &amp; reserves</h3><p class="feat-p">A dedicated Insurance &amp; Reserve department tracks coverage and reserve health year-round — critical in a parish where one storm reprices a master policy.</p></div>
+        <div class="feat-card"><div class="feat-ic" aria-hidden="true"></div><h3 class="feat-h">Insurance &amp; reserves</h3><p class="feat-p">A dedicated Insurance &amp; Reserve team keeps coverage and reserves in view year-round, so insurance and reserves aren't an afterthought at budget time.</p></div>
       </div>
     </div>
   </section>
