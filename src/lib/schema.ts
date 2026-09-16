@@ -6,6 +6,7 @@
 //
 //   import { breadcrumbSchema, faqSchema, serviceSchema } from '~/lib/schema';
 //   import { SITE } from '~/config/site';
+import { fullName, memberAlt, memberId, memberUrl, photoPath, type TeamMember } from '~/data/team';
 //
 //   const breadcrumb = breadcrumbSchema([
 //     { name: 'Home',     url: SITE.url + '/' },
@@ -254,5 +255,59 @@ export function localBusinessSchema(opts?: { description?: string }) {
     areaServed: SITE.org.areaServed,
     priceRange: SITE.org.priceRange,
     ...(opts?.description ? { description: opts.description } : {}),
+  };
+}
+
+// ── Person (team members) ─────────────────────────────────────────────────────
+// One Person node per team member, keyed by a stable @id (their anchor on the
+// team page) so the same person referenced from the team page and a city page
+// resolves to one entity. worksFor points at the Organization node BaseLayout
+// emits; workLocation (optional) points at a city page's LocalBusiness node.
+
+
+export function personSchema(m: TeamMember, opts?: { workLocationId?: string }) {
+  return {
+    '@type': 'Person',
+    '@id': memberId(m),
+    name: fullName(m),
+    givenName: m.givenName,
+    familyName: m.familyName,
+    jobTitle: m.jobTitle,
+    url: SITE.url + memberUrl(m),
+    image: {
+      '@type': 'ImageObject',
+      contentUrl: SITE.url + photoPath(m),
+      caption: memberAlt(m),
+    },
+    worksFor: { '@type': 'Organization', '@id': SITE.url + '/#organization' },
+    knowsAbout: ['Homeowners association management', 'Community association management'],
+    ...(opts?.workLocationId
+      ? { workLocation: { '@type': 'LocalBusiness', '@id': opts.workLocationId } }
+      : {}),
+    ...(m.sameAs?.length ? { sameAs: m.sameAs } : {}),
+    ...(m.credentials?.length
+      ? {
+          hasCredential: m.credentials.map((name) => ({
+            '@type': 'EducationalOccupationalCredential',
+            name,
+          })),
+        }
+      : {}),
+  };
+}
+
+// ── Organization.employee ─────────────────────────────────────────────────────
+// Merges the roster into the company node by @id — use on the team page, where
+// every listed person is visible. numberOfEmployees mirrors the on-page figure.
+
+export function orgTeamSchema(members: TeamMember[], opts?: { approxHeadcount?: number }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': SITE.url + '/#organization',
+    ...(opts?.approxHeadcount
+      ? { numberOfEmployees: { '@type': 'QuantitativeValue', value: opts.approxHeadcount } }
+      : {}),
+    employee: members.map((m) => personSchema(m)),
   };
 }
