@@ -238,11 +238,13 @@ const faq = {
         <h2 class="mgr-h">One manager who knows your community by name.</h2>
         <p class="mgr-p">Every Daphne community gets a dedicated Community Association Manager — <strong>not a rotating queue and not a call center.</strong> They attend your meetings, walk your property, and know which vendor already fixed the front gate last spring.</p>
         <p class="mgr-p">Behind that one person sits the whole company: accounting, insurance and reserves, covenants, and maintenance specialists, all in-house. You get a neighbor as your point of contact and a full bench backing them up.</p>
-        <div class="mgr-card">
-          <ImageSlot src="/photos/shelby-averett-cmgt.webp" alt="Shelby Averett, Community Association Manager for CMGT on the Alabama Gulf Coast" shape="circle" class="mgr-headshot" />
-          <div>
-            <div class="mgr-name">Shelby Averett</div>
-            <div class="mgr-role">Your Alabama Gulf Coast point of contact · Community Association Manager</div>
+        <div class="mgr-team">
+          <div class="mgr-person">
+            <ImageSlot src="/photos/shelby-averett-cmgt.webp" alt="Shelby Averett, Community Association Manager for CMGT on the Alabama Gulf Coast" shape="circle" class="mgr-headshot" />
+            <div>
+              <div class="mgr-name">Shelby Averett</div>
+              <div class="mgr-role">Your Alabama Gulf Coast point of contact · Community Association Manager</div>
+            </div>
           </div>
         </div>
       </div>
@@ -486,8 +488,11 @@ body { background: #fff; }
     .mgr-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.14; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 16px; text-wrap: balance; }
     .mgr-p { font-size: 16px; line-height: 1.75; color: var(--ink-500); margin: 0 0 16px; max-width: 540px; }
     .mgr-p strong { color: var(--freedom-blue); font-weight: 600; }
-    .mgr-card { display: flex; align-items: center; gap: 20px; background: var(--nb-lightest); border-radius: 18px; padding: 22px 26px; margin-top: 26px; max-width: 480px; }
-    .mgr-card :global(.image-slot) { width: 78px; height: 78px; flex: 0 0 78px; }
+    /* Local team panel — one row per person; a single person renders like the old card. */
+    .mgr-team { background: var(--nb-lightest); border-radius: 18px; padding: 6px 26px; margin-top: 26px; max-width: 480px; }
+    .mgr-person { display: flex; align-items: center; gap: 20px; padding: 16px 0; }
+    .mgr-person + .mgr-person { border-top: 1.5px solid rgba(30,30,119,.08); }
+    .mgr-person :global(.image-slot) { width: 72px; height: 72px; flex: 0 0 72px; }
     .mgr-name { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--freedom-blue); line-height: 1.2; }
     .mgr-role { font-size: 13.5px; color: var(--ink-500); margin-top: 4px; }
     .mgr-media :global(.image-slot) { width: 100%; height: 400px; }

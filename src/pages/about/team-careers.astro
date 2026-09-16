@@ -53,61 +53,66 @@ const breadcrumb = breadcrumbSchema([
           <ImageSlot src="/photos/summer-mere-cmgt.webp" alt="Summer Mere, Director of PPD at CMGT" shape="circle" />
           <div class="team-name">Summer Mere</div>
           <div class="team-role">Director of PPD</div>
-          <div class="team-region">Department head</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/amanda-roubique-cmgt.webp" alt="Amanda Roubique, CAM Supervisor for CMGT in Greater Baton Rouge" shape="circle" />
           <div class="team-name">Amanda Roubique</div>
           <div class="team-role">CAM Supervisor</div>
-          <div class="team-region">Greater Baton Rouge</div>
+        </div>
+        <div class="team-card reveal">
+          <ImageSlot src="/photos/caitlin-wentland-cmgt.webp" alt="Caitlin Wentland, CAM Supervisor for CMGT on the Mississippi Gulf Coast" shape="circle" />
+          <div class="team-name">Caitlin Wentland</div>
+          <div class="team-role">CAM Supervisor</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/megan-moore-cmgt.webp" alt="Megan Moore, Community Association Manager for CMGT in Greater Baton Rouge" shape="circle" />
           <div class="team-name">Megan Moore</div>
           <div class="team-role">Community Association Manager</div>
-          <div class="team-region">Greater Baton Rouge</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/denise-scipione-cmgt.webp" alt="Denise Scipione, Community Association Manager for CMGT on the Louisiana Northshore" shape="circle" />
           <div class="team-name">Denise Scipione</div>
           <div class="team-role">Community Association Manager</div>
-          <div class="team-region">Louisiana Northshore</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/shonte-thompson-cmgt.webp" alt="Shonte Thompson, Onsite Community Association Manager for CMGT on the Louisiana Northshore" shape="circle" />
           <div class="team-name">Shonte Thompson</div>
           <div class="team-role">Onsite Community Association Manager</div>
-          <div class="team-region">Louisiana Northshore</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/jayda-barrilleaux-cmgt.webp" alt="Jayda Barrilleaux, Community Association Manager for CMGT in Southwest Louisiana" shape="circle" />
           <div class="team-name">Jayda Barrilleaux</div>
           <div class="team-role">Community Association Manager</div>
-          <div class="team-region">Southwest Louisiana</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/natalie-vidrine-cmgt.webp" alt="Natalie Vidrine, Onsite Community Association Manager for CMGT in Southwest Louisiana" shape="circle" />
           <div class="team-name">Natalie Vidrine</div>
           <div class="team-role">Onsite Community Association Manager</div>
-          <div class="team-region">Southwest Louisiana</div>
+        </div>
+        <div class="team-card reveal">
+          <ImageSlot src="/photos/tonya-leblanc-cmgt.webp" alt="Tonya LeBlanc, Community Association Manager for CMGT in Southwest Louisiana" shape="circle" />
+          <div class="team-name">Tonya LeBlanc</div>
+          <div class="team-role">Community Association Manager</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/sarah-radovich-cmgt.webp" alt="Sarah Radovich, Community Association Manager for CMGT on the Mississippi Gulf Coast" shape="circle" />
           <div class="team-name">Sarah Radovich</div>
           <div class="team-role">Community Association Manager</div>
-          <div class="team-region">Mississippi Gulf Coast</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/sarah-solomon-cmgt.webp" alt="Sarah Solomon, F&A CAM for CMGT on the Mississippi Gulf Coast" shape="circle" />
           <div class="team-name">Sarah Solomon</div>
           <div class="team-role">F&amp;A CAM</div>
-          <div class="team-region">Mississippi Gulf Coast</div>
+        </div>
+        <div class="team-card reveal">
+          <ImageSlot src="/photos/sheena-walter-cmgt.webp" alt="Sheena Walter, Community Association Manager for CMGT in North Louisiana" shape="circle" />
+          <div class="team-name">Sheena Walter</div>
+          <div class="team-role">Community Association Manager</div>
         </div>
         <div class="team-card reveal">
           <ImageSlot src="/photos/shelby-averett-cmgt.webp" alt="Shelby Averett, Community Association Manager for CMGT on the Alabama Gulf Coast" shape="circle" />
           <div class="team-name">Shelby Averett</div>
           <div class="team-role">Community Association Manager</div>
-          <div class="team-region">Alabama Gulf Coast</div>
         </div>
       </div>
     </div>
@@ -280,14 +285,12 @@ const breadcrumb = breadcrumbSchema([
   .team-link:hover .arrow { transform: translateX(4px); }
   /* Flex rows (not grid) so a short final row centers instead of leaving an orphan at the left. */
   .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 44px 28px; }
-  .team-card { text-align: center; flex: 0 0 calc((100% - 4 * 28px) / 5); display: flex; flex-direction: column; align-items: center; }
+  .team-card { text-align: center; flex: 0 0 calc((100% - 4 * 28px) / 5); }
   @media (max-width: 980px) { .team-card { flex-basis: calc((100% - 2 * 28px) / 3); } }
   @media (max-width: 620px) { .team-card { flex-basis: calc((100% - 28px) / 2); } }
   .team-card :global(.image-slot) { width: 132px; height: 132px; margin: 0 auto 16px; }
   .team-name { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); line-height: 1.2; }
   .team-role { font-size: 12.5px; color: var(--ink-400); margin-top: 4px; line-height: 1.4; }
-  /* Pinned to the card bottom so region labels stay level across a row even when a title wraps. */
-  .team-region { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--freedom-blue); opacity: .55; margin-top: auto; padding-top: 8px; }
 
   /* MINDSETS */
   .mind { background: #fff; padding: 116px 0; }
