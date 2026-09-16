@@ -12,15 +12,22 @@ import { SITE } from '~/config/site';
 import ImageSlot from '~/components/ImageSlot.astro';
 import ServiceAreaMap from '~/components/ServiceAreaMap.astro';
 import { LOCATION_REVIEWS } from '~/data/reviews';
+import { personSchema } from '~/lib/schema';
+import { teamFor, fullName, memberAlt, memberUrl, photoPath, REGION_LABEL } from '~/data/team';
 
 // Rating/count render from the committed per-location fallback so the page always
 // shows a real number, then /api/reviews swaps in the live values client-side.
 const rv = LOCATION_REVIEWS['lafayette'];
 
+// The people shown in the local-team panel below — also emitted as Person nodes
+// employed at this office, so the office and its managers are one linked graph.
+const localTeam = teamFor('southwest-louisiana');
+
 const localBusiness = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "@id": "https://cmgt.org/hoa-management/louisiana/lafayette#localbusiness",
+  "employee": localTeam.map((m) => personSchema(m, { workLocationId: "https://cmgt.org/hoa-management/louisiana/lafayette#localbusiness" })),
   "name": "CMGT- Southwest Louisiana",
   "url": "https://cmgt.org/hoa-management/louisiana/lafayette",
   "telephone": "+1-337-216-1399",
@@ -252,27 +259,15 @@ const faq = {
         <p class="mgr-p">Every Lafayette community gets a dedicated Community Association Manager — <strong>not a rotating queue and not a call center.</strong> They attend your meetings, walk your property, and know which vendor already fixed the front gate last spring.</p>
         <p class="mgr-p">Behind that one person sits the whole company: accounting, insurance and reserves, covenants, and maintenance specialists, all in-house. You get a neighbor as your point of contact and a full bench backing them up.</p>
         <div class="mgr-team">
-          <div class="mgr-person">
-            <ImageSlot src="/photos/tonya-leblanc-cmgt.webp" alt="Tonya LeBlanc, Community Association Manager for CMGT in Southwest Louisiana" shape="circle" class="mgr-headshot" />
-            <div>
-              <div class="mgr-name">Tonya LeBlanc</div>
-              <div class="mgr-role">Your Southwest Louisiana point of contact · Community Association Manager</div>
+          {localTeam.map((m) => (
+            <div class="mgr-person">
+              <ImageSlot src={photoPath(m)} alt={memberAlt(m)} shape="circle" class="mgr-headshot" />
+              <div>
+                <div class="mgr-name"><a href={memberUrl(m)}>{fullName(m)}</a></div>
+                <div class="mgr-role">{m.lead ? `Your ${REGION_LABEL[m.region]} point of contact · ${m.jobTitle}` : m.jobTitle}</div>
+              </div>
             </div>
-          </div>
-          <div class="mgr-person">
-            <ImageSlot src="/photos/jayda-barrilleaux-cmgt.webp" alt="Jayda Barrilleaux, Community Association Manager for CMGT in Southwest Louisiana" shape="circle" class="mgr-headshot" />
-            <div>
-              <div class="mgr-name">Jayda Barrilleaux</div>
-              <div class="mgr-role">Community Association Manager</div>
-            </div>
-          </div>
-          <div class="mgr-person">
-            <ImageSlot src="/photos/natalie-vidrine-cmgt.webp" alt="Natalie Vidrine, Onsite Community Association Manager for CMGT in Southwest Louisiana" shape="circle" class="mgr-headshot" />
-            <div>
-              <div class="mgr-name">Natalie Vidrine</div>
-              <div class="mgr-role">Onsite Community Association Manager</div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       <div class="mgr-media reveal">
@@ -521,6 +516,8 @@ body { background: #fff; }
     .mgr-person + .mgr-person { border-top: 1.5px solid rgba(30,30,119,.08); }
     .mgr-person :global(.image-slot) { width: 72px; height: 72px; flex: 0 0 72px; }
     .mgr-name { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--freedom-blue); line-height: 1.2; }
+    .mgr-name a { color: inherit; text-decoration: none; }
+    .mgr-name a:hover { text-decoration: underline; text-decoration-color: var(--landscaping-green); text-underline-offset: 3px; }
     .mgr-role { font-size: 13.5px; color: var(--ink-500); margin-top: 4px; }
     .mgr-media :global(.image-slot) { width: 100%; height: 400px; }
 
