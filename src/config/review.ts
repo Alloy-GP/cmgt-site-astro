@@ -40,16 +40,24 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Alabama HOA Management',         path: '/hoa-management/alabama',                       review: false },
   { label: 'Florida Panhandle HOA Management', path: '/hoa-management/florida',                     review: false },
 
-  // City pages — next review batch
-  { label: 'Baton Rouge HOA Management (LA)', path: '/hoa-management/louisiana/baton-rouge',          review: false },
-  { label: 'Lafayette HOA Management (LA)',   path: '/hoa-management/louisiana/lafayette',            review: false },
-  { label: 'Shreveport HOA Management (LA)',  path: '/hoa-management/louisiana/shreveport',           review: false },
-  { label: 'Daphne HOA Management (AL)',      path: '/hoa-management/alabama/daphne',                 review: false },
-  { label: 'Biloxi HOA Management (MS)',      path: '/hoa-management/mississippi/biloxi',             review: false },
+  // City pages — up for review (refreshed local team, headshots, and imagery)
+  { label: 'Baton Rouge HOA Management (LA)', path: '/hoa-management/louisiana/baton-rouge',          review: true },
+  { label: 'Lafayette HOA Management (LA)',   path: '/hoa-management/louisiana/lafayette',            review: true },
+  { label: 'Shreveport HOA Management (LA)',  path: '/hoa-management/louisiana/shreveport',           review: true },
+  { label: 'Daphne HOA Management (AL)',      path: '/hoa-management/alabama/daphne',                 review: true },
+  { label: 'Biloxi HOA Management (MS)',      path: '/hoa-management/mississippi/biloxi',             review: true },
 
-  // State HOA Law pages — NEW, up for review
+  // State HOA Law pages — off review for now; this batch is the two new blog posts.
+  { label: 'Alabama HOA Laws',               path: '/resources/hoa-laws/alabama',                   review: false },
+  { label: 'Louisiana HOA Laws',             path: '/resources/hoa-laws/louisiana',                 review: false },
+  { label: 'Mississippi HOA Laws',           path: '/resources/hoa-laws/mississippi',               review: false },
+  { label: 'Texas HOA Laws',                 path: '/resources/hoa-laws/texas',                     review: false },
+  { label: 'Florida HOA Laws',               path: '/resources/hoa-laws/florida',                   review: false },
 
   // Resources & guides
+  // Nothing under active review right now — all false, so the widget stays hidden.
+  { label: 'HOA Financial Statements',       path: '/resources/hoa-financial-statements',           review: false },
+  { label: 'HOA Master Insurance Policy',    path: '/resources/hoa-master-insurance-policy',         review: false },
   { label: 'HOA Special Assessments',        path: '/resources/hoa-special-assessments',            review: false },
   { label: 'Resources Hub',                  path: '/resources',                                    review: false },
   { label: 'Hurricane Preparedness',         path: '/resources/hurricane-preparedness-for-hoas',    review: false },

@@ -124,6 +124,17 @@ function Field({ def, value, error, onChange }) {
 // so the site's own floating-label styling is preserved.
 const MAPS_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
 
+// Is a suggestion inside this CAM's markets? Matches the STATE segment, which
+// arrives either mid-string ("Houma, LA, USA") or at the end ("Houma, LA"),
+// depending on whether the API appended the country. No markets configured (a
+// national client, or a site that hasn't set them) = no state filter.
+function inMarket(text) {
+  const states = PROPOSAL_V2?.markets;
+  if (!states || !states.length) return true;
+  const t = String(text || '');
+  return states.some((st) => t.includes(`, ${st},`) || t.endsWith(`, ${st}`));
+}
+
 function debounce(fn, ms) {
   let t;
   const d = (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
@@ -171,13 +182,40 @@ function LocationField({ value, error, onChange }) {
       const seq = ++seqRef.current;
       const { suggestions } = await AutocompleteSuggestion.fetchAutocompleteSuggestions({
         input, sessionToken: tokenRef.current, region: 'us',
+        // `region` only BIASES formatting — it is not a filter, which is why the
+        // whole world was on offer ("Bátonyterenye, Hungary" for "baton"). These
+        // three are the ones that actually restrict:
+        //   includedRegionCodes  hard country filter
+        //   includedPrimaryTypes cities, not businesses or street addresses
+        //                        (was suggesting "Barton Malow, Sterling, VA" and
+        //                        "Baton Rouge Metropolitan Airport")
+        //   locationRestriction  a hard box over this CAM's states, so the five
+        //                        suggestions returned are mostly in-market before
+        //                        `markets` filters them exactly
+        includedRegionCodes: ['us'],
+        includedPrimaryTypes: ['(cities)'],
+        ...(PROPOSAL_V2.placesBounds ? { locationRestriction: PROPOSAL_V2.placesBounds } : {}),
       });
       if (seq !== seqRef.current) return; // a newer keystroke superseded this one
       const list = (suggestions || [])
         .map((s) => s.placePrediction).filter(Boolean)
-        .map((p) => p.text.toString());
+        .map((p) => p.text.toString())
+        // The box is coarser than the states (it catches GA, NC, AR, OK…), so the
+        // market list does the precision. Nothing outside it can be selected.
+        .filter(inMarket)
+        // "Baton Rouge, LA, USA" -> "Baton Rouge, LA". includedRegionCodes adds the
+        // country; every lead already in the pipeline carries the short form, and
+        // the portal prints this string back to the board ("Local Louisiana /
+        // Baton Rouge presence"), so keep the shape it has always had.
+        .map((t) => t.replace(/,\s*USA$/, ''));
       setPreds(list); setActive(-1); setOpen(list.length > 0);
-    } catch { setPreds([]); setOpen(false); }
+    } catch (err) {
+      // An unknown request property throws ("unknown property x"), which would
+      // otherwise present as "autocomplete just stopped working" with nothing in
+      // the console to say why.
+      if (import.meta.env.DEV) console.warn('places autocomplete failed:', err);
+      setPreds([]); setOpen(false);
+    }
   }, 220), []);
 
   useEffect(() => () => fetchPreds.cancel(), [fetchPreds]);
@@ -353,6 +391,18 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
       if (!vals.name.trim()) e.name = 'Required';
       if (!vals.email.trim()) e.email = 'Required';
       else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(vals.email)) e.email = 'Enter a valid email';
+      // Required on the PROPOSAL wizard only: the sales process is a discovery
+      // call, and a lead with no number is the one shape a rep can't work. The
+      // other intents keep it optional — a resident asking about dues shouldn't
+      // have to hand over a number to ask a question.
+      //
+      // Presence only, deliberately no format or digit-count rule: "555" and any
+      // punctuation must pass, both so testing isn't obstructed and so a board
+      // president typing their own number never has to guess at a format.
+      //
+      // The `required: true` on the field above is ONLY the asterisk — step 1
+      // validates by hand, so this line is what actually enforces it.
+      if (!vals.phone.trim()) e.phone = 'Required';
     } else if (s === 2) {
       if (!vals.association.trim()) e.association = 'Required';
       if (!vals.location.trim()) e.location = 'Required';
@@ -518,7 +568,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
             <Field def={{ key: 'name', label: 'Your name', type: 'text', required: true, noName: true }} value={vals.name} error={errors.name} onChange={set} />
             <Field def={{ key: 'role', label: 'Your role', type: 'select', options: V.roles, noName: true }} value={vals.role} error={errors.role} onChange={set} />
             <Field def={{ key: 'email', label: 'Email', type: 'text', required: true, noName: true }} value={vals.email} error={errors.email} onChange={set} />
-            <Field def={{ key: 'phone', label: 'Phone', type: 'text', noName: true }} value={vals.phone} error={errors.phone} onChange={set} />
+            <Field def={{ key: 'phone', label: 'Phone', type: 'text', required: true, noName: true }} value={vals.phone} error={errors.phone} onChange={set} />
           </div>
           {showOfframp && (
             <div className="if-offramp" role="note">
