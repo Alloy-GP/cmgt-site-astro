@@ -15,12 +15,27 @@ const service = serviceSchema({
   description: 'Switching HOA management companies without the trauma — a clear Day 1 to Day 90 transition. We handle records, vendors, finances, and communication.',
   url: SITE.url + '/switching-hoa-management-companies',
 });
+// The board-side checklist below, as HowTo. Steps match the on-page list exactly.
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to change HOA management companies',
+  description: 'The six steps a board takes to change HOA management companies cleanly — from reading the current agreement to notifying owners and vendors before day one.',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Read your current management agreement', text: 'Find the term, the renewal date, the notice period, and any early-termination fee. The notice window sets your whole calendar.' },
+    { '@type': 'HowToStep', position: 2, name: "Get the board's decision on the record", text: 'Vote at a properly noticed board meeting and record it in the minutes. Check your bylaws in case a membership vote is required.' },
+    { '@type': 'HowToStep', position: 3, name: 'Request proposals and check references', text: 'Ask each company the same questions and speak to a board they manage today.' },
+    { '@type': 'HowToStep', position: 4, name: 'Give written notice with a records list attached', text: 'Send the termination letter by the method your agreement requires and list every record you expect back.' },
+    { '@type': 'HowToStep', position: 5, name: 'Move the money carefully', text: "Open new accounts in the association's name, update signers, get a final reconciliation, and transfer reserves with a paper trail." },
+    { '@type': 'HowToStep', position: 6, name: 'Tell homeowners and vendors before day one', text: 'Owners need the new payment address and portal before the next assessment; vendors need a new contact before the next invoice.' },
+  ],
+};
 
 ---
 <BaseLayout
   title="Switching HOA Management Companies, Without Trauma — CMGT"
   description="Switching HOA management companies without the trauma — a clear Day 1 to Day 90 transition. We handle records, vendors, finances, and communication."
-  pageSchema={[breadcrumb, service]}
+  pageSchema={[breadcrumb, service, howTo]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Switching Management Companies"}]'></nav>
 
@@ -290,6 +305,26 @@ const service = serviceSchema({
   </section>
 
   <!-- COST -->
+  <!-- HOW TO CHANGE — the board's side of the process, before the timeline above kicks in -->
+  <section class="chg">
+    <div class="container">
+      <div class="chg-head reveal">
+        <div class="eyebrow eyebrow-blue">The board's checklist</div>
+        <h2 class="chg-h">How to change HOA management companies, step by step.</h2>
+        <p class="chg-sub">The Day 1 to Day 90 timeline above is what we do once you've signed. This is the part before that — <strong>what the board itself has to do to change management companies cleanly</strong>, in the order it usually happens.</p>
+      </div>
+      <ol class="chg-steps">
+        <li class="chg-step reveal"><span class="chg-n">01</span><div><h3 class="chg-t">Read your current management agreement</h3><p class="chg-d">Find the term, the renewal date, the notice period (30 to 90 days is typical), and any early-termination fee. The notice window sets your whole calendar.</p></div></li>
+        <li class="chg-step reveal"><span class="chg-n">02</span><div><h3 class="chg-t">Get the board's decision on the record</h3><p class="chg-d">Vote at a properly noticed board meeting and record it in the minutes. Check your bylaws — a few communities require a membership vote to change managers.</p></div></li>
+        <li class="chg-step reveal"><span class="chg-n">03</span><div><h3 class="chg-t">Request proposals and check references</h3><p class="chg-d">Ask each company the same questions: who is our manager, how many communities do they carry, when do we get financials, and can we call a board they manage today.</p></div></li>
+        <li class="chg-step reveal"><span class="chg-n">04</span><div><h3 class="chg-t">Give written notice — with a records list attached</h3><p class="chg-d">Send the termination letter by the method your agreement requires, and list every record you expect back: bank statements, owner ledgers, vendor contracts, insurance policies, meeting minutes, architectural files, keys and access codes.</p></div></li>
+        <li class="chg-step reveal"><span class="chg-n">05</span><div><h3 class="chg-t">Move the money carefully</h3><p class="chg-d">New accounts opened in the association's name, signers updated, a final reconciliation from the outgoing company, and reserves transferred with a paper trail. Nothing moves before the books balance.</p></div></li>
+        <li class="chg-step reveal"><span class="chg-n">06</span><div><h3 class="chg-t">Tell homeowners and vendors before day one</h3><p class="chg-d">Owners need the new payment address and portal before the next assessment is due; vendors need a new contact before the next invoice. Your new manager should draft both letters.</p></div></li>
+      </ol>
+      <p class="chg-foot reveal">Steps four through six are where CMGT does the work for you — see the timeline above. Coming from <a href="/self-managed-hoa">self-management</a> rather than another company? Skip steps one and four; there's no outgoing manager to give notice to.</p>
+    </div>
+  </section>
+
   <section class="cost">
     <div class="container cost-grid">
       <div class="reveal">
@@ -318,7 +353,7 @@ const service = serviceSchema({
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Ready when you are.</h2>
-        <p class="cta-p">Tell us what's not working with your current manager. We'll show you exactly how the switch would go — within two business days.</p>
+        <p class="cta-p">Tell us what's not working with your current manager. We'll show you exactly how the switch would go — within one business day.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
@@ -392,6 +427,21 @@ const service = serviceSchema({
     .ho-q .g { color: var(--landscaping-green); font-style: normal; font-weight: 700; }
 
     /* COST fold-in */
+    /* HOW TO CHANGE — six-step board checklist */
+    .chg { background: #fff; padding: 100px 0; }
+    .chg-head { max-width: 760px; margin: 0 0 44px; }
+    .chg-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.1; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
+    .chg-sub { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
+    .chg-sub strong { color: var(--freedom-blue); font-weight: 600; }
+    .chg-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+    @media (max-width: 860px) { .chg-steps { grid-template-columns: 1fr; } }
+    .chg-step { display: flex; gap: 16px; align-items: flex-start; background: var(--nb-lightest); border-radius: 14px; padding: 22px 24px; }
+    .chg-n { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 24px; color: var(--landscaping-green); flex: none; line-height: 1.1; }
+    .chg-t { font-family: var(--font-display); font-weight: 700; font-size: 17.5px; color: var(--freedom-blue); margin: 0 0 6px; }
+    .chg-d { font-size: 14.5px; line-height: 1.6; color: var(--ink-500); margin: 0; }
+    .chg-foot { font-size: 14.5px; line-height: 1.6; color: var(--ink-500); margin: 26px 0 0; max-width: 760px; }
+    .chg-foot a { color: var(--freedom-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
     .cost { background: var(--nb-lightest); padding: 100px 0; }
     .cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
     @media (max-width: 860px) { .cost-grid { grid-template-columns: 1fr; gap: 24px; } }

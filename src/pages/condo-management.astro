@@ -14,11 +14,11 @@ const breadcrumb = breadcrumbSchema([
 const condoService = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'Condominium & Townhome Management',
-  name: 'Condo Management',
+  serviceType: 'Condominium & Townhome Association Management',
+  name: 'Condo Association Management',
   provider: { '@type': 'Organization', '@id': SITE.url + '/#organization' },
   areaServed: ['Louisiana', 'Mississippi', 'Alabama', 'Texas'].map((s) => ({ '@type': 'State', name: s })),
-  description: 'Full-service condominium, townhome, and high-rise association management across the Gulf South — reserves, insurance monitoring, on-site teams, and storm planning for shared-building communities.',
+  description: 'Condo association management company for the Gulf South — full-service condominium, townhome, and high-rise association management: reserves, insurance monitoring, on-site teams, and storm planning for shared-building communities.',
 };
 
 // FAQ structured data mirroring the on-page FAQ (rich-result eligibility).
@@ -33,8 +33,8 @@ const faq = faqSchema([
 ]);
 ---
 <BaseLayout
-  title="Condo Management Built for Shared-Wall Living — CMGT"
-  description="Condo management for the Gulf South — condominium associations, townhomes, and high-rises. Shared-building expertise and on-site teams where it counts."
+  title="Condo Association Management Company, Gulf South — CMGT"
+  description="Condo association management for the Gulf South — condo, townhome, and high-rise associations. Shared-building expertise and on-site teams where it counts."
   pageSchema={[breadcrumb, condoService, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Condo & Townhome Management"}]'></nav>
@@ -45,13 +45,14 @@ const faq = faqSchema([
       <div class="ph-hero-top">
         <div>
           <div class="eyebrow">Condo &amp; Townhome Management</div>
-          <h1 class="ph-hero-display">Condo management for <em>shared-wall living.</em></h1>
+          <h1 class="ph-hero-display">Condo association management for <em>shared-wall living.</em></h1>
         </div>
         <div>
           <p class="ph-hero-lede">
             Condominiums, townhome associations, and high-rises come with realities a
             single-family HOA never sees — shared structures, building systems, and reserves
-            that have to hold up. <strong>We manage the building and the relationships inside it.</strong>
+            that have to hold up. A condo association management company has to do both:
+            <strong>manage the building and the relationships inside it.</strong>
           </p>
           <div class="ph-hero-ctas">
             <a class="btn btn-green" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
@@ -320,7 +321,7 @@ const faq = faqSchema([
     <div class="container cost-grid">
       <div class="reveal">
         <div class="eyebrow eyebrow-blue">What it costs</div>
-        <h2 class="cost-h">What does condo management cost?</h2>
+        <h2 class="cost-h">What does condo association management cost?</h2>
         <p class="cost-p">The honest answer: <strong>it depends on the building</strong> — so we quote custom every time, never a one-size template. A staffed high-rise and a 20-unit townhome row are different operations.</p>
         <p class="cost-p">We compete on <strong>value</strong>, not on being the cheapest bid. Better-funded reserves, monitored insurance, and fewer expensive surprises protect your owners far more than a low monthly fee ever will.</p>
         <p class="cost-note">Want a real number? Request a proposal and we'll scope a quote to your building — no pressure, no obligation.</p>
@@ -479,7 +480,7 @@ const faq = faqSchema([
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Let's talk about your community.</h2>
-        <p class="cta-p">Tell us about your condo or townhome community and a real person will reach out within two business days. No pitch deck, no pressure.</p>
+        <p class="cta-p">Tell us about your condo or townhome community and a real person will reach out within one business day. No pitch deck, no pressure.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>

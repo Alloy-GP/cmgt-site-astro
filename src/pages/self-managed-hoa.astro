@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -15,12 +15,20 @@ const service = serviceSchema({
   description: 'Self-managed HOA or professional management? An honest comparison for volunteer boards — real costs, breaking points, and a financial-only middle path.',
   url: SITE.url + '/self-managed-hoa',
 });
+// Mirrors the on-page FAQ word for word (Google discards answers a reader can't see).
+const faq = faqSchema([
+  { q: `Can an HOA be self-managed?`, a: `Yes. No state we serve requires a homeowners association to hire a management company, and plenty of small communities run themselves well. The obligations don't go away, though — the board still has to keep the books, hold the meetings, enforce the covenants, and carry the insurance. Self-management means the volunteers do all of it.` },
+  { q: `How much does a self-managed HOA save?`, a: `The management fee — and that's the whole list. Everything else stays: insurance, landscaping, utilities, reserves, legal and accounting. What self-management adds back is volunteer hours and the cost of mistakes — a missed insurance renewal, an under-funded reserve, a fine the association can't defend. Run the calculator above and put an honest price on the hours.` },
+  { q: `What is financial-only HOA management?`, a: `A middle path. A management company keeps the books — billing, collections, bank reconciliations, budget, reserve contribution, monthly statements, tax and audit support — while the board keeps running meetings, covenants, and vendors. It's what our HOA financial management package does, and it's built for exactly the communities on this page.` },
+  { q: `How do you transition from self-managed to a management company?`, a: `More simply than switching between companies, because there's no outgoing manager to negotiate with. The board votes, signs the agreement, and hands over the records it has — governing documents, bank statements, owner roster, vendor contracts, insurance policies. The new manager brings the books current, sets up billing, and notifies owners. The same Day 1 to Day 90 plan we use for boards switching companies applies, minus the part where we chase your old manager for records.` },
+  { q: `When does a self-managed HOA need professional management?`, a: `When the work depends on one or two people, when the finances have outgrown a spreadsheet, or when enforcing the rules has started to cost friendships — the three signs at the top of this page. If your board recognizes one, the question isn't whether you've failed; it's whether the volunteers should still be carrying it.` },
+]);
 
 ---
 <BaseLayout
   title="Self-Managed HOA vs. Professional Management — CMGT"
   description="Self-managed HOA or professional management? An honest comparison for volunteer boards — real costs, breaking points, and a financial-only middle path."
-  pageSchema={[breadcrumb, service]}
+  pageSchema={[breadcrumb, service, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Self-Managed HOA vs. Professional"}]'></nav>
 
@@ -106,6 +114,25 @@ const service = serviceSchema({
     </div>
   </section>
 
+  <!-- RESPONSIBILITIES -->
+  <section class="sig sig-alt">
+    <div class="container">
+      <div class="sig-head reveal">
+        <div class="eyebrow eyebrow-blue">What a self-managed HOA actually has to do</div>
+        <h2 class="sig-h">The job description nobody handed you at the election.</h2>
+        <p class="sig-sub">A self-managed HOA doesn't have less to do than a managed one — <strong>it has the same to-do list, spread across volunteers.</strong> Here's the whole job, so your board can see which parts it's carrying well and which parts are quietly slipping.</p>
+      </div>
+      <div class="sig-grid">
+        <div class="sig-card reveal"><div class="sig-n">01</div><h3 class="sig-t">Money</h3><p class="sig-d">Bill and collect assessments, pay vendors, reconcile the bank every month, keep the general ledger, file the tax return, and produce <a href="/resources/hoa-financial-statements">financial statements</a> owners can actually read.</p></div>
+        <div class="sig-card reveal"><div class="sig-n">02</div><h3 class="sig-t">Budget &amp; reserves</h3><p class="sig-d">Build the <a href="/resources/hoa-budget-template">annual budget</a>, fund reserves per a current <a href="/resources/hoa-reserve-study">reserve study</a>, and keep the community clear of a surprise <a href="/resources/hoa-special-assessments">special assessment</a>.</p></div>
+        <div class="sig-card reveal"><div class="sig-n">03</div><h3 class="sig-t">Insurance &amp; risk</h3><p class="sig-d">Renew the <a href="/resources/hoa-master-insurance-policy">master policy</a> at the right limits, track certificates from every vendor, and have the storm plan written before June 1.</p></div>
+        <div class="sig-card reveal"><div class="sig-n">04</div><h3 class="sig-t">Covenants</h3><p class="sig-d">Inspect, notice, and hear violations consistently — the same way for everyone — and document it well enough that the association can defend a fine.</p></div>
+        <div class="sig-card reveal"><div class="sig-n">05</div><h3 class="sig-t">Meetings &amp; records</h3><p class="sig-d">Notice meetings the way your documents and <a href="/resources/hoa-laws/louisiana">state law</a> require, keep minutes, run elections, and answer records requests on time.</p></div>
+        <div class="sig-card reveal"><div class="sig-n">06</div><h3 class="sig-t">Vendors &amp; maintenance</h3><p class="sig-d">Bid the landscaping and pool contracts, chase the gate repair, take the after-hours emergency call, and keep the common areas from quietly deteriorating.</p></div>
+      </div>
+    </div>
+  </section>
+
   <!-- INTERACTIVE: True cost of self-managing -->
   <section class="calc">
     <div class="container">
@@ -159,13 +186,45 @@ const service = serviceSchema({
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container faq-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">Common questions</div>
+        <h2 class="faq-h">What boards ask before they decide.</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q" type="button">Can an HOA be self-managed?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">Yes. No state we serve requires a homeowners association to hire a management company, and plenty of small communities run themselves well. The obligations don't go away, though — <strong>the board still has to keep the books, hold the meetings, enforce the covenants, and carry the insurance.</strong> Self-management means the volunteers do all of it.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">How much does a self-managed HOA save?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">The management fee — and that's the whole list. Everything else stays: insurance, landscaping, utilities, reserves, legal and accounting. <strong>What self-management adds back is volunteer hours and the cost of mistakes</strong> — a missed insurance renewal, an under-funded reserve, a fine the association can't defend. Run the calculator above and put an honest price on the hours.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">What is financial-only HOA management?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">A middle path. A management company keeps the books — billing, collections, bank reconciliations, budget, reserve contribution, monthly statements, tax and audit support — while the board keeps running meetings, covenants, and vendors. It's what our <a href="/hoa-financial-management">HOA financial management</a> package does, and it's built for exactly the communities on this page.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">How do you transition from self-managed to a management company?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">More simply than switching between companies, because there's no outgoing manager to negotiate with. The board votes, signs the agreement, and hands over the records it has — governing documents, bank statements, owner roster, vendor contracts, insurance policies. The new manager brings the books current, sets up billing, and notifies owners. The same <a href="/switching-hoa-management-companies">Day 1 to Day 90 plan</a> we use for boards switching companies applies, minus the part where we chase your old manager for records.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">When does a self-managed HOA need professional management?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">When the work depends on one or two people, when the finances have outgrown a spreadsheet, or when enforcing the rules has started to cost friendships — the three signs at the top of this page. <strong>If your board recognizes one, the question isn't whether you've failed;</strong> it's whether the volunteers should still be carrying it.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="cta">
     <div class="leaf" aria-hidden="true"><img src="/assets/leaf-mark.svg" alt=""></div>
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Not sure which way to go?</h2>
-        <p class="cta-p">Tell us about your community and we'll give you a straight answer — full management, financial-only, or "you're doing great, keep going." Within two business days.</p>
+        <p class="cta-p">Tell us about your community and we'll give you a straight answer — full management, financial-only, or "you're doing great, keep going." Within one business day.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Talk it through <span class="arrow">→</span></a>
@@ -176,6 +235,18 @@ const service = serviceSchema({
 
   <script>
     (function () {
+      // FAQ accordion (static markup — safe to wire directly)
+      document.querySelectorAll('.faq-item').forEach(function (item) {
+        var btn = item.querySelector('.faq-q');
+        var ans = item.querySelector<HTMLElement>('.faq-a');
+        if (!btn || !ans) return;
+        var panel = ans;
+        btn.addEventListener('click', function () {
+          var open = item.classList.toggle('open');
+          panel.style.maxHeight = open ? (panel.scrollHeight + 'px') : '0';
+        });
+      });
+
       var h = document.getElementById('sm-homes'), w = document.getElementById('sm-hours');
       var hv = document.getElementById('sm-homes-v'), wv = document.getElementById('sm-hours-v');
       var res = document.getElementById('sm-result'), det = document.getElementById('sm-detail');
@@ -295,4 +366,24 @@ const service = serviceSchema({
   .cta-p { font-size: 17px; line-height: 1.6; max-width: 500px; margin: 0; color: rgba(30,30,119,.82); }
   .cta-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
   .cta-phone { font-size: 14px; font-weight: 600; color: rgba(30,30,119,.75); text-decoration: none; }
+  .sig-alt { background: #fff; }
+  .sig-d a { color: var(--freedom-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+  /* FAQ — same treatment as the service pages */
+  .faq { background: var(--nb-lightest); padding: 110px 0; }
+  .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }
+  @media (max-width: 860px) { .faq-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .faq-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 0; text-wrap: balance; }
+  .faq-list { border-top: 1.5px solid var(--hairline-strong); }
+  .faq-item { border-bottom: 1.5px solid var(--hairline-strong); }
+  .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: transparent; border: 0; cursor: pointer; text-align: left; padding: 24px 2px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--freedom-blue); }
+  .faq-sign { flex: none; width: 26px; height: 26px; position: relative; }
+  .faq-sign::before, .faq-sign::after { content: ""; position: absolute; background: var(--landscaping-green); border-radius: 2px; transition: transform var(--dur-base) var(--ease-out); }
+  .faq-sign::before { left: 0; right: 0; top: 12px; height: 2.5px; }
+  .faq-sign::after { top: 0; bottom: 0; left: 12px; width: 2.5px; }
+  .faq-item.open .faq-sign::after { transform: scaleY(0); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
+  .faq-a-in { font-size: 15.5px; line-height: 1.7; color: var(--ink-500); padding: 0 2px 24px; max-width: 640px; }
+  .faq-a-in strong { color: var(--freedom-blue); font-weight: 600; }
+  .faq-a-in a { color: var(--freedom-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 </style>

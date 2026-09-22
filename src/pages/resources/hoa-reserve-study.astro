@@ -3,6 +3,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
 import { articleSchema, breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
+import GuideDownload from '~/components/GuideDownload.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
@@ -29,7 +30,7 @@ const faq = faqSchema([
   },
   {
     q: 'Is there an HOA reserve study template I can use instead of hiring a provider?',
-    a: 'A template can organize your component list and show the board what a complete report looks like, but it cannot replace the inspection and cost estimating a credentialed reserve specialist provides. Use the checklist in this guide to prepare, then commission a full study. Lenders, insurers, and buyers give weight to the professional report, not to a spreadsheet.',
+    a: 'Yes, and there is a free one in this guide. A template organizes your component list and shows the board what a complete report looks like, but it cannot replace the inspection and cost estimating a credentialed reserve specialist provides. Fill in the template to prepare, then commission a full study. Lenders, insurers, and buyers give weight to the professional report, not to a spreadsheet.',
   },
 ]);
 // Article, matching every other board-education spoke. Dates are this page's
@@ -39,9 +40,9 @@ const article = articleSchema({
   description: 'What an HOA reserve study is, what one costs, what the finished report should contain, and how to turn it into a funding plan. A plain-English guide for boards.',
   url: SITE.url + '/resources/hoa-reserve-study',
   datePublished: '2026-06-01',
-  dateModified: '2026-09-04',
+  dateModified: '2026-09-22',
   image: SITE.url + '/photos/og/reserve-hero-photo.jpg',
-  about: ['HOA reserve study', 'HOA reserve study cost', 'HOA reserve study template', 'HOA reserve funding', 'Capital replacement planning'],
+  about: ['HOA reserve study', 'HOA reserve study cost', 'HOA reserve study template', 'HOA reserve study requirements by state', 'Percent funded', 'HOA reserve funding', 'Capital replacement planning'],
 });
 
 ---
@@ -60,7 +61,7 @@ const article = articleSchema({
         <div class="art-cat">Finances &amp; Reserves</div>
         <h1 class="art-h1">HOA reserve study: the complete guide for boards.</h1>
         <p class="art-lede">The clubhouse roof gives out, the quote is $180,000, and the reserve fund has $40,000 in it. A reserve study is how a board keeps that scenario out of every homeowner’s mailbox. Here’s what it is, what it costs, what the finished report should contain, and the part most guides skip.</p>
-        <div class="art-meta"><span>8 min read</span><span class="dot"></span><span>2026 Edition · Updated September 2026</span></div>
+        <div class="art-meta"><span>11 min read</span><span class="dot"></span><span>2026 Edition · Updated September 2026</span></div>
       </div>
     </header>
 
@@ -117,11 +118,39 @@ const article = articleSchema({
           </table>
         </div>
         <p class="art-p">Illustrative figures only. The annual set-aside is simply replacement cost divided by remaining life, which is how a straight-line component method arrives at a contribution. Real studies pool the components so one big-ticket year does not swamp the plan. Walking your common areas with this table in hand is the best preparation a board can do; hand the draft list to your provider and they will correct it against what they find on site.</p>
+        <GuideDownload
+          title="HOA reserve study template: the component inventory"
+          blurb="The table above as a working spreadsheet — quantity, year installed, useful life, remaining life, replacement cost, and a straight-line set-aside per component — plus a funding snapshot tab that calculates percent funded from your current balance. Fill it in before the specialist arrives."
+          href="/downloads/cmgt-hoa-reserve-study-template.xlsx"
+        />
         <p class="art-p">Once the study is in hand, the funding plan needs a home in the annual budget. Our <a href="/resources/hoa-budget-template">HOA budget template</a> shows where the reserve contribution line sits and how to model it.</p>
 
         <h2 class="art-h2">Does your HOA actually need one? (Even if your state doesn’t require it)</h2>
         <p class="art-p">Nearly every community benefits from an HOA reserve study, and a growing number of states now legally require them, but Louisiana, Mississippi, and Alabama generally do not. That gap is exactly why so many Gulf South communities get caught off guard. Reserve study requirements by state vary widely: California requires a full study every three years, and Florida now mandates structural integrity reserve studies for older condo buildings after the 2021 Surfside collapse. Much of the Gulf South has no such mandate.</p>
-        <p class="art-p"><strong>Not legally required does not mean not needed.</strong> Underfunded reserves are the leading cause of surprise special assessments, and the risk shows up before any repair does. Lenders and buyers increasingly scrutinize reserve health: <a href="https://www.fanniemae.com" target="_blank" rel="noopener">Fannie Mae</a>, for example, generally expects a condo budget to put at least 10% of income toward reserves for units to qualify for financing. A thin reserve fund can quietly make a community harder to sell and harder to insure. An HOA reserve study replaces guesswork with a plan, which is the whole point of proactive, transparent management: solve the problem before a homeowner ever knows it exists.</p>
+        <p class="art-p"><strong>Not legally required does not mean not needed.</strong> Underfunded reserves are the leading cause of surprise <a href="/resources/hoa-special-assessments">special assessments</a>, and the risk shows up before any repair does. Lenders and buyers increasingly scrutinize reserve health: <a href="https://www.fanniemae.com" target="_blank" rel="noopener">Fannie Mae</a>, for example, generally expects a condo budget to put at least 10% of income toward reserves for units to qualify for financing. A thin reserve fund can quietly make a community harder to sell and harder to insure. An HOA reserve study replaces guesswork with a plan, which is the whole point of proactive, transparent management: solve the problem before a homeowner ever knows it exists.</p>
+
+        <h2 class="art-h2">HOA reserve study requirements by state</h2>
+        <p class="art-p">Boards ask this constantly, and the short answer for most of the Gulf South is that the statute is silent and the governing documents decide. Florida is the exception, and only for certain condominium buildings. Here is where each state we serve stands; because legislatures revisit this every session, treat the table as a starting point and confirm with association counsel.</p>
+        <div class="art-table-wrap reveal">
+          <table class="art-table">
+            <thead><tr><th>State</th><th>HOAs and planned communities</th><th>Condominiums</th></tr></thead>
+            <tbody>
+              <tr><td><a href="/resources/hoa-laws/louisiana">Louisiana</a></td><td>No statutory reserve study requirement. Your declaration and bylaws control whether and how reserves are funded.</td><td>No requirement under the Louisiana Condominium Act; the condo declaration governs.</td></tr>
+              <tr><td><a href="/resources/hoa-laws/mississippi">Mississippi</a></td><td>No HOA statute at all. Covenants and the Nonprofit Corporation Act govern, and neither requires a study.</td><td>No requirement under Mississippi condominium law.</td></tr>
+              <tr><td><a href="/resources/hoa-laws/alabama">Alabama</a></td><td>No requirement under the Alabama Homeowners’ Association Act.</td><td>No requirement under the Alabama Uniform Condominium Act.</td></tr>
+              <tr><td><a href="/resources/hoa-laws/texas">Texas</a></td><td>No requirement under Property Code Chapter 209.</td><td>No requirement under the Texas Uniform Condominium Act (Chapter 82).</td></tr>
+              <tr><td><a href="/resources/hoa-laws/florida">Florida</a></td><td>No requirement for HOAs under Chapter 720. Reserves themselves are optional unless the developer established them or the members vote them in.</td><td>Buildings three stories or taller must complete a structural integrity reserve study at least every 10 years under Chapter 718, and cannot waive funding for the structural components it covers.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="art-p"><strong>The requirement that bites most Gulf South boards is not a statute, it is a lender.</strong> Condo project reviews for conventional mortgages increasingly ask whether a current reserve study exists and whether the budget funds it, and a community that cannot answer yes can find its units harder to finance. Put differently: the state may not require an HOA reserve study, but the buyers of your homes effectively do.</p>
+
+        <h2 class="art-h2">How to read a reserve study: percent funded and the funding plan</h2>
+        <p class="art-p">A finished study runs forty pages or more, and most of it is the component detail. Three things in it deserve the board’s attention before anything else.</p>
+        <p class="art-p"><strong>Percent funded</strong> is the headline. It compares what the reserve fund holds today with what it should hold given how much of each component’s life has already been used up. A widely used rule of thumb: under 30 percent funded is weak and points toward a special assessment when the next big item comes due; 30 to 70 percent is fair and fixable with steady contributions; above 70 percent is strong. The free template in this guide calculates it from your component list and current balance.</p>
+        <p class="art-p"><strong>The funding method</strong> tells you how aggressive the plan is. <em>Full funding</em> aims to hold 100 percent funded and is the most conservative. <em>Threshold funding</em> keeps the balance above a floor the board sets. <em>Baseline funding</em> only promises the balance never drops below zero, which leaves no room for a component failing early or a bid coming in high. The lower the target, the more of the risk sits with a future board and a future special assessment.</p>
+        <p class="art-p"><strong>The recommended annual contribution</strong> is the number that has to make it into the budget. Compare it with the reserve line you actually funded last year; the gap between the two is the honest measure of whether the community is catching up or falling behind. Then look at the next five years of projected expenditures, because a roof due in year three is a very different conversation from one due in year eighteen.</p>
+        <p class="art-p">One line boards often forget belongs in this conversation: the <a href="/resources/hoa-master-insurance-policy">master insurance policy’s</a> named-storm deductible. On the coast it is usually a percentage of insured value, which can make it a six-figure reserve question of its own.</p>
 
         <h2 class="art-h2">How to choose a reserve study provider</h2>
         <p class="art-p">Look for an independent, credentialed reserve specialist who holds the Reserve Specialist (RS) or Professional Reserve Analyst (PRA) designation and follows the National Reserve Study Standards. The best HOA reserve study companies do exactly this work and have no financial stake in the repairs they recommend. A quick vetting checklist:</p>
@@ -148,7 +177,7 @@ const article = articleSchema({
         <p class="art-p">Generally no. These states don’t broadly mandate reserve studies for HOAs the way California and Florida do. That said, your governing documents or a lender may still expect one, and skipping it leaves the community exposed to surprise special assessments. Because state law changes, confirm your community’s current obligations with your association counsel.</p>
 
         <h3 class="art-h3">Is there an HOA reserve study template I can use instead of hiring a provider?</h3>
-        <p class="art-p">A template can organize your component list and show the board what a complete report looks like, but it cannot replace the inspection and cost estimating a credentialed reserve specialist provides. Use the checklist above to prepare, then commission a full study. Lenders, insurers, and buyers give weight to the professional report, not to a spreadsheet.</p>
+        <p class="art-p">Yes, and there is a free one in this guide. A template organizes your component list and shows the board what a complete report looks like, but it cannot replace the inspection and cost estimating a credentialed reserve specialist provides. Fill in the template to prepare, then commission a full study. Lenders, insurers, and buyers give weight to the professional report, not to a spreadsheet.</p>
 
         <h2 class="art-h2">A reserve study tells you what’s coming, and how to pay for it</h2>
         <p class="art-p">An HOA reserve study gives your community two things it can’t get any other way: an honest look at what will need repair or replacement, and a realistic plan to pay for it without a special assessment surprise. The board that acts on its study and folds the funding plan into a sustainable budget never has to send that dreaded letter. You don’t have to figure it out alone: CMGT helps boards commission the right study and turn its findings into a transparent, fundable budget.</p>
@@ -167,7 +196,7 @@ const article = articleSchema({
 
   <section class="cta">
     <div class="container cta-in">
-      <div><h2 class="cta-h">Want this handled for you?</h2><p class="cta-p">A real person will walk through your community’s reserves and budget — within two business days.</p></div>
+      <div><h2 class="cta-h">Want this handled for you?</h2><p class="cta-p">A real person will walk through your community’s reserves and budget — within one business day.</p></div>
       <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
     </div>
   </section>
@@ -224,4 +253,5 @@ const article = articleSchema({
   .art-table th { background: var(--freedom-blue); color: #fff; text-align: left; font-family: var(--font-body); font-weight: 700; font-size: 12.5px; letter-spacing: .02em; padding: 12px 14px; vertical-align: bottom; }
   .art-table td { padding: 12px 14px; border: 1px solid var(--hairline-strong); color: var(--ink-700); line-height: 1.5; vertical-align: top; width: 50%; }
   .art-table tbody tr:nth-child(even) td { background: var(--fb-lightest); }
+  .art-table td a { color: var(--freedom-blue); font-weight: 600; }
 </style>

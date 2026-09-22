@@ -54,6 +54,23 @@ export interface Guide {
 // Newest first, by each page's own visible "Updated" line. Hurricane prep is
 // seasonal — move that object up during storm season rather than editing copy.
 export const GUIDES: Guide[] = [
+  // Featured (2026-W39): 'hoa reserve study' (800/mo) has sat at #8–12 for weeks
+  // with Google crediting the hub URL rather than this guide. The featured panel
+  // is the hub's strongest internal link, so the head-term target gets it.
+  {
+    slug: '/resources/hoa-reserve-study',
+    topic: 'finances',
+    // Singular on purpose: 'hoa reserve study' is the head term this guide targets.
+    title: 'HOA reserve study: the complete board guide',
+    dek: 'What an HOA reserve study is, what one costs, what the report should contain, and how to fund it — plus a free template.',
+    thumb: '/photos/resources/reserve-study.webp',
+    alt: 'A well-maintained HOA common area kept in good repair by a funded reserve plan',
+    featured: {
+      dek: 'What an HOA reserve study is, what one costs, what the finished report should contain, and how to turn it into a funding plan — with a free component inventory template to walk your common areas with.',
+      image: '/photos/reserve-hero-photo.webp',
+      alt: 'A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan',
+    },
+  },
   {
     slug: '/resources/hoa-master-insurance-policy',
     topic: 'insurance',
@@ -61,11 +78,6 @@ export const GUIDES: Guide[] = [
     dek: "What the association's policy covers, where yours has to start, and how wind, flood, and deductibles work.",
     thumb: '/photos/resources/hoa-master-insurance-policy.webp',
     alt: 'A well-kept Gulf South community with townhomes, a pool, and landscaped common areas covered by an HOA master insurance policy',
-    featured: {
-      dek: 'What an HOA or condo master insurance policy covers, where your own coverage has to start, and how Gulf South boards handle wind, flood, and deductibles.',
-      image: '/photos/hoa-master-insurance-policy.webp',
-      alt: 'A well-kept Gulf South community with townhomes, a pool, and landscaped common areas covered by an HOA master insurance policy',
-    },
   },
   {
     slug: '/resources/hoa-financial-statements',
@@ -141,18 +153,9 @@ export const GUIDES: Guide[] = [
     slug: '/resources/hoa-budget-template',
     topic: 'finances',
     title: "HOA budget templates & best practices: a board's guide",
-    dek: 'The structure, the line items, and sample budgets by community size to model against.',
+    dek: 'The structure, the line items, sample budgets by community size, and a free spreadsheet template.',
     thumb: '/photos/resources/budget-template.webp',
     alt: 'Three HOA board members reviewing a budget spreadsheet on a laptop at a kitchen table',
-  },
-  {
-    slug: '/resources/hoa-reserve-study',
-    topic: 'finances',
-    // Singular on purpose: 'hoa reserve study' is the head term this guide targets.
-    title: 'HOA reserve study: the complete board guide',
-    dek: 'What an HOA reserve study is, what one costs, what the report should contain, and how to fund it.',
-    thumb: '/photos/resources/reserve-study.webp',
-    alt: 'A well-maintained HOA common area kept in good repair by a funded reserve plan',
   },
   {
     slug: '/resources/hurricane-preparedness-for-hoas',
