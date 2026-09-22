@@ -1,0 +1,195 @@
+---
+// src/pages/newsletter.astro
+// The CMGT board newsletter's canonical home — the "Ask a question" CTA in each
+// monthly Mailchimp send lands here (#ask). Four sections:
+//   1. Current issue   — static, derived from the latest campaign + editorial seed
+//   2. Subscribe strip — static; vanilla-JS form posting to /api/subscribe
+//   3. Ask form        — static Freedom Blue band; only <AskForm> is hydrated
+//   4. Archive         — static rows, built from past campaigns (empty-state safe)
+//
+// Prerendered so the Mailchimp fetch runs at BUILD time, not per view. A
+// campaign-sent webhook rebuilds the page (src/pages/api/newsletter-webhook.ts).
+// Monthly content edits: src/data/newsletter/current.json.
+// Ported from the Edison site's newsletter system (Alloy-GP/Edison-Website).
+export const prerender = true;
+
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ImageSlot from '~/components/ImageSlot.astro';
+import AskForm from '~/components/newsletter/AskForm.jsx';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema, collectionPageSchema } from '~/lib/schema';
+import { getNewsletterData } from '~/lib/newsletter';
+import '../styles/newsletter.css';
+
+const { newsletter, current, archive } = await getNewsletterData();
+
+const PAGE_URL = SITE.url + '/newsletter';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Board Newsletter', url: PAGE_URL },
+]);
+
+// Past issues as an ItemList once there are any; pre-launch it's just the crumb.
+const pageSchema = archive.length
+  ? [
+      breadcrumb,
+      collectionPageSchema({
+        name: `${newsletter.name} — Past Issues`,
+        description: newsletter.description,
+        url: PAGE_URL,
+        items: archive.map((it) => ({ name: `${it.issueLabel}: ${it.title}`, url: it.url })),
+      }),
+    ]
+  : [breadcrumb];
+
+// Per-issue social card when the seed names one; otherwise BaseLayout falls
+// back to OG_IMAGES['/newsletter']. Spread so an absent value is never passed
+// as undefined (exactOptionalPropertyTypes).
+const ogProps = current.ogImage ? { ogImage: current.ogImage, ogImageAlt: current.heroAlt } : {};
+
+const title = `${current.title} | ${newsletter.name}`;
+---
+<BaseLayout title={title} description={newsletter.description} pageSchema={pageSchema} {...ogProps}>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Board Newsletter"}]'></nav>
+
+  {/* ── Section 1 — Current issue ─────────────────────────────── */}
+  <section class="nl-current">
+    <div class="container nl-current-inner">
+      <div>
+        <div class="eyebrow nl-eyebrow">Current Issue · {current.issueLabel}</div>
+        <h1>{current.title}</h1>
+        <p class="nl-dek">{current.dek}</p>
+        {current.archiveUrl && (
+          <a class="nl-readmore" href={current.archiveUrl} target="_blank" rel="noopener noreferrer">
+            Read the full {current.issueLabel} issue <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        )}
+        {current.inThisIssue.length > 0 && (
+          <div class="nl-iti-wrap">
+            <p class="nl-iti-h">In this issue</p>
+            <ul class="nl-iti">
+              {current.inThisIssue.map((item, i) => (
+                <li>
+                  <span class="nl-iti-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      <div class="nl-hero">
+        <ImageSlot priority src={current.heroImg} alt={current.heroAlt} shape="rounded" radius={20} />
+      </div>
+    </div>
+  </section>
+
+  {/* ── Section 2 — Subscribe strip ───────────────────────────── */}
+  <section id="subscribe" class="nl-sub-band">
+    <div class="container nl-sub">
+      <div>
+        <h2 class="nl-sub-h">Get the next issue in your inbox.</h2>
+        <p class="nl-sub-p">{newsletter.subscribeBlurb}</p>
+      </div>
+      <div>
+        <form class="nl-sub-form" id="nl-sub-form">
+          {/* Honeypot — hidden from humans; bots that fill it are silently rejected server-side. */}
+          <label class="nl-hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          {/* `source` selects the Mailchimp tag in /api/subscribe (newsletter-page vs newsletter-footer). */}
+          <input type="hidden" name="source" value="newsletter-page" />
+          <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required />
+          <button class="btn btn-green" type="submit">Get the next issue <span class="arrow">→</span></button>
+        </form>
+        <p class="nl-sub-ok" id="nl-sub-ok" role="status" aria-live="polite">Thanks — check your inbox to confirm your subscription.</p>
+        <p class="nl-sub-note">For HOA boards &amp; homeowners. We confirm by email first, so nobody can sign you up but you.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Section 3 — Ask form (CTA destination) ────────────────── */}
+  <section id="ask" class="nl-ask-band">
+    <div class="container nl-ask">
+      <div class="nl-ask-left">
+        <div class="eyebrow nl-eyebrow-light">Ask CMGT</div>
+        <h2>{current.ask.title}</h2>
+        <p class="nl-ask-body">{current.ask.body}</p>
+        <div class="nl-prompts">
+          {current.ask.prompts.map((p) => <div class="nl-prompt">{p}</div>)}
+        </div>
+      </div>
+      <AskForm client:load slug={current.slug} issueLabel={current.issueLabel} ask={current.ask} newsletterName={newsletter.name} />
+    </div>
+  </section>
+
+  {/* ── Section 4 — Archive ───────────────────────────────────── */}
+  <section class="nl-archive">
+    <div class="container">
+      <div class="nl-archive-head">
+        <div>
+          <div class="eyebrow nl-eyebrow">The Archive</div>
+          <h2>Past Issues</h2>
+        </div>
+        <div class="nl-archive-note">
+          Every issue stays readable. Board members join mid-year all the time.
+        </div>
+      </div>
+      {archive.length > 0 ? (
+        <div class="nl-rows">
+          {archive.map((it) => (
+            <a class="nl-row" href={it.url} target="_blank" rel="noopener noreferrer">
+              <div class="nl-row-date">{it.issueLabel}</div>
+              <div>
+                <div class="nl-row-title">{it.title}</div>
+                {it.blurb && <div class="nl-row-blurb">{it.blurb}</div>}
+              </div>
+              <div class="nl-row-arrow" aria-hidden="true">→</div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="nl-empty">
+          {current.issueLabel} is the first issue. Past issues will appear here as they publish.
+        </div>
+      )}
+    </div>
+  </section>
+
+  <script>
+    // Subscribe strip → POST /api/subscribe (Mailchimp double opt-in). Mirrors the
+    // footer form in public/scripts/nav.js: send the whole form so the honeypot
+    // and `source` ride along; success flips the confirmation line on.
+    const form = document.getElementById('nl-sub-form') as HTMLFormElement | null;
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = form.querySelector<HTMLInputElement>('input[type=email]');
+        if (input && !input.checkValidity()) { input.reportValidity(); return; }
+        const email = input ? input.value.trim() : '';
+        if (!email) return;
+        const btn = form.querySelector<HTMLButtonElement>('button');
+        const ok  = document.getElementById('nl-sub-ok');
+        if (btn) btn.disabled = true;
+        const fd = new FormData(form);
+        fd.set('email', email);
+        fetch('/api/subscribe', { method: 'POST', body: fd })
+          .then((r) => { if (!r.ok) throw new Error('subscribe failed'); })
+          .then(() => {
+            if (ok) ok.classList.add('on');
+            form.reset();
+            if (btn) btn.disabled = false;
+            const w = window as Window & { gtag?: (...args: unknown[]) => void };
+            if (typeof w.gtag === 'function') w.gtag('event', 'sign_up', { method: 'newsletter', page_path: location.pathname });
+          })
+          .catch(() => {
+            if (btn) btn.disabled = false;
+            if (input) {
+              input.setCustomValidity('Something went wrong — please try again.');
+              input.reportValidity();
+              setTimeout(() => input.setCustomValidity(''), 1200);
+            }
+          });
+      });
+    }
+  </script>
+</BaseLayout>

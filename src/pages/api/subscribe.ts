@@ -21,6 +21,9 @@ export const POST: APIRoute = async ({ request }) => {
     }
     const email     = data.get('email')?.toString().trim()     ?? '';
     const firstName = data.get('firstName')?.toString().trim() ?? '';
+    // Which form sent it: '' / anything unknown = footer; 'newsletter-page' = the
+    // /newsletter landing strip. Only changes the Mailchimp tag (see email.config.ts).
+    const source    = data.get('source')?.toString().trim()    ?? '';
 
     if (!email) {
       return new Response(JSON.stringify({ error: 'Email is required.' }), { status: 400 });
@@ -34,7 +37,10 @@ export const POST: APIRoute = async ({ request }) => {
     await upsertMailchimpContact({
       email,
       firstName,
-      tags: EMAIL_CONFIG.mailchimp.subscribeTags ?? EMAIL_CONFIG.mailchimp.defaultTags,
+      tags:
+        EMAIL_CONFIG.mailchimp.subscribeTagsBySource[source] ??
+        EMAIL_CONFIG.mailchimp.subscribeTags ??
+        EMAIL_CONFIG.mailchimp.defaultTags,
       doubleOptIn: true,
     });
 
