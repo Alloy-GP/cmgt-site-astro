@@ -37,6 +37,11 @@ interface MailchimpContact {
   // clicking it. Used by the public newsletter to block bots (they can't
   // confirm). Proposal leads omit this and land as 'subscribed' directly.
   doubleOptIn?: boolean;
+  // When true, NEW members are created as 'transactional' — kept in the
+  // audience (so tags, history and replies are on record) but never sent a
+  // campaign. Used when a /newsletter asker declines the newsletter. Ignored
+  // for existing members. Takes precedence over doubleOptIn.
+  transactional?: boolean;
 }
 
 export async function upsertMailchimpContact(contact: MailchimpContact): Promise<void> {
@@ -60,9 +65,10 @@ export async function upsertMailchimpContact(contact: MailchimpContact): Promise
     // PUT = add-or-update. `status_if_new` only applies when CREATING, so an
     // existing (or previously-unsubscribed) member keeps their current status.
     // 'pending' triggers Mailchimp's double opt-in confirmation email.
+    const statusIfNew = contact.transactional ? 'transactional' : contact.doubleOptIn ? 'pending' : 'subscribed';
     const base = {
       email_address: email,
-      status_if_new: (contact.doubleOptIn ? 'pending' : 'subscribed') as 'pending' | 'subscribed',
+      status_if_new: statusIfNew as 'pending' | 'subscribed' | 'transactional',
     };
     try {
       await mailchimp.lists.setListMember(id, hash, {

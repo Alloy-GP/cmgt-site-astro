@@ -1,0 +1,132 @@
+/* src/styles/newsletter.css
+   Styles for /newsletter. Ported from the Edison newsletter system and re-tokened
+   to CMGT's palette in global.css (Freedom Blue / Landscaping Green, Gelica +
+   DM Sans) — no hardcoded brand hex beyond what global.css already uses.
+   `nl-` prefix throughout (the footer's own signup is `ft-nl-`, no clash).
+   Two breakpoints: 980px, 620px. */
+
+/* ── Section 1 — Current issue ─────────────────────────────────────── */
+.nl-current { background: #fff; padding: 84px 0 72px; }
+.nl-current-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+.nl-eyebrow { color: var(--freedom-blue); }
+.nl-eyebrow-light { color: var(--landscaping-green); }
+.nl-current h1 {
+  margin: 14px 0 18px;
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(38px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.025em;
+  color: var(--freedom-blue); text-wrap: balance;
+}
+.nl-dek { margin: 0 0 24px; font-size: 17px; line-height: 1.7; color: var(--ink-500); max-width: 52ch; }
+.nl-readmore {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-weight: 700; font-size: 15px; color: var(--freedom-blue); text-decoration: none;
+  border-bottom: 2px solid var(--landscaping-green); padding-bottom: 3px;
+}
+.nl-readmore .arrow { display: inline-block; transition: transform var(--dur-base) var(--ease-out); }
+.nl-readmore:hover .arrow { transform: translateX(4px); }
+.nl-iti-wrap { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--hairline); }
+.nl-iti-h { margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-400); }
+.nl-iti { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.nl-iti li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15.5px; line-height: 1.55; color: var(--ink-700); }
+.nl-iti-num { font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--landscaping-green); padding-top: 3px; }
+.nl-hero .image-slot { width: 100%; aspect-ratio: 4 / 5; max-height: 640px; box-shadow: var(--shadow-card); }
+
+/* ── Section 2 — Subscribe strip ───────────────────────────────────── */
+.nl-sub-band { background: var(--nb-lightest); padding: 46px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.nl-sub { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: 40px; align-items: center; }
+.nl-sub-h { margin: 0 0 8px; font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; color: var(--freedom-blue); }
+.nl-sub-p { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-500); max-width: 60ch; }
+.nl-sub-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.nl-sub-form input[type="email"] {
+  flex: 1 1 240px; min-width: 0;
+  padding: 13px 16px; border-radius: 6px;
+  border: 1.5px solid var(--hairline-strong); background: #fff;
+  font: inherit; font-size: 15px; color: var(--freedom-blue);
+}
+.nl-sub-form input[type="email"]:focus { outline: 2px solid var(--neighborly-blue); outline-offset: 1px; border-color: var(--freedom-blue); }
+.nl-sub-form .btn { flex: 0 0 auto; }
+.nl-sub-form .btn:disabled { opacity: .65; cursor: wait; }
+.nl-sub-ok { display: none; margin: 10px 0 0; font-size: 14px; font-weight: 600; color: #2FA95A; }
+.nl-sub-ok.on { display: block; }
+.nl-sub-note { margin: 10px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-400); }
+
+/* ── Section 3 — Ask band ──────────────────────────────────────────── */
+.nl-ask-band { position: relative; overflow: hidden; background: var(--freedom-blue); color: #fff; padding: 88px 0; scroll-margin-top: 96px; }
+.nl-ask-band::after {
+  content: ""; position: absolute; left: -90px; bottom: -120px; width: 340px; height: 340px;
+  background: url('/assets/leaf-mark.svg') no-repeat center / contain;
+  filter: brightness(0) invert(1); opacity: .07; transform: rotate(12deg); pointer-events: none;
+}
+.nl-ask { position: relative; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 64px; align-items: start; }
+.nl-ask-left h2 { margin: 14px 0 16px; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.12; letter-spacing: -.015em; color: #fff; text-wrap: balance; }
+.nl-ask-body { margin: 0; font-size: 16.5px; line-height: 1.7; color: rgba(255,255,255,.78); }
+.nl-prompts { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+.nl-prompt { background: rgba(255,255,255,.07); padding: 14px 18px; border-left: 3px solid var(--landscaping-green); border-radius: 0 6px 6px 0; font-size: 15px; color: #fff; }
+
+/* ── Section 3 — Form (on Freedom Blue) ────────────────────────────── */
+.nl-form { display: flex; flex-direction: column; gap: 18px; }
+.nl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.nl-field { display: flex; flex-direction: column; gap: 6px; }
+.nl-span { grid-column: 1 / -1; }
+.nl-label { font-weight: 600; font-size: 13px; letter-spacing: .01em; color: rgba(255,255,255,.85); }
+.nl-req { color: var(--landscaping-green); margin-left: 3px; }
+.nl-input {
+  font-family: var(--font-body); font-size: 15px; line-height: 1.4;
+  padding: 12px 14px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.07); color: #fff; width: 100%;
+  transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+}
+.nl-input:focus { outline: none; border-color: var(--landscaping-green); background: rgba(255,255,255,.1); }
+.nl-input::placeholder { color: rgba(255,255,255,.45); }
+.nl-textarea { resize: vertical; min-height: 112px; }
+.nl-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 38px; }
+/* Native dropdown options inherit the white text — force a legible color. */
+.nl-select option { color: var(--ink-700); background: #fff; }
+.nl-check { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,.72); cursor: pointer; }
+.nl-check input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--landscaping-green); flex-shrink: 0; }
+.nl-submit { align-self: flex-start; }
+.nl-submit:disabled { opacity: .65; cursor: wait; }
+.nl-note { margin: 0; font-size: 12.5px; line-height: 1.5; color: rgba(255,255,255,.62); }
+.nl-error {
+  padding: 13px 16px; border-radius: 6px;
+  background: rgba(176,57,46,.18); border: 1px solid rgba(255,155,145,.45);
+  font-size: 14px; line-height: 1.55; color: #ffd9d4;
+}
+.nl-error a { color: #fff; }
+.nl-sent { padding: 48px 32px; text-align: center; border: 1px solid rgba(74,207,108,.45); border-radius: 12px; background: rgba(74,207,108,.1); }
+.nl-sent-h { font-family: var(--font-display); font-weight: 700; font-size: 24px; color: #fff; margin-bottom: 10px; }
+.nl-sent-b { margin: 0 auto; font-size: 15.5px; line-height: 1.6; color: rgba(255,255,255,.72); max-width: 44ch; }
+/* Offscreen honeypot */
+.nl-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ── Section 4 — Archive ───────────────────────────────────────────── */
+.nl-archive { background: #fff; padding: 88px 0 100px; }
+.nl-archive-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 34px; }
+.nl-archive-head h2 { margin: 12px 0 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); }
+.nl-archive-note { font-size: 14.5px; line-height: 1.6; color: var(--ink-500); max-width: 42ch; }
+.nl-rows { border-top: 2px solid var(--freedom-blue); }
+.nl-row {
+  display: grid; grid-template-columns: 150px 1fr auto; gap: 24px; align-items: center;
+  padding: 22px 8px; border-bottom: 1px solid var(--hairline);
+  text-decoration: none; background: transparent;
+  transition: background var(--dur-base) var(--ease-out);
+}
+.nl-row:hover { background: var(--nb-lightest); }
+.nl-row-date { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--freedom-blue); }
+.nl-row-title { font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.35; color: var(--freedom-blue); margin-bottom: 4px; }
+.nl-row-blurb { font-size: 14px; line-height: 1.55; color: var(--ink-500); }
+.nl-row-arrow { font-weight: 700; font-size: 20px; color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out); }
+.nl-row:hover .nl-row-arrow { color: var(--freedom-blue); transform: translateX(4px); }
+.nl-empty { padding: 56px 32px; text-align: center; border: 1px dashed var(--hairline-strong); border-radius: 12px; font-size: 15px; line-height: 1.6; color: var(--ink-500); }
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 980px) {
+  .nl-current-inner, .nl-ask, .nl-sub { grid-template-columns: 1fr; gap: 36px; }
+  .nl-hero .image-slot { aspect-ratio: 16 / 10; max-height: none; }
+}
+@media (max-width: 620px) {
+  .nl-current { padding-top: 72px; }
+  .nl-grid { grid-template-columns: 1fr; }
+  .nl-row { grid-template-columns: 1fr; gap: 8px; }
+  .nl-row-arrow { display: none; }
+}

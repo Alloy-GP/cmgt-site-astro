@@ -26,6 +26,10 @@ export const LASTMOD: Record<string, string> = {
   '/resources/hoa-laws/alabama':                '2026-08-01',
   '/resources/hoa-laws/florida':                '2026-08-01',
 
+  // Board newsletter landing page. Issue content rebuilds itself on every
+  // Mailchimp send; bump this only when the page itself changes.
+  '/newsletter':                                '2026-09-22',
+
   // Service and solution pages touched in the 2026-W39 SEO pass
   '/hoa-financial-management':                  '2026-09-22',
   '/condo-management':                          '2026-09-22',

@@ -134,6 +134,12 @@ export const OG_IMAGES: Record<string, OgImage> = {
     image: '/photos/og/budget-hero-photo.jpg',
     alt: 'An HOA board treasurer working on community finances at a clubhouse table with a laptop open',
   },
+  // Fallback for /newsletter. The page passes the current issue's own ogImage
+  // from src/data/newsletter/current.json when one is set, which wins over this.
+  '/newsletter': {
+    image: '/photos/og/budget-hero-photo.jpg',
+    alt: 'An HOA board treasurer working on community finances at a clubhouse table with a laptop open',
+  },
   '/resources/hoa-reserve-study': {
     image: '/photos/og/reserve-hero-photo.jpg',
     alt: 'A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan',
