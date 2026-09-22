@@ -28,7 +28,7 @@ const FAQ = [
   },
   {
     q: 'How much does property management cost in Baton Rouge?',
-    a: 'Most Baton Rouge property management companies charge a percentage of the monthly rent plus a leasing fee when a new tenant is placed. We quote each property straightforwardly based on its size and needs, with no buried fees. Tell us about your rental and we’ll come back with a clear number within two business days.',
+    a: 'Most Baton Rouge property management companies charge a percentage of the monthly rent plus a leasing fee when a new tenant is placed. We quote each property straightforwardly based on its size and needs, with no buried fees. Tell us about your rental and we’ll come back with a clear number within one business day.',
   },
   {
     q: 'What does CMGT actually do each month as my property manager?',
@@ -236,7 +236,7 @@ const faq = faqSchema(FAQ.map((f) => ({ q: f.q, a: f.a.replace(/<[^>]+>/g, '') }
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Let's talk about your property.</h2>
-        <p class="cta-p">Tell us about your Baton Rouge rental and we'll come back with a clear management quote — within two business days.</p>
+        <p class="cta-p">Tell us about your Baton Rouge rental and we'll come back with a clear management quote — within one business day.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal?intent=rental">Have us manage it <span class="arrow">→</span></a>
