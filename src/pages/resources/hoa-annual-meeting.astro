@@ -3,9 +3,10 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
 import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
-import GuideDownload from '~/components/GuideDownload.astro';
 
-// In client review (stg). Companion downloadable: /downloads/cmgt-hoa-annual-meeting-kit.docx.
+// In client review (stg). Companion resource: a fillable, printable web kit at
+// /downloads/cmgt-hoa-annual-meeting-kit.html plus a blank printable PDF at
+// /downloads/cmgt-hoa-annual-meeting-kit-blank.pdf (replaced the earlier .docx).
 // NOT on the Resources hub, nav, or review widget yet, and not on prod — add when approved.
 
 const pageUrl = SITE.url + '/resources/hoa-annual-meeting';
@@ -32,12 +33,12 @@ const howTo = {
   name: 'How to prepare for an HOA annual meeting',
   description:
     'A week-by-week timeline that counts backward from the meeting date. Exact days come from your governing documents and state law.',
-  tool: [{ '@type': 'HowToTool', name: 'HOA Annual Meeting Kit (free Word file)' }],
+  tool: [{ '@type': 'HowToTool', name: 'HOA Annual Meeting Kit (free fillable, printable web page)' }],
   step: [
-    { '@type': 'HowToStep', position: 1, name: 'Eight weeks out: confirm the rules and the room', text: "Confirm the date, time, and place, or the virtual format, against your bylaws. Pull your governing documents' rules for notice, quorum, proxies, and voting, and write them down in one place. Then book the room before someone else's baby shower does." },
+    { '@type': 'HowToStep', position: 1, name: 'Eight weeks out: confirm the rules and the room', text: "Confirm the date, time, and place, or the virtual format, against your bylaws. Pull the rules for notice, quorum, proxies, and voting from your governing documents and from any state statute, and write them down in one place. Where the two conflict, the statute can override the documents. Then book the room before someone else's baby shower does." },
     { '@type': 'HowToStep', position: 2, name: 'Six to eight weeks out: call for candidates and decide how voting works', text: 'Send the call for board candidates, with a deadline that leaves time to include their statements in the notice. Decide how voting will work: in person, by proxy, by ballot, or electronically where your documents and state law allow it.' },
-    { '@type': 'HowToStep', position: 3, name: 'Four to six weeks out: prepare the financials and draft the agenda', text: 'Prepare the financial report and, where applicable, the proposed budget. Draft the agenda; the sample below is a good starting point.' },
-    { '@type': 'HowToStep', position: 4, name: 'By your notice deadline: send the official notice', text: 'Send the official meeting notice with the agenda, candidate information, and any proxy or ballot, within the notice period your documents require. Every other date on this list should count backward from that deadline.' },
+    { '@type': 'HowToStep', position: 3, name: 'Four to six weeks out: prepare the financials and draft the agenda', text: 'Prepare the financial report and, where applicable, the proposed budget. Draft the agenda from the sample below.' },
+    { '@type': 'HowToStep', position: 4, name: 'By your notice deadline: send the official notice', text: 'Send the official meeting notice with the agenda, candidate information, and any proxy or ballot, inside the notice window your documents and state law set. Some statutes set both a latest and an earliest date, so sending too early can be a problem, too. Every other date on this list should count backward from that window.' },
     { '@type': 'HowToStep', position: 5, name: 'Two weeks out: remind and track', text: 'Send a reminder. Track proxies or ballots received against the quorum you need, so you know early whether to push harder.' },
     { '@type': 'HowToStep', position: 6, name: 'Meeting week: set up and assign roles', text: 'Print sign-in sheets and ballots, confirm who is counting votes, and set up the room or test the meeting link.' },
     { '@type': 'HowToStep', position: 7, name: 'After the meeting: close the loop', text: 'Announce the results, update the board roster, and file the minutes.' },
@@ -47,7 +48,7 @@ const howTo = {
 const faq = faqSchema([
   {
     q: "What happens if an HOA doesn't have an annual meeting?",
-    a: 'The board may be out of compliance with its bylaws, directors whose terms have ended may keep serving without a new election, and homeowners may have grounds to request a meeting. The consequences depend on your governing documents and state law.',
+    a: "The board may be out of compliance with its bylaws and, in some states, with statute. Some states give homeowners a formal way to demand a meeting or force an election, and directors staying on after their terms end doesn't replace the duty to hold one. The consequences depend on your governing documents and state law, so check your state's guide and your attorney.",
   },
   {
     q: 'Is it mandatory for homeowners to attend the HOA annual meeting?',
@@ -93,35 +94,42 @@ const faq = faqSchema([
           <p class="art-take-p">Start about eight weeks out and plan backward from your notice deadline. Your bylaws set the exact rules; this guide gives you the order: confirm the rules, call for candidates, prepare the financials, send notice on time, chase quorum, run a fair election, and close the loop. The free kit turns it into a checklist, a notice template, and an agenda.</p>
         </div>
 
-        <p class="art-p">This guide gives you a week-by-week timeline, a sample agenda, a plan for quorum and elections, and a free kit you can use this week. No clipboard experience required, though a good pen helps.</p>
+        <p class="art-p">This guide gives you a week-by-week timeline, a sample agenda, a plan for quorum and elections, and a free kit you can use this week.</p>
 
-        <GuideDownload
-          title="Free HOA Annual Meeting Kit"
-          blurb="A week-by-week checklist, a notice template, and an agenda template, all in one editable Word file. The checklist opens with a worksheet for the rules in your own governing documents, so you fill those in first."
-          href="/downloads/cmgt-hoa-annual-meeting-kit.docx"
-          cta="Download the kit"
-          meta="Word file · opens in Google Docs · free, no email required"
-        />
+        <aside class="kit-dl reveal" aria-label="Free HOA Annual Meeting Kit">
+          <div class="kit-dl-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </div>
+          <div class="kit-dl-body">
+            <p class="kit-dl-kicker">Free kit</p>
+            <h3 class="kit-dl-t">Free HOA Annual Meeting Kit</h3>
+            <p class="kit-dl-d">A checklist, notice, and agenda you fill in right in your browser, then print or save as a PDF. Free, no email required.</p>
+            <div class="kit-dl-actions">
+              <a class="btn btn-green" href="/downloads/cmgt-hoa-annual-meeting-kit.html" target="_blank" rel="noopener">Open the kit <span class="arrow">&rarr;</span></a>
+              <a class="kit-dl-alt" href="/downloads/cmgt-hoa-annual-meeting-kit-blank.pdf" target="_blank" rel="noopener">Print a blank copy (PDF)</a>
+            </div>
+          </div>
+        </aside>
 
         <h2 class="art-h2">What is an HOA annual meeting?</h2>
-        <p class="art-p">The HOA annual meeting is the once-a-year meeting of all members, usually required by the bylaws, where homeowners elect board members, hear the association&rsquo;s financial report, and often review the budget. Your bylaws probably call it the annual meeting of members.</p>
+        <p class="art-p">The HOA annual meeting is the once-a-year meeting of all members where homeowners elect board members, hear the association&rsquo;s financial report, and often review the budget. Most bylaws require one, and several Gulf South states require it by statute even when the documents are silent. Your bylaws probably call it the annual meeting of members.</p>
         <p class="art-p">It&rsquo;s different from a regular board meeting. Board meetings are where directors handle the ongoing work of the association, sometimes with an executive session for sensitive matters. The annual meeting belongs to the homeowners. It&rsquo;s the one time a year the whole community sees the board&rsquo;s work, the financials, and the plan for next year. <strong>Boards that prepare well walk into a room of homeowners who already trust the numbers.</strong></p>
-        <p class="art-p">Your bylaws set when the HOA annual meeting happens and what has to be on it, and state law may add requirements. The notice and quorum sections below point to where to check.</p>
+        <p class="art-p">Your bylaws set when the HOA annual meeting happens and what has to be on it, and state law may add requirements or override the documents.</p>
 
         <h2 class="art-h2">Your HOA annual meeting timeline, week by week</h2>
-        <p class="art-p">Start about eight weeks out, because notice deadlines and candidate calls take longer than boards expect. <strong>The order is what matters; the exact days come from your governing documents.</strong> The kit&rsquo;s checklist uses these same seven stages and opens with a worksheet for the rules in your documents (notice period, delivery, quorum, proxies, and electronic voting). Fill that in first.</p>
+        <p class="art-p">Start about eight weeks out, because notice deadlines and candidate calls take longer than boards expect. <strong>The order is what matters; the exact days come from your governing documents and state law.</strong> The kit&rsquo;s checklist uses these same seven stages and opens with a worksheet for the rules in your documents and state law (notice window, delivery, quorum, proxies, and electronic voting).</p>
 
         <h3 class="art-h3">1. Eight weeks out: confirm the rules and the room</h3>
-        <p class="art-p">Confirm the date, time, and place, or the virtual format, against your bylaws. Pull your governing documents&rsquo; rules for notice, quorum, proxies, and voting, and write them down in one place. Then book the room before someone else&rsquo;s baby shower does.</p>
+        <p class="art-p">Confirm the date, time, and place, or the virtual format, against your bylaws. Pull the rules for notice, quorum, proxies, and voting from your governing documents and from any state statute, and write them down in one place. Where the two conflict, the statute can override the documents. Then book the room before someone else&rsquo;s baby shower does.</p>
 
         <h3 class="art-h3">2. Six to eight weeks out: call for candidates and decide how voting works</h3>
         <p class="art-p">Send the call for board candidates, with a deadline that leaves time to include their statements in the notice. Decide how voting will work: in person, by proxy, by ballot, or electronically where your documents and state law allow it.</p>
 
         <h3 class="art-h3">3. Four to six weeks out: prepare the financials and draft the agenda</h3>
-        <p class="art-p">Prepare the financial report and, where applicable, the proposed budget. Draft the agenda; the sample below is a good starting point.</p>
+        <p class="art-p">Prepare the financial report and, where applicable, the proposed budget. Draft the agenda from the sample below.</p>
 
         <h3 class="art-h3">4. By your notice deadline: send the official notice</h3>
-        <p class="art-p">Send the official meeting notice with the agenda, candidate information, and any proxy or ballot, within the notice period your documents require. Every other date on this list should count backward from that deadline.</p>
+        <p class="art-p">Send the official meeting notice with the agenda, candidate information, and any proxy or ballot, inside the notice window your documents and state law set. Some statutes set both a latest and an earliest date, so sending too early can be a problem, too. Every other date on this list should count backward from that window.</p>
 
         <h3 class="art-h3">5. Two weeks out: remind and track</h3>
         <p class="art-p">Send a reminder. Track proxies or ballots received against the quorum you need, so you know early whether to push harder.</p>
@@ -147,7 +155,7 @@ const faq = faqSchema([
           <li>Announce election results</li>
           <li>Adjourn</li>
         </ol>
-        <p class="art-p">If your community presents or ratifies the budget at the HOA annual meeting, give the budget presentation real time on the agenda and have copies ready. Our <a href="/resources/hoa-budget-template">HOA budget template</a> walks through building one homeowners can follow. For open forum, set a time limit per speaker in advance and announce it before the first hand goes up, so everyone gets heard. If your bylaws adopt <a href="https://robertsrules.com/" target="_blank" rel="noopener">Robert&rsquo;s Rules of Order</a>, the official site is a useful reference for motions and procedure. <strong>A clear agenda, sent with the notice, keeps the meeting on schedule and the surprises to a minimum.</strong></p>
+        <p class="art-p">If your community presents or ratifies the budget at the HOA annual meeting, give the budget presentation real time on the agenda and have copies ready. Presenting the budget is common; a member vote on it happens only where your documents or state law call for one, since many boards adopt the budget themselves. Our <a href="/resources/hoa-budget-template">HOA budget template</a> walks through building one homeowners can follow. For open forum, set a time limit per speaker that fits your documents and state law (some states set a minimum) and announce it before the first hand goes up. If your bylaws adopt <a href="https://robertsrules.com/" target="_blank" rel="noopener">Robert&rsquo;s Rules of Order</a>, the official site is a useful reference for motions and procedure. <strong>A clear agenda, sent with the notice, keeps the meeting on schedule and the surprises to a minimum.</strong></p>
 
         <h2 class="art-h2">HOA meeting notice requirements: get this part right</h2>
         <p class="art-p">Your bylaws and state law set how far in advance notice must go out, how it&rsquo;s delivered, and what it has to include, and a meeting held on defective notice can be challenged. Of all the HOA annual meeting requirements, this is the one where close enough isn&rsquo;t good enough.</p>
@@ -162,16 +170,16 @@ const faq = faqSchema([
         <p class="art-p">Electronic notice may be an option where your documents and state law allow it. <strong>Check your HOA meeting notice requirements before the notice goes out, not after.</strong> We manage communities. We don&rsquo;t practice law. For the rules where you are, <a href="/resources">find your state&rsquo;s HOA law guide in our Resources library</a>.</p>
 
         <h2 class="art-h2">HOA annual meeting quorum: how to reach it, and what to do if you don't</h2>
-        <p class="art-p">Quorum is the minimum number of members, present or represented, that the bylaws require for the meeting to conduct business. Without it, the members can&rsquo;t hold the election or vote on anything, and everyone who showed up goes home a little annoyed.</p>
+        <p class="art-p">Quorum is the minimum number of members, present or represented, that the bylaws require for the meeting to conduct business. Without it, the members generally can&rsquo;t hold the election or vote on anything at the meeting, and everyone who showed up goes home a little annoyed.</p>
 
         <h3 class="art-h3">How to reach quorum</h3>
         <p class="art-p">Turnout is mostly a communication job. Start early, send reminders, make proxies or ballots easy to return, and offer a virtual option where your documents allow it. Tell homeowners plainly why it matters: without quorum, the HOA annual meeting can&rsquo;t do its business. In CMGT communities, 70% of homeowners use the portal, which makes reminders easier to send and returns easier to track. <strong>The best quorum plan starts with the first notice, not the week of the meeting.</strong></p>
 
         <h3 class="art-h3">If you don't reach quorum</h3>
-        <p class="art-p">Many bylaws allow the meeting to adjourn and reconvene as an adjourned meeting, sometimes with a lower quorum. Check what yours say before the meeting, so the board walks in with a plan instead of improvising. <strong>Know your documents&rsquo; rule for a missed quorum before you need it.</strong> Your association&rsquo;s attorney and <a href="/resources">your state&rsquo;s HOA law guide</a> can confirm what applies.</p>
+        <p class="art-p">Many bylaws allow the meeting to adjourn and reconvene as an adjourned meeting, sometimes with a lower quorum. Some states also allow an election by absentee or electronic ballot without a meeting, where the documents permit it. Check what yours say before the meeting, so the board walks in with a plan instead of improvising. <strong>Know your documents&rsquo; rule for a missed quorum before you need it.</strong> Your association&rsquo;s attorney and <a href="/resources">your state&rsquo;s HOA law guide</a> can confirm what applies.</p>
 
         <h2 class="art-h2">Running a fair HOA board election</h2>
-        <p class="art-p">A fair board election follows the voting procedures in your documents, treats every candidate the same, and has someone other than a candidate count the votes. HOA voting rules and HOA election rules vary by governing documents and state law, so start there. Most fair elections share the same parts:</p>
+        <p class="art-p">A fair board election follows the voting procedures in your documents, treats every candidate the same, and has someone other than a candidate count the votes. HOA voting rules and HOA election rules vary by governing documents and state law, and some states add their own, like candidate deadlines or who may count ballots. Start there. Most fair elections share the same parts:</p>
         <ul class="art-ul">
           <li>An open candidate call, sent to every homeowner with the same deadline.</li>
           <li>Candidate statements distributed with the notice, in the same format for everyone.</li>
@@ -179,23 +187,23 @@ const faq = faqSchema([
           <li>Counting by the manager or volunteer inspectors who aren&rsquo;t on the ballot.</li>
           <li>Results announced at the meeting and recorded in the minutes.</li>
         </ul>
-        <p class="art-p">The Community Associations Institute&rsquo;s <a href="https://www.caionline.org/getmedia/6aac5390-af94-41cd-8bbc-d4e41ad6f190/cagovernanceguidelines2021.pdf" target="_blank" rel="noopener">governance guidelines</a> recommend letting each candidate have a representative observe the count, a simple step that heads off most disputes. <strong>A transparent count is what makes people accept the result.</strong></p>
+        <p class="art-p">The Community Associations Institute&rsquo;s <a href="https://www.caionline.org/getmedia/6aac5390-af94-41cd-8bbc-d4e41ad6f190/cagovernanceguidelines2021.pdf" target="_blank" rel="noopener">governance guidelines</a> recommend letting each candidate have a representative observe the count. <strong>A transparent count is what makes people accept the result.</strong></p>
 
         <h2 class="art-h2">In person, virtual, or hybrid?</h2>
         <p class="art-p">In-person meetings build trust, virtual and hybrid options raise turnout, and which you can use depends on your documents and state law. Some board members and homeowners want a room, a printed agenda, and a handshake. Others would rather join from the kitchen table after the kids are in bed. A hybrid meeting can serve both. <strong>If you go hybrid, hand the technology to one person who isn&rsquo;t also running the meeting.</strong></p>
 
         <h2 class="art-h2">Your free HOA annual meeting kit</h2>
-        <p class="art-p">The kit turns this guide into three fill-in documents, in one Word file that opens in Google Docs:</p>
+        <p class="art-p">The kit turns this guide into three fill-in pages you can use in your browser:</p>
         <ul class="art-ul">
-          <li>A week-by-week checklist with the same seven stages as the timeline above, plus a worksheet for your documents&rsquo; rules.</li>
-          <li>An HOA annual meeting notice template, with every legal requirement left as a blank for you to fill in from your documents.</li>
+          <li>A week-by-week checklist with the same seven stages as the timeline above, plus a worksheet for your documents&rsquo; rules. Enter your meeting date and it fills in a planning target for each stage.</li>
+          <li>An HOA annual meeting notice template that builds itself as you fill it in, with every legal requirement left as a blank.</li>
           <li>An HOA annual meeting agenda template that matches the sample agenda, item for item.</li>
         </ul>
-        <p class="art-p">Every legal requirement is left as a blank, so you fill it in from your own governing documents. <a href="/downloads/cmgt-hoa-annual-meeting-kit.docx" download>Download the HOA Annual Meeting Kit</a>. It&rsquo;s a Word file that opens in Google Docs, free and no email required.</p>
+        <p class="art-p">Your entries save in your own browser, not on our site. The notice and agenda print without CMGT branding, ready to send. Prefer paper? The blank copy prints every field as a line. <a href="/downloads/cmgt-hoa-annual-meeting-kit.html" target="_blank" rel="noopener">Open the kit</a> or <a href="/downloads/cmgt-hoa-annual-meeting-kit-blank.pdf" target="_blank" rel="noopener">print a blank copy (PDF)</a>.</p>
 
         <h2 class="art-h2">Frequently asked questions about the HOA annual meeting</h2>
         <h3 class="art-h3">What happens if an HOA doesn&rsquo;t have an annual meeting?</h3>
-        <p class="art-p">The board may be out of compliance with its bylaws, directors whose terms have ended may keep serving without a new election, and homeowners may have grounds to request a meeting. The consequences depend on your governing documents and state law.</p>
+        <p class="art-p">The board may be out of compliance with its bylaws and, in some states, with statute. Some states give homeowners a formal way to demand a meeting or force an election, and directors staying on after their terms end doesn&rsquo;t replace the duty to hold one. The consequences depend on your governing documents and state law, so check <a href="/resources">your state&rsquo;s guide</a> and your attorney.</p>
         <h3 class="art-h3">Is it mandatory for homeowners to attend the HOA annual meeting?</h3>
         <p class="art-p">Generally, no. But the meeting can&rsquo;t do business without quorum, so every homeowner who attends or returns a proxy or ballot helps the community get its work done, including electing the board.</p>
         <h3 class="art-h3">What is a quorum for an HOA annual meeting?</h3>
@@ -254,6 +262,15 @@ const faq = faqSchema([
   .art-ul li strong, .art-ol li strong { color: var(--freedom-blue); font-weight: 600; }
   .art-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
   .art-wrap a:hover { border-bottom-color: var(--landscaping-green); }
+  .kit-dl { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; background: var(--fb-lightest); border: 1.5px solid var(--hairline-strong); border-left: 5px solid var(--landscaping-green); border-radius: 16px; padding: 26px 28px; margin: 30px 0; }
+  @media (max-width: 720px) { .kit-dl { grid-template-columns: 1fr; gap: 14px; } .kit-dl-icon { display: none; } }
+  .kit-dl-icon { width: 54px; height: 54px; border-radius: 14px; background: var(--freedom-blue); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .kit-dl-kicker { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--freedom-blue); opacity: .65; margin: 0 0 6px; }
+  .kit-dl-t { font-family: var(--font-display); font-weight: 700; font-size: 20px; line-height: 1.2; color: var(--freedom-blue); margin: 0 0 8px; }
+  .kit-dl-d { font-size: 15px; line-height: 1.6; color: var(--ink-700); margin: 0 0 16px; }
+  .kit-dl-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .kit-dl a.btn, .kit-dl a.btn:hover { border-bottom: none; }
+  .kit-dl-alt { font-size: 14px; font-weight: 600; }
   .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
   .rel { background: var(--nb-lightest); padding: 90px 0; }
   .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
