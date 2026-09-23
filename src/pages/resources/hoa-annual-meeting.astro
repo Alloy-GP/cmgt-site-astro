@@ -7,9 +7,6 @@ import GuideDownload from '~/components/GuideDownload.astro';
 
 // In client review (stg). Companion downloadable: /downloads/cmgt-hoa-annual-meeting-kit.docx.
 // NOT on the Resources hub, nav, or review widget yet, and not on prod — add when approved.
-// HERO/OG ARE PLACEHOLDERS: using the clubhouse photo until the brief's featured image
-// (an empty, set-up clubhouse meeting room, no people) is generated. Swap the ImageSlot
-// src, the alt, and the og-images.ts entry when the real image lands.
 
 const pageUrl = SITE.url + '/resources/hoa-annual-meeting';
 
@@ -25,7 +22,7 @@ const article = articleSchema({
     'How to prepare for your HOA annual meeting: a week-by-week timeline, agenda, notice, quorum and elections, plus a free checklist and templates to download.',
   url: pageUrl,
   datePublished: '2026-09-23',
-  image: new URL('/photos/og/on-site-management-showing-clubhouse.jpg', SITE.url).toString(),
+  image: new URL('/photos/og/hoa-annual-meeting.jpg', SITE.url).toString(),
   about: ['HOA annual meeting', 'HOA board election', 'HOA meeting notice', 'HOA quorum', 'HOA voting rules'],
 });
 
@@ -80,7 +77,7 @@ const faq = faqSchema([
 
   <article>
     <header class="art-hero">
-      <ImageSlot priority src="/photos/on-site-management-showing-clubhouse.webp" alt="A Gulf South community clubhouse, the kind of room where an HOA annual meeting is held" shape="rect" />
+      <ImageSlot priority src="/photos/hoa-annual-meeting.webp" alt="A Gulf South community clubhouse room set up for an HOA annual meeting, with a sign-in table, agendas, a ballot box, and rows of chairs facing the front table and podium" shape="rect" />
       <div class="container art-hero-in">
         <div class="art-cat">Governance &amp; Meetings</div>
         <h1 class="art-h1">How to prepare for your HOA annual meeting (timeline, agenda, and a free kit).</h1>
