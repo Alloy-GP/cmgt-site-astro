@@ -61,6 +61,7 @@ export const EMAIL_CONFIG = {
         vendor:   [...ALLOY_MONITORING],
         general:  [...ALLOY_MONITORING],
         resident: [...ALLOY_MONITORING], // homeowner help — Jeff not cc'd
+        newsletter: [...ALLOY_MONITORING], // /newsletter questions — Jeff not cc'd
       }
     : {}
   ) as Record<string, string[]>,
@@ -88,14 +89,22 @@ export const EMAIL_CONFIG = {
         general:  ['info@cmgt.org'],           // catch-all general inquiries → general inbox
         rental:   ['christremblay@cmgt.org'], // rental management inquiries → Chris Tremblay
         resident: ['info@cmgt.org'],           // homeowner help → general office inbox (never new development)
+        newsletter: ['info@cmgt.org'],         // /newsletter "Ask CMGT" questions → general inbox (not new-business)
       }
-    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY, resident: NON_PROD_NOTIFY }
+    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY, resident: NON_PROD_NOTIFY, newsletter: NON_PROD_NOTIFY }
   ) as Record<string, string[]>,
 
   mailchimp: {
     enabled:      IS_PROD,   // prod only — never add stg/dev test leads to the real audience
     defaultTags:  ['website-lead'],        // tag applied to proposal form submissions (only intent synced to Mailchimp)
-    subscribeTags: ['newsletter-footer'],  // tag applied to footer newsletter opt-ins
+    subscribeTags: ['newsletter-footer'],  // tag applied to footer newsletter opt-ins (default)
+    // /api/subscribe picks the tag from the form's `source` field; a source not
+    // listed here falls back to subscribeTags. Keeps footer vs. /newsletter
+    // landing-page sign-ups separable in Mailchimp reporting.
+    subscribeTagsBySource: {
+      'newsletter-page': ['newsletter-page'],
+    } as Record<string, string[]>,
+    askTags: ['newsletter-ask'],           // tag applied to /newsletter "Ask CMGT" askers (plus asked-{issue})
   },
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -193,6 +202,16 @@ export const EMAIL_CONFIG = {
         `<p>Hi there,</p>
         <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: you're officially on the list. When we've got something genuinely useful for your board — plain-English guidance on reserves, budgets, and Gulf South HOA law — a real team will send it your way. No spam, no filler, ever.</p>
         <p>Glad to have you.</p>
+        <p>— The CMGT Team<br>We Manage. You Live.</p>`,
+    },
+    // /newsletter "Ask CMGT" form (/api/newsletter-ask).
+    newsletterAsk: {
+      notifySubject: (who: string) => `New newsletter question — ${who}`,
+      confirmSubject: "We've got it from here 👋",
+      confirmBody: (firstName: string) =>
+        `<p>Hi${firstName ? ` ${firstName}` : ' there'},</p>
+        <p>This is an automated reply, even the best communication company has to let a robot say hello now and then. But here's the real part: your question landed safely, and a CMGT community manager is already on the way to read it and reply personally — usually within one business day. Because around here, "we'll look into it" actually means someone is looking into it.</p>
+        <p>We've got it from here.</p>
         <p>— The CMGT Team<br>We Manage. You Live.</p>`,
     },
   },

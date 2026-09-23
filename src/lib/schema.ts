@@ -46,7 +46,6 @@ export function orgSchema() {
       addressCountry: SITE.org.addressCountry,
     },
     areaServed: SITE.org.areaServed,
-    priceRange: SITE.org.priceRange,
   };
 }
 
@@ -253,7 +252,6 @@ export function localBusinessSchema(opts?: { description?: string }) {
       addressCountry: SITE.org.addressCountry,
     },
     areaServed: SITE.org.areaServed,
-    priceRange: SITE.org.priceRange,
     ...(opts?.description ? { description: opts.description } : {}),
   };
 }

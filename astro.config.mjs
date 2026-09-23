@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import { LASTMOD } from './src/data/lastmod.ts';
 
 export default defineConfig({
   // ── STEP 1: update to client's live domain ────────────────────
@@ -14,7 +15,16 @@ export default defineConfig({
 
   integrations: [
     react(),
-    sitemap(), // auto-generates /sitemap-index.xml on every build — no manual sitemap.xml needed
+    // auto-generates /sitemap-index.xml on every build — no manual sitemap.xml needed.
+    // lastmod comes from the explicit map in src/data/lastmod.ts: the site is SSR,
+    // so the integration has no file dates to derive it from and emitted none.
+    sitemap({
+      serialize(item) {
+        const path = new URL(item.url).pathname.replace(/\/$/, '') || '/';
+        const lastmod = LASTMOD[path];
+        return lastmod ? { ...item, lastmod } : item;
+      },
+    }),
   ],
 
   prefetch: { prefetchAll: true },

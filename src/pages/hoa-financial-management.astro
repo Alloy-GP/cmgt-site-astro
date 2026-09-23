@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -11,16 +11,26 @@ const breadcrumb = breadcrumbSchema([
 // Service, per the sitemap spec's schema-by-type. areaServed is the geography this
 // page actually claims; the company itself stays the one Organization node.
 const service = serviceSchema({
-  name: 'HOA Financial & Administrative Management',
-  description: 'HOA financial management, accounting & bookkeeping for smaller communities — full P&L to every member, financials by the 20th, ~10% delinquency.',
+  name: 'HOA Financial Management, Accounting & Bookkeeping',
+  description: 'HOA financial management for boards: accounting, bookkeeping, budgeting, collections, and monthly financial statements shared with every homeowner by the 20th.',
   url: SITE.url + '/hoa-financial-management',
 });
+// Mirrors the on-page FAQ word for word (Google discards answers a reader can't see).
+const faq = faqSchema([
+  { q: `What is HOA financial management?`, a: `It's the money side of running a community — billing and collecting assessments, paying vendors, reconciling the bank accounts, keeping the general ledger, preparing the budget and reserve contribution, and producing monthly financial statements. Financial-only management delivers exactly that, while your board keeps running meetings, covenants, and vendors.` },
+  { q: `What's included in your HOA accounting and bookkeeping services?`, a: `Accrual or cash-basis accounting, the general ledger, accounts payable and receivable, bank reconciliations, assessment billing and online payments, budget and reserve planning, monthly financial statements, and year-end tax and audit support. Everything a treasurer would otherwise do, done by people who do it all day.` },
+  { q: `How much does HOA financial management cost?`, a: `Less than full-service management, because the board keeps the day-to-day. Beyond that it depends on the number of homes, the state of the books today, and your collections and reporting needs — so we quote custom every time. Request a proposal and we'll scope it to your community.` },
+  { q: `What's the difference between financial management and full management?`, a: `With financial management, your board still runs the community — meetings, covenants, vendors — and we run the accounting, bookkeeping, budgeting, and reporting. Full-service hands the entire operation to us.` },
+  { q: `When do we get our financial statements?`, a: `By the 20th of every month — it's a commitment written into our management agreement. And we share the full P&L and balance sheet with the entire membership, not just the board.` },
+  { q: `Can financial management help with delinquency?`, a: `Yes. A consistent billing and collections process is a big reason our communities average around 10% delinquency — steady, predictable cash flow the board can count on.` },
+  { q: `Do you offer financial-only management for condos?`, a: `The F&A package is an HOA service. Condominiums almost always need full management because of shared-building systems, insurance, and reserves — see our condo practice for that.` },
+]);
 
 ---
 <BaseLayout
-  title="HOA Financial Management & Accounting, Open Books — CMGT"
-  description="HOA financial management, accounting & bookkeeping for smaller communities — full P&L to every member, financials by the 20th, ~10% delinquency."
-  pageSchema={[breadcrumb, service]}
+  title="HOA Financial Management, Accounting & Bookkeeping — CMGT"
+  description="HOA financial management for boards: accounting, bookkeeping, budgeting, collections, and monthly financial statements shared with every homeowner by the 20th."
+  pageSchema={[breadcrumb, service, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"HOA Financial Management"}]'></nav>
 
@@ -30,12 +40,12 @@ const service = serviceSchema({
       <div class="ph-hero-top">
         <div>
           <div class="eyebrow">HOA Financial Management</div>
-          <h1 class="ph-hero-display">The books, <em>open to everyone.</em></h1>
+          <h1 class="ph-hero-display">HOA financial management with <em>the books open to everyone.</em></h1>
         </div>
         <div>
           <p class="ph-hero-lede">
             For smaller communities that deserve professional financials without a full-service price tag.
-            <strong>We handle the financials, bookkeeping, and the administrative side</strong> — and we put
+            <strong>We handle the HOA accounting, bookkeeping, and the administrative side</strong> — and we put
             the full picture in front of every homeowner, not just the treasurer.
           </p>
           <div class="ph-hero-ctas">
@@ -65,13 +75,15 @@ const service = serviceSchema({
         <div class="eyebrow eyebrow-blue">The Financial &amp; Administrative package</div>
         <h2 class="inc-h">HOA accounting and bookkeeping, handled end to end.</h2>
         <p class="inc-sub">Right-sized support for smaller communities — because professional management shouldn't be a privilege of the biggest associations. Your board keeps running the day-to-day; we run the financial and administrative engine behind it.</p>
+        <p class="inc-sub"><strong>What is HOA financial management?</strong> It's everything that happens to your community's money after the board sets the direction: billing and collecting assessments, paying vendors, reconciling the bank accounts, keeping the general ledger, preparing the annual budget and reserve contribution, and producing the monthly financial statements the board and homeowners rely on. Full-service management includes all of it. Financial-only management delivers just that part — for boards that are happy running meetings, covenants, and vendors themselves.</p>
+        <p class="inc-sub">It's built for <a href="/self-managed-hoa">self-managed HOAs</a> that have outgrown a volunteer treasurer's spreadsheet, for small communities whose budget can't carry a full-service fee, and for boards that simply want their books kept by people who do this all day, every day.</p>
       </div>
       <div class="inc-grid">
-        <div class="inc-item reveal"><div class="inc-num">01</div><h3 class="inc-t">HOA Accounting</h3><p class="inc-d">Accrual or cash-basis accounting, general ledger, AP/AR, and month-end close — clean, current, and audit-ready.</p></div>
-        <div class="inc-item reveal"><div class="inc-num">02</div><h3 class="inc-t">Bookkeeping</h3><p class="inc-d">Every transaction categorized and reconciled, with documentation your board and auditor can actually follow.</p></div>
-        <div class="inc-item reveal"><div class="inc-num">03</div><h3 class="inc-t">Budgeting &amp; Reserves</h3><p class="inc-d"><a href="/resources/hoa-budget-template">Annual HOA budget</a> preparation and reserve planning so your community funds the future instead of fearing it.</p></div>
-        <div class="inc-item reveal"><div class="inc-num">04</div><h3 class="inc-t">Dues &amp; Delinquency</h3><p class="inc-d">Assessment billing, online payments, and a consistent collections process that keeps delinquency low.</p></div>
-        <div class="inc-item reveal"><div class="inc-num">05</div><h3 class="inc-t">Financial Reporting</h3><p class="inc-d">Full P&amp;L, balance sheet, and bank reconciliations delivered monthly — in your hands by the 20th.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">01</div><h3 class="inc-t">HOA Accounting Services</h3><p class="inc-d">Accrual or cash-basis accounting, general ledger, accounts payable and receivable, and month-end close — clean, current, and audit-ready.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">02</div><h3 class="inc-t">HOA Bookkeeping</h3><p class="inc-d">Every transaction categorized and reconciled against the bank statement, with documentation your board and auditor can actually follow.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">03</div><h3 class="inc-t">Budgeting &amp; Reserve Planning</h3><p class="inc-d"><a href="/resources/hoa-budget-template">Annual HOA budget</a> preparation and a reserve contribution that follows your <a href="/resources/hoa-reserve-study">reserve study</a>, so your community funds the future instead of fearing it.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">04</div><h3 class="inc-t">Dues &amp; Delinquency</h3><p class="inc-d">Assessment billing, online payments, and a consistent <a href="/hoa-delinquency-recovery">collections process</a> that keeps delinquency low.</p></div>
+        <div class="inc-item reveal"><div class="inc-num">05</div><h3 class="inc-t">Monthly Financial Statements</h3><p class="inc-d">Full P&amp;L, balance sheet, and bank reconciliations delivered monthly — in your hands by the 20th. <a href="/resources/hoa-financial-statements">Here's how to read them.</a></p></div>
         <div class="inc-item reveal"><div class="inc-num">06</div><h3 class="inc-t">Tax &amp; Audit Support</h3><p class="inc-d">Year-end packages and coordination with your CPA or auditor, so filing season is a non-event.</p></div>
       </div>
     </div>
@@ -149,6 +161,52 @@ const service = serviceSchema({
     </div>
   </section>
 
+  <!-- COST -->
+  <section class="cost">
+    <div class="container cost-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-blue">What it costs</div>
+        <h2 class="cost-h">What does HOA financial management cost?</h2>
+        <p class="cost-p">Less than full-service management, because it covers less — the board keeps running the community, and we run the money. Beyond that, the honest answer is <strong>it depends on your community</strong>, so we quote custom every time rather than off a rate card.</p>
+        <p class="cost-p">What the fee buys is a set of numbers you can trust: statements on time, reconciled to the bank, and shared with every owner. Boards moving off a volunteer-kept spreadsheet usually find that better collections alone covers a good part of it.</p>
+        <p class="cost-note">Want a real number? Request a proposal and we'll scope a quote to your community — no pressure, no obligation.</p>
+      </div>
+      <div class="cost-factors reveal">
+        <div class="cost-frow"><span class="cost-fnum">01</span><div><h3 class="cost-ft">Number of homes</h3><p class="cost-fd">More owners means more billing, more payments to post, and more statements to send — the biggest driver of scope.</p></div></div>
+        <div class="cost-frow"><span class="cost-fnum">02</span><div><h3 class="cost-ft">Where the books are today</h3><p class="cost-fd">Clean records transfer quickly. A shoebox of receipts and an unreconciled account take real work to bring current first.</p></div></div>
+        <div class="cost-frow"><span class="cost-fnum">03</span><div><h3 class="cost-ft">Collections and reporting needs</h3><p class="cost-fd">High delinquency, an annual audit, or lender reporting for a condo add hours — and are exactly where professional books earn their keep.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TREASURER GUIDES -->
+  <section class="peers peers-alt">
+    <div class="container">
+      <div class="peers-head reveal">
+        <div class="eyebrow eyebrow-blue">Board education</div>
+        <h2 class="peers-h">Guides for treasurers, and the boards they report to.</h2>
+        <p class="peers-sub">Plain-English guides from our Board Education Hub — the same numbers we produce for our communities, explained for volunteers.</p>
+      </div>
+      <div class="peers-grid">
+        <a class="peer-card reveal" href="/resources/hoa-financial-statements">
+          <h3 class="peer-t">HOA financial statements, explained</h3>
+          <p class="peer-d">The balance sheet, income statement, cash flow, and budget comparison — what each one tells you and what to look for.</p>
+          <span class="peer-cta">Read the guide <span class="arrow">→</span></span>
+        </a>
+        <a class="peer-card reveal" href="/resources/hoa-budget-template">
+          <h3 class="peer-t">HOA budget template &amp; best practices</h3>
+          <p class="peer-d">Every line item, sample budgets by community size, and a free spreadsheet template to build your own.</p>
+          <span class="peer-cta">Read the guide <span class="arrow">→</span></span>
+        </a>
+        <a class="peer-card reveal" href="/resources/hoa-reserve-study">
+          <h3 class="peer-t">HOA reserve study: the complete board guide</h3>
+          <p class="peer-d">What a reserve study is, what it costs, and how the funding plan becomes a line in your budget.</p>
+          <span class="peer-cta">Read the guide <span class="arrow">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- PEER -->
   <section class="peers">
     <div class="container">
@@ -186,6 +244,18 @@ const service = serviceSchema({
       </div>
       <div class="faq-list reveal">
         <div class="faq-item">
+          <button class="faq-q" type="button">What is HOA financial management?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">It's the money side of running a community — billing and collecting assessments, paying vendors, reconciling the bank accounts, keeping the general ledger, preparing the budget and reserve contribution, and producing monthly financial statements. <strong>Financial-only management delivers exactly that</strong>, while your board keeps running meetings, covenants, and vendors.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">What's included in your HOA accounting and bookkeeping services?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">Accrual or cash-basis accounting, the general ledger, accounts payable and receivable, bank reconciliations, assessment billing and online payments, budget and reserve planning, monthly financial statements, and year-end tax and audit support. <strong>Everything a treasurer would otherwise do</strong>, done by people who do it all day.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">How much does HOA financial management cost?<span class="faq-sign" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-in">Less than full-service management, because the board keeps the day-to-day. Beyond that it depends on the number of homes, the state of the books today, and your collections and reporting needs — <strong>so we quote custom every time.</strong> Request a proposal and we'll scope it to your community.</div></div>
+        </div>
+        <div class="faq-item">
           <button class="faq-q" type="button">What's the difference between financial management and full management?<span class="faq-sign" aria-hidden="true"></span></button>
           <div class="faq-a"><div class="faq-a-in">With financial management, <strong>your board still runs the community</strong> — meetings, covenants, vendors — and we run the accounting, bookkeeping, budgeting, and reporting. Full-service hands the entire operation to us.</div></div>
         </div>
@@ -211,7 +281,7 @@ const service = serviceSchema({
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Let's open the books.</h2>
-        <p class="cta-p">Tell us about your association and we'll show you what financial management with full transparency looks like — within two business days.</p>
+        <p class="cta-p">Tell us about your association and we'll show you what financial management with full transparency looks like — within one business day.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a>
@@ -288,6 +358,8 @@ const service = serviceSchema({
   .inc-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 3.8vw, 46px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
   .inc-sub { font-size: 16.5px; line-height: 1.7; color: var(--ink-500); margin: 0; }
   .inc-sub strong { color: var(--freedom-blue); font-weight: 600; }
+  .inc-sub + .inc-sub { margin-top: 14px; }
+  .inc-sub a, .inc-d a { color: var(--freedom-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
   .inc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 44px; }
   @media (max-width: 880px) { .inc-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 560px) { .inc-grid { grid-template-columns: 1fr; } }
@@ -323,6 +395,8 @@ const service = serviceSchema({
   .mdl-media :global(.image-slot) { width: 100%; height: 420px; }
 
   .peers { background: #fff; padding: 110px 0; }
+  .peers-alt { background: var(--nb-lightest); }
+  .peers-alt .peer-card { background: #fff; }
   .peers-head { max-width: 680px; margin: 0 0 44px; }
   .peers-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 14px; text-wrap: balance; }
   .peers-sub { font-size: 16px; line-height: 1.7; color: var(--ink-500); margin: 0; }
@@ -335,6 +409,20 @@ const service = serviceSchema({
   .peer-cta { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 14px; color: var(--freedom-blue); }
   .peer-cta .arrow { color: var(--landscaping-green); transition: transform var(--dur-base) var(--ease-out); }
   .peer-card:hover .peer-cta .arrow { transform: translateX(4px); }
+
+  /* COST — same treatment as the services page */
+  .cost { background: #fff; padding: 112px 0; }
+  .cost-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
+  @media (max-width: 920px) { .cost-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .cost-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -.015em; color: var(--freedom-blue); margin: 16px 0 18px; text-wrap: balance; }
+  .cost-p { font-size: 16px; line-height: 1.75; color: var(--ink-700); margin: 0 0 16px; max-width: 520px; }
+  .cost-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .cost-factors { display: flex; flex-direction: column; gap: 10px; }
+  .cost-frow { display: flex; gap: 14px; align-items: flex-start; background: var(--nb-lightest); border-radius: 13px; padding: 18px 20px; }
+  .cost-fnum { font-family: var(--font-display); font-weight: 300; font-style: italic; font-size: 22px; color: var(--landscaping-green); flex: none; line-height: 1.2; }
+  .cost-ft { font-family: var(--font-display); font-weight: 700; font-size: 16.5px; color: var(--freedom-blue); margin: 0 0 5px; }
+  .cost-fd { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0; }
+  .cost-note { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); margin: 20px 0 0; font-style: italic; }
 
   .faq { background: var(--nb-lightest); padding: 110px 0; }
   .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }

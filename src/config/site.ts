@@ -18,10 +18,10 @@ export const SITE = {
   locale: 'en_US',
 
   /** Fallback <title> if a page doesn't pass its own */
-  defaultTitle: 'CMGT — Short tagline here',
+  defaultTitle: 'CMGT — HOA & Community Association Management, Gulf South',
 
   /** Fallback meta description */
-  defaultDescription: 'One sentence describing what the business does and who it serves.',
+  defaultDescription: 'Team-based HOA, condo, and community association management across Louisiana, Mississippi, Alabama, Texas, and the Florida Panhandle — 400+ communities, independently owned since 2007.',
 
   /**
    * Default OG image — place the file at public/assets/og.png

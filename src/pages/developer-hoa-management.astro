@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema, serviceSchema } from '~/lib/schema';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -15,12 +15,19 @@ const service = serviceSchema({
   description: 'Developer HOA management from groundbreaking to homeowner turnover — flat $50/month pre-occupancy, funds through the HOA, multi-year pro forma.',
   url: SITE.url + '/developer-hoa-management',
 });
+// Mirrors the on-page FAQ word for word (Google discards answers a reader can't see).
+const faq = faqSchema([
+  { q: `What does management cost during construction?`, a: `A flat $50/month until the first home is occupied. It keeps your carrying costs predictable while the community is still being built, and scales into standard management as homes sell.` },
+  { q: `Who controls the association's money before turnover?`, a: `All funds flow through the HOA from day one. That keeps the books clean and the eventual homeowner turnover transparent — no commingling, no surprises.` },
+  { q: `Do you work with developers in Florida?`, a: `Yes — we manage developer-run communities in the Florida Panhandle. Note that's distinct from Florida condominium regimes, which we don't take on.` },
+  { q: `What happens at homeowner turnover?`, a: `We hand a well-documented, fully-funded association to the new homeowner-led board — and typically keep managing it, so there's no disruptive transition for residents.` },
+]);
 
 ---
 <BaseLayout
   title="Developer HOA Management, Groundbreaking to Turnover — CMGT"
   description="Developer HOA management from groundbreaking to homeowner turnover — flat $50/month pre-occupancy, funds through the HOA, multi-year pro forma."
-  pageSchema={[breadcrumb, service]}
+  pageSchema={[breadcrumb, service, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Developer HOA Management"}]'></nav>
 
@@ -214,7 +221,7 @@ const service = serviceSchema({
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Building something? Let's structure it right.</h2>
-        <p class="cta-p">Tell us about your development and we'll walk through the pro forma, the governance, and the path to turnover — within two business days.</p>
+        <p class="cta-p">Tell us about your development and we'll walk through the pro forma, the governance, and the path to turnover — within one business day.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Start the conversation <span class="arrow">→</span></a>

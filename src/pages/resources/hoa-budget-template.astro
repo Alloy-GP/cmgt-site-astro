@@ -3,6 +3,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
 import { articleSchema, breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
+import GuideDownload from '~/components/GuideDownload.astro';
 
 const breadcrumb = breadcrumbSchema([
   { name: 'Home', url: SITE.url + '/' },
@@ -50,8 +51,9 @@ const article = articleSchema({
   description: 'A plain-English guide to building an HOA budget: the structure, line items, sample budgets by community size, and how to set up your own budget template.',
   url: SITE.url + '/resources/hoa-budget-template',
   datePublished: '2026-06-01',
+  dateModified: '2026-09-22',
   image: SITE.url + '/photos/og/budget-hero-photo.jpg',
-  about: ['HOA budget', 'Homeowners association budgeting', 'HOA assessments'],
+  about: ['HOA budget', 'HOA budget template', 'HOA budget example', 'Homeowners association budgeting', 'HOA assessments'],
 });
 
 ---
@@ -70,7 +72,7 @@ const article = articleSchema({
         <div class="art-cat">Finances &amp; Reserves</div>
         <h1 class="art-h1">HOA budget templates and best practices: a board's guide.</h1>
         <p class="art-lede">Newly elected treasurer facing a blank spreadsheet and a fiscal-year deadline? Here's what goes into a solid HOA budget, the line items to include, sample numbers to model against, and how to turn it into the assessments your community pays. No finance degree required.</p>
-        <div class="art-meta"><span>6 min read</span><span class="dot"></span><span>2026 Edition · Updated June 2026</span></div>
+        <div class="art-meta"><span>8 min read</span><span class="dot"></span><span>2026 Edition · Updated September 2026</span></div>
       </div>
     </header>
 
@@ -81,13 +83,18 @@ const article = articleSchema({
           <p class="art-take-p">A complete HOA budget has three parts — operating costs, reserve contributions, and a contingency. Build from last year's actuals, fund reserves as a fixed line, and set it up as a simple four-section template you can reuse every fiscal year.</p>
         </div>
 
-        <p class="art-p">You just got elected treasurer, and now a blank spreadsheet and a fiscal-year deadline are staring back at you. Building an HOA budget from scratch is intimidating when finance isn't your day job. This guide walks through what goes into a solid budget, the line items to include, sample numbers to model against, and how to turn it all into the assessments your community pays — so you can set up your own HOA budget template with confidence.</p>
+        <p class="art-p">You just got elected treasurer, and now a blank spreadsheet and a fiscal-year deadline are staring back at you. Building an HOA budget from scratch is intimidating when finance isn't your day job. This guide walks through what goes into a solid budget, the line items to include, sample numbers to model against, and how to turn it all into the assessments your community pays — so you can set up your own HOA budget template with confidence. Or skip the blank spreadsheet entirely and start from ours.</p>
+        <GuideDownload
+          title="Free HOA budget template (Excel / Google Sheets)"
+          blurb="The four-section budget from this guide as a working spreadsheet — income, operating expenses, reserves and contingency — with last-year and this-year columns, section totals, and the dues math built in: total ÷ homes ÷ payment periods, grossed up for a delinquency allowance. A second tab holds the three sample budgets below."
+          href="/downloads/cmgt-hoa-budget-template.xlsx"
+        />
 
         <h2 class="art-h2">The 3 parts of an HOA budget</h2>
         <p class="art-p">A complete HOA budget has three parts: an operating budget for day-to-day costs, reserve contributions for long-term repairs and replacements, and capital expenses for one-time projects. <strong>The most common and costly mistake is leaving reserves out</strong>, which is how communities end up with a surprise special assessment.</p>
         <ul class="art-ul">
           <li><strong>Operating budget.</strong> Recurring costs such as management, insurance, utilities, and landscaping.</li>
-          <li><strong>Reserve contributions.</strong> Money set aside each year for big-ticket replacements like roofs, roads, and the pool, ideally guided by a <a href="/resources/hoa-reserve-study">HOA reserve study</a>.</li>
+          <li><strong>Reserve contributions.</strong> Money set aside each year for big-ticket replacements like roofs, roads, and the pool, ideally guided by a <a href="/resources/hoa-reserve-study">HOA reserve study</a>. Skip this and the eventual bill arrives as a <a href="/resources/hoa-special-assessments">special assessment</a>.</li>
           <li><strong>Capital expenses.</strong> One-time projects, such as adding a playground or building a new entrance.</li>
         </ul>
 
@@ -99,7 +106,7 @@ const article = articleSchema({
         <ul class="art-ul"><li>Management, insurance, utilities, landscaping and common-area maintenance, legal and accounting, and administrative costs.</li></ul>
         <p class="art-lbl">Reserves and contingency</p>
         <ul class="art-ul"><li>Your annual reserve contribution (set by the reserve study), plus a contingency and a delinquency allowance so a few late payments don't sink the plan.</li></ul>
-        <p class="art-p">In the Gulf South, insurance usually means separate windstorm and flood coverage, and a hurricane-season contingency line is smart budgeting — so build those in rather than hoping the year stays quiet.</p>
+        <p class="art-p">In the Gulf South, insurance usually means separate windstorm and flood coverage on top of the <a href="/resources/hoa-master-insurance-policy">master policy</a>, and a hurricane-season contingency line is smart budgeting — so build those in rather than hoping the year stays quiet.</p>
 
         <h2 class="art-h2">Sample HOA budgets by community size</h2>
         <p class="art-p">What a budget looks like depends heavily on size and amenities, so here are three simplified examples to model from. <strong>These are illustrative figures, not real community budgets</strong> — use them to see the shape, then plug your own numbers in. Notice how the reserve share grows as a community adds amenities.</p>
@@ -108,10 +115,36 @@ const article = articleSchema({
         <div class="art-sample reveal"><p class="s-t">Large or master-planned community — amenities and staff</p><p class="s-d">$1 million or more a year: about 60% operating, 35% reserves, 5% contingency. Dues vary widely with the amenity package.</p></div>
         <p class="art-p">Every sample above follows the same structure, so you can copy the one closest to your community into your own template and adjust the numbers.</p>
 
+        <h2 class="art-h2">HOA budget example: the mid-size community, line by line</h2>
+        <p class="art-p">Here is the middle sample expanded into a full HOA budget example — 150 homes, a pool, common areas, and a $300,000 year. The shares are the ones above (65% operating, 30% reserves, 5% contingency), and the dues math at the bottom is the same formula every board uses. <strong>Illustrative figures, not a real community's budget.</strong></p>
+        <div class="art-table-wrap reveal">
+          <table class="art-table">
+            <thead><tr><th>Section</th><th>Line item</th><th>Annual</th></tr></thead>
+            <tbody>
+              <tr><td>Income</td><td>Assessments</td><td>$290,500</td></tr>
+              <tr><td>Income</td><td>Late fees, amenity rentals, interest</td><td>$9,500</td></tr>
+              <tr><td>Operating</td><td>Management fee</td><td>$46,000</td></tr>
+              <tr><td>Operating</td><td>Insurance — master policy (property, liability, D&amp;O, fidelity)</td><td>$44,000</td></tr>
+              <tr><td>Operating</td><td>Insurance — windstorm and flood</td><td>$16,000</td></tr>
+              <tr><td>Operating</td><td>Utilities — common areas</td><td>$20,000</td></tr>
+              <tr><td>Operating</td><td>Landscaping and grounds</td><td>$34,000</td></tr>
+              <tr><td>Operating</td><td>Pool and amenity operations</td><td>$14,000</td></tr>
+              <tr><td>Operating</td><td>Repairs and maintenance — routine</td><td>$10,000</td></tr>
+              <tr><td>Operating</td><td>Legal, accounting, and administrative</td><td>$11,000</td></tr>
+              <tr><td>Reserves</td><td>Reserve contribution (per the reserve study)</td><td>$90,000</td></tr>
+              <tr><td>Contingency</td><td>General contingency (5% of the total)</td><td>$15,000</td></tr>
+              <tr><td><strong>Total</strong></td><td><strong>Expenses = income</strong></td><td><strong>$300,000</strong></td></tr>
+              <tr><td>Dues</td><td>$300,000 ÷ 150 homes ÷ 12 months</td><td>$167 per home, per month</td></tr>
+              <tr><td>Dues</td><td>Grossed up for a 5% delinquency allowance</td><td>$175 billed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="art-p">Two things to notice. Insurance is the largest operating line and the one most likely to move at renewal, which is why the template carries last year's actual next to this year's figure. And the reserve contribution is nearly a third of the whole budget — that is what a funded community looks like, and it is the line a volunteer-built budget most often shortchanges.</p>
+
         <h2 class="art-h2">How to build your budget: step by step</h2>
         <p class="art-p">Building the budget is a repeatable sequence you can run every fiscal year. <strong>Work these six steps in order and a well-built template does the math with you.</strong></p>
         <ol class="art-ol">
-          <li><strong>Review last year's actuals.</strong> Start with what the community really spent, not just what was budgeted.</li>
+          <li><strong>Review last year's actuals.</strong> Start with what the community really spent, not just what was budgeted — your year-end <a href="/resources/hoa-financial-statements">financial statements</a> have the numbers.</li>
           <li><strong>List every expected expense.</strong> Enter each operating line item into your spreadsheet.</li>
           <li><strong>Fund reserves per your reserve study.</strong> Set the annual reserve contribution the study recommends.</li>
           <li><strong>Add a contingency.</strong> A small buffer, often 3 to 5%, absorbs surprises.</li>
@@ -133,7 +166,7 @@ const article = articleSchema({
 
         <h2 class="art-h2">How to set up your own HOA budget template</h2>
         <p class="art-p">You don't need special software to get started. <strong>A working HOA budget template is just a spreadsheet with four sections — income, operating expenses, reserves, and contingency — plus one formula that turns the total into dues.</strong> Set it up once and you can reuse it every fiscal year.</p>
-        <p class="art-p">In Excel or Google Sheets, give each section its own block of rows, list the line items from above, and total them. Add a cell that divides the annual total by your number of homes and payment periods to calculate dues, plus a line for a delinquency allowance. Plenty of free budget templates float around online, but most are generic business budgets; building your own around these community-association categories keeps it relevant.</p>
+        <p class="art-p">In Excel or Google Sheets, give each section its own block of rows, list the line items from above, and total them. Add a cell that divides the annual total by your number of homes and payment periods to calculate dues, plus a line for a delinquency allowance. Plenty of free budget templates float around online, but most are generic business budgets; building your own around these community-association categories keeps it relevant — or <a href="/downloads/cmgt-hoa-budget-template.xlsx">download the HOA budget template</a> above, which already has the four sections, the sample budgets, and the dues formula built in.</p>
         <p class="art-p"><strong>Prefer not to build it yourself?</strong> CMGT prepares and manages association budgets for boards across the South and keeps them transparent to homeowners all year. If that sounds better than a blank spreadsheet, our <a href="/hoa-management-services">community association management</a> and <a href="/hoa-financial-management">budget preparation</a> teams can take it off your plate — <a href="/request-a-proposal">request a proposal</a> any time.</p>
 
         <h2 class="art-h2">Frequently asked questions</h2>
@@ -163,7 +196,7 @@ const article = articleSchema({
 
   <section class="cta">
     <div class="container cta-in">
-      <div><h2 class="cta-h">Want this handled for you?</h2><p class="cta-p">A real person will walk through your community's budget and reserves — within two business days.</p></div>
+      <div><h2 class="cta-h">Want this handled for you?</h2><p class="cta-p">A real person will walk through your community's budget and reserves — within one business day.</p></div>
       <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">→</span></a></div>
     </div>
   </section>
@@ -211,4 +244,12 @@ const article = articleSchema({
   .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
   .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
   .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+  /* Line-item example table (same treatment as the reserve guide) */
+  .art-table-wrap { margin: 26px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .art-table { width: 100%; border-collapse: collapse; min-width: 480px; font-size: 15px; }
+  .art-table th { background: var(--freedom-blue); color: #fff; text-align: left; font-family: var(--font-body); font-weight: 700; font-size: 12.5px; letter-spacing: .02em; padding: 12px 14px; vertical-align: bottom; }
+  .art-table td { padding: 12px 14px; border: 1px solid var(--hairline-strong); color: var(--ink-700); line-height: 1.5; vertical-align: top; }
+  .art-table td:first-child, .art-table td:last-child { white-space: nowrap; }
+  .art-table tbody tr:nth-child(even) td { background: var(--fb-lightest); }
+  .art-table td strong { color: var(--freedom-blue); }
 </style>

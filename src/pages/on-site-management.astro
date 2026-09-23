@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
-import { breadcrumbSchema } from '~/lib/schema';
+import { breadcrumbSchema, faqSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
 const breadcrumb = breadcrumbSchema([
@@ -25,11 +25,20 @@ const service = {
   description: "A standalone on-site management service for large master-planned single-family communities and high-rise and condo associations — a daily on-property team (CAM, on-site maintenance, groundskeeper) backed by CMGT's specialist support departments.",
   url: SITE.url + '/on-site-management',
 };
+// Mirrors the on-page FAQ word for word (Google discards answers a reader can't see).
+const faq = faqSchema([
+  { q: `How is On-Site different from your regular management?`, a: `Our flagship management is comprehensive and delivered remotely — a dedicated manager and a responsive specialist team. On-Site adds a team physically on the property every day of the week: daily inspections, in-person vendor coordination, and direct homeowner interaction. It's a standalone service, not a tier you upgrade into.` },
+  { q: `Do we need full-service management to get On-Site?`, a: `No. On-Site is its own plan — not an upgrade you bolt onto another one. If your community needs a daily on-property team, On-Site is the plan you choose, full stop. You don't buy full-service first.` },
+  { q: `Does going on-site mean a smaller team handles everything?`, a: `No — it's the opposite. A daily on-property team is backed by our full specialist bench: financials, monthly reporting, and architectural review are still run by the same back-office departments that support every CMGT community. Choosing On-Site means more people on your community, not fewer.` },
+  { q: `Who's on the on-site team?`, a: `Typically a dedicated Community Association Manager, an on-site maintenance team member, and a groundskeeper. The maintenance role is part of the team — which gives boards in-house maintenance accountability most communities can only get through an outside vendor.` },
+  { q: `What kinds of communities is On-Site for?`, a: `Two kinds: large master-planned single-family communities (gated, amenity-heavy) and high-rise and luxury condo communities. Same delivery model, two audiences — boards on either side can ask for it.` },
+  { q: `Is On-Site available in Florida?`, a: `Yes — On-Site is available across all five states, and in Florida it supports large master-planned and non-condo communities. The one thing we don't take on in Florida is condominium regimes, where the state's regulations aren't a fit for the service standard we hold ourselves to.` },
+]);
 ---
 <BaseLayout
   title="On-Site HOA & Condo Management — Daily Presence — CMGT"
   description="On-site management for large communities and high-rise condos — a daily on-property team backed by CMGT's specialist departments across five states."
-  pageSchema={[breadcrumb, service]}
+  pageSchema={[breadcrumb, service, faq]}
 >
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"On-Site Management"}]'></nav>
 
@@ -300,7 +309,7 @@ const service = {
     <div class="container cta-in">
       <div class="reveal">
         <h2 class="cta-h">Need boots on the ground?</h2>
-        <p class="cta-p">Tell us about the community — the size, the amenities, the building — and we'll walk through what an on-site team would look like, and what stays with the specialist bench. We'll get back within two business days.</p>
+        <p class="cta-p">Tell us about the community — the size, the amenities, the building — and we'll walk through what an on-site team would look like, and what stays with the specialist bench. We'll get back within one business day.</p>
       </div>
       <div class="cta-actions reveal">
         <a class="btn btn-blue" href="/request-a-proposal">Start the conversation <span class="arrow">→</span></a>
