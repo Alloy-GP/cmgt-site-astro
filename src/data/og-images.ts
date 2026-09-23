@@ -184,4 +184,8 @@ export const OG_IMAGES: Record<string, OgImage> = {
     image: '/photos/og/hoa-collections-delinquency.jpg',
     alt: 'A homeowner paying their monthly HOA assessment online from the sofa, the portal showing a payment received confirmation',
   },
+  '/resources/what-do-hoa-fees-cover': {
+    image: '/photos/og/what-do-hoa-fees-cover.jpg',
+    alt: 'A well-kept Gulf South neighborhood common area maintained by HOA fees, with a landscaped walking path, benches, an entrance monument, and a pond with a fountain at dusk',
+  },
 };
