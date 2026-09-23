@@ -174,4 +174,8 @@ export const OG_IMAGES: Record<string, OgImage> = {
     image: '/photos/og/hoa-master-insurance-policy.jpg',
     alt: 'A well-kept Gulf South community with townhomes, a pool, and landscaped common areas covered by an HOA master insurance policy',
   },
+  '/resources/hoa-collections-delinquency': {
+    image: '/photos/og/hoa-collections-delinquency.jpg',
+    alt: 'A homeowner paying their monthly HOA assessment online from the sofa, the portal showing a payment received confirmation',
+  },
 };

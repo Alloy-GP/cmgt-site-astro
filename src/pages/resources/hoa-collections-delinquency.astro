@@ -1,0 +1,257 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
+import ImageSlot from '~/components/ImageSlot.astro';
+
+// In client review (stg). Not yet on the Resources hub, the nav, or the review
+// widget — add those when approved. OG card wired via og-images.ts.
+
+const pageUrl = SITE.url + '/resources/hoa-collections-delinquency';
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Resources', url: SITE.url + '/resources' },
+  { name: 'Finances & Reserves', url: pageUrl },
+]);
+
+const article = articleSchema({
+  headline: 'Unpaid Dues, Tight Budgets, Tense Neighbors: A Plan for HOA Collections',
+  description:
+    "HOA collections, explained for boards: why delinquency climbs, how transparency brings it down, and the process behind CMGT's 10% average delinquency rate.",
+  url: pageUrl,
+  datePublished: '2026-09-23',
+  image: new URL('/photos/og/hoa-collections-delinquency.jpg', SITE.url).toString(),
+  about: ['HOA collections', 'HOA delinquency', 'HOA collection policy', 'HOA late fees', 'HOA payment plan'],
+});
+
+const faq = faqSchema([
+  {
+    q: "What happens if a homeowner doesn't pay HOA dues?",
+    a: 'Late fees apply according to the community’s collection policy, and the account moves through reminders, notices, and payment options before the board considers legal steps. The HOA collections process section above walks through each stage.',
+  },
+  {
+    q: 'Can an HOA foreclose for unpaid dues?',
+    a: "Sometimes, depending on state law and the governing documents. Where it's allowed, it usually follows required notices and sometimes a court process, and some states limit it; Texas, for example, bars foreclosure on a balance made up only of fines. It's a last resort, so start with your state's HOA law guide and your association's attorney.",
+  },
+  {
+    q: 'How much can an HOA charge in late fees?',
+    a: 'It depends on your governing documents and state law, so your collection policy should state the amount and your attorney should confirm it. Whatever the amount, apply it the same way to every account.',
+  },
+  {
+    q: 'Can the board tell other homeowners who is delinquent?',
+    a: "Check with your association's attorney before naming anyone. Many boards share total delinquency with the membership and discuss individual accounts privately, which keeps homeowners informed without singling out a neighbor.",
+  },
+  {
+    q: 'When should a board send a delinquent account to an attorney?',
+    a: 'When the steps in your collection policy have run their course without payment or a payment plan. The policy should define that trigger in advance, so the decision never feels personal.',
+  },
+]);
+---
+<BaseLayout
+  title="HOA Collections & Delinquency: Fix It Before It Grows | CMGT"
+  description="HOA collections, explained for boards: why delinquency climbs, how transparency brings it down, and the process behind CMGT's 10% average delinquency rate."
+  ogType="article"
+  pageSchema={[breadcrumb, article, faq]}
+>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Resources","href":"/resources"},{"t":"Finances & Reserves"}]'></nav>
+
+  <article>
+    <header class="art-hero">
+      <ImageSlot priority src="/photos/hoa-collections-delinquency.webp" alt="A homeowner paying their monthly HOA assessment online from the sofa, the portal showing a payment received confirmation" shape="rect" />
+      <div class="container art-hero-in">
+        <div class="art-cat">Finances &amp; Reserves</div>
+        <h1 class="art-h1">Unpaid dues, tight budgets, tense neighbors: a plan for HOA collections.</h1>
+        <p class="art-lede">Weak collections leave the budget short, push maintenance down the road, and put volunteer boards in the one role nobody signed up for. Here is how to bring delinquency down, most of it before anyone is late.</p>
+        <div class="art-meta"><span>8 min read</span><span class="dot"></span><span>Finances &amp; Reserves</span></div>
+      </div>
+    </header>
+
+    <div class="art-body">
+      <div class="container art-wrap">
+        <div class="art-take reveal">
+          <p class="art-take-h">The short version</p>
+          <p class="art-take-p">Most delinquency is a process problem, not a people problem. Finances homeowners can see, payments that are easy to make, steady follow-up, and a policy that treats everyone the same. Put those in place, and the past-due list starts to shrink.</p>
+        </div>
+
+        <p class="art-p">HOA collections is the work of getting every homeowner&rsquo;s assessments paid in full and on time, and when it falls behind, the whole community feels it. Weak HOA collections leave the budget short, push maintenance and reserve contributions down the road, and leave paying homeowners covering for neighbors who aren&rsquo;t. They also put volunteer board members in the one role nobody signed up for: asking their neighbors for money.</p>
+        <p class="art-p">Delinquency is more fixable than most boards expect, because most of the work happens long before anyone is late. This guide covers why delinquency climbs, how to prevent it, what a sound collection policy says, how the process runs, and when it becomes a legal question. With budget season underway, the timing is right.</p>
+
+        <h2 class="art-h2">What HOA delinquency really costs a community</h2>
+        <p class="art-p">HOA delinquency is the share of assessments that homeowners owe but haven&rsquo;t paid, and its cost lands on everyone who does pay. When HOA collections slip, the shortfall shows up as a chain reaction:</p>
+        <ul class="art-ul">
+          <li>The operating account runs short, so the board delays maintenance or trims a reserve contribution.</li>
+          <li>Deferred work gets more expensive, and the community is less ready for a new roof or a storm.</li>
+          <li>Pressure builds for higher dues or a special assessment, which hits the homeowners who paid all along.</li>
+          <li>Those homeowners feel penalized, trust slips, and the next statement gets easier to ignore.</li>
+        </ul>
+        <p class="art-p"><strong>Delinquency isn&rsquo;t only a money problem; it&rsquo;s a trust problem that feeds itself.</strong> It also shapes next year&rsquo;s budget, which has to plan around what the community actually collects, not just what it bills. Our <a href="/resources/hoa-budget-template">HOA budget template</a> can help.</p>
+
+        <h2 class="art-h2">Why delinquent HOA dues climb</h2>
+        <p class="art-p">Delinquent HOA dues usually climb for ordinary, fixable reasons: paying is inconvenient, reminders are inconsistent, homeowners don&rsquo;t trust where the money goes, or someone hit a hard stretch. Few homeowners wake up planning to stiff their neighbors.</p>
+        <p class="art-p">Behind most growing past-due lists, you&rsquo;ll find some mix of these:</p>
+        <ul class="art-ul">
+          <li><strong>Friction.</strong> If the only option is a paper check mailed to an outdated address, some payments won&rsquo;t arrive on time.</li>
+          <li><strong>Inconsistent follow-up.</strong> When reminders go out one month and not the next, homeowners learn the due date is a suggestion.</li>
+          <li><strong>No visibility.</strong> If homeowners have never seen a balance sheet or where last year&rsquo;s money went, dues start to feel like a bill with no receipt.</li>
+          <li><strong>Real hardship.</strong> Job loss, illness, divorce, a death in the family. These past-due accounts need a conversation, not a form letter.</li>
+        </ul>
+        <p class="art-p">Slow follow-up, uneven communication, and closed books are common HOA collections problems, and every one can be fixed. <strong>Most delinquency is a process problem, not a people problem.</strong></p>
+
+        <h2 class="art-h2">The best HOA collections strategy is prevention</h2>
+        <p class="art-p">The communities with the lowest delinquency are the ones where homeowners can see where their money goes and can pay without friction. Prevention is the best HOA collections strategy there is, because an account that never goes past due never needs a late notice.</p>
+        <div class="art-callout reveal">
+          <p class="art-callout-h">Three habits that do most of the work</p>
+          <ol>
+            <li><strong>Show homeowners the numbers.</strong> Sharing monthly financials with the whole membership, not just the board, is the simplest trust-builder a community has.</li>
+            <li><strong>Make paying easy.</strong> Online payments and a homeowner portal remove the most common reason a payment is late: it was a hassle.</li>
+            <li><strong>Follow up the same way every time.</strong> A reminder that goes out on schedule every month teaches homeowners the due date is real. That&rsquo;s much easier when someone owns the task full time.</li>
+          </ol>
+        </div>
+        <p class="art-p">A few things we do at CMGT, for example: full monthly financials go to every homeowner by the 20th of each month. Homeowners can pay online through the portal, and 56% of payments now come in that way. Late payment follow-up is handled by a dedicated accounts receivable team. Across the communities we manage, average delinquency is 10%, and we think transparency has a lot to do with that. <strong>When homeowners trust the numbers, they pay on time and support the community.</strong> Our <a href="/hoa-financial-management">HOA financial management</a> page shows how the pieces fit together.</p>
+
+        <h2 class="art-h2">What a good HOA collection policy includes</h2>
+        <p class="art-p">A written HOA collection policy tells every homeowner, in advance, when dues are due, what happens when they&rsquo;re late, and what options exist if they&rsquo;re struggling. Just as important, it lets the board apply the same rules to everyone.</p>
+        <p class="art-p">Consistency is what makes HOA collections fair, and it&rsquo;s what makes them defensible. If one neighbor gets a pass because they&rsquo;re friendly with the treasurer while another gets a late notice, the board has a fairness problem, and maybe a legal one. <strong>A policy set in advance takes the personal part out of HOA collections.</strong> The board isn&rsquo;t judging the family on the corner; it&rsquo;s following a policy every homeowner already has.</p>
+        <p class="art-p">A policy has to work within your community&rsquo;s governing documents and your state&rsquo;s law, so have the association&rsquo;s attorney review it before adoption. Budget season, with annual meetings right behind it, is a natural time to adopt one or revisit the one you have.</p>
+
+        <h3 class="art-h3">Due dates, grace periods, and HOA late fees</h3>
+        <p class="art-p">Your policy should state the due date for assessments, whether there&rsquo;s a grace period, when a late fee applies, and whether interest accrues on delinquent assessments and how. Write it so a new homeowner understands it on the first read.</p>
+        <p class="art-p">What your community can legally charge depends on the governing documents and state law, so confirm specifics there. <strong>HOA late fees work best when they&rsquo;re predictable.</strong> The goal isn&rsquo;t to punish; it&rsquo;s to make the due date mean something.</p>
+
+        <h3 class="art-h3">HOA payment plans</h3>
+        <p class="art-p">A payment plan is the compassion lever that also gets money back into the budget. In HOA collections, a homeowner paying something every month beats an account that goes silent.</p>
+        <p class="art-p">A good policy defines who is eligible, how long a plan can run, and what happens if a payment is missed. <strong>Some states require a written HOA payment plan policy, so check your state&rsquo;s rules before writing this part.</strong> Texas is one example: Chapter 209 of the Texas Property Code requires a property owners&rsquo; association with more than 14 lots to adopt payment plan guidelines and record them in the county records. That&rsquo;s a policy requirement, not a guaranteed plan for every owner, and Texas condominiums fall under a different chapter.</p>
+
+        <h3 class="art-h3">Planning for hardship after a storm</h3>
+        <p class="art-p">After a hurricane or flood, homeowners may be displaced, waiting on an insurance check, or out of work, and a normal HOA collections calendar can feel punishing. We know that one firsthand. When the 2016 Great Flood hit Denham Springs, our own office took on two feet of water.</p>
+        <p class="art-p"><strong>Decide in advance, in the policy, how your board will handle hardship after a declared disaster.</strong> That might mean pausing late fees, extending the window before escalation, or easing the path into a payment plan. Settling it early means the board isn&rsquo;t improvising account by account while everyone is still pulling up wet carpet. Have your attorney review this section, too.</p>
+
+        <h2 class="art-h2">How the HOA collections process works, step by step</h2>
+        <p class="art-p">A well-run HOA collections process moves from friendly reminder to formal notice to payment options, and only then to escalation, with consistent timing so no homeowner is surprised. The exact collection timeline comes from your policy and your state&rsquo;s law, but the stages look like this:</p>
+        <div class="art-callout reveal">
+          <p class="art-callout-h">The collections process, stage by stage</p>
+          <ol>
+            <li><strong>Statement and due date.</strong> A clear statement shows what&rsquo;s due and when, with easy ways to pay online, through the portal, or by mail.</li>
+            <li><strong>Courtesy reminder.</strong> A friendly nudge shortly after the due date. Plenty of late payments end right here.</li>
+            <li><strong>Late notice and fee.</strong> Once any grace period passes, the late fee posts according to the policy and a written notice goes out.</li>
+            <li><strong>Personal outreach and a payment plan offer.</strong> A real person reaches out, asks what&rsquo;s going on, and offers a plan if one fits.</li>
+            <li><strong>Formal demand or final notice.</strong> It states the full balance and next steps, following any notice rules in your state&rsquo;s law.</li>
+            <li><strong>Escalation under the policy.</strong> If it&rsquo;s still unresolved, it moves to the policy&rsquo;s next step, and the board decides anything beyond that with its attorney.</li>
+          </ol>
+        </div>
+        <p class="art-p">If you&rsquo;ve been wondering how to collect HOA dues without souring the neighborhood, this is the answer: start early, escalate gradually, and keep the door open. The <a href="https://www.caionline.org/press-room/collecting-association-assessments/" target="_blank" rel="noopener">Community Associations Institute</a> recommends the same shape: act early while the amount is manageable, consider payment plans, and give owners notice and a chance to be heard. <strong>In HOA collections, doing it the same way for every account matters more than any single step.</strong></p>
+
+        <h3 class="art-h3">What your manager handles vs. what your board decides</h3>
+        <p class="art-p">Your management company runs day-to-day HOA collections, and your board sets the rules and makes the judgment calls.</p>
+        <div class="art-table-wrap reveal">
+          <table class="art-table">
+            <thead>
+              <tr>
+                <th>Your manager handles</th>
+                <th>Your board decides (with its attorney)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Sending statements and reminders</td><td>Adopting the collection policy</td></tr>
+              <tr><td>Tracking past-due accounts and keeping the board updated</td><td>Setting the triggers for an assessment lien and other escalation</td></tr>
+              <tr><td>Talking with homeowners</td><td>Approving exceptions and waivers</td></tr>
+              <tr><td>Setting up payment plans within the policy</td><td>Referring an account to a collections attorney</td></tr>
+              <tr><td>Carrying out the steps the policy already authorizes</td><td>Whether to pursue foreclosure or other legal action</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="art-p"><strong>At CMGT, the board keeps all governance authority, and we carry out its decisions.</strong> We also handle the hard conversations with compassion, so board members aren&rsquo;t calling their neighbors about past-due balances.</p>
+
+        <h2 class="art-h2">When HOA collections becomes a legal question</h2>
+        <p class="art-p">When an account stays delinquent after reminders, notices, and payment options, the next steps (liens, referral to a collections attorney, and in some cases foreclosure) are legal decisions the board makes with its attorney.</p>
+        <p class="art-p">An HOA lien and HOA foreclosure are the terms most boards have heard, and the requirements vary between Louisiana, Mississippi, Alabama, Texas, and Florida, and between one set of governing documents and the next. Texas shows how specific state law on HOA collections can get. Under <a href="https://statutes.capitol.texas.gov/Docs/PR/htm/PR.209.htm" target="_blank" rel="nofollow noopener">Chapter 209 of the Texas Property Code</a>, before an association can hold an owner responsible for a third-party collection agent&rsquo;s fees, it must send a certified-mail notice that specifies each delinquent amount and the total required to make the account current, describes payment plan options where they apply, and gives the owner at least 45 days to cure. That letter covers collection agent fees only. Filing a lien and foreclosing follow separate Texas notice and court requirements, and other states set their own steps, so a Texas letter isn&rsquo;t a template for anywhere else.</p>
+        <p class="art-p">We manage communities. We don&rsquo;t practice law. What we can do is keep the record clean, with every statement, reminder, conversation, and offer documented. <strong>A well-documented HOA collections record lets your board and its attorney make a sound decision.</strong> The rules in your state are laid out in our state HOA law guides for Louisiana, Mississippi, Alabama, Texas, and Florida, so <a href="/resources">find your state&rsquo;s HOA law guide in our Resources library</a>.</p>
+
+        <h2 class="art-h2">Frequently asked questions about HOA collections</h2>
+        <h3 class="art-h3">What happens if a homeowner doesn&rsquo;t pay HOA dues?</h3>
+        <p class="art-p">Late fees apply according to the community&rsquo;s collection policy, and the account moves through reminders, notices, and payment options before the board considers legal steps. The HOA collections process section above walks through each stage.</p>
+        <h3 class="art-h3">Can an HOA foreclose for unpaid dues?</h3>
+        <p class="art-p">Sometimes, depending on state law and the governing documents. Where it&rsquo;s allowed, it usually follows required notices and sometimes a court process, and some states limit it; Texas, for example, bars foreclosure on a balance made up only of fines. It&rsquo;s a last resort, so start with <a href="/resources">your state&rsquo;s HOA law guide</a> and your association&rsquo;s attorney.</p>
+        <h3 class="art-h3">How much can an HOA charge in late fees?</h3>
+        <p class="art-p">It depends on your governing documents and state law, so your collection policy should state the amount and your attorney should confirm it. Whatever the amount, apply it the same way to every account.</p>
+        <h3 class="art-h3">Can the board tell other homeowners who is delinquent?</h3>
+        <p class="art-p">Check with your association&rsquo;s attorney before naming anyone. Many boards share total delinquency with the membership and discuss individual accounts privately, which keeps homeowners informed without singling out a neighbor.</p>
+        <h3 class="art-h3">When should a board send a delinquent account to an attorney?</h3>
+        <p class="art-p">When the steps in your collection policy have run their course without payment or a payment plan. The policy should define that trigger in advance, so the decision never feels personal.</p>
+
+        <h2 class="art-h2">Delinquency is fixable</h2>
+        <p class="art-p">Most of the fix for HOA collections happens before anyone is late: finances homeowners can actually see, payments that are easy to make, follow-up that&rsquo;s consistent and kind, and a policy that treats everyone the same. Put those in place, and the past-due list starts to shrink.</p>
+        <p class="art-p">If delinquency keeps climbing in your community, it may be time to look at how it&rsquo;s managed. Our guide to <a href="/switching-hoa-management-companies">switching HOA management companies</a> explains what that change involves.</p>
+
+        <p class="art-disclaimer">This article is general guidance, not legal advice, and attorneys may disagree on how the law applies to a given community. Consult your association&rsquo;s attorney before adopting a collection policy or acting on a delinquent account.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="rel">
+    <div class="container">
+      <h2 class="rel-h">Keep reading.</h2>
+      <div class="rel-grid"><a class="rel-card" href="/resources/hoa-budget-template"><span class="rel-t">HOA Budget Template</span><span class="rel-ar">&rarr;</span></a><a class="rel-card" href="/hoa-financial-management"><span class="rel-t">HOA Financial Management</span><span class="rel-ar">&rarr;</span></a><a class="rel-card" href="/switching-hoa-management-companies"><span class="rel-t">Switching Management Companies</span><span class="rel-ar">&rarr;</span></a></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container cta-in">
+      <div><h2 class="cta-h">Want collections handled with consistency and compassion?</h2><p class="cta-p">A real person will walk through your community&rsquo;s collections and budget &mdash; within two business days.</p></div>
+      <div><a class="btn btn-blue" href="/request-a-proposal">Request a proposal <span class="arrow">&rarr;</span></a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  body { background: #fff; }
+  .eyebrow-blue { color: var(--freedom-blue); opacity: .6; }
+  .art-hero { position: relative; background: var(--freedom-blue); color: #fff; padding: 104px 0 88px; overflow: hidden; isolation: isolate; }
+  .art-hero > :global(.image-slot) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .art-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(30,30,119,.66) 0%, rgba(30,30,119,.84) 100%); pointer-events: none; }
+  .art-hero-in { position: relative; z-index: 2; max-width: 820px; }
+  .art-cat { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--landscaping-green); }
+  .art-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.025em; color: #fff; margin: 16px 0 20px; text-wrap: balance; }
+  .art-lede { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; color: rgba(255,255,255,.9); margin: 0 0 24px; text-wrap: pretty; }
+  .art-meta { display: flex; gap: 18px; align-items: center; font-size: 13.5px; color: rgba(255,255,255,.65); }
+  .art-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.4); }
+  .art-body { background: #fff; padding: 70px 0 100px; }
+  .art-wrap { max-width: 720px; }
+  .art-take { background: var(--fb-lightest); border-left: 4px solid var(--landscaping-green); border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 0 0 44px; }
+  .art-take-h { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--freedom-blue); opacity: .6; margin: 0 0 8px; }
+  .art-take-p { font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--freedom-blue); margin: 0; }
+  .art-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 32px); line-height: 1.18; letter-spacing: -.015em; color: var(--freedom-blue); margin: 44px 0 16px; text-wrap: balance; }
+  .art-h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(19px, 2.2vw, 23px); line-height: 1.25; color: var(--freedom-blue); margin: 30px 0 10px; }
+  .art-p { font-size: 17px; line-height: 1.75; color: var(--ink-700); margin: 0 0 18px; }
+  .art-p strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-ul { margin: 0 0 20px; padding-left: 22px; }
+  .art-ul li { font-size: 17px; line-height: 1.65; color: var(--ink-700); margin: 0 0 9px; }
+  .art-ul li strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-callout { background: var(--fb-lightest); border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 28px; margin: 26px 0; }
+  .art-callout-h { font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--freedom-blue); margin: 0 0 14px; }
+  .art-callout ol { margin: 0; padding-left: 20px; }
+  .art-callout li { font-size: 16px; line-height: 1.6; color: var(--ink-700); margin: 0 0 11px; }
+  .art-callout li:last-child { margin-bottom: 0; }
+  .art-callout li strong { color: var(--freedom-blue); font-weight: 600; }
+  .art-table-wrap { margin: 26px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .art-table { width: 100%; border-collapse: collapse; min-width: 480px; font-size: 15px; }
+  .art-table th { background: var(--freedom-blue); color: #fff; text-align: left; font-family: var(--font-body); font-weight: 700; font-size: 12.5px; letter-spacing: .02em; padding: 12px 14px; vertical-align: bottom; }
+  .art-table td { padding: 12px 14px; border: 1px solid var(--hairline-strong); color: var(--ink-700); line-height: 1.5; vertical-align: top; width: 50%; }
+  .art-table tbody tr:nth-child(even) td { background: var(--fb-lightest); }
+  .art-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .art-wrap a:hover { border-bottom-color: var(--landscaping-green); }
+  .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
+  .rel { background: var(--nb-lightest); padding: 90px 0; }
+  .rel-h { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.015em; color: var(--freedom-blue); margin: 0 0 32px; }
+  .rel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .rel-grid { grid-template-columns: 1fr; } }
+  .rel-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--hairline-strong); border-radius: 14px; padding: 24px 26px; text-decoration: none; box-shadow: 0 2px 8px rgba(30,30,119,.05); transition: border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .rel-card:hover { border-color: var(--landscaping-green); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,30,119,.10); }
+  .rel-t { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--freedom-blue); }
+  .rel-ar { color: var(--landscaping-green); font-size: 18px; }
+  .cta { background: var(--landscaping-green); color: var(--freedom-blue); padding: 90px 0; }
+  .cta-in { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .cta-h { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+  .cta-p { font-size: 16.5px; line-height: 1.6; max-width: 460px; margin: 0; color: rgba(30,30,119,.82); }
+</style>
