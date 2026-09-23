@@ -298,6 +298,18 @@
   transition: transform var(--dur-base) var(--ease-out);
 }
 .np-feat:hover .np-feat-cta { transform: translateX(4px); }
+/* Give the rows room for a one-line description beside the featured card. */
+.nav-panel-has-feat .np-list { min-width: 330px; }
+/* Resources quick links — the Solutions-strip pattern from the Management panel,
+   fitted to the list panel's 24px side / 18px bottom padding so it runs edge to
+   edge and rounds with the panel (14px outer radius, 1px border). */
+.np-strip {
+  margin: 16px -24px -18px; padding: 14px 24px 18px;
+  background: var(--nb-lightest, #F3F8FF);
+  border-top: 1px solid var(--hairline, #EEE);
+  border-radius: 0 0 13px 13px;
+}
+.nav-panel-list .np-strip .mm-eyebrow { margin: 0 0 10px; }
 .np-meta {
   margin: 14px 0 0; padding: 12px 2px 0;
   border-top: 1px solid var(--hairline, #EEE);
