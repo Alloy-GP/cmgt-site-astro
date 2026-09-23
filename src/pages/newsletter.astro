@@ -2,14 +2,19 @@
 // src/pages/newsletter.astro
 // The CMGT board newsletter's canonical home — the "Ask a question" CTA in each
 // monthly Mailchimp send lands here (#ask). Four sections:
-//   1. Current issue   — static, derived from the latest campaign + editorial seed
+//   1. Current issue   — static, derived entirely from the latest campaign
 //   2. Subscribe strip — static; vanilla-JS form posting to /api/subscribe
 //   3. Ask form        — static Freedom Blue band; only <AskForm> is hydrated
 //   4. Archive         — static rows, built from past campaigns (empty-state safe)
 //
+// NOTHING here is edited per issue. Headline, date, intro, hero image, section
+// list, "read the full issue" link and the archive all come from the sent
+// campaigns in the Mailchimp folder (src/lib/newsletter.ts). Evergreen copy
+// (newsletter name, Ask block, fallback hero) lives in
+// src/data/newsletter/newsletter.json.
+//
 // Prerendered so the Mailchimp fetch runs at BUILD time, not per view. A
 // campaign-sent webhook rebuilds the page (src/pages/api/newsletter-webhook.ts).
-// Monthly content edits: src/data/newsletter/current.json.
 // Ported from the Edison site's newsletter system (Alloy-GP/Edison-Website).
 export const prerender = true;
 
@@ -43,12 +48,16 @@ const pageSchema = archive.length
     ]
   : [breadcrumb];
 
-// Per-issue social card when the seed names one; otherwise BaseLayout falls
-// back to OG_IMAGES['/newsletter']. Spread so an absent value is never passed
-// as undefined (exactOptionalPropertyTypes).
-const ogProps = current.ogImage ? { ogImage: current.ogImage, ogImageAlt: current.heroAlt } : {};
+// Before the first send `current` is null and the page runs in "coming soon"
+// mode: standing copy, fallback hero, subscribe + ask still fully working.
+const hero = current?.hero ?? newsletter.fallbackHero;
+const headline = current?.title ?? newsletter.comingSoon.title;
+const dek = current?.dek ?? newsletter.comingSoon.dek;
+const eyebrow = current ? `Current Issue · ${current.issueLabel}` : 'Coming soon';
+const title = current ? `${current.title} | ${newsletter.name}` : `${newsletter.name} | CMGT`;
 
-const title = `${current.title} | ${newsletter.name}`;
+// Spread so an absent value is never passed as undefined (exactOptionalPropertyTypes).
+const ogProps = hero.og ? { ogImage: hero.og, ogImageAlt: hero.alt } : {};
 ---
 <BaseLayout title={title} description={newsletter.description} pageSchema={pageSchema} {...ogProps}>
   <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Board Newsletter"}]'></nav>
@@ -57,19 +66,19 @@ const title = `${current.title} | ${newsletter.name}`;
   <section class="nl-current">
     <div class="container nl-current-inner">
       <div>
-        <div class="eyebrow nl-eyebrow">Current Issue · {current.issueLabel}</div>
-        <h1>{current.title}</h1>
-        <p class="nl-dek">{current.dek}</p>
-        {current.archiveUrl && (
+        <div class="eyebrow nl-eyebrow">{eyebrow}</div>
+        <h1>{headline}</h1>
+        {dek && <p class="nl-dek">{dek}</p>}
+        {current?.archiveUrl && (
           <a class="nl-readmore" href={current.archiveUrl} target="_blank" rel="noopener noreferrer">
             Read the full {current.issueLabel} issue <span class="arrow" aria-hidden="true">→</span>
           </a>
         )}
-        {current.inThisIssue.length > 0 && (
+        {current && current.sections.length > 0 && (
           <div class="nl-iti-wrap">
             <p class="nl-iti-h">In this issue</p>
             <ul class="nl-iti">
-              {current.inThisIssue.map((item, i) => (
+              {current.sections.map((item, i) => (
                 <li>
                   <span class="nl-iti-num">{String(i + 1).padStart(2, '0')}</span>
                   <span>{item}</span>
@@ -80,7 +89,7 @@ const title = `${current.title} | ${newsletter.name}`;
         )}
       </div>
       <div class="nl-hero">
-        <ImageSlot priority src={current.heroImg} alt={current.heroAlt} shape="rounded" radius={20} />
+        <ImageSlot priority src={hero.src} alt={hero.alt} shape="rounded" radius={20} />
       </div>
     </div>
   </section>
@@ -112,13 +121,13 @@ const title = `${current.title} | ${newsletter.name}`;
     <div class="container nl-ask">
       <div class="nl-ask-left">
         <div class="eyebrow nl-eyebrow-light">Ask CMGT</div>
-        <h2>{current.ask.title}</h2>
-        <p class="nl-ask-body">{current.ask.body}</p>
+        <h2>{newsletter.ask.title}</h2>
+        <p class="nl-ask-body">{newsletter.ask.body}</p>
         <div class="nl-prompts">
-          {current.ask.prompts.map((p) => <div class="nl-prompt">{p}</div>)}
+          {newsletter.ask.prompts.map((p) => <div class="nl-prompt">{p}</div>)}
         </div>
       </div>
-      <AskForm client:load slug={current.slug} issueLabel={current.issueLabel} ask={current.ask} newsletterName={newsletter.name} />
+      <AskForm client:load slug={current?.slug ?? ''} issueLabel={current?.issueLabel ?? ''} ask={newsletter.ask} newsletterName={newsletter.name} />
     </div>
   </section>
 
@@ -149,7 +158,9 @@ const title = `${current.title} | ${newsletter.name}`;
         </div>
       ) : (
         <div class="nl-empty">
-          {current.issueLabel} is the first issue. Past issues will appear here as they publish.
+          {current
+            ? `${current.issueLabel} is the first issue. Past issues will appear here as they publish.`
+            : 'Past issues will appear here as they publish.'}
         </div>
       )}
     </div>

@@ -134,8 +134,8 @@ export const OG_IMAGES: Record<string, OgImage> = {
     image: '/photos/og/budget-hero-photo.jpg',
     alt: 'An HOA board treasurer working on community finances at a clubhouse table with a laptop open',
   },
-  // Fallback for /newsletter. The page passes the current issue's own ogImage
-  // from src/data/newsletter/current.json when one is set, which wins over this.
+  // Fallback for /newsletter. When the current campaign has a large photo of its
+  // own, the page passes that Mailchimp-hosted image as ogImage, which wins over this.
   '/newsletter': {
     image: '/photos/og/budget-hero-photo.jpg',
     alt: 'An HOA board treasurer working on community finances at a clubhouse table with a laptop open',

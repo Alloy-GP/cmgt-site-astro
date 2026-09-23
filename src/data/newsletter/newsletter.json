@@ -1,0 +1,27 @@
+{
+  "$comment": "EVERGREEN COPY ONLY (newsletter name matches the template header: \"Notes For Boards\") — nothing in this file changes per issue. Everything issue-specific (headline, date, intro, hero image, section list, 'read the full issue' link, archive) is read from the sent campaigns in the Mailchimp folder at build time by src/lib/newsletter.ts. Edit this file only to change the newsletter's name, the standing blurbs, the Ask block, or the fallback hero used when an issue has no large photo of its own.",
+  "name": "Notes For Boards",
+  "description": "Notes For Boards is the CMGT newsletter for Gulf South HOA and condo boards — one email a month with plain-English guidance on budgets, reserves, insurance, and HOA law. Read the current issue, browse past issues, or ask us a question.",
+  "subscribeBlurb": "One email a month, written for volunteer board members across Louisiana, Mississippi, Alabama, Texas, and the Florida Panhandle. No industry-speak, no sales pitch. Unsubscribe anytime.",
+  "fallbackHero": {
+    "src": "/photos/budget-hero-photo.webp",
+    "alt": "An HOA board treasurer working on community finances at a clubhouse table with a laptop open",
+    "og": "/photos/og/budget-hero-photo.jpg"
+  },
+  "comingSoon": {
+    "title": "Notes For Boards is on its way.",
+    "dek": "One email a month for Gulf South HOA and condo boards — plain-English guidance on budgets, reserves, insurance, and the law that governs your community. Subscribe below and the first issue lands in your inbox."
+  },
+  "ask": {
+    "title": "Ask CMGT a question",
+    "body": "About this issue, your budget, your reserves, or anything else on your board's plate. No question is too small — whether CMGT manages your community today or your board is weighing a change. A CMGT community manager answers personally, usually within one business day.",
+    "prompts": [
+      "Why did our insurance renewal jump this year?",
+      "How much belongs in reserves?",
+      "Do we have to raise assessments?"
+    ],
+    "questionLabel": "Your question",
+    "questionPlaceholder": "e.g. Our insurance renewal came in 40% higher than last year. What are our options before we consider a special assessment?",
+    "submitLabel": "Send My Question"
+  }
+}
