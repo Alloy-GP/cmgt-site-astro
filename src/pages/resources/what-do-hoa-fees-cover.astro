@@ -171,20 +171,20 @@ const faq = faqSchema([
                 <tr><th>Budget section</th><th>Line item</th><th>What it pays for</th></tr>
               </thead>
               <tbody>
-                <tr><td rowspan="3">Operating &mdash; Maintenance</td><td>Landscaping and mowing</td><td>Common areas, entrances, and medians</td></tr>
+                <tr class="sec-start"><td class="sec" rowspan="3">Operating &mdash; Maintenance</td><td>Landscaping and mowing</td><td>Common areas, entrances, and medians</td></tr>
                 <tr><td>Pond and drainage upkeep</td><td>Keeping shared water features and drainage working</td></tr>
                 <tr><td>Common-area repairs</td><td>Fences, signs, and lighting</td></tr>
-                <tr><td rowspan="3">Operating &mdash; Amenities</td><td>Pool service and chemicals</td><td>Keeping the pool open and safe</td></tr>
+                <tr class="sec-start"><td class="sec" rowspan="3">Operating &mdash; Amenities</td><td>Pool service and chemicals</td><td>Keeping the pool open and safe</td></tr>
                 <tr><td>Pool furniture and supplies</td><td>Chairs, umbrellas, and equipment</td></tr>
                 <tr><td>Clubhouse cleaning and upkeep</td><td>The shared indoor space</td></tr>
-                <tr><td rowspan="2">Operating &mdash; Utilities</td><td>Common-area electricity</td><td>Streetlights, pool, and the entrance</td></tr>
+                <tr class="sec-start"><td class="sec" rowspan="2">Operating &mdash; Utilities</td><td>Common-area electricity</td><td>Streetlights, pool, and the entrance</td></tr>
                 <tr><td>Irrigation water</td><td>Watering common-area landscaping</td></tr>
-                <tr><td rowspan="2">Operating &mdash; Insurance</td><td>Master property and liability policy</td><td>Shared property and the association&rsquo;s liability</td></tr>
+                <tr class="sec-start"><td class="sec" rowspan="2">Operating &mdash; Insurance</td><td>Master property and liability policy</td><td>Shared property and the association&rsquo;s liability</td></tr>
                 <tr><td>Directors &amp; officers coverage</td><td>Protecting volunteer board members</td></tr>
-                <tr><td rowspan="3">Operating &mdash; Management &amp; admin</td><td>Management fee</td><td>Running the community day to day</td></tr>
+                <tr class="sec-start"><td class="sec" rowspan="3">Operating &mdash; Management &amp; admin</td><td>Management fee</td><td>Running the community day to day</td></tr>
                 <tr><td>Accounting, tax prep, and legal</td><td>Books, filings, and counsel</td></tr>
                 <tr><td>Postage, printing, and bank fees</td><td>Homeowner communications and banking</td></tr>
-                <tr><td>Reserve contribution</td><td>Transfer to reserves</td><td>Saving for future repairs and replacements &mdash; pool resurfacing, fencing, roads, the entrance monument (set by the <a href="/resources/hoa-reserve-study">reserve study</a>)</td></tr>
+                <tr class="sec-start"><td class="sec">Reserve contribution</td><td>Transfer to reserves</td><td>Saving for future repairs and replacements &mdash; pool resurfacing, fencing, roads, the entrance monument (set by the <a href="/resources/hoa-reserve-study">reserve study</a>)</td></tr>
               </tbody>
             </table>
           </div>
@@ -271,14 +271,17 @@ const faq = faqSchema([
   .art-table { width: 100%; border-collapse: collapse; min-width: 480px; font-size: 15px; }
   .art-table th { background: var(--freedom-blue); color: #fff; text-align: left; font-family: var(--font-body); font-weight: 700; font-size: 12.5px; letter-spacing: .02em; padding: 12px 14px; vertical-align: bottom; }
   .art-table td { padding: 12px 14px; border: 1px solid var(--hairline-strong); color: var(--ink-700); line-height: 1.5; vertical-align: top; width: 50%; }
+  /* Zebra striping is for the plain 2-column tables only. The sample budget
+     table (.art-table-3) uses rowspan section cells, so nth-child/first-child
+     selectors can't target its columns reliably — it's grouped with explicit
+     classes below instead. */
+  .art-table:not(.art-table-3) tbody tr:nth-child(even) td { background: var(--fb-lightest); }
   .art-table.art-table-3 { min-width: 560px; }
   .art-table.art-table-3 td { width: auto; }
-  .art-table tbody tr:nth-child(even) td { background: var(--fb-lightest); }
-  /* The sample budget table uses rowspan cells, so row-based zebra striping
-     scatters into a patchy checkerboard. Keep its body cells clean instead and
-     tint only the section (rowspan) column to group the rows. */
-  .art-table.art-table-3 tbody tr:nth-child(even) td { background: transparent; }
-  .art-table.art-table-3 tbody td:first-child { background: var(--fb-lightest); font-weight: 600; color: var(--freedom-blue); }
+  /* Section label column: consistent tint, so it reads as the grouping column. */
+  .art-table.art-table-3 td.sec { background: var(--fb-lightest); font-weight: 600; color: var(--freedom-blue); vertical-align: top; }
+  /* Strong rule between sections; internal rows keep the light 1px hairline. */
+  .art-table.art-table-3 tr.sec-start > td { border-top: 2px solid var(--freedom-blue); }
   .art-wrap a { color: var(--freedom-blue); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
   .art-wrap a:hover { border-bottom-color: var(--landscaping-green); }
   .art-disclaimer { font-size: 13.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--hairline); padding-top: 20px; margin: 44px 0 0; font-style: italic; }
