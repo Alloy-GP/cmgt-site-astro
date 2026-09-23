@@ -188,4 +188,10 @@ export const OG_IMAGES: Record<string, OgImage> = {
     image: '/photos/og/what-do-hoa-fees-cover.jpg',
     alt: 'A well-kept Gulf South neighborhood common area maintained by HOA fees, with a landscaped walking path, benches, an entrance monument, and a pond with a fountain at dusk',
   },
+  // PLACEHOLDER: interim clubhouse image until the annual-meeting featured image
+  // (an empty, set-up meeting room) is generated. Swap image + alt when it lands.
+  '/resources/hoa-annual-meeting': {
+    image: '/photos/og/on-site-management-showing-clubhouse.jpg',
+    alt: 'A Gulf South community clubhouse, the kind of room where an HOA annual meeting is held',
+  },
 };
