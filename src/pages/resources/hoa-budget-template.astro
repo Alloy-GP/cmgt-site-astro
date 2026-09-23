@@ -17,23 +17,23 @@ const howTo = {
   name: 'How to Build an HOA Budget',
   description: 'A repeatable six-step process boards can run every fiscal year to build an HOA budget and set assessments.',
   step: [
-    { '@type': 'HowToStep', position: 1, name: "Review last year's actuals", text: 'Start with what the community really spent, not just what was budgeted.' },
-    { '@type': 'HowToStep', position: 2, name: 'List every expected expense', text: 'Enter each operating line item into the template.' },
+    { '@type': 'HowToStep', position: 1, name: "Review last year's actuals", text: 'Start with what the community really spent, not just what was budgeted. Your year-end financial statements have the numbers.' },
+    { '@type': 'HowToStep', position: 2, name: 'List every expected expense', text: 'Enter each operating line item, and note where each number came from: a contract, a quote, or a year of bills.' },
     { '@type': 'HowToStep', position: 3, name: 'Fund reserves per your reserve study', text: 'Set the annual reserve contribution the study recommends.' },
-    { '@type': 'HowToStep', position: 4, name: 'Add a contingency', text: 'A small buffer, often 3 to 5%, absorbs surprises.' },
-    { '@type': 'HowToStep', position: 5, name: 'Total it up and back into dues', text: 'Divide the annual budget by the number of homes, then by the number of payment periods.' },
-    { '@type': 'HowToStep', position: 6, name: 'Present for review and ratification', text: 'Take the draft to the board and follow your ratification process.' },
+    { '@type': 'HowToStep', position: 4, name: 'Add a contingency', text: 'A small buffer, often 3 to 5% of operating costs, absorbs surprises.' },
+    { '@type': 'HowToStep', position: 5, name: 'Work out what dues need to cover', text: 'Add up expenses, reserves, contingency, and any capital work, then subtract income other than assessments. Divide what is left by the number of homes, then by the number of payment periods.' },
+    { '@type': 'HowToStep', position: 6, name: 'Present for review and ratification', text: 'Check the increase against any cap in your governing documents, take the draft to the board, and follow your ratification process.' },
   ],
 };
 
 const faq = faqSchema([
   {
     q: 'What should be included in an HOA budget?',
-    a: 'An HOA budget should include every recurring expense (management, insurance, utilities, and maintenance), an annual reserve contribution, and a contingency for surprises, all funded by assessments and other income. The line-item section breaks these into income, operating, reserves, and contingency, and your template should mirror that structure so nothing gets missed.',
+    a: 'An HOA budget should include every recurring expense (management, insurance, utilities, and maintenance), an annual reserve contribution, a contingency for surprises, and any capital projects planned for the year, all funded by assessments and other income. Your template should group these the same way so nothing gets missed.',
   },
   {
     q: 'How do you calculate HOA dues from the budget?',
-    a: 'Divide the total annual budget by the number of homes, then by the number of payment periods (12 for monthly dues). For example, a $240,000 budget across 120 homes works out to $2,000 per home a year, or about $167 a month. Adjust for a delinquency allowance, and note that some communities allocate dues by ownership percentage rather than an equal split.',
+    a: 'Add up everything the budget has to fund, subtract income other than assessments, then divide by the number of homes and the number of payment periods (12 for monthly dues). For example, a $240,000 budget with $6,000 in other income leaves $234,000 for dues: $1,950 per home a year, or about $163 a month. Adjust for a delinquency allowance. The template assumes every home pays the same share; if your declaration allocates by ownership percentage or lot type, adjust each home’s share to match.',
   },
   {
     q: 'What is the HOA budget approval process?',
@@ -48,10 +48,10 @@ const faq = faqSchema([
 // own visible "Updated" line — a schema date a reader can't see gets flagged.
 const article = articleSchema({
   headline: "HOA budget templates and best practices: a board's guide",
-  description: 'A plain-English guide to building an HOA budget: the structure, line items, sample budgets by community size, and how to set up your own budget template.',
+  description: 'A plain-English guide to building an HOA budget: the structure, line items, a worked example, and a free template that calculates your dues for you.',
   url: SITE.url + '/resources/hoa-budget-template',
   datePublished: '2026-06-01',
-  dateModified: '2026-09-22',
+  dateModified: '2026-09-23',
   image: SITE.url + '/photos/og/budget-hero-photo.jpg',
   about: ['HOA budget', 'HOA budget template', 'HOA budget example', 'Homeowners association budgeting', 'HOA assessments'],
 });
@@ -59,7 +59,7 @@ const article = articleSchema({
 ---
 <BaseLayout
   title="HOA Budget Template & Best Practices: Board Guide | CMGT"
-  description="A plain-English guide to building an HOA budget: the structure, line items, sample budgets by community size, and how to set up your own budget template."
+  description="A plain-English guide to building an HOA budget: the structure, line items, a worked example, and a free template that calculates your dues for you."
   ogType="article"
   pageSchema={[breadcrumb, article, howTo, faq]}
 >
@@ -71,8 +71,8 @@ const article = articleSchema({
       <div class="container art-hero-in">
         <div class="art-cat">Finances &amp; Reserves</div>
         <h1 class="art-h1">HOA budget templates and best practices: a board's guide.</h1>
-        <p class="art-lede">Newly elected treasurer facing a blank spreadsheet and a fiscal-year deadline? Here's what goes into a solid HOA budget, the line items to include, sample numbers to model against, and how to turn it into the assessments your community pays. No finance degree required.</p>
-        <div class="art-meta"><span>8 min read</span><span class="dot"></span><span>2026 Edition · Updated September 2026</span></div>
+        <p class="art-lede">Newly elected treasurer facing a blank spreadsheet and a fiscal-year deadline? Here's what goes into a solid HOA budget, the line items to include, a worked example, and a free template that does the dues math for you. No finance degree required.</p>
+        <div class="art-meta"><span>9 min read</span><span class="dot"></span><span>2026 Edition · Updated September 2026</span></div>
       </div>
     </header>
 
@@ -80,109 +80,117 @@ const article = articleSchema({
       <div class="container art-wrap">
         <div class="art-take reveal">
           <p class="art-take-h">The short version</p>
-          <p class="art-take-p">A complete HOA budget has three parts — operating costs, reserve contributions, and a contingency. Build from last year's actuals, fund reserves as a fixed line, and set it up as a simple four-section template you can reuse every fiscal year.</p>
+          <p class="art-take-p">A complete HOA budget has three parts: operating costs, reserve contributions, and capital projects, with a small contingency to absorb surprises. Build from last year's actuals, fund reserves as a fixed line, and let the dues come out of the math instead of starting from them.</p>
         </div>
 
-        <p class="art-p">You just got elected treasurer, and now a blank spreadsheet and a fiscal-year deadline are staring back at you. Building an HOA budget from scratch is intimidating when finance isn't your day job. This guide walks through what goes into a solid budget, the line items to include, sample numbers to model against, and how to turn it all into the assessments your community pays — so you can set up your own HOA budget template with confidence. Or skip the blank spreadsheet entirely and start from ours.</p>
-        <GuideDownload
-          title="Free HOA budget template (Excel / Google Sheets)"
-          blurb="The four-section budget from this guide as a working spreadsheet — income, operating expenses, reserves and contingency — with last-year and this-year columns, section totals, and the dues math built in: total ÷ homes ÷ payment periods, grossed up for a delinquency allowance. A second tab holds the three sample budgets below."
-          href="/downloads/cmgt-hoa-budget-template.xlsx"
-        />
+        <p class="art-p">You just got elected treasurer, and now a blank spreadsheet and a fiscal-year deadline are staring back at you. Building an HOA budget from scratch is intimidating when finance isn't your day job. This guide walks through what goes into a solid budget, the line items to include, a worked example, and how to turn it all into the assessments your community pays. Or skip the blank spreadsheet and start from ours.</p>
+
+        <div id="free-template">
+          <GuideDownload
+            title="Free HOA budget template (Excel / Google Sheets)"
+            blurb="A working budget spreadsheet built around the steps in this guide. You fill in last year's actuals and next year's numbers line by line, and it calculates what dues need to be, grossed up for a delinquency allowance — you never type the dues in. Four tabs: Budget (the only one most communities need), an optional Reserves check, an optional Cash Check that flags any month the account dips below zero, and a finished Example for an imaginary 150-home community with a pool."
+            href="/downloads/cmgt-hoa-budget-template.xlsx"
+            meta="Excel file · opens in Google Sheets · free, no email required"
+          />
+        </div>
 
         <h2 class="art-h2">The 3 parts of an HOA budget</h2>
-        <p class="art-p">A complete HOA budget has three parts: an operating budget for day-to-day costs, reserve contributions for long-term repairs and replacements, and capital expenses for one-time projects. <strong>The most common and costly mistake is leaving reserves out</strong>, which is how communities end up with a surprise special assessment.</p>
-        <ul class="art-ul">
+        <p class="art-p">A complete HOA budget has three parts: an operating budget for day-to-day costs, reserve contributions for long-term repairs and replacements, and capital expenses for one-time projects. A small contingency sits on top to absorb the ordinary surprises. <strong>The most common and costly mistake is leaving reserves out</strong>, which is how communities end up with a surprise special assessment.</p>
+        <ol class="art-ol">
           <li><strong>Operating budget.</strong> Recurring costs such as management, insurance, utilities, and landscaping.</li>
-          <li><strong>Reserve contributions.</strong> Money set aside each year for big-ticket replacements like roofs, roads, and the pool, ideally guided by a <a href="/resources/hoa-reserve-study">HOA reserve study</a>. Skip this and the eventual bill arrives as a <a href="/resources/hoa-special-assessments">special assessment</a>.</li>
-          <li><strong>Capital expenses.</strong> One-time projects, such as adding a playground or building a new entrance.</li>
-        </ul>
+          <li><strong>Reserve contributions.</strong> Money set aside each year for big-ticket replacements like roofs, roads, and the pool, ideally guided by an <a href="/resources/hoa-reserve-study">HOA reserve study</a>. Skip this and the eventual bill arrives as a <a href="/resources/hoa-special-assessments">special assessment</a>.</li>
+          <li><strong>Capital expenses.</strong> One-time projects, such as adding a playground or upgrading the entrance. Each one should be paid from one place: reserves, operating, a special assessment, or a loan. A project paid from reserves shouldn't also show up as an operating expense, or owners pay for the same work twice.</li>
+        </ol>
 
         <h2 class="art-h2">HOA budget line items: what to include</h2>
         <p class="art-p">A good budget accounts for every recurring expense plus a cushion for surprises. At its core it balances income against expenses across a single fiscal year. <strong>Here are the line items every HOA budget should cover, grouped the way a good template is organized.</strong></p>
-        <p class="art-lbl">Income</p>
-        <ul class="art-ul"><li>Assessments and dues (your primary income), late fees, interest, and other income such as clubhouse rentals.</li></ul>
+        <p class="art-lbl">Income other than assessments</p>
+        <ul class="art-ul"><li>Late fees, interest on the operating account, clubhouse rentals, and resale or transfer fees. Assessments aren't on this list on purpose: they're what's left to cover after everything else, so they come out of the math at the end.</li></ul>
         <p class="art-lbl">Operating expenses</p>
-        <ul class="art-ul"><li>Management, insurance, utilities, landscaping and common-area maintenance, legal and accounting, and administrative costs.</li></ul>
-        <p class="art-lbl">Reserves and contingency</p>
-        <ul class="art-ul"><li>Your annual reserve contribution (set by the reserve study), plus a contingency and a delinquency allowance so a few late payments don't sink the plan.</li></ul>
-        <p class="art-p">In the Gulf South, insurance usually means separate windstorm and flood coverage on top of the <a href="/resources/hoa-master-insurance-policy">master policy</a>, and a hurricane-season contingency line is smart budgeting — so build those in rather than hoping the year stays quiet.</p>
+        <ul class="art-ul"><li>Management, insurance, utilities, landscaping and common-area maintenance, pool and amenity operations, legal and accounting, and administrative costs.</li></ul>
+        <p class="art-lbl">Reserves, contingency, and capital</p>
+        <ul class="art-ul"><li>Your annual reserve contribution (set by the reserve study), a contingency of 3 to 5% of operating costs, any capital projects the operating budget is paying for this year, and a delinquency allowance so a few late payments don't sink the plan.</li></ul>
+        <p class="art-p">In the Gulf South, insurance usually means separate windstorm and flood coverage on top of the <a href="/resources/hoa-master-insurance-policy">master policy</a>. Coastal wind deductibles are often a percentage of insured value, so it's smart to set aside money toward the deductible each year rather than hoping the season stays quiet.</p>
 
         <h2 class="art-h2">Sample HOA budgets by community size</h2>
-        <p class="art-p">What a budget looks like depends heavily on size and amenities, so here are three simplified examples to model from. <strong>These are illustrative figures, not real community budgets</strong> — use them to see the shape, then plug your own numbers in. Notice how the reserve share grows as a community adds amenities.</p>
-        <div class="art-sample reveal"><p class="s-t">Small HOA — about 40 homes, no amenities</p><p class="s-d">Roughly $40,000 a year: about 75% operating, 20% reserves, 5% contingency. That lands near $70–85 per home each month.</p></div>
-        <div class="art-sample reveal"><p class="s-t">Mid-size community — about 150 homes, pool and common areas</p><p class="s-d">Roughly $300,000 a year: about 65% operating, 30% reserves, 5% contingency. That lands near $150–175 per home each month.</p></div>
-        <div class="art-sample reveal"><p class="s-t">Large or master-planned community — amenities and staff</p><p class="s-d">$1 million or more a year: about 60% operating, 35% reserves, 5% contingency. Dues vary widely with the amenity package.</p></div>
-        <p class="art-p">Every sample above follows the same structure, so you can copy the one closest to your community into your own template and adjust the numbers.</p>
+        <p class="art-p">What a budget looks like depends heavily on size and amenities, so here are three simplified examples to model from. <strong>These are illustrative figures, not real community budgets.</strong> Use them to see the shape, then plug your own numbers into the template. Notice how the reserve share grows as a community adds amenities.</p>
+        <div class="art-sample reveal"><p class="s-t">Small HOA, about 40 homes, no amenities</p><p class="s-d">Roughly $40,000 a year: about 75% operating and 20% reserves, with a small contingency making up the rest. That lands near $70–85 per home each month.</p></div>
+        <div class="art-sample reveal"><p class="s-t">Mid-size community, about 150 homes, pool and common areas</p><p class="s-d">Roughly $300,000 a year: about 65% operating and 30% reserves, with contingency and capital making up the rest. That lands near $150–175 per home each month.</p></div>
+        <div class="art-sample reveal"><p class="s-t">Large or master-planned community, amenities and staff</p><p class="s-d">$1 million or more a year: about 60% operating and 35% reserves, with the rest in contingency and capital. Dues vary widely with the amenity package.</p></div>
 
-        <h2 class="art-h2">HOA budget example: the mid-size community, line by line</h2>
-        <p class="art-p">Here is the middle sample expanded into a full HOA budget example — 150 homes, a pool, common areas, and a $300,000 year. The shares are the ones above (65% operating, 30% reserves, 5% contingency), and the dues math at the bottom is the same formula every board uses. <strong>Illustrative figures, not a real community's budget.</strong></p>
+        <h2 class="art-h2">HOA budget example: a mid-size community, line by line</h2>
+        <p class="art-p">Here is the mid-size sample expanded into a full budget: Magnolia Bend, an imaginary 150-home community with a pool and common areas. It's the same budget you'll find on the Example tab of the template. <strong>Illustrative figures, not a real community's budget.</strong></p>
         <div class="art-table-wrap reveal">
           <table class="art-table">
             <thead><tr><th>Section</th><th>Line item</th><th>Annual</th></tr></thead>
             <tbody>
-              <tr><td>Income</td><td>Assessments</td><td>$290,500</td></tr>
-              <tr><td>Income</td><td>Late fees, amenity rentals, interest</td><td>$9,500</td></tr>
               <tr><td>Operating</td><td>Management fee</td><td>$46,000</td></tr>
-              <tr><td>Operating</td><td>Insurance — master policy (property, liability, D&amp;O, fidelity)</td><td>$44,000</td></tr>
-              <tr><td>Operating</td><td>Insurance — windstorm and flood</td><td>$16,000</td></tr>
-              <tr><td>Operating</td><td>Utilities — common areas</td><td>$20,000</td></tr>
+              <tr><td>Operating</td><td>Insurance: general liability, D&amp;O, and property</td><td>$44,000</td></tr>
+              <tr><td>Operating</td><td>Insurance: windstorm and flood</td><td>$21,000</td></tr>
+              <tr><td>Operating</td><td>Utilities: common areas</td><td>$20,000</td></tr>
               <tr><td>Operating</td><td>Landscaping and grounds</td><td>$34,000</td></tr>
               <tr><td>Operating</td><td>Pool and amenity operations</td><td>$14,000</td></tr>
-              <tr><td>Operating</td><td>Repairs and maintenance — routine</td><td>$10,000</td></tr>
-              <tr><td>Operating</td><td>Legal, accounting, and administrative</td><td>$11,000</td></tr>
+              <tr><td>Operating</td><td>Repairs and maintenance: routine</td><td>$10,000</td></tr>
+              <tr><td>Operating</td><td>Legal, accounting, administrative, and other</td><td>$13,900</td></tr>
+              <tr><td><strong>Operating</strong></td><td><strong>Total operating expenses</strong></td><td><strong>$202,900</strong></td></tr>
               <tr><td>Reserves</td><td>Reserve contribution (per the reserve study)</td><td>$90,000</td></tr>
-              <tr><td>Contingency</td><td>General contingency (5% of the total)</td><td>$15,000</td></tr>
-              <tr><td><strong>Total</strong></td><td><strong>Expenses = income</strong></td><td><strong>$300,000</strong></td></tr>
-              <tr><td>Dues</td><td>$300,000 ÷ 150 homes ÷ 12 months</td><td>$167 per home, per month</td></tr>
-              <tr><td>Dues</td><td>Grossed up for a 5% delinquency allowance</td><td>$175 billed</td></tr>
+              <tr><td>Reserves</td><td>Storm deductible funding</td><td>$5,000</td></tr>
+              <tr><td>Contingency</td><td>Contingency (4% of operating)</td><td>$8,116</td></tr>
+              <tr><td>Capital</td><td>Entry sign lighting upgrade (paid from operating)</td><td>$4,000</td></tr>
+              <tr><td><strong>Total</strong></td><td><strong>Total to be funded</strong></td><td><strong>$310,016</strong></td></tr>
+              <tr><td>Income</td><td>Less: late fees, rentals, transfer fees, interest</td><td>($11,500)</td></tr>
+              <tr><td><strong>Dues</strong></td><td><strong>Assessment revenue required</strong></td><td><strong>$298,516</strong></td></tr>
+              <tr><td>Dues</td><td>$298,516 ÷ 150 homes ÷ 12 months</td><td>$165.84 per home, per month</td></tr>
+              <tr><td>Dues</td><td>Grossed up for a 5% delinquency allowance</td><td><strong>$174.57 billed per home, per month</strong></td></tr>
             </tbody>
           </table>
         </div>
-        <p class="art-p">Two things to notice. Insurance is the largest operating line and the one most likely to move at renewal, which is why the template carries last year's actual next to this year's figure. And the reserve contribution is nearly a third of the whole budget — that is what a funded community looks like, and it is the line a volunteer-built budget most often shortchanges.</p>
+        <p class="art-p">Magnolia Bend currently charges $160 a month, so this budget means an increase of $14.57, or 9.1%, which is within the 10% cap in its governing documents.</p>
+        <p class="art-p">Two things to notice. Insurance, taken together, is the largest operating cost and the one most likely to move at renewal, which is why the template carries last year's actual next to next year's figure. And the reserve contribution is nearly a third of the whole budget. That's what a funded community looks like, and it's the line a volunteer-built budget most often shortchanges.</p>
 
         <h2 class="art-h2">How to build your budget: step by step</h2>
-        <p class="art-p">Building the budget is a repeatable sequence you can run every fiscal year. <strong>Work these six steps in order and a well-built template does the math with you.</strong></p>
+        <p class="art-p">Building the budget is a repeatable sequence you can run every fiscal year. <strong>Work these six steps in order, and the template does the math with you.</strong></p>
         <ol class="art-ol">
-          <li><strong>Review last year's actuals.</strong> Start with what the community really spent, not just what was budgeted — your year-end <a href="/resources/hoa-financial-statements">financial statements</a> have the numbers.</li>
-          <li><strong>List every expected expense.</strong> Enter each operating line item into your spreadsheet.</li>
+          <li><strong>Review last year's actuals.</strong> Start with what the community really spent, not just what was budgeted. Your year-end <a href="/resources/hoa-financial-statements">financial statements</a> have the numbers.</li>
+          <li><strong>List every expected expense.</strong> Enter each operating line item, and note where each number came from: a contract, a quote, or a year of bills.</li>
           <li><strong>Fund reserves per your reserve study.</strong> Set the annual reserve contribution the study recommends.</li>
-          <li><strong>Add a contingency.</strong> A small buffer, often 3 to 5%, absorbs surprises.</li>
-          <li><strong>Total it up and back into dues.</strong> Divide the annual budget by the number of homes, then by the number of payment periods. Example: a $240,000 budget across 120 homes is $2,000 per home a year, or about $167 a month.</li>
-          <li><strong>Present for review and ratification.</strong> Take the draft to the board and follow your ratification process.</li>
+          <li><strong>Add a contingency.</strong> A small buffer, often 3 to 5% of operating costs, absorbs surprises.</li>
+          <li><strong>Work out what dues need to cover.</strong> Add up expenses, reserves, contingency, and any capital work, then subtract income other than assessments. Divide what's left by the number of homes, then by the number of payment periods. Example: a $240,000 budget with $6,000 in other income leaves $234,000 for dues. Across 120 homes, that's $1,950 per home a year, or about $163 a month.</li>
+          <li><strong>Present for review and ratification.</strong> Check the increase against any cap in your governing documents, take the draft to the board, and follow your ratification process.</li>
         </ol>
         <p class="art-p">Adjust that dues math for a delinquency allowance so the plan still works when a few homeowners pay late.</p>
 
         <h2 class="art-h2">The budget approval process (and common mistakes to avoid)</h2>
-        <p class="art-p">Most associations require the board to adopt the budget and then distribute or ratify it with homeowners, so start early enough to finish before the fiscal year begins. <strong>The typical cycle runs draft, board review, member notice or ratification, then adoption</strong> — but your governing documents and state law control the specifics, so confirm your community's exact requirements. The <a href="https://hoaresources.caionline.org/budgeting-best-practices-for-hoas/" target="_blank" rel="noopener">Community Associations Institute</a> publishes helpful budgeting guidance for a deeper reference.</p>
+        <p class="art-p">Most associations require the board to adopt the budget and then distribute or ratify it with homeowners, so start early enough to finish before the fiscal year begins. <strong>The typical cycle runs draft, board review, member notice or ratification, then adoption</strong> — but your governing documents and state law control the specifics, so confirm your community's exact requirements. The <a href="https://www.caionline.org" target="_blank" rel="noopener">Community Associations Institute</a> publishes helpful budgeting guidance for a deeper reference.</p>
         <p class="art-p">The most common budgeting mistakes are all avoidable:</p>
         <ul class="art-ul">
           <li>Underfunding reserves, the leading cause of surprise special assessments.</li>
           <li>Leaving out a contingency line for the unexpected.</li>
           <li>Skipping a delinquency allowance and assuming every homeowner pays on time.</li>
+          <li>Charging the same capital project to both reserves and operating.</li>
           <li>Copying last year's budget without reviewing the actuals.</li>
-          <li>Missing the notice deadlines written into your governing documents.</li>
+          <li>Missing the notice deadlines, or the cap on increases, written into your governing documents.</li>
         </ul>
 
         <h2 class="art-h2">How to set up your own HOA budget template</h2>
-        <p class="art-p">You don't need special software to get started. <strong>A working HOA budget template is just a spreadsheet with four sections — income, operating expenses, reserves, and contingency — plus one formula that turns the total into dues.</strong> Set it up once and you can reuse it every fiscal year.</p>
-        <p class="art-p">In Excel or Google Sheets, give each section its own block of rows, list the line items from above, and total them. Add a cell that divides the annual total by your number of homes and payment periods to calculate dues, plus a line for a delinquency allowance. Plenty of free budget templates float around online, but most are generic business budgets; building your own around these community-association categories keeps it relevant — or <a href="/downloads/cmgt-hoa-budget-template.xlsx">download the HOA budget template</a> above, which already has the four sections, the sample budgets, and the dues formula built in.</p>
-        <p class="art-p"><strong>Prefer not to build it yourself?</strong> CMGT prepares and manages association budgets for boards across the South and keeps them transparent to homeowners all year. If that sounds better than a blank spreadsheet, our <a href="/hoa-management-services">community association management</a> and <a href="/hoa-financial-management">budget preparation</a> teams can take it off your plate — <a href="/request-a-proposal">request a proposal</a> any time.</p>
+        <p class="art-p">You don't need special software. <strong>A working HOA budget template is a spreadsheet with a block for income other than assessments, a block for operating expenses, and a block for reserves, contingency, and capital, plus one calculation that turns the total into dues.</strong></p>
+        <p class="art-p">In Excel or Google Sheets, give each block its own rows, list the line items from above, and total them. Then add up everything the community has to fund, subtract income other than assessments, and divide what's left by your number of homes and payment periods, plus a line for a delinquency allowance. Plenty of free budget templates float around online, but most are generic business budgets. Building your own around these community-association categories keeps it relevant. Or <a href="#free-template">download the template above</a>, which already does all of this and includes a worked example.</p>
+        <p class="art-p"><strong>Prefer not to build it yourself?</strong> CMGT prepares and manages association budgets for boards across the South and keeps them transparent to homeowners all year. If that sounds better than a blank spreadsheet, our <a href="/hoa-management-services">community association management</a> and budget preparation teams can take it off your plate. <a href="/request-a-proposal">Request a proposal</a> any time.</p>
 
         <h2 class="art-h2">Frequently asked questions</h2>
         <h3 class="art-lbl" style="font-size:19px;">What should be included in an HOA budget?</h3>
-        <p class="art-p">An HOA budget should include every recurring expense (management, insurance, utilities, and maintenance), an annual reserve contribution, and a contingency for surprises, all funded by assessments and other income. The line-item section breaks these into income, operating, reserves, and contingency, and your template should mirror that structure so nothing gets missed.</p>
+        <p class="art-p">An HOA budget should include every recurring expense (management, insurance, utilities, and maintenance), an annual reserve contribution, a contingency for surprises, and any capital projects planned for the year, all funded by assessments and other income. Your template should group these the same way so nothing gets missed.</p>
         <h3 class="art-lbl" style="font-size:19px;">How do you calculate HOA dues from the budget?</h3>
-        <p class="art-p">Divide the total annual budget by the number of homes, then by the number of payment periods (12 for monthly dues). For example, a $240,000 budget across 120 homes works out to $2,000 per home a year, or about $167 a month. Adjust for a delinquency allowance, and note that some communities allocate dues by ownership percentage rather than an equal split.</p>
+        <p class="art-p">Add up everything the budget has to fund, subtract income other than assessments, then divide by the number of homes and the number of payment periods (12 for monthly dues). For example, a $240,000 budget with $6,000 in other income leaves $234,000 for dues: $1,950 per home a year, or about $163 a month. Adjust for a delinquency allowance. The template assumes every home pays the same share; if your declaration allocates by ownership percentage or lot type, adjust each home's share to match.</p>
         <h3 class="art-lbl" style="font-size:19px;">What is the HOA budget approval process?</h3>
         <p class="art-p">In most associations, the board adopts the budget and then notices or ratifies it with the members according to the governing documents and state law. The usual cycle is draft, board review, member notice or ratification, and adoption. Because ratification rules vary, confirm your community's specific requirements in your governing documents or with counsel.</p>
         <h3 class="art-lbl" style="font-size:19px;">How much should an HOA budget for reserves?</h3>
         <p class="art-p">The reserve contribution should follow your community's <a href="/resources/hoa-reserve-study">HOA reserve study</a>, not a guess, because underfunding reserves is the leading cause of surprise special assessments. The study sets a target so your reserve fund tracks toward a healthy percent funded over time.</p>
 
         <h2 class="art-h2">A clear budget is the best protection against surprises</h2>
-        <p class="art-p">A clear budget keeps your community financially healthy and spares homeowners the nasty surprises that come from guesswork. Setting up a simple HOA budget template and keeping it current gives your board a running start — and if you'd rather have a partner build it, manage it, and keep it transparent all year, that's exactly what we do.</p>
+        <p class="art-p">A clear budget keeps your community financially healthy and spares homeowners the nasty surprises that come from guesswork. Setting up a simple HOA budget template and keeping it current gives your board a running start. If you'd rather have a partner build it, manage it, and keep it transparent all year, that's exactly what we do.</p>
 
-        <p class="art-disclaimer">This article is general information for HOA boards, not legal or financial advice. Sample budgets are illustrative, not real community financials. Budget-adoption and ratification rules vary by governing documents and state law — confirm your community's requirements with counsel.</p>
+        <p class="art-disclaimer">This article and template are free planning resources for HOA boards, not the process CMGT uses to prepare budgets for the communities it manages, and not accounting, tax, legal, or financial advice. Sample budgets are illustrative, not real community financials. Budget adoption and ratification rules vary by governing documents and state law; confirm your community's requirements with your CPA and your association's attorney.</p>
       </div>
     </div>
   </article>
