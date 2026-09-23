@@ -54,9 +54,26 @@ export interface Guide {
 // Newest first, by each page's own visible "Updated" line. Hurricane prep is
 // seasonal — move that object up during storm season rather than editing copy.
 export const GUIDES: Guide[] = [
-  // Featured (2026-W39): 'hoa reserve study' (800/mo) has sat at #8–12 for weeks
-  // with Google crediting the hub URL rather than this guide. The featured panel
-  // is the hub's strongest internal link, so the head-term target gets it.
+  // STG REVIEW OVERRIDE: the collections guide holds the featured panel here while it
+  // is in client approval. On PRODUCTION the reserve-study guide keeps the featured
+  // panel (2026-W39 head-term campaign — see its note below). When collections is
+  // approved and promoted, decide which of the two should be featured on prod.
+  {
+    slug: '/resources/hoa-collections-delinquency',
+    topic: 'finances',
+    title: 'HOA collections: fixing delinquency before it grows',
+    dek: 'Why delinquency climbs, how transparency brings it down, and what a fair collection policy includes.',
+    thumb: '/photos/resources/hoa-collections-delinquency.webp',
+    alt: 'A homeowner paying their monthly HOA assessment online from the sofa, the portal showing a payment received confirmation',
+    featured: {
+      dek: 'Why HOA delinquency climbs, how transparency and easy online payment bring it down, what a fair collection policy includes, and when escalation becomes a board decision.',
+      image: '/photos/hoa-collections-delinquency.webp',
+      alt: 'A homeowner paying their monthly HOA assessment online from the sofa, the portal showing a payment received confirmation',
+    },
+  },
+  // 2026-W39: 'hoa reserve study' (800/mo) has sat at #8–12 for weeks with Google
+  // crediting the hub URL rather than this guide, so on production it holds the
+  // featured panel (the hub's strongest internal link, aimed at the head term).
   {
     slug: '/resources/hoa-reserve-study',
     topic: 'finances',
@@ -65,11 +82,6 @@ export const GUIDES: Guide[] = [
     dek: 'What an HOA reserve study is, what one costs, what the report should contain, and how to fund it — plus a free template.',
     thumb: '/photos/resources/reserve-study.webp',
     alt: 'A well-maintained HOA common area kept in good repair by a funded reserve plan',
-    featured: {
-      dek: 'What an HOA reserve study is, what one costs, what the finished report should contain, and how to turn it into a funding plan — with a free component inventory template to walk your common areas with.',
-      image: '/photos/reserve-hero-photo.webp',
-      alt: 'A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan',
-    },
   },
   {
     slug: '/resources/hoa-master-insurance-policy',
