@@ -11,6 +11,7 @@
  * attributes on each .gm-row below.
  */
 import { orderDocsUrl } from '~/lib/order-docs';
+import { GUIDES } from '~/data/guides';
 const HOME = '/';
 const PROPOSAL = '/request-a-proposal';
 const ORDER_DOCS = orderDocsUrl();
@@ -25,6 +26,21 @@ const MK = [
 const first = MK[0];
 const gmSrc = (m: typeof MK[number]) => `https://www.google.com/maps?q=${encodeURIComponent(m.q)}&z=${m.z}&output=embed`;
 const gmDir = (m: typeof MK[number]) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(m.dir)}`;
+
+// Resources panel. The featured card is whichever guide carries the `featured`
+// block in src/data/guides.ts — the same one the hub's own featured card shows —
+// so the two never drift apart and nobody edits the nav when the feature changes.
+const FEATURED_GUIDE = GUIDES.find((g) => g.featured) ?? GUIDES[0];
+// Site-wide links to the guides that carry the hub's search traffic. They used to
+// be full rows with descriptions; now they sit in a compact strip under the rows
+// (same pattern as the Solutions strip in Management). The featured guide is
+// dropped from the strip so it never appears twice in one panel.
+const QUICK_GUIDES = [
+  { t: 'Reserve study',           href: '/resources/hoa-reserve-study' },
+  { t: 'Budget template',         href: '/resources/hoa-budget-template' },
+  { t: 'Louisiana HOA laws',      href: '/resources/hoa-laws/louisiana' },
+  { t: 'Master insurance policy', href: '/resources/hoa-master-insurance-policy' },
+].filter((q) => q.href !== FEATURED_GUIDE.slug);
 
 const NAV = [
   {
@@ -67,25 +83,20 @@ const NAV = [
   },
   {
     label: 'Resources', type: 'dropdown', hub: '/resources',
+    // Three destinations, one line each — the panel was six rows of two-to-four-
+    // line descriptions plus a card that repeated row 02. Guides live in `quick`.
     items: [
-      { t: 'Board Education Hub', d: 'Plain-language guides for volunteer board leaders', href: '/resources' },
-      // The two guides that carry the hub's search traffic get a site-wide link.
-      // 'hoa reserve study' is the head term the whole cluster hangs off; the budget
-      // guide is the newest page-1 entry. Both now ship a free spreadsheet.
-      { t: 'HOA Reserve Study Guide', d: 'What a reserve study is, what it costs, and how to fund the plan — with a free component inventory template', href: '/resources/hoa-reserve-study' },
-      { t: 'HOA Budget Template', d: 'Line items, sample budgets by community size, and a free spreadsheet template', href: '/resources/hoa-budget-template' },
-      // Louisiana is HQ and where most communities sit; the other four state law
-      // references are one click on from this page and from each state hub.
-      { t: 'Louisiana HOA Laws', d: 'The statutes that govern your board, in plain English — plus TX, MS, AL & FL', href: '/resources/hoa-laws/louisiana' },
-      { t: 'Board Newsletter', d: 'One email a month for Gulf South boards — read the current issue, browse the archive, or ask a question', href: '/newsletter' },
-      { t: 'FAQ', d: 'Straight answers — no industry-speak', href: '/faq' },
+      { t: 'Board Education Hub', d: 'Plain-language guides for board leaders', href: '/resources' },
+      { t: 'Board Newsletter',    d: 'Notes For Boards — one email a month',    href: '/newsletter' },
+      { t: 'FAQ',                 d: 'Straight answers — no industry-speak',    href: '/faq' },
     ],
+    quick: { label: 'Popular guides', links: QUICK_GUIDES },
     featured: {
       eyebrow: 'Featured guide',
-      t: 'HOA reserve study, explained',
-      d: 'What a reserve study is, what it costs, and how to turn it into a funding plan — plus a free component inventory template.',
+      t: FEATURED_GUIDE.title,
+      d: FEATURED_GUIDE.dek,
       cta: 'Read the guide',
-      href: '/resources/hoa-reserve-study',
+      href: FEATURED_GUIDE.slug,
     },
   },
 ] as any[];
@@ -203,6 +214,13 @@ const UTILITY = [
                 </a>
               )}
             </div>
+            {n.quick && (
+              <div class="np-strip"><p class="mm-eyebrow">{n.quick.label}</p><div class="sol-links">
+                {n.quick.links.map((q: any) => (
+                  <a class="sol-link" href={q.href}>{q.t} <span class="arr">→</span></a>
+                ))}
+              </div></div>
+            )}
             {n.meta && <p class="np-meta">{n.meta}</p>}
           </div>
         )}
@@ -238,9 +256,19 @@ const UTILITY = [
             <a class="nav-panel-item" href={m.view}><span class="t">{m.label}</span></a>
           ))
         ) : (
-          n.items.map((it: any) => (
-            <a class="nav-panel-item" href={it.href}><span class="t">{it.t}</span><span class="d">{it.d}</span></a>
-          ))
+          <>
+            {n.items.map((it: any) => (
+              <a class="nav-panel-item" href={it.href}><span class="t">{it.t}</span><span class="d">{it.d}</span></a>
+            ))}
+            {n.quick && (
+              <>
+                <p class="nav-group-label">{n.quick.label}</p>
+                {n.quick.links.map((q: any) => (
+                  <a class="nav-panel-item" href={q.href}><span class="t">{q.t}</span></a>
+                ))}
+              </>
+            )}
+          </>
         )}
       </div>
     </div>
