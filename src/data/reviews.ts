@@ -6,13 +6,16 @@
    Shreveport page showing Baton Rouge reviews defeats the point of the page.
 
    How this is used:
-   - The committed `rating`/`count` below are the SSR/build-time fallback, so a
-     page always renders a real number and never a zero or an empty rating.
-   - /api/reviews?city=<id> refreshes rating, count and review text from the
-     Google Places API (edge-cached daily). The client script on each city page
-     swaps the displayed values in place and renders the review cards.
-   - LocalBusiness aggregateRating in each page is generated from these same
-     values, so the schema and the visible rating can't disagree.
+   - src/lib/google-reviews.ts pulls each location's live rating, count and
+     review text from the Google Places API. Every city page awaits it
+     server-side, so the hero rail, the NAP "Reviews" row, the proof-band counter
+     and the LocalBusiness aggregateRating all render from one current number.
+   - /api/reviews?city=<id> serves the same data to the inline script on each
+     page, which re-syncs those numbers and renders the review cards
+     (edge-cached daily, warmed by the crons in vercel.json).
+   - The committed `rating`/`count` below are the fallback for when the Places
+     key is missing or Google is slow or down, so a page always renders a real
+     number and never a zero or an empty rating.
 
    Update the fallback numbers here only as a manual backstop; the live pull is
    what keeps the displayed values current.
@@ -47,7 +50,7 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
     textQuery: 'CMGT Association Condo and Rental Management, 140 Aspen Square, Denham Springs, LA',
     rating: 4.2,
     count: 535,
-    updatedAt: '2026-08-04',
+    updatedAt: '2026-09-24',
   },
   shreveport: {
     id: 'shreveport',
@@ -56,7 +59,7 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
     textQuery: 'CMGT North Louisiana, Crockett Street, Shreveport, LA',
     rating: 4.5,
     count: 14,
-    updatedAt: '2026-08-04',
+    updatedAt: '2026-09-24',
   },
   lafayette: {
     id: 'lafayette',
@@ -65,7 +68,7 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
     textQuery: 'CMGT Southwest Louisiana, NW Evangeline Thruway, Carencro, LA',
     rating: 4.1,
     count: 18,
-    updatedAt: '2026-08-04',
+    updatedAt: '2026-09-24',
   },
   daphne: {
     id: 'daphne',
@@ -74,9 +77,10 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
     textQuery: 'CMGT Alabama Gulf Coast, 26241 Equity Dr, Daphne, AL',
     // Pulled from the profile itself (places:searchText → Place Details), not guessed.
     // Note this is the weakest of the five — worth a look before it's promoted anywhere.
-    rating: 3.4,
-    count: 16,
-    updatedAt: '2026-08-04',
+    // 2026-09-24: was 3.4 from 16; a review was removed and the average moved.
+    rating: 3.5,
+    count: 15,
+    updatedAt: '2026-09-24',
   },
   biloxi: {
     id: 'biloxi',
@@ -86,7 +90,7 @@ export const LOCATION_REVIEWS: Record<string, LocationReviews> = {
     // Pulled from the profile itself, same as the others.
     rating: 4.6,
     count: 19,
-    updatedAt: '2026-08-04',
+    updatedAt: '2026-09-24',
   },
 };
 

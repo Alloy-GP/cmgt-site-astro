@@ -5,19 +5,23 @@
 //
 // GBP: CMGT- North Louisiana
 // NAP MUST match the live Google listing character-for-character — do not normalize
-// the street line or abbreviate it. Rating/review count are still hardcoded from the
-// handoff; wiring them to live GBP data is the open P0 (see the dev handoff).
+// the street line or abbreviate it. Rating, review count and the reviews link come from
+// this office's own Google Business Profile at render time (src/lib/google-reviews.ts).
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { SITE } from '~/config/site';
 import ImageSlot from '~/components/ImageSlot.astro';
 import ServiceAreaMap from '~/components/ServiceAreaMap.astro';
-import { LOCATION_REVIEWS } from '~/data/reviews';
+import { getLocationReviews } from '~/lib/google-reviews';
 import { personSchema } from '~/lib/schema';
 import { teamFor, fullName, memberAlt, memberUrl, photoPath, REGION_LABEL } from '~/data/team';
 
-// Rating/count render from the committed per-location fallback so the page always
-// shows a real number, then /api/reviews swaps in the live values client-side.
-const rv = LOCATION_REVIEWS['shreveport'];
+// Rating, count and reviews link for this office, fetched server-side so the hero
+// rail, the NAP "Reviews" row, the proof-band counter and the LocalBusiness
+// aggregateRating below all render the same current number. Memoised per function
+// instance; falls back to the committed values in src/data/reviews.ts if Google is
+// slow or down, and the inline script at the bottom re-syncs from /api/reviews.
+const { data: rv } = await getLocationReviews('shreveport', { timeoutMs: 2500 });
+const ratingText = rv.rating.toFixed(1);
 
 // The people shown in the local-team panel below — also emitted as Person nodes
 // employed at this office, so the office and its managers are one linked graph.
@@ -41,8 +45,8 @@ const localBusiness = {
   },
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.5",
-    "reviewCount": "14"
+    "ratingValue": ratingText,
+    "reviewCount": String(rv.count)
   },
   "areaServed": [
     {
@@ -204,10 +208,10 @@ const faq = {
     <div class="container">
       <div class="rating-rail">
         <div class="rr-score">
-          <div class="rr-num" data-rv-rating>4.5</div>
+          <div class="rr-num" data-rv-rating>{ratingText}</div>
           <div>
             <div class="rr-stars" aria-hidden="true">★★★★★</div>
-            <div class="rr-meta"><span data-rv-count>14</span> Google reviews</div>
+            <div class="rr-meta"><span data-rv-count>{rv.count}</span> Google reviews</div>
           </div>
         </div>
         
@@ -229,7 +233,7 @@ const faq = {
           <div class="nap-row"><div class="nap-k">Office</div><div class="nap-v">717 Crockett St Ste 2031<br>Shreveport, LA 71101<span class="sub">By appointment · serving Shreveport, Bossier City, and North Louisiana</span></div></div>
           <div class="nap-row"><div class="nap-k">Phone</div><div class="nap-v"><a href="tel:3182195554">(318) 219-5554</a></div></div>
           <div class="nap-row"><div class="nap-k">Hours</div><div class="nap-v">Mon–Thu 8:30a–4:30p<br>Fri 8:30a–4:00p CT</div></div>
-          <div class="nap-row"><div class="nap-k">Reviews</div><div class="nap-v">4.5★ from 14 homeowners and board members<span class="sub"><a data-rv-link href="https://www.google.com/maps/search/?api=1&amp;query=CMGT-+North+Louisiana" target="_blank" rel="noopener">Read them on our Google Business Profile</a></span></div></div>
+          <div class="nap-row"><div class="nap-k">Reviews</div><div class="nap-v"><span data-rv-rating>{ratingText}</span>★ from <span data-rv-count>{rv.count}</span> homeowners and board members<span class="sub"><a data-rv-link href={rv.reviewsUrl} target="_blank" rel="noopener">Read them on our Google Business Profile</a></span></div></div>
         </div>
       </div>
       <div class="office-media reveal">
@@ -317,7 +321,7 @@ const faq = {
       <div class="eyebrow eyebrow-blue reveal">From our Shreveport Google profile</div>
       <h2 class="revs-h">What neighbors near Shreveport actually say.</h2>
       <div class="revs-grid" id="revs-grid-shreveport"></div>
-      <a class="revs-all" id="revs-all-shreveport" href="#" target="_blank" rel="noopener">Read all reviews on Google <span class="arrow">→</span></a>
+      <a class="revs-all" id="revs-all-shreveport" href={rv.reviewsUrl} target="_blank" rel="noopener">Read all reviews on Google <span class="arrow">→</span></a>
     </div>
   </section>
 
@@ -325,7 +329,7 @@ const faq = {
     <div class="container proof-in">
       <h2 class="proof-h">Your manager lives here. The <em>whole team</em> has their back.</h2>
       <div class="proof-grid reveal">
-        <div><div class="proof-num"><span data-count-to="14" data-rv-count-to>14</span></div><div class="proof-label">Google reviews in this market</div></div>
+        <div><div class="proof-num"><span data-count-to={rv.count} data-rv-count-to>{rv.count}</span></div><div class="proof-label">Google reviews in this market</div></div>
         <div><div class="proof-num"><span data-count-to="96" data-suffix="%">96%</span></div><div class="proof-label">client retention, by dollar value</div></div>
         <div><div class="proof-num"><span data-prefix="~" data-count-to="10" data-suffix="%">~10%</span></div><div class="proof-label">average delinquency across our communities</div></div>
         <div><div class="proof-num">389</div><div class="proof-label">communities managed across five states</div></div>
