@@ -48,6 +48,14 @@
     {
       "path": "/api/reviews?city=lafayette",
       "schedule": "10 8 * * *"
+    },
+    {
+      "path": "/api/reviews?city=daphne",
+      "schedule": "15 8 * * *"
+    },
+    {
+      "path": "/api/reviews?city=biloxi",
+      "schedule": "20 8 * * *"
     }
   ]
 }
