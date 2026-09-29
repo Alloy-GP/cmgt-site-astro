@@ -54,9 +54,8 @@ export interface Guide {
 // Newest first, by each page's own visible "Updated" line. Hurricane prep is
 // seasonal — move that object up during storm season rather than editing copy.
 export const GUIDES: Guide[] = [
-  // Featured (2026-W39): 'hoa reserve study' (800/mo) has sat at #8–12 for weeks
-  // with Google crediting the hub URL rather than this guide. The featured panel
-  // is the hub's strongest internal link, so the head-term target gets it.
+  // 'hoa reserve study' (800/mo) is the W39 head-term target. It held the featured
+  // panel until 2026-09-29, when the annual meeting guide took it; now a regular card.
   {
     slug: '/resources/hoa-reserve-study',
     topic: 'finances',
@@ -65,14 +64,9 @@ export const GUIDES: Guide[] = [
     dek: 'What an HOA reserve study is, what one costs, what the report should contain, and how to fund it — plus a free template.',
     thumb: '/photos/resources/reserve-study.webp',
     alt: 'A well-maintained HOA common area kept in good repair by a funded reserve plan',
-    featured: {
-      dek: 'What an HOA reserve study is, what one costs, what the finished report should contain, and how to turn it into a funding plan — with a free component inventory template to walk your common areas with.',
-      image: '/photos/reserve-hero-photo.webp',
-      alt: 'A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan',
-    },
   },
-  // Published 2026-09-29 (the three-post batch). Regular cards — reserve-study
-  // keeps the featured panel above.
+  // Published 2026-09-29 (the three-post batch). The annual meeting guide below
+  // carries the featured panel (seasonal, and the only one with a downloadable kit).
   {
     slug: '/resources/hoa-collections-delinquency',
     topic: 'finances',
@@ -96,6 +90,11 @@ export const GUIDES: Guide[] = [
     dek: 'A week-by-week timeline, a sample agenda, quorum and elections, and a free fillable meeting kit.',
     thumb: '/photos/resources/hoa-annual-meeting.webp',
     alt: 'A Gulf South community clubhouse room set up for an HOA annual meeting, with a sign-in table, agendas, a ballot box, and rows of chairs facing the front table and podium',
+    featured: {
+      dek: 'A week-by-week timeline that counts backward from your meeting date, a sample agenda, how to reach quorum and run a fair election, and a free fillable kit (checklist, notice, and agenda) you can use this week.',
+      image: '/photos/hoa-annual-meeting.webp',
+      alt: 'A Gulf South community clubhouse room set up for an HOA annual meeting, with a sign-in table, agendas, a ballot box, and rows of chairs facing the front table and podium',
+    },
   },
   {
     slug: '/resources/hoa-master-insurance-policy',
