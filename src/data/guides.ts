@@ -71,6 +71,32 @@ export const GUIDES: Guide[] = [
       alt: 'A well-maintained HOA common area — a clubhouse, pool, and paved entrance kept in good repair by a funded reserve plan',
     },
   },
+  // Published 2026-09-29 (the three-post batch). Regular cards — reserve-study
+  // keeps the featured panel above.
+  {
+    slug: '/resources/hoa-collections-delinquency',
+    topic: 'finances',
+    title: 'HOA collections: fixing delinquency before it grows',
+    dek: 'Why delinquency climbs, how transparency brings it down, and what a fair collection policy includes.',
+    thumb: '/photos/resources/hoa-collections-delinquency.webp',
+    alt: 'A homeowner paying their monthly HOA assessment online from the sofa, the portal showing a payment received confirmation',
+  },
+  {
+    slug: '/resources/what-do-hoa-fees-cover',
+    topic: 'finances',
+    title: 'What do HOA fees cover? Where your money goes',
+    dek: "What your HOA fee pays for, what it usually doesn't, what drives the cost, and how to see your own numbers.",
+    thumb: '/photos/resources/what-do-hoa-fees-cover.webp',
+    alt: 'A well-kept Gulf South neighborhood common area maintained by HOA fees, with a landscaped walking path, benches, an entrance monument, and a pond with a fountain at dusk',
+  },
+  {
+    slug: '/resources/hoa-annual-meeting',
+    topic: 'governance',
+    title: 'How to prepare for your HOA annual meeting',
+    dek: 'A week-by-week timeline, a sample agenda, quorum and elections, and a free fillable meeting kit.',
+    thumb: '/photos/resources/hoa-annual-meeting.webp',
+    alt: 'A Gulf South community clubhouse room set up for an HOA annual meeting, with a sign-in table, agendas, a ballot box, and rows of chairs facing the front table and podium',
+  },
   {
     slug: '/resources/hoa-master-insurance-policy',
     topic: 'insurance',
