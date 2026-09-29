@@ -4,9 +4,8 @@ import { SITE } from '~/config/site';
 import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
-// In client review (stg). Publishes AFTER the collections guide, so it is NOT on
-// the Resources hub (guides.ts), the nav, or the review widget yet — add those
-// when approved. OG card wired via og-images.ts.
+// Published 2026-09-29. Listed on the Resources hub (guides.ts) as a regular
+// card. OG card wired via og-images.ts.
 
 const pageUrl = SITE.url + '/resources/what-do-hoa-fees-cover';
 
@@ -21,7 +20,7 @@ const article = articleSchema({
   description:
     'What do HOA fees cover? Maintenance, amenities, insurance, reserves, and management, plus what drives fees up and how to see where your money goes.',
   url: pageUrl,
-  datePublished: '2026-09-23',
+  datePublished: '2026-09-29',
   image: new URL('/photos/og/what-do-hoa-fees-cover.jpg', SITE.url).toString(),
   about: ['HOA fees', 'HOA dues', 'HOA assessments', 'HOA budget', 'HOA reserves', 'HOA reserve fund'],
 });

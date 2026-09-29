@@ -4,8 +4,8 @@ import { SITE } from '~/config/site';
 import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
-// In client review (stg). Not yet on the Resources hub, the nav, or the review
-// widget — add those when approved. OG card wired via og-images.ts.
+// Published 2026-09-29. Listed on the Resources hub (guides.ts) as a regular
+// card; reserve-study keeps the featured panel. OG card wired via og-images.ts.
 
 const pageUrl = SITE.url + '/resources/hoa-collections-delinquency';
 
@@ -20,7 +20,7 @@ const article = articleSchema({
   description:
     "HOA collections, explained for boards: why delinquency climbs, how transparency brings it down, and the process behind CMGT's 10% average delinquency rate.",
   url: pageUrl,
-  datePublished: '2026-09-23',
+  datePublished: '2026-09-29',
   image: new URL('/photos/og/hoa-collections-delinquency.jpg', SITE.url).toString(),
   about: ['HOA collections', 'HOA delinquency', 'HOA collection policy', 'HOA late fees', 'HOA payment plan'],
 });

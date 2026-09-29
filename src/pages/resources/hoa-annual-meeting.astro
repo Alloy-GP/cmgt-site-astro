@@ -4,10 +4,10 @@ import { SITE } from '~/config/site';
 import { breadcrumbSchema, faqSchema, articleSchema } from '~/lib/schema';
 import ImageSlot from '~/components/ImageSlot.astro';
 
-// In client review (stg). Companion resource: a fillable, printable web kit at
+// Published 2026-09-29. Listed on the Resources hub (guides.ts) as a regular card.
+// Companion resource: a fillable, printable web kit at
 // /downloads/cmgt-hoa-annual-meeting-kit.html plus a blank printable PDF at
-// /downloads/cmgt-hoa-annual-meeting-kit-blank.pdf (replaced the earlier .docx).
-// NOT on the Resources hub, nav, or review widget yet, and not on prod — add when approved.
+// /downloads/cmgt-hoa-annual-meeting-kit-blank.pdf. OG card wired via og-images.ts.
 
 const pageUrl = SITE.url + '/resources/hoa-annual-meeting';
 
@@ -22,7 +22,7 @@ const article = articleSchema({
   description:
     'How to prepare for your HOA annual meeting: a week-by-week timeline, agenda, notice, quorum and elections, plus a free checklist and templates to download.',
   url: pageUrl,
-  datePublished: '2026-09-23',
+  datePublished: '2026-09-29',
   image: new URL('/photos/og/hoa-annual-meeting.jpg', SITE.url).toString(),
   about: ['HOA annual meeting', 'HOA board election', 'HOA meeting notice', 'HOA quorum', 'HOA voting rules'],
 });

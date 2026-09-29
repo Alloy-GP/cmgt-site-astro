@@ -55,11 +55,11 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Florida HOA Laws',               path: '/resources/hoa-laws/florida',                   review: false },
 
   // Resources & guides
-  // Up for review: three new resource posts (client send). The city pages above
-  // are also still under review from the prior location batch.
-  { label: 'HOA Collections & Delinquency',  path: '/resources/hoa-collections-delinquency',        review: true },
-  { label: 'What Do HOA Fees Cover',         path: '/resources/what-do-hoa-fees-cover',             review: true },
-  { label: 'HOA Annual Meeting (+ Kit)',     path: '/resources/hoa-annual-meeting',                 review: true },
+  // The three resource posts passed review and published to prod 2026-09-29, so
+  // they're off the widget now. The city pages above are still under review.
+  { label: 'HOA Collections & Delinquency',  path: '/resources/hoa-collections-delinquency',        review: false },
+  { label: 'What Do HOA Fees Cover',         path: '/resources/what-do-hoa-fees-cover',             review: false },
+  { label: 'HOA Annual Meeting (+ Kit)',     path: '/resources/hoa-annual-meeting',                 review: false },
   { label: 'HOA Financial Statements',       path: '/resources/hoa-financial-statements',           review: false },
   { label: 'HOA Master Insurance Policy',    path: '/resources/hoa-master-insurance-policy',         review: false },
   { label: 'HOA Special Assessments',        path: '/resources/hoa-special-assessments',            review: false },
