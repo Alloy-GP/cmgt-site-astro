@@ -180,4 +180,16 @@ export const OG_IMAGES: Record<string, OgImage> = {
     image: '/photos/og/hoa-master-insurance-policy.jpg',
     alt: 'A well-kept Gulf South community with townhomes, a pool, and landscaped common areas covered by an HOA master insurance policy',
   },
+  '/resources/hoa-collections-delinquency': {
+    image: '/photos/og/hoa-collections-delinquency.jpg',
+    alt: 'A homeowner paying their monthly HOA assessment online from the sofa, the portal showing a payment received confirmation',
+  },
+  '/resources/what-do-hoa-fees-cover': {
+    image: '/photos/og/what-do-hoa-fees-cover.jpg',
+    alt: 'A well-kept Gulf South neighborhood common area maintained by HOA fees, with a landscaped walking path, benches, an entrance monument, and a pond with a fountain at dusk',
+  },
+  '/resources/hoa-annual-meeting': {
+    image: '/photos/og/hoa-annual-meeting.jpg',
+    alt: 'A Gulf South community clubhouse room set up for an HOA annual meeting, with a sign-in table, agendas, a ballot box, and rows of chairs facing the front table and podium',
+  },
 };
