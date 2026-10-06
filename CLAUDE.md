@@ -98,7 +98,7 @@ src/pages/api/newsletter-webhook.ts   ← Mailchimp "campaign sending" → Verce
 
 Setup (done for CMGT on 2026-09-22 via the Vercel + Mailchimp APIs; repeat for a new client):
 
-1. **Mailchimp folder** — a campaign folder (CMGT: `CMGT Newsletter`, id `eb19e4ea02`). Only campaigns inside it count; drafts and tests are ignored until sent. Its id goes in `MAILCHIMP_NEWSLETTER_FOLDER_ID` (Production + Preview) on the Vercel project. Find ids with `GET /3.0/campaign-folders`.
+1. **Mailchimp folder** — a campaign folder (CMGT: `CMGT Newsletter`, id `eb19e4ea02`). Only campaigns inside it count; drafts and tests are ignored until sent. Regular sends and A/B tests (Mailchimp type `variate`) both count — the October 2026 issue went out as an A/B subject-line test and the page originally filtered on `type=regular`, so it rebuilt to the pre-launch state. On an A/B test the headline is the winning subject line once Mailchimp picks one, else variant A. Its id goes in `MAILCHIMP_NEWSLETTER_FOLDER_ID` (Production + Preview) on the Vercel project. Find ids with `GET /3.0/campaign-folders`.
 2. **Vercel deploy hook** — project → Settings → Git → Deploy Hooks (branch `main`); URL in `VERCEL_DEPLOY_HOOK_URL` (Production). Can also be created with `POST /v1/projects/{name}/deploy-hooks`.
 3. **Mailchimp webhook** — Audience → Settings → Webhooks (or `POST /3.0/lists/{list}/webhooks`): `https://<domain>/api/newsletter-webhook?secret=<MAILCHIMP_WEBHOOK_SECRET>`, event **Campaign sending only**. Mailchimp GETs the URL on save, so the route must already be live on production. Secret in `MAILCHIMP_WEBHOOK_SECRET` (Production).
 
