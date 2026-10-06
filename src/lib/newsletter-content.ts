@@ -46,17 +46,28 @@ function stripMergeTags(s: string): string {
     .replace(/\*\|[^|]{1,60}\|\*/g, '');
 }
 
+// Named entities Mailchimp's editor and templates actually emit. Anything not
+// listed falls through untouched, so a miss shows up as literal "&name;" text
+// on the page — the October 2026 issue shipped a "&middot;" that way.
 const ENTITIES: Record<string, string> = {
   amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
-  rsquo: '’', lsquo: '‘', rdquo: '”', ldquo: '“',
-  mdash: '—', ndash: '–', hellip: '…', copy: '©', reg: '®',
+  rsquo: '’', lsquo: '‘', rdquo: '”', ldquo: '“', sbquo: '‚', bdquo: '„',
+  lsaquo: '‹', rsaquo: '›', laquo: '«', raquo: '»',
+  mdash: '—', ndash: '–', hellip: '…', middot: '·', bull: '•',
+  copy: '©', reg: '®', trade: '™', deg: '°', sect: '§', para: '¶',
+  dagger: '†', Dagger: '‡', prime: '′', Prime: '″',
+  times: '×', divide: '÷', minus: '−', plusmn: '±', frac12: '½', frac14: '¼', frac34: '¾',
+  euro: '€', pound: '£', cent: '¢', yen: '¥', micro: 'µ',
+  larr: '←', rarr: '→', uarr: '↑', darr: '↓', harr: '↔',
+  iexcl: '¡', iquest: '¿', shy: '', ensp: ' ', emsp: ' ', thinsp: ' ',
+  zwnj: '', zwj: '', lrm: '', rlm: '',
 };
 
 function decodeEntities(s: string): string {
   return s
     .replace(/&#x([0-9a-f]+);/gi, (_m, h) => String.fromCodePoint(parseInt(h, 16)))
     .replace(/&#(\d+);/g, (_m, d) => String.fromCodePoint(parseInt(d, 10)))
-    .replace(/&([a-z]+);/gi, (m, n) => ENTITIES[n.toLowerCase()] ?? m);
+    .replace(/&([a-z0-9]+);/gi, (m, n) => ENTITIES[n] ?? ENTITIES[n.toLowerCase()] ?? m);
 }
 
 /** Tags → text. Drops zero-width / preheader-padding characters too. */
