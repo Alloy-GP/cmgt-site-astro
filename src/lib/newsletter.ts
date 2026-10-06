@@ -78,10 +78,32 @@ export interface NewsletterData {
 
 interface MailchimpCampaign {
   id: string;
+  /** `regular`, `variate` (A/B test), `rss`, `plaintext`, `absplit`. */
+  type?: string;
   status?: string;
   send_time: string;
   long_archive_url?: string;
   settings?: { subject_line?: string; preview_text?: string };
+  /** Only on A/B test campaigns. */
+  variate_settings?: {
+    subject_lines?: string[];
+    winning_combination_id?: string;
+    combinations?: { id: string; subject_line: number }[];
+  };
+}
+
+// Regular sends and A/B tests ("variate") both count as issues. Anything else
+// that lands in the folder (RSS, plain-text, legacy A/B split) is ignored.
+const ISSUE_TYPES = new Set(['regular', 'variate']);
+
+// The public subject line. On an A/B subject-line test Mailchimp reports
+// variant A in settings.subject_line; once a winner is picked, prefer the line
+// most readers actually saw.
+function subjectLine(c: MailchimpCampaign): string {
+  const v = c.variate_settings;
+  const winner = v?.combinations?.find((k) => k.id === v.winning_combination_id);
+  const winning = winner && v?.subject_lines?.[winner.subject_line];
+  return winning || c.settings?.subject_line || '';
 }
 
 const MC_BASE = () => `https://${import.meta.env.MAILCHIMP_SERVER_PREFIX}.api.mailchimp.com/3.0`;
@@ -137,28 +159,37 @@ async function mc<T>(path: string): Promise<T | null> {
 }
 
 async function fetchCampaigns(): Promise<MailchimpCampaign[]> {
-  // No `status` filter on purpose: the rebuild is triggered by Mailchimp's
-  // "campaign sending" event, which fires when the send STARTS. A campaign can
-  // still be `sending` when this runs, so we take sent + sending and drop
-  // everything else (drafts, scheduled, paused) below.
+  // No `type` filter: Mailchimp's takes a single value, and the October 2026
+  // issue went out as an A/B test (`variate`), which `type=regular` silently
+  // dropped — the page kept its pre-launch state after a successful rebuild.
+  // No `status` filter either: the rebuild is triggered by Mailchimp's
+  // "campaign sending" event, which fires when the send STARTS, so a campaign
+  // can still be `sending` when this runs. Both are filtered below: issue
+  // types only, sent + sending only (drafts, scheduled, paused dropped).
   const params = new URLSearchParams({
-    type: 'regular',
     folder_id: import.meta.env.MAILCHIMP_NEWSLETTER_FOLDER_ID,
     sort_field: 'send_time',
     sort_dir: 'DESC',
     count: '24',
     fields:
-      'campaigns.id,campaigns.status,campaigns.send_time,campaigns.long_archive_url,campaigns.settings.subject_line,campaigns.settings.preview_text',
+      'campaigns.id,campaigns.type,campaigns.status,campaigns.send_time,campaigns.long_archive_url,campaigns.settings.subject_line,campaigns.settings.preview_text,campaigns.variate_settings',
   });
   const data = await mc<{ campaigns?: MailchimpCampaign[] }>(`/campaigns?${params}`);
   return (data?.campaigns ?? []).filter(
-    (c) => c.send_time && (c.status === 'sent' || c.status === 'sending')
+    (c) =>
+      c.send_time &&
+      ISSUE_TYPES.has(c.type ?? 'regular') &&
+      (c.status === 'sent' || c.status === 'sending')
   );
 }
 
 async function fetchContent(id: string): Promise<string> {
-  const data = await mc<{ html?: string }>(`/campaigns/${id}/content`);
-  return data?.html ?? '';
+  // Regular campaigns return `html`. A/B tests return `variate_contents[]`
+  // instead — one entry per content variant (a subject-line test has one).
+  const data = await mc<{ html?: string; variate_contents?: { html?: string }[] }>(
+    `/campaigns/${id}/content`
+  );
+  return data?.html || data?.variate_contents?.find((v) => v.html)?.html || '';
 }
 
 export async function getNewsletterData(): Promise<NewsletterData> {
@@ -177,7 +208,7 @@ export async function getNewsletterData(): Promise<NewsletterData> {
   // subject_line is the public-facing line; settings.title is Mailchimp's
   // internal campaign name ("September Newsletter") — never the H1. The
   // template's own big headline is the fallback if a subject line is missing.
-  const title = latest.settings?.subject_line || x.headline || 'Newsletter';
+  const title = subjectLine(latest) || x.headline || 'Newsletter';
   const hero: Hero = x.hero
     ? { src: x.hero.src, alt: x.hero.alt || `${title} — ${newsletter.name}`, og: x.hero.src }
     : newsletter.fallbackHero;
@@ -196,7 +227,7 @@ export async function getNewsletterData(): Promise<NewsletterData> {
     .map((c) => ({
       slug: monthSlug(c.send_time),
       issueLabel: monthLabel(c.send_time),
-      title: c.settings?.subject_line || 'Newsletter',
+      title: subjectLine(c) || 'Newsletter',
       blurb: c.settings?.preview_text || '',
       url: c.long_archive_url || '',
     }))
