@@ -348,6 +348,8 @@ export interface FullPage {
   /** Markdown body, or null when the page could not be fetched. */
   markdown: string | null;
   status?: number;
+  /** Why the fetch failed, when it threw rather than returning a status. */
+  error?: string;
 }
 
 export function renderLlmsFull(site: LlmsSite, summary: string, pages: FullPage[], generatedAt: Date): string {
@@ -365,7 +367,8 @@ export function renderLlmsFull(site: LlmsSite, summary: string, pages: FullPage[
     out.push(`Page: ${oneLine(p.title)}`);
     out.push(`URL: ${p.url}`);
     out.push(`Section: ${oneLine(p.section)}`, '');
-    out.push(p.markdown ?? `(Page text unavailable at generation time${p.status ? ` — HTTP ${p.status}` : ''}. Fetch the URL above.)`, '');
+    const why = p.status ? ` — HTTP ${p.status}` : p.error ? ` — ${p.error}` : '';
+    out.push(p.markdown ?? `(Page text unavailable at generation time${why}. Fetch the URL above.)`, '');
   }
   return out.join('\n');
 }

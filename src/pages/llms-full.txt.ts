@@ -34,7 +34,13 @@ const CACHE_DEGRADED = 'public, max-age=0, s-maxage=600';
 
 export const GET: APIRoute = async ({ site, url }) => {
   const canonical = (site?.origin ?? SITE.url).replace(/\/+$/, '');
-  const fetchOrigin = url.origin; // the deployment serving this request, not the canonical host
+  // Pages are fetched from the canonical public host, not from this deployment's
+  // own URL: on Vercel the request URL seen by the function is not a reachable
+  // public origin (the first production run came back 0/48 with connection
+  // errors), and preview/stg URLs sit behind Deployment Protection. The one
+  // exception is `astro dev`, where the canonical host is not this code at all.
+  const isLocal = /^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$/.test(url.hostname);
+  const fetchOrigin = isLocal ? url.origin : canonical;
   const summary = LLMS.summary?.trim() || SITE.defaultDescription;
 
   const targets = [
@@ -60,8 +66,10 @@ export const GET: APIRoute = async ({ site, url }) => {
       let markdown = htmlToMarkdown(extractMainHtml(html), pageUrl);
       if (markdown.length > PER_PAGE_CHAR_CAP) markdown = markdown.slice(0, PER_PAGE_CHAR_CAP) + '\n\n(truncated)';
       return { section, title: link.title || extractTitle(html, SITE.name), url: pageUrl, markdown: markdown || null, status: 200 };
-    } catch {
-      return { section, title: link.title, url: pageUrl, markdown: null };
+    } catch (e) {
+      // Keep the reason in the stub so a bad run is diagnosable from the file itself.
+      const reason = e instanceof Error ? (e.name === 'AbortError' ? `timeout after ${PER_PAGE_TIMEOUT_MS} ms` : `${e.name}: ${e.message}`) : String(e);
+      return { section, title: link.title, url: pageUrl, markdown: null, error: `${reason} (fetching ${fetchOrigin})` };
     } finally {
       clearTimeout(timer);
     }
