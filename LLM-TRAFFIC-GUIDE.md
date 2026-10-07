@@ -16,7 +16,7 @@ site in under a minute.
 | URL / file | What it is | How it is produced |
 |---|---|---|
 | `/llms.txt` | The curated index AI assistants read first ([llmstxt.org](https://llmstxt.org/)): one H1, a one-paragraph summary, a short list of stable facts (offices, phones, service area, credentials), then H2 sections of `[title](url): what the page answers`. Legal pages go under `## Optional`. | `src/pages/llms.txt.ts` — **prerendered** at build from `src/data/llms.ts`. A static file in production; zero per-request cost. |
-| `/llms-full.txt` | Every indexed page's text in one plain-text file, so an agent can ingest the site in a single request. Each page is a block: `Page:`, `URL:` (the canonical to cite), `Section:`, then the `<main>` content as Markdown. | `src/pages/llms-full.txt.ts` — **server-rendered on demand**, fetching this deployment's own pages, cached at the CDN for a day (`s-maxage=86400, stale-while-revalidate=604800`). ~450 KB for CMGT's 48 pages. |
+| `/llms-full.txt` | Every indexed page's text in one plain-text file, so an agent can ingest the site in a single request. Each page is a block: `Page:`, `URL:` (the canonical to cite), `Section:`, then the `<main>` content as Markdown. | `src/pages/llms-full.txt.ts` — **server-rendered on demand**, fetching the pages from the canonical public host (`SITE.url`), cached at the CDN for a day (`s-maxage=86400, stale-while-revalidate=604800`). ~450 KB for CMGT's 48 pages. |
 | `public/robots.txt` | Allows every AI crawler explicitly (search/answer bots **and** training bots) and points at `llms.txt`. | Static. Template in the starter. |
 | `src/data/llms.ts` | The one per-client file: summary, facts, sections, optional. | Seeded by `npm run llms:draft`, then curated by hand. |
 | `src/lib/llms.ts` | Rendering, validation, route table, HTML→Markdown. Pure functions, no Astro imports. | Shared. Never edited per client. |
@@ -45,8 +45,11 @@ and left alone.
 - **Count-up stats are read from their `data-count-to` attribute**, so the text says
   "389 communities", not the "0" the HTML starts with before JavaScript runs.
 - **Name and canonical URL come from `SITE`** (`src/config/site.ts`), the same source
-  as the meta tags and JSON-LD. Previews fetch their own pages but link to the
-  canonical host.
+  as the meta tags and JSON-LD. `llms-full.txt` fetches the pages from that canonical
+  host too (only `astro dev` fetches itself): on Vercel the request URL a function
+  sees is not a reachable public origin, and preview/stg URLs sit behind Deployment
+  Protection, so a stg or preview `llms-full.txt` describes production's pages. When
+  a fetch fails, the stub says why (status or error, and which origin was tried).
 - **`npm run llms:check`** verifies the live result from outside the stack, including
   the thing robots.txt cannot tell you: whether the edge (Vercel Firewall, Cloudflare)
   is challenging bot user-agents.

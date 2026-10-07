@@ -76,7 +76,7 @@ clients, curation rules, robots policy, GA4 measurement, troubleshooting).
 ```
 src/data/llms.ts            ← THE per-client file: summary, facts, sections, optional. Curated by hand.
 src/pages/llms.txt.ts       ← prerendered; validates the registry at build (fails on bad paths, warns on unlisted pages)
-src/pages/llms-full.txt.ts  ← SSR, CDN-cached a day; fetches this deployment's pages → Markdown
+src/pages/llms-full.txt.ts  ← SSR, CDN-cached a day; fetches the canonical site's pages → Markdown
 src/lib/llms.ts             ← shared logic (render, validate, route table, HTML→Markdown). Never edit per client.
 scripts/llms-draft.mjs      ← `npm run llms:draft` — seeds the registry / appends new pages to UNSORTED
 scripts/llms-check.mjs      ← `npm run llms:check -- https://cmgt.org` — verifies a LIVE site, incl. bot reachability
