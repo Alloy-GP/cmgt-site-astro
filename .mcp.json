@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "ahrefs": {
+      "type": "http",
+      "url": "https://api.ahrefs.com/mcp/mcp",
+      "headers": {
+        "Authorization": "Bearer ${AHREFS_MCP_KEY}"
+      }
+    }
+  },
+  "$comment": "Project-scope MCP servers for Claude Code. No secrets here: AHREFS_MCP_KEY comes from the environment (Conductor: environment_variable_files in ~/.conductor/settings.toml; locally: your shell profile). Ahrefs key = Account settings \u2192 API keys \u2192 Generate MCP key (MCP scope)."
+}
