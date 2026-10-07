@@ -67,6 +67,33 @@ src/
 - Review widget — create the Pastel project and paste its share link into `PASTEL_BASE` in `src/config/review.ts` (trailing `#` required); add `REVIEW_SLACK_WEBHOOK` + `ZENDESK_*` to the **stg** Vercel project only (never prod). The widget renders only on stg — it's guarded by `PUBLIC_ENV !== 'production'` — and only shows pages flipped to `review:true`. Full reference: `review-widget-guide.html` in this repo.
 - Add `FORM_ALERT_SLACK_URL` to Vercel — the same Slack Incoming Webhook URL the `resend-slack-alerts` project uses, so form send-failure alerts land in the same channel. Leave blank to disable (forms still work). The helper is `src/lib/form-alert.ts`, already wired into all three API routes (contact/lead/subscribe).
 
+## LLM traffic — `/llms.txt`, `/llms-full.txt`, AI crawler policy
+
+Every AI assistant gets a curated site guide, the whole site's text in one file, and an
+explicit welcome in robots.txt. Full reference: `LLM-TRAFFIC-GUIDE.md` (rollout to other
+clients, curation rules, robots policy, GA4 measurement, troubleshooting).
+
+```
+src/data/llms.ts            ← THE per-client file: summary, facts, sections, optional. Curated by hand.
+src/pages/llms.txt.ts       ← prerendered; validates the registry at build (fails on bad paths, warns on unlisted pages)
+src/pages/llms-full.txt.ts  ← SSR, CDN-cached a day; fetches this deployment's pages → Markdown
+src/lib/llms.ts             ← shared logic (render, validate, route table, HTML→Markdown). Never edit per client.
+scripts/llms-draft.mjs      ← `npm run llms:draft` — seeds the registry / appends new pages to UNSORTED
+scripts/llms-check.mjs      ← `npm run llms:check -- https://cmgt.org` — verifies a LIVE site, incl. bot reachability
+public/robots.txt           ← allows every AI crawler by name; points at llms.txt
+```
+
+Rules of thumb:
+- **Added a page?** The build warns `page not listed: /x`. Run `npm run llms:draft`, move the
+  entry out of `UNSORTED` into the right section, and write a one-line "what question this
+  page answers" description. Titles are short labels, not the SEO `<title>`.
+- **Renamed or deleted a page?** The build fails until `src/data/llms.ts` is fixed. Intentional.
+- **Changed an office, phone, service, or credential?** Update `facts` in the same PR.
+- **After every production deploy that touches pages:** `npm run llms:check -- https://cmgt.org`
+  and expect 0 errors. The "every page carries noindex" warning is normal on stg/dev only.
+- Do not add `noindex` to the .txt files, and do not block any AI crawler without reading the
+  policy section of the guide first.
+
 ## Newsletter landing page (`/newsletter`) — Mailchimp-driven, zero per-issue editing
 
 Ported from the Edison site, then made fully automatic. The page is **prerendered**: at build time it reads the sent campaigns in one Mailchimp campaign folder and renders the newest as the current issue and the rest as the archive. A Mailchimp webhook fires a Vercel deploy hook on every send, so the page rebuilds itself. Nobody edits anything per issue.

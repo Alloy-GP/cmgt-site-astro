@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "test:forms": "node scripts/test-form-alert.ts"
+    "test:forms": "node scripts/test-form-alert.ts",
+    "llms:draft": "node scripts/llms-draft.mjs",
+    "llms:check": "node scripts/llms-check.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

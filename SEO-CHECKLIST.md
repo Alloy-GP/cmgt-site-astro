@@ -315,6 +315,8 @@ Sitemap: https://yourdomain.com/sitemap.xml
 - Disallow API routes, admin areas, staging paths
 - Do NOT disallow `/assets/` — it blocks Google from crawling images and JS/CSS needed for rendering
 - One `Sitemap:` directive pointing to your sitemap
+- Allow AI crawlers explicitly (OAI-SearchBot, ChatGPT-User, GPTBot, ClaudeBot, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, Google-Extended, Applebot-Extended, Bingbot, Amazonbot, meta-externalagent, CCBot, …) in their own group, repeating the same Disallows — a bot uses the most specific group and ignores `*`. See `LLM-TRAFFIC-GUIDE.md`.
+- Ship `/llms.txt` (curated index) and `/llms-full.txt` (full page text) and verify from outside with `npm run llms:check -- https://yourdomain.com`, which also proves the edge isn't challenging bot user-agents.
 
 ---
 
