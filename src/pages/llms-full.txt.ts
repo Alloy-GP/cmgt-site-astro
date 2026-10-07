@@ -34,13 +34,14 @@ const CACHE_DEGRADED = 'public, max-age=0, s-maxage=600';
 
 export const GET: APIRoute = async ({ site, url }) => {
   const canonical = (site?.origin ?? SITE.url).replace(/\/+$/, '');
-  // Pages are fetched from the canonical public host, not from this deployment's
-  // own URL: on Vercel the request URL seen by the function is not a reachable
-  // public origin (the first production run came back 0/48 with connection
-  // errors), and preview/stg URLs sit behind Deployment Protection. The one
-  // exception is `astro dev`, where the canonical host is not this code at all.
-  const isLocal = /^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$/.test(url.hostname);
-  const fetchOrigin = isLocal ? url.origin : canonical;
+  // Pages are fetched from the canonical public host, never from this request's
+  // own origin. On Vercel, Astro's `url` inside a function is `https://localhost/…`
+  // (the first production runs came back 0/48: "fetch failed (fetching
+  // https://localhost)"), so neither `url.origin` nor a hostname test can be
+  // trusted there; preview/stg URLs also sit behind Deployment Protection.
+  // `astro dev` is the one place where the canonical host is not this code, so
+  // only there do we fetch ourselves — decided by the build-time DEV flag.
+  const fetchOrigin = import.meta.env.DEV ? url.origin : canonical;
   const summary = LLMS.summary?.trim() || SITE.defaultDescription;
 
   const targets = [
