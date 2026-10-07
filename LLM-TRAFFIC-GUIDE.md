@@ -46,10 +46,13 @@ and left alone.
   "389 communities", not the "0" the HTML starts with before JavaScript runs.
 - **Name and canonical URL come from `SITE`** (`src/config/site.ts`), the same source
   as the meta tags and JSON-LD. `llms-full.txt` fetches the pages from that canonical
-  host too (only `astro dev` fetches itself): on Vercel the request URL a function
-  sees is not a reachable public origin, and preview/stg URLs sit behind Deployment
-  Protection, so a stg or preview `llms-full.txt` describes production's pages. When
-  a fetch fails, the stub says why (status or error, and which origin was tried).
+  host too; only `astro dev` fetches itself, decided by Astro's build-time `DEV` flag.
+  Gotcha that cost two production runs: on Vercel, `Astro.url` inside a function is
+  `https://localhost/…`, so neither `url.origin` nor a hostname test is usable there
+  (anything on an AGP site that needs the public origin must use `Astro.site`).
+  Preview/stg URLs also sit behind Deployment Protection, so a stg or preview
+  `llms-full.txt` describes production's pages. When a fetch fails, the stub says
+  why (status or error, and which origin was tried).
 - **`npm run llms:check`** verifies the live result from outside the stack, including
   the thing robots.txt cannot tell you: whether the edge (Vercel Firewall, Cloudflare)
   is challenging bot user-agents.
