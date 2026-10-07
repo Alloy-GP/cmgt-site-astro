@@ -32,6 +32,25 @@
 
 const HOMEOWNER_HUB = '/homeowner-hub';
 const RESOURCES_HUB = '/resources';
+const ANNUAL_MEETING_GUIDE = '/resources/hoa-annual-meeting';
+
+/**
+ * The October 2026 "Notes For Boards" issue went out with its merge placeholder
+ * unreplaced, so the email links to https://cmgt.org/[ANNUAL-MEETING-GUIDE-URL].
+ * Mail clients send the brackets literally or as %5B/%5D, and the lowercase rule
+ * below would otherwise rewrite the case first, so match on the decoded path,
+ * case-insensitively, brackets optional. Cannot live in astro.config.mjs: Astro
+ * reads [...] in a redirect key as a dynamic route param.
+ */
+const NEWSLETTER_PLACEHOLDER = /^\/\[?annual-meeting-guide-url\]?\/?$/i;
+
+function safeDecode(pathname: string): string {
+  try {
+    return decodeURIComponent(pathname);
+  } catch {
+    return pathname;
+  }
+}
 
 /** /cm, /cm/anything, and any *.asp page anywhere (the old portal was all ASP). */
 const ASP_PORTAL = /^\/cm(\/|$)|\.asp$/i;
@@ -48,6 +67,7 @@ const HAS_EXTENSION = /\.[a-z0-9]{2,5}$/i;
 export function legacyRedirectTarget(url: URL): string | null {
   const { pathname, search } = url;
 
+  if (NEWSLETTER_PLACEHOLDER.test(safeDecode(pathname))) return ANNUAL_MEETING_GUIDE;
   if (ASP_PORTAL.test(pathname)) return HOMEOWNER_HUB;
   if (WP_UPLOADS.test(pathname)) return HOMEOWNER_HUB;
   if (WP_BLOG_ARCHIVE.test(pathname)) return RESOURCES_HUB;
