@@ -67,6 +67,38 @@ src/
 - Review widget — create the Pastel project and paste its share link into `PASTEL_BASE` in `src/config/review.ts` (trailing `#` required); add `REVIEW_SLACK_WEBHOOK` + `ZENDESK_*` to the **stg** Vercel project only (never prod). The widget renders only on stg — it's guarded by `PUBLIC_ENV !== 'production'` — and only shows pages flipped to `review:true`. Full reference: `review-widget-guide.html` in this repo.
 - Add `FORM_ALERT_SLACK_URL` to Vercel — the same Slack Incoming Webhook URL the `resend-slack-alerts` project uses, so form send-failure alerts land in the same channel. Leave blank to disable (forms still work). The helper is `src/lib/form-alert.ts`, already wired into all three API routes (contact/lead/subscribe).
 
+## Pipedrive — proposal leads → Organization + Person + Deal
+
+Complete `proposal` submissions (never partials, never vendor/general/rental) are pushed to
+Pipedrive by `src/lib/pipedrive.ts`. It is a no-op unless `PIPEDRIVE_API_TOKEN` is set AND
+`PUBLIC_ENV=production`, and it never throws. Every answer is written into the deal's note.
+
+**Where deals land, and whose.** Pipeline 12 "Sav - Warm & Closing", first stage ("WIP"), owned
+by Savannah (user 26876223) — `DEAL_PIPELINE_ID` / `DEAL_STAGE_ID` / `DEAL_OWNER_ID` in
+`src/lib/pipedrive.ts`; `PIPEDRIVE_PIPELINE_ID` / `PIPEDRIVE_STAGE_ID` / `PIPEDRIVE_OWNER_ID` on
+Vercel override them (production is set to pipeline 12 and Savannah too). If Pipedrive rejects the routing
+or a custom field, the deal is retried without them and the fallback is logged, so a lead is
+never dropped from the CRM.
+
+**Form answers → Pipedrive fields.** `FIELD_MAP` in `src/lib/pipedrive.ts` also writes chosen
+answers into real Pipedrive fields (so they show in the deal summary and can be reported on).
+The field is found by its NAME in Pipedrive (Settings → Data fields) at runtime and cached;
+values are coerced to the field's type (numeric → number, option → option id, text → as typed).
+
+| Form answer (fieldsJson label) | Pipedrive field | Where |
+|---|---|---|
+| Number of units | Number of Homes — a Numerical field in CMGT's account (also matches "# of Homes", "Homes", "Number of Units") | Deal |
+| Location | Community Address — an Address field; Pipedrive geocodes the text. The form only collects city + state (Places suggestions are cities-only), so that is what lands here | Deal (and the Organization's standard address) |
+
+- **Field renamed in Pipedrive?** Add the new name to the mapping's `pipedrive` list, or set
+  `PIPEDRIVE_DEAL_FIELD_HOMES` / `PIPEDRIVE_DEAL_FIELD_ADDRESS` to the field's API key.
+- **Mapping another answer?** Add a `FIELD_MAP` entry. `form` must equal the label the form
+  sends (IntakeForm.jsx `buildFields`). Nothing else changes.
+- **Unresolved?** The deal is still created; the value stays in the note and the function logs
+  `[pipedrive] no deal field named …` — check Vercel logs for the production project.
+- Env reads are inlined at build time, so Pipedrive env vars must exist on the Vercel project
+  before the build that should use them (that is how the rest of the site works too).
+
 ## LLM traffic — `/llms.txt`, `/llms-full.txt`, AI crawler policy
 
 Every AI assistant gets a curated site guide, the whole site's text in one file, and an
