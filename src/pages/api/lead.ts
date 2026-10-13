@@ -165,6 +165,9 @@ export const POST: APIRoute = async ({ request }) => {
     // Proposals only — vendor bids / general questions / rentals are not sales
     // deals, so they don't create Pipedrive records. No-op on stg/dev or until
     // PIPEDRIVE_API_TOKEN is set; never throws. Partials are skipped too.
+    // Every answer goes into the deal's note; the ones listed in FIELD_MAP
+    // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
+    // → "Community Address" — are also written to the matching Pipedrive fields.
     if (!isPartial && intent === 'proposal') {
       const role = detailFields.find((f) => /role/i.test(f.label))?.value || '';
       // Property/community address (wizard "Location" or contact form "address")
@@ -177,6 +180,7 @@ export const POST: APIRoute = async ({ request }) => {
       await addToPipedrive({
         email, name, phone, role, org: company, address,
         notes: notesText,
+        fields: detailFields,
         source: `${intentCfg.label}${ref ? ` · ${ref}` : ''}`,
       });
     }

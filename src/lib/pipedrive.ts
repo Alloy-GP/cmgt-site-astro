@@ -9,10 +9,14 @@
 //
 // Env vars (set on the Vercel PRODUCTION env):
 //   PIPEDRIVE_API_TOKEN    — Pipedrive personal API token (required to activate)
-//   PIPEDRIVE_PIPELINE_ID  — pipeline for new deals (optional; Pipedrive default if unset)
-//   PIPEDRIVE_STAGE_ID     — stage for new deals (optional; pipeline's first stage if unset)
-//   PIPEDRIVE_OWNER_ID     — Pipedrive user id to own new Org/Person/Deal (optional).
-//                            Without it, records are owned by the API token's user.
+//   PIPEDRIVE_PIPELINE_ID  — pipeline for new deals (optional; DEAL_PIPELINE_ID below if unset)
+//   PIPEDRIVE_STAGE_ID     — stage for new deals (optional; the pipeline's first stage if unset)
+//   PIPEDRIVE_OWNER_ID     — Pipedrive user id to own new Org/Person/Deal (optional;
+//                            DEAL_OWNER_ID below if unset).
+//   PIPEDRIVE_DEAL_FIELD_HOMES, PIPEDRIVE_DEAL_FIELD_ADDRESS — optional. API keys of the
+//                            Deal's "Number of Homes" / "Community Address" custom fields.
+//                            Only needed if a field is ever renamed in Pipedrive — by
+//                            default they're found by name (see FIELD_MAP).
 
 interface PipedriveLead {
   email: string;
@@ -23,9 +27,183 @@ interface PipedriveLead {
   address?: string; // property/community address — set on the Organization so it shows on the Deal card
   notes?: string;
   source: string;
+  /** The form's labeled answers (fieldsJson). Everything is already in `notes`;
+   *  the entries matched by FIELD_MAP are ALSO written to real Pipedrive fields. */
+  fields?: FormAnswer[];
 }
 
-async function upsertOrganization(base: string, qs: string, orgName: string, ownerId?: number, address?: string): Promise<number | undefined> {
+interface FormAnswer { label: string; value: string }
+
+// ── Where new deals land ──────────────────────────────────────────────────────
+// Every proposal goes to Savannah's pipeline, in its first stage ("WIP") unless
+// DEAL_STAGE_ID names one. Ids come from GET /v1/pipelines and /v1/stages; the env
+// vars PIPEDRIVE_PIPELINE_ID / PIPEDRIVE_STAGE_ID override them per deployment.
+// If Pipedrive rejects the routing (pipeline or stage deleted), the deal is
+// created again without it — Pipedrive's default pipeline — rather than lost,
+// and the failure is logged.
+const DEAL_PIPELINE_ID = 12;                         // "Sav - Warm & Closing"
+const DEAL_STAGE_ID: number | undefined = undefined; // e.g. 87 = "Needs Proposal"
+// Owner of every new Organization / Person / Deal (Pipedrive user id, from
+// GET /v1/users). PIPEDRIVE_OWNER_ID overrides. Without either, Pipedrive would
+// assign whoever the API token belongs to.
+const DEAL_OWNER_ID = 26876223;                      // Savannah
+
+// ── Form answers → Pipedrive custom fields ────────────────────────────────────
+// Every proposal answer lands in the deal's note. The mappings below ALSO write
+// chosen answers into Pipedrive's own fields, so they show in the deal summary
+// and can be filtered / reported on.
+//
+// A mapping is matched by the field's NAME in Pipedrive (Settings → Data fields),
+// resolved to its API key (a 40-char hash) at runtime and cached, so nothing here
+// changes if the field is recreated. Names compare case- and punctuation-
+// insensitively ("No. of homes" matches "no of homes"). If the field is named
+// something else in Pipedrive, add the name to `pipedrive` or put its API key
+// in the `keyEnv` env var.
+//
+// To map another answer: add an entry. `form` is the label the form sends in
+// fieldsJson (IntakeForm.jsx → buildFields / the proposal INTENT fields).
+// Values are coerced to the Pipedrive field's type: numeric fields get a number
+// (first number found in the answer: "1,200 units" → 1200), single/multi-option
+// fields get the option whose label matches, text fields get the text as typed.
+//
+// Mappings can target the Organization too (entity: 'organization'); those apply
+// only when this lead creates the org — an EXISTING organization is left
+// untouched because staff may have curated it.
+
+type PdEntity = 'deal' | 'organization';
+
+interface FieldMapping {
+  form: string;           // form label to read (from fieldsJson)
+  entity: PdEntity;       // record the value is written to
+  pipedrive: string[];    // accepted Pipedrive field names, in order of preference
+  keyEnv: string;         // env var that may hold the field's API key instead
+  key?: string;           // that env var's value (read statically so Astro inlines it)
+  as?: 'number';          // force numeric parsing even when the field is text
+}
+
+const FIELD_MAP: FieldMapping[] = [
+  // "Number of units" on the proposal form → "Number of Homes" on the Deal
+  // (CMGT's Pipedrive: a Numerical custom field, key ad8d8653…; it's found by
+  // name so the key isn't hardcoded).
+  {
+    form: 'Number of units',
+    entity: 'deal',
+    pipedrive: ['Number of Homes', '# of Homes', 'No. of Homes', 'Homes', 'Number of Units', '# of Units', 'Units'],
+    keyEnv: 'PIPEDRIVE_DEAL_FIELD_HOMES',
+    key: import.meta.env.PIPEDRIVE_DEAL_FIELD_HOMES || undefined,
+    as: 'number',
+  },
+  // "Location" → "Community Address" on the Deal (an Address field; Pipedrive
+  // geocodes the text into its city/state/ZIP sub-fields). The form only
+  // collects city + state ("Baton Rouge, LA") — Places suggestions are
+  // restricted to cities — so that's what lands here until a street-address
+  // field exists. The same value goes on the Organization's standard address.
+  {
+    form: 'Location',
+    entity: 'deal',
+    pipedrive: ['Community Address', 'Property Address', 'Address'],
+    keyEnv: 'PIPEDRIVE_DEAL_FIELD_ADDRESS',
+    key: import.meta.env.PIPEDRIVE_DEAL_FIELD_ADDRESS || undefined,
+  },
+];
+
+interface PdField {
+  key: string;
+  name: string;
+  field_type: string;
+  options?: { id: number; label: string }[];
+}
+
+const NUMERIC_TYPES = new Set(['double', 'monetary', 'int']);
+const FIELDS_TTL_MS = 10 * 60 * 1000;
+// Field list per entity, cached for the life of the (warm) function instance.
+const fieldsCache: Partial<Record<PdEntity, { at: number; fields: PdField[] }>> = {};
+
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+
+async function listFields(base: string, qs: string, entity: PdEntity): Promise<PdField[]> {
+  const hit = fieldsCache[entity];
+  if (hit && Date.now() - hit.at < FIELDS_TTL_MS) return hit.fields;
+  const path = entity === 'deal' ? 'dealFields' : 'organizationFields';
+  const fields: PdField[] = [];
+  let start = 0;
+  for (let page = 0; page < 10; page++) {
+    const res = await fetch(`${base}/${path}?start=${start}&limit=500&${qs}`);
+    if (!res.ok) throw new Error(`${path} responded ${res.status}`);
+    const data = await res.json();
+    fields.push(...((data?.data ?? []) as PdField[]));
+    const pg = data?.additional_data?.pagination;
+    if (!pg?.more_items_in_collection) break;
+    start = pg.next_start;
+  }
+  fieldsCache[entity] = { at: Date.now(), fields };
+  return fields;
+}
+
+// Coerce a form answer to what the Pipedrive field type expects; undefined = skip.
+function coerce(raw: string, field: PdField, as?: 'number'): string | number | undefined {
+  const numeric = NUMERIC_TYPES.has(field.field_type);
+  if (numeric || as === 'number') {
+    const found = raw.replace(/,/g, '').match(/\d+(\.\d+)?/)?.[0];
+    if (!found) return undefined;
+    return numeric ? Number(found) : found;
+  }
+  if (field.field_type === 'enum') {
+    return field.options?.find((o) => norm(o.label) === norm(raw))?.id;
+  }
+  if (field.field_type === 'set') {
+    const ids = raw.split(',')
+      .map((part) => field.options?.find((o) => norm(o.label) === norm(part))?.id)
+      .filter((id): id is number => typeof id === 'number');
+    return ids.length ? ids.join(',') : undefined;
+  }
+  return raw;
+}
+
+/** `{ [fieldKey]: value }` for every FIELD_MAP entry on `entity` that has both a
+ *  form answer and a resolvable Pipedrive field. Never throws; logs and returns
+ *  what it could resolve. */
+async function customFields(base: string, qs: string, entity: PdEntity, answers?: FormAnswer[]): Promise<Record<string, string | number>> {
+  const out: Record<string, string | number> = {};
+  const wanted = FIELD_MAP.filter((m) => m.entity === entity);
+  if (!wanted.length || !answers?.length) return out;
+  let fields: PdField[] | undefined;
+  for (const m of wanted) {
+    const raw = answers.find((a) => norm(a.label) === norm(m.form))?.value?.trim();
+    if (!raw) continue;
+    try {
+      fields ??= await listFields(base, qs, entity);
+    } catch (err) {
+      console.error(`[pipedrive] could not list ${entity} fields:`, err);
+      return out;
+    }
+    const field = m.key
+      ? fields.find((f) => f.key === m.key)
+      : m.pipedrive.map(norm).map((n) => fields!.find((f) => norm(f.name) === n)).find(Boolean);
+    if (!field) {
+      // Loud on the deal (that's the one people asked for); the org field is optional.
+      const log = entity === 'deal' ? console.warn : console.info;
+      log(
+        m.key
+          ? `[pipedrive] ${m.keyEnv}=${m.key} is not a ${entity} field key — "${m.form}" stays in the note only.`
+          : `[pipedrive] no ${entity} field named "${m.pipedrive[0]}" — "${m.form}" stays in the note only. Rename the field in Pipedrive or set ${m.keyEnv} to its API key.`,
+      );
+      continue;
+    }
+    const value = coerce(raw, field, m.as);
+    if (value === undefined) {
+      console.warn(`[pipedrive] "${m.form}" = ${JSON.stringify(raw)} can't be stored in ${entity} field "${field.name}" (${field.field_type}) — skipped.`);
+      continue;
+    }
+    out[field.key] = value;
+  }
+  return out;
+}
+
+async function upsertOrganization(
+  base: string, qs: string, orgName: string, ownerId?: number, address?: string,
+  custom: Record<string, string | number> = {},
+): Promise<number | undefined> {
   try {
     const searchRes = await fetch(
       `${base}/organizations/search?term=${encodeURIComponent(orgName)}&exact_match=true&${qs}`,
@@ -43,6 +221,7 @@ async function upsertOrganization(base: string, qs: string, orgName: string, own
         name: orgName,
         ...(address ? { address } : {}),
         ...(ownerId ? { owner_id: ownerId } : {}),
+        ...custom,
       }),
     });
     const created = await createRes.json();
@@ -58,23 +237,27 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
   // No-op unless activated in production — keeps stg/dev from creating real deals.
   if (!apiToken || !isProduction) return;
 
-  const { email, name, phone, role, org, address, notes, source } = lead;
+  const { email, name, phone, role, org, address, notes, source, fields: answers } = lead;
   const base = 'https://api.pipedrive.com/v1';
   const qs = `api_token=${apiToken}`;
 
-  // Owner (Pipedrive user id) to assign as the record owner. Without this,
-  // Pipedrive owns every record with whoever the API token belongs to. Set
-  // PIPEDRIVE_OWNER_ID to Ken's user id to assign leads to him regardless of token.
-  const ownerId = import.meta.env.PIPEDRIVE_OWNER_ID ? Number(import.meta.env.PIPEDRIVE_OWNER_ID) : undefined;
+  // Owner (Pipedrive user id) for the Org / Person / Deal — see DEAL_OWNER_ID.
+  const ownerId = Number(import.meta.env.PIPEDRIVE_OWNER_ID) || DEAL_OWNER_ID;
 
   const [firstName, ...rest] = (name || '').trim().split(' ');
   const lastName = rest.join(' ');
 
   try {
+    // Custom-field values from the form answers (FIELD_MAP), resolved up front so
+    // a lookup hiccup can't leave a half-created lead behind. Each is {} when
+    // nothing resolves — the answers are still in the note either way.
+    const orgCustom  = org ? await customFields(base, qs, 'organization', answers) : {};
+    const dealCustom = await customFields(base, qs, 'deal', answers);
+
     // 0. Upsert Organization so we can attach it to both Person and Deal.
     //    Address is stored here (Pipedrive's standard address lives on the Org),
     //    so it surfaces on the Deal card via the linked organization.
-    const orgId = org ? await upsertOrganization(base, qs, org, ownerId, address) : undefined;
+    const orgId = org ? await upsertOrganization(base, qs, org, ownerId, address, orgCustom) : undefined;
 
     // 1. Upsert Person — search by email first, create if not found.
     let personId: number | undefined;
@@ -109,30 +292,43 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
     //    Title is just the organization / HOA name (per Ken). Falls back to the
     //    submitter's name only when no org was provided.
     const dealTitle = (org && org.trim()) ? org.trim() : name;
-    const dealRes = await fetch(`${base}/deals?${qs}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: dealTitle,
-        person_id: personId,
-        ...(orgId ? { org_id: orgId } : {}),
-        ...(ownerId ? { user_id: ownerId } : {}), // deal owner (Pipedrive uses user_id here)
-        ...(import.meta.env.PIPEDRIVE_PIPELINE_ID
-          ? { pipeline_id: Number(import.meta.env.PIPEDRIVE_PIPELINE_ID) }
-          : {}),
-        ...(import.meta.env.PIPEDRIVE_STAGE_ID
-          ? { stage_id: Number(import.meta.env.PIPEDRIVE_STAGE_ID) }
-          : {}),
-        status: 'open',
-        visible_to: 3, // Everyone
-      }),
-    });
-    const dealData = await dealRes.json();
-    const dealId = dealData?.data?.id;
-    if (!dealRes.ok || !dealId) {
-      console.error('[pipedrive] create deal error:', dealData?.error);
-      return;
+    const dealBase = {
+      title: dealTitle,
+      person_id: personId,
+      ...(orgId ? { org_id: orgId } : {}),
+      ...(ownerId ? { user_id: ownerId } : {}), // deal owner (Pipedrive uses user_id here)
+      status: 'open',
+      visible_to: 3, // Everyone
+    };
+    // Pipeline / stage. A stage implies its pipeline, so only one is sent
+    // (Pipedrive ignores pipeline_id when stage_id is present).
+    const pipelineId = Number(import.meta.env.PIPEDRIVE_PIPELINE_ID) || DEAL_PIPELINE_ID;
+    const stageId    = Number(import.meta.env.PIPEDRIVE_STAGE_ID) || DEAL_STAGE_ID;
+    const routing: Record<string, number> = stageId ? { stage_id: stageId } : pipelineId ? { pipeline_id: pipelineId } : {};
+    // Try the full deal first; if Pipedrive rejects it, drop the routing, then
+    // the custom fields, so a lead ends up in the CRM even when a stage was
+    // deleted or a field changed shape. Each step down is logged.
+    const attempts: Record<string, unknown>[] = [
+      { ...dealBase, ...dealCustom, ...routing }, // e.g. "Number of Homes" ← "Number of units"
+      ...(Object.keys(routing).length ? [{ ...dealBase, ...dealCustom }] : []),
+      ...(Object.keys(dealCustom).length ? [dealBase] : []),
+    ];
+    let dealId: number | undefined;
+    for (const [i, body] of attempts.entries()) {
+      const dealRes = await fetch(`${base}/deals?${qs}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const dealData = await dealRes.json();
+      dealId = dealData?.data?.id;
+      if (dealRes.ok && dealId) {
+        if (i > 0) console.error(`[pipedrive] deal ${dealId} created only on attempt ${i + 1} — check the pipeline/stage ids and FIELD_MAP.`);
+        break;
+      }
+      console.error(`[pipedrive] create deal error (attempt ${i + 1}/${attempts.length}):`, dealData?.error, dealData?.error_info ?? '');
     }
+    if (!dealId) return;
 
     // 3. Add a note to the Deal with the form context / submitted answers.
     const noteLines = [
