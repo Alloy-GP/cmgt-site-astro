@@ -504,6 +504,12 @@
 .ft-legal { display: flex; gap: 18px; flex-wrap: wrap; }
 .ft-legal a { color: rgba(255,255,255,.55); text-decoration: none; }
 .ft-legal a:hover { color: #fff; }
+/* Alloy Growth Partner credit: sits after the legal links in the row's own size and tone; only the icon reacts on hover. */
+.ft-bottom-right { display: flex; align-items: center; gap: 14px 18px; flex-wrap: wrap; }
+.ft-partner-credit { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; color: inherit; text-decoration: none; font-size: inherit; font-weight: 400; }
+.ft-partner-credit span { white-space: nowrap; }
+.ft-partner-credit img { width: 18px; height: 18px; display: block; opacity: .55; transition: opacity 140ms; }
+.ft-partner-credit:hover img { opacity: .9; }
 
 /* ── Breadcrumbs (under sticky nav) ───────────────────────────── */
 .crumbs { background: #fff; border-bottom: 1px solid var(--hairline, #EEE); }
