@@ -191,15 +191,23 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Push COMPLETE PROPOSAL submissions into Pipedrive (Organization + Person + Deal).
+    // Push PROPOSAL submissions into Pipedrive (Organization + Person + Deal).
     // Proposals only — vendor bids / general questions / rentals are not sales
     // deals, so they don't create Pipedrive records. No-op on stg/dev or until
-    // PIPEDRIVE_API_TOKEN is set; never throws. Partials are skipped too.
+    // PIPEDRIVE_API_TOKEN is set; never throws.
+    //
+    // Partials (contact step done, form not submitted) become a
+    // "Started, not submitted — Name" deal so sales can chase them. When the
+    // full form comes in, that partial deal is deleted and replaced by the real
+    // one (see pipedrive.ts). Partials from someone who picked the resident
+    // role are skipped — they're homeowners, not prospects.
     // Every answer goes into the deal's note; the ones listed in FIELD_MAP
     // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
     // → "Community Address" — are also written to the matching Pipedrive fields.
-    if (!isPartial && intent === 'proposal') {
-      const role = detailFields.find((f) => /role/i.test(f.label))?.value || '';
+    const leadRole = detailFields.find((f) => /role/i.test(f.label))?.value || '';
+    const isResident = /resident/i.test(leadRole);
+    if (intent === 'proposal' && !(isPartial && isResident)) {
+      const role = leadRole;
       // Property/community address (wizard "Location" or contact form "address")
       // → attached to the Pipedrive Organization so it shows on the Deal card.
       const address = detailFields.find((f) => /address|location/i.test(f.label))?.value || '';
@@ -211,7 +219,8 @@ export const POST: APIRoute = async ({ request }) => {
         email, name, phone, role, org: company, address,
         notes: notesText,
         fields: detailFields,
-        source: `${intentCfg.label}${ref ? ` · ${ref}` : ''}`,
+        source: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}${ref ? ` · ${ref}` : ''}`,
+        stage: isPartial ? 'partial' : 'complete',
       });
     }
 

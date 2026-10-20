@@ -30,7 +30,15 @@ interface PipedriveLead {
   /** The form's labeled answers (fieldsJson). Everything is already in `notes`;
    *  the entries matched by FIELD_MAP are ALSO written to real Pipedrive fields. */
   fields?: FormAnswer[];
+  /** 'partial' = the proposal wizard's contact step was completed but the form
+   *  wasn't submitted; 'complete' (default) = full submission. */
+  stage?: 'partial' | 'complete';
 }
+
+// Deals created from partial (started, not submitted) proposals get this title
+// prefix. It's how the full submission finds and removes them later — keep the
+// prefix stable or old partials won't be cleaned up.
+export const PARTIAL_DEAL_PREFIX = 'Started, not submitted —';
 
 interface FormAnswer { label: string; value: string }
 
@@ -231,6 +239,19 @@ async function upsertOrganization(
   }
 }
 
+async function openPartialDeals(base: string, qs: string, personId: number): Promise<number[]> {
+  try {
+    const res = await fetch(`${base}/persons/${personId}/deals?status=open&limit=100&${qs}`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data?.data ?? [])
+      .filter((d: { title?: string }) => (d.title ?? '').startsWith(PARTIAL_DEAL_PREFIX))
+      .map((d: { id: number }) => d.id);
+  } catch {
+    return [];
+  }
+}
+
 export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
   const apiToken = import.meta.env.PIPEDRIVE_API_TOKEN;
   const isProduction = import.meta.env.PUBLIC_ENV === 'production';
@@ -238,6 +259,7 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
   if (!apiToken || !isProduction) return;
 
   const { email, name, phone, role, org, address, notes, source, fields: answers } = lead;
+  const isPartial = lead.stage === 'partial';
   const base = 'https://api.pipedrive.com/v1';
   const qs = `api_token=${apiToken}`;
 
@@ -251,13 +273,14 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
     // Custom-field values from the form answers (FIELD_MAP), resolved up front so
     // a lookup hiccup can't leave a half-created lead behind. Each is {} when
     // nothing resolves — the answers are still in the note either way.
-    const orgCustom  = org ? await customFields(base, qs, 'organization', answers) : {};
-    const dealCustom = await customFields(base, qs, 'deal', answers);
+    const orgCustom  = org && !isPartial ? await customFields(base, qs, 'organization', answers) : {};
+    const dealCustom = isPartial ? {} : await customFields(base, qs, 'deal', answers);
 
     // 0. Upsert Organization so we can attach it to both Person and Deal.
     //    Address is stored here (Pipedrive's standard address lives on the Org),
     //    so it surfaces on the Deal card via the linked organization.
-    const orgId = org ? await upsertOrganization(base, qs, org, ownerId, address, orgCustom) : undefined;
+    // Partials only have contact info — no org until the full form comes in.
+    const orgId = org && !isPartial ? await upsertOrganization(base, qs, org, ownerId, address, orgCustom) : undefined;
 
     // 1. Upsert Person — search by email first, create if not found.
     let personId: number | undefined;
@@ -291,7 +314,14 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
     // 2. Create a Deal linked to the Person + Organization.
     //    Title is just the organization / HOA name (per Ken). Falls back to the
     //    submitter's name only when no org was provided.
-    const dealTitle = (org && org.trim()) ? org.trim() : name;
+    // Open partial deals already on this person (see PARTIAL_DEAL_PREFIX).
+    const openPartials = await openPartialDeals(base, qs, personId);
+    // A restarted form shouldn't stack a second partial on the same person.
+    if (isPartial && openPartials.length) return;
+
+    const dealTitle = isPartial
+      ? `${PARTIAL_DEAL_PREFIX} ${name}`
+      : (org && org.trim()) ? org.trim() : name;
     const dealBase = {
       title: dealTitle,
       person_id: personId,
@@ -329,6 +359,17 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
       console.error(`[pipedrive] create deal error (attempt ${i + 1}/${attempts.length}):`, dealData?.error, dealData?.error_info ?? '');
     }
     if (!dealId) return;
+
+    // The full proposal is in — remove this person's partial deal(s) so sales
+    // sees one record, not two. Done only AFTER the full deal exists, so a
+    // failure never leaves the lead with nothing. Pipedrive keeps deleted deals
+    // recoverable for 30 days.
+    if (!isPartial) {
+      for (const partialId of openPartials) {
+        const delRes = await fetch(`${base}/deals/${partialId}?${qs}`, { method: 'DELETE' });
+        if (!delRes.ok) console.error(`[pipedrive] could not delete partial deal ${partialId}:`, delRes.status);
+      }
+    }
 
     // 3. Add a note to the Deal with the form context / submitted answers.
     const noteLines = [
