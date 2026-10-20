@@ -218,13 +218,26 @@ export const POST: APIRoute = async ({ request }) => {
         ...detailFields.map((f) => `${f.label}: ${f.value || '—'}`),
         message ? `\nMessage:\n${message}` : '',
       ].filter(Boolean).join('\n');
-      await addToPipedrive({
+      const crm = await addToPipedrive({
         email, name, phone, role, org: company, address,
         notes: notesText,
         fields: detailFields,
         source: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}${ref ? ` · ${ref}` : ''}`,
         stage: isPartial ? 'partial' : 'complete',
       });
+      // A lead that reached the inbox but not the CRM is easy to miss, and the
+      // function log is the last place anyone looks — say so in Slack.
+      if (crm.status === 'failed') {
+        await notifySubmission({
+          client: EMAIL_CONFIG.brand.name,
+          slackWebhookUrl: SLACK_WEBHOOK,
+          route: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''} — not in Pipedrive`,
+          formName: `${intent} form → Pipedrive`,
+          status: 'warning',
+          note: `Pipedrive ${crm.detail}. The email and this channel have the lead; the deal must be created by hand.`,
+          fields: [['Name', name], ['Email', email], ['Company', company], ['Ref', ref], ['Stage', stage]],
+        });
+      }
     }
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
