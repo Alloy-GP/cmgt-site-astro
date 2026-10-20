@@ -79,7 +79,8 @@ export const PROPOSAL_V2 = {
     'Developer-controlled community needing professional setup',
   ],
   budget: ['Open — looking for the right fit, not the cheapest', 'Cost-sensitive — need a lean option', 'Tight budget — financial only', 'Premium — full service expected'],
-  timeline: ['Immediately', 'Within 60 days', 'Engage by Q3 2026', 'Engage by Q4 2026', 'Just exploring'],
+  // Relative windows only — no calendar dates or quarters, so these never go stale.
+  timeline: ['Immediately', 'Within 60 days', '3–6 months', 'Just exploring'],
   // ── Where this CAM actually operates ───────────────────────────────────────
   // The Location field's suggestions are restricted to these states. Without it
   // the Places API happily offers the whole planet: typing "baton" returned

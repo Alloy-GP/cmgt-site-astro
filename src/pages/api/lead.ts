@@ -50,6 +50,10 @@ export const POST: APIRoute = async ({ request }) => {
     // Per-intent content (subject + submitter confirmation) — see email.config.ts.
     const intentCfg = EMAIL_CONFIG.intents[intent] ?? EMAIL_CONFIG.intents.default;
     const detailFields = parseFields(data.get('fieldsJson'));
+    // The wizard's step-1 role ("Board President", "Property owner / resident"…).
+    // Shown in the Slack heading for partials so board members and residents can
+    // be told apart at a glance, and used below to keep residents out of Pipedrive.
+    const leadRole = detailFields.find((f) => /role/i.test(f.label))?.value || '';
 
     // The Slack record: every answer, labelled, in the same order as the email.
     // Used for the normal log, the "not delivered" fallback, and the honeypot
@@ -146,7 +150,7 @@ export const POST: APIRoute = async ({ request }) => {
     await notifySubmission({
       client: EMAIL_CONFIG.brand.name,
       slackWebhookUrl: SLACK_WEBHOOK,
-      route: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}`,
+      route: `${intentCfg.label}${isPartial ? ` (started, not submitted${leadRole ? ` · ${leadRole}` : ''})` : ''}`,
       formName: `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`,
       delivered: !notifyError,
       fields: slackRows,
@@ -191,15 +195,22 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Push COMPLETE PROPOSAL submissions into Pipedrive (Organization + Person + Deal).
+    // Push PROPOSAL submissions into Pipedrive (Organization + Person + Deal).
     // Proposals only — vendor bids / general questions / rentals are not sales
     // deals, so they don't create Pipedrive records. No-op on stg/dev or until
-    // PIPEDRIVE_API_TOKEN is set; never throws. Partials are skipped too.
+    // PIPEDRIVE_API_TOKEN is set; never throws.
+    //
+    // Partials (contact step done, form not submitted) become a
+    // "Started, not submitted — Name" deal so sales can chase them. When the
+    // full form comes in, that partial deal is deleted and replaced by the real
+    // one (see pipedrive.ts). Partials from someone who picked the resident
+    // role are skipped — they're homeowners, not prospects.
     // Every answer goes into the deal's note; the ones listed in FIELD_MAP
     // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
     // → "Community Address" — are also written to the matching Pipedrive fields.
-    if (!isPartial && intent === 'proposal') {
-      const role = detailFields.find((f) => /role/i.test(f.label))?.value || '';
+    const isResident = /resident/i.test(leadRole);
+    if (intent === 'proposal' && !(isPartial && isResident)) {
+      const role = leadRole;
       // Property/community address (wizard "Location" or contact form "address")
       // → attached to the Pipedrive Organization so it shows on the Deal card.
       const address = detailFields.find((f) => /address|location/i.test(f.label))?.value || '';
@@ -211,7 +222,8 @@ export const POST: APIRoute = async ({ request }) => {
         email, name, phone, role, org: company, address,
         notes: notesText,
         fields: detailFields,
-        source: `${intentCfg.label}${ref ? ` · ${ref}` : ''}`,
+        source: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}${ref ? ` · ${ref}` : ''}`,
+        stage: isPartial ? 'partial' : 'complete',
       });
     }
 
