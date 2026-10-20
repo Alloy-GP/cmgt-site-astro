@@ -6,7 +6,7 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
 import { sendWithAlert, notifySubmission, honeypotValue } from '~/lib/form-alert';
-import { addToPipedrive } from '~/lib/pipedrive';
+import { addToPipedrive, type PipedriveOutcome } from '~/lib/pipedrive';
 import { upsertMailchimpContact } from '~/lib/mailchimp';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
@@ -145,18 +145,23 @@ export const POST: APIRoute = async ({ request }) => {
       notifyError = err;
     }
 
-    // Log the lead to the client's Slack channel — see contact.ts for why this
-    // posts even when the email failed.
-    await notifySubmission({
-      client: EMAIL_CONFIG.brand.name,
-      slackWebhookUrl: SLACK_WEBHOOK,
-      route: `${intentCfg.label}${isPartial ? ` (started, not submitted${leadRole ? ` · ${leadRole}` : ''})` : ''}`,
-      formName: `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`,
-      delivered: !notifyError,
-      fields: slackRows,
-    });
-
-    if (notifyError) throw notifyError;
+    // The Slack record. If the email failed, post it now (it is then the only
+    // copy of the lead) and stop. Otherwise it is posted at the end, after the
+    // CRM push, so one message says both "delivered" and what Pipedrive did —
+    // a lead that reached the inbox but not the CRM is otherwise invisible.
+    const slackRoute = `${intentCfg.label}${isPartial ? ` (started, not submitted${leadRole ? ` · ${leadRole}` : ''})` : ''}`;
+    const slackForm = `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`;
+    if (notifyError) {
+      await notifySubmission({
+        client: EMAIL_CONFIG.brand.name,
+        slackWebhookUrl: SLACK_WEBHOOK,
+        route: slackRoute,
+        formName: slackForm,
+        delivered: false,
+        fields: slackRows,
+      });
+      throw notifyError;
+    }
 
     // Confirmation to submitter — only on a COMPLETE submit (don't confirm a half-finished form).
     if (!isPartial) {
@@ -209,6 +214,7 @@ export const POST: APIRoute = async ({ request }) => {
     // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
     // → "Community Address" — are also written to the matching Pipedrive fields.
     const isResident = /resident/i.test(leadRole);
+    let crm: PipedriveOutcome | undefined;
     if (intent === 'proposal' && !(isPartial && isResident)) {
       const role = leadRole;
       // Property/community address (wizard "Location" or contact form "address")
@@ -218,27 +224,34 @@ export const POST: APIRoute = async ({ request }) => {
         ...detailFields.map((f) => `${f.label}: ${f.value || '—'}`),
         message ? `\nMessage:\n${message}` : '',
       ].filter(Boolean).join('\n');
-      const crm = await addToPipedrive({
+      crm = await addToPipedrive({
         email, name, phone, role, org: company, address,
         notes: notesText,
         fields: detailFields,
         source: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}${ref ? ` · ${ref}` : ''}`,
         stage: isPartial ? 'partial' : 'complete',
       });
-      // A lead that reached the inbox but not the CRM is easy to miss, and the
-      // function log is the last place anyone looks — say so in Slack.
-      if (crm.status === 'failed') {
-        await notifySubmission({
-          client: EMAIL_CONFIG.brand.name,
-          slackWebhookUrl: SLACK_WEBHOOK,
-          route: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''} — not in Pipedrive`,
-          formName: `${intent} form → Pipedrive`,
-          status: 'warning',
-          note: `Pipedrive ${crm.detail}. The email and this channel have the lead; the deal must be created by hand.`,
-          fields: [['Name', name], ['Email', email], ['Company', company], ['Ref', ref], ['Stage', stage]],
-        });
-      }
     }
+
+    // One Slack post per lead, stating delivery AND the CRM outcome, e.g.
+    // "proposal form → newdevelopment@cmgt.org · delivered · Pipedrive: deal 891".
+    // A failed CRM push is marked ⚠️ so it is not mistaken for a clean lead.
+    const crmText = !crm
+      ? ''
+      : crm.status === 'created'
+        ? `Pipedrive: ${crm.detail}`
+        : crm.status === 'skipped'
+          ? `Pipedrive: skipped — ${crm.detail}`
+          : `Pipedrive FAILED — ${crm.detail}. The email and this channel have the lead; create the deal by hand.`;
+    await notifySubmission({
+      client: EMAIL_CONFIG.brand.name,
+      slackWebhookUrl: SLACK_WEBHOOK,
+      route: slackRoute,
+      formName: slackForm,
+      status: crm?.status === 'failed' ? 'warning' : 'delivered',
+      ...(crmText ? { note: crmText } : {}),
+      fields: slackRows,
+    });
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (err) {
