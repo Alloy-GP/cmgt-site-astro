@@ -7,6 +7,7 @@ import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
 import { sendWithAlert, notifySubmission, honeypotValue } from '~/lib/form-alert';
 import { addToPipedrive, type PipedriveOutcome } from '~/lib/pipedrive';
+import { isResidentRole } from '~/lib/roles';
 import { upsertMailchimpContact } from '~/lib/mailchimp';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
@@ -213,7 +214,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Every answer goes into the deal's note; the ones listed in FIELD_MAP
     // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
     // → "Community Address" — are also written to the matching Pipedrive fields.
-    const isResident = /resident/i.test(leadRole);
+    const isResident = isResidentRole(leadRole);
     let crm: PipedriveOutcome | undefined;
     if (intent === 'proposal' && !(isPartial && isResident)) {
       const role = leadRole;
