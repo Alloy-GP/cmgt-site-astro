@@ -10,6 +10,10 @@ const breadcrumb = breadcrumbSchema([
   { name: 'Home',                url: SITE.url + '/' },
   { name: 'Request a Proposal',  url: SITE.url + '/request-a-proposal' },
 ]);
+// ?intent=proposal (every "Request a proposal" CTA) opens the wizard directly.
+// Read here, server-side, so the wizard is in the HTML — no picker flash before
+// hydration. Other intents (?intent=rental from the rentals page) work the same.
+const initialIntent = Astro.url.searchParams.get('intent') ?? undefined;
 // ContactPage, per the sitemap spec — this is the site's single contact route
 // (/contact 301s here).
 const contact = contactPageSchema({
@@ -58,7 +62,7 @@ const contact = contactPageSchema({
 
         <!-- The form is the hero: top-right, immediately visible -->
         <div class="prop-form-wrap" id="intake-root">
-          <IntakeForm client:load />
+          <IntakeForm client:load initialIntent={initialIntent} />
         </div>
       </div>
 

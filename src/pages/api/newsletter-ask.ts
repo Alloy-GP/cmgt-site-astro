@@ -17,6 +17,7 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
 import { sendWithAlert, notifySubmission } from '~/lib/form-alert';
+import { HONEYPOT_FIELDS } from '~/lib/honeypot';
 import { upsertMailchimpContact } from '~/lib/mailchimp';
 
 export const prerender = false;
@@ -38,8 +39,26 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json().catch(() => ({}));
 
-    // Honeypot — bots fill hidden fields, humans don't.
-    if (body.website) {
+    // Honeypot — bots fill hidden fields, humans don't (but a browser autofill
+    // can). Nothing is sent, and the discard is logged to Slack so a real
+    // question never vanishes silently (mirrors /api/lead).
+    const honeypot = HONEYPOT_FIELDS.map((k) => String(body?.[k] ?? '').trim()).find(Boolean) ?? '';
+    if (honeypot) {
+      await notifySubmission({
+        client: EMAIL_CONFIG.brand.name,
+        slackWebhookUrl: SLACK_WEBHOOK,
+        route: 'Newsletter question — discarded',
+        formName: 'Newsletter ask',
+        status: 'discarded',
+        note: `value: ${JSON.stringify(honeypot.slice(0, 60))}`,
+        fields: [
+          ['Name', `${body.FNAME ?? ''} ${body.LNAME ?? ''}`.trim()],
+          ['Email', String(body.EMAIL ?? '')],
+          ['Community', String(body.COMMUNITY ?? '')],
+          ['Role', String(body.ROLE ?? '')],
+          ['Question', String(body.QUESTION ?? '')],
+        ],
+      });
       return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
 
