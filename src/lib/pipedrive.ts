@@ -252,11 +252,20 @@ async function openPartialDeals(base: string, qs: string, personId: number): Pro
   }
 }
 
-export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
+/** What happened in Pipedrive, so the caller can log a failure where people
+ *  will see it (Slack) instead of only in the function log. Never thrown. */
+export interface PipedriveOutcome {
+  status: 'created' | 'skipped' | 'failed';
+  detail: string;
+}
+
+export async function addToPipedrive(lead: PipedriveLead): Promise<PipedriveOutcome> {
   const apiToken = import.meta.env.PIPEDRIVE_API_TOKEN;
   const isProduction = import.meta.env.PUBLIC_ENV === 'production';
   // No-op unless activated in production — keeps stg/dev from creating real deals.
-  if (!apiToken || !isProduction) return;
+  if (!apiToken || !isProduction) {
+    return { status: 'skipped', detail: !apiToken ? 'PIPEDRIVE_API_TOKEN not set' : 'non-production' };
+  }
 
   const { email, name, phone, role, org, address, notes, source, fields: answers } = lead;
   const isPartial = lead.stage === 'partial';
@@ -307,7 +316,7 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
       personId = personData?.data?.id;
       if (!personRes.ok || !personId) {
         console.error('[pipedrive] create person error:', personData?.error);
-        return;
+        return { status: 'failed', detail: `create person: ${personRes.status} ${JSON.stringify(personData?.error ?? personData?.error_info ?? '')}` };
       }
     }
 
@@ -317,7 +326,7 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
     // Open partial deals already on this person (see PARTIAL_DEAL_PREFIX).
     const openPartials = await openPartialDeals(base, qs, personId);
     // A restarted form shouldn't stack a second partial on the same person.
-    if (isPartial && openPartials.length) return;
+    if (isPartial && openPartials.length) return { status: 'skipped', detail: `open partial deal ${openPartials[0]} already exists` };
 
     const dealTitle = isPartial
       ? `${PARTIAL_DEAL_PREFIX} ${name}`
@@ -344,6 +353,7 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
       ...(Object.keys(dealCustom).length ? [dealBase] : []),
     ];
     let dealId: number | undefined;
+    let lastDealError = '';
     for (const [i, body] of attempts.entries()) {
       const dealRes = await fetch(`${base}/deals?${qs}`, {
         method: 'POST',
@@ -357,8 +367,9 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
         break;
       }
       console.error(`[pipedrive] create deal error (attempt ${i + 1}/${attempts.length}):`, dealData?.error, dealData?.error_info ?? '');
+      lastDealError = `${dealRes.status} ${dealData?.error ?? ''} ${dealData?.error_info ?? ''}`.trim();
     }
-    if (!dealId) return;
+    if (!dealId) return { status: 'failed', detail: `create deal: ${lastDealError}` };
 
     // The full proposal is in — remove this person's partial deal(s) so sales
     // sees one record, not two. Done only AFTER the full deal exists, so a
@@ -384,7 +395,9 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<void> {
         body: JSON.stringify({ content: noteLines.replace(/\n/g, '<br>'), deal_id: dealId }),
       });
     }
+    return { status: 'created', detail: `deal ${dealId}${isPartial ? ' (partial)' : ''}` };
   } catch (err) {
     console.error('[pipedrive] unexpected error:', err);
+    return { status: 'failed', detail: `unexpected: ${err instanceof Error ? err.message : String(err)}` };
   }
 }

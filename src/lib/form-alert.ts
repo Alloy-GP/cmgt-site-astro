@@ -91,7 +91,7 @@ interface SendAlertOptions {
  * Never throws: notification must not be able to break a submission that has
  * already been delivered.
  */
-export type SubmissionStatus = 'delivered' | 'undelivered' | 'discarded';
+export type SubmissionStatus = 'delivered' | 'undelivered' | 'discarded' | 'warning';
 
 // Slack caps a section's text at 3000 characters; stay under it per section.
 const SECTION_LIMIT = 2800;
@@ -109,6 +109,10 @@ export async function notifySubmission(
      * a trace.
      */
     status?: SubmissionStatus;
+    /**
+     * 'warning' = the submission was delivered but a later step failed (e.g.
+     * the CRM push); `note` says what.
+     */
     /** Extra context for the footer line (e.g. the honeypot value). */
     note?: string;
   }
@@ -145,7 +149,9 @@ export async function notifySubmission(
   const footer =
     status === 'delivered'
       ? `${form} · delivered`
-      : status === 'discarded'
+      : status === 'warning'
+        ? `${form} · *${opts.note ?? 'a later step failed'}*`
+        : status === 'discarded'
         ? `${form} · *discarded — nothing was sent.* The hidden honeypot field was ` +
           `filled${opts.note ? ` (${opts.note})` : ''}. Bots do this; a browser or ` +
           `password-manager autofill can too. If this looks like a real person, follow up by hand.`
