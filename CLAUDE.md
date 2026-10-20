@@ -132,8 +132,9 @@ values are coerced to the field's type (numeric → number, option → option id
   sends (IntakeForm.jsx `buildFields`). Nothing else changes.
 - **Unresolved?** The deal is still created; the value stays in the note and the function logs
   `[pipedrive] no deal field named …` — check Vercel logs for the production project.
-- Env reads are inlined at build time, so Pipedrive env vars must exist on the Vercel project
-  before the build that should use them (that is how the rest of the site works too).
+- Only `PUBLIC_*` env vars are inlined at build time. Secrets such as the Pipedrive token are
+  read from the environment at runtime (the compiled function uses `process.env`), so adding or
+  rotating one on Vercel takes effect on the next invocation without a rebuild.
 
 ## LLM traffic — `/llms.txt`, `/llms-full.txt`, AI crawler policy
 

@@ -147,5 +147,13 @@ check('legacy honeypot name is detected', honeypotValue(hp2) !== '');
 check('whitespace-only honeypot is not a hit', honeypotValue(hp3) === '');
 check('current honeypot name is hidden from Slack rows', !fieldsFromFormData(hp1).some(([k]) => /contact preference/i.test(k)));
 
+
+// 13. Resident detection for partial proposals must not catch "President".
+const { isResidentRole } = await import('../src/lib/roles.ts');
+check('"Property owner / resident" is a resident', isResidentRole('Property owner / resident'));
+check('"Board President" is NOT a resident', !isResidentRole('Board President'));
+check('"Vice President" is NOT a resident', !isResidentRole('Vice President'));
+check('empty role is NOT a resident', !isResidentRole(''));
+
 console.log(failures ? `\n${failures} check(s) FAILED` : '\nall checks passed');
 process.exit(failures ? 1 : 0);
