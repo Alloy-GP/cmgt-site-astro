@@ -148,7 +148,7 @@ export async function notifySubmission(
   const form = opts.formName ?? 'Website form';
   const footer =
     status === 'delivered'
-      ? `${form} · delivered`
+      ? `${form} · delivered${opts.note ? ` · ${opts.note}` : ''}`
       : status === 'warning'
         ? `${form} · *${opts.note ?? 'a later step failed'}*`
         : status === 'discarded'
