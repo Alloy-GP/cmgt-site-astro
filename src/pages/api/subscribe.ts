@@ -4,7 +4,7 @@
 
 import type { APIRoute } from 'astro';
 import { EMAIL_CONFIG } from '~/lib/email.config';
-import { notifySubmission, fieldsFromFormData } from '~/lib/form-alert';
+import { notifySubmission, fieldsFromFormData, honeypotValue } from '~/lib/form-alert';
 import { upsertMailchimpContact } from '~/lib/mailchimp';
 
 // Slack destination — this client's own channel, then the shared fallback.
@@ -14,9 +14,20 @@ const SLACK_WEBHOOK =
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data      = await request.formData();
-    const honeypot  = data.get('website')?.toString() ?? '';
+    const honeypot  = honeypotValue(data);
     if (honeypot) {
-      // Bot filled the hidden honeypot field — silently discard (mirrors /api/lead).
+      // Honeypot filled — a bot, or a browser autofill. Nothing is sent, but the
+      // discard is logged to Slack so a real sign-up never vanishes silently
+      // (mirrors /api/lead).
+      await notifySubmission({
+        client: EMAIL_CONFIG.brand.name,
+        slackWebhookUrl: SLACK_WEBHOOK,
+        route: 'Newsletter signup — discarded',
+        formName: 'subscribe form',
+        status: 'discarded',
+        note: `value: ${JSON.stringify(honeypot.slice(0, 60))}`,
+        fields: fieldsFromFormData(data),
+      });
       return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
     const email     = data.get('email')?.toString().trim()     ?? '';

@@ -20,6 +20,11 @@
 .if-wc { position: absolute; left: -9999px; top: 0; width: 1px; height: 1px; overflow: hidden; }
 .if-wc input { width: 1px; height: 1px; }
 
+/* --- Hydration guard: the forms' controls sit in a <fieldset> that is disabled
+   until React has hydrated (see useHydrated in IntakeForm.jsx). Reset the
+   fieldset's default box so it is invisible in the layout. --- */
+.if-fs { border: 0; padding: 0; margin: 0; min-width: 0; }
+
 /* --- Component --- */
 .if-accentbar { height: 5px; background: linear-gradient(90deg, var(--if-brand), var(--if-accent)); }
 .if-inner { padding: 30px 32px; }

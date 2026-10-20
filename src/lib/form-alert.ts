@@ -39,6 +39,21 @@
  * another doesn't — the failure alert, the submission log, and the
  * email-fallback gate all agree by construction.
  */
+import { HONEYPOT_FIELDS } from './honeypot.ts';
+
+/**
+ * The honeypot value a submission carried, or '' when a human filled the form.
+ * Checks every name the field has had (see honeypot.ts) so a cached bundle that
+ * still sends the old name is judged the same way.
+ */
+export function honeypotValue(data: FormData): string {
+  for (const key of HONEYPOT_FIELDS) {
+    const v = data.get(key);
+    if (typeof v === 'string' && v.trim()) return v.trim();
+  }
+  return '';
+}
+
 function slackUrl(opts: SendAlertOptions): string | undefined {
   return (
     opts.slackWebhookUrl ??
@@ -76,43 +91,67 @@ interface SendAlertOptions {
  * Never throws: notification must not be able to break a submission that has
  * already been delivered.
  */
+export type SubmissionStatus = 'delivered' | 'undelivered' | 'discarded';
+
+// Slack caps a section's text at 3000 characters; stay under it per section.
+const SECTION_LIMIT = 2800;
+
 export async function notifySubmission(
   opts: SendAlertOptions & {
     fields?: Array<[string, string]>;
     route?: string;
+    /** Shorthand for status: 'undelivered'. Ignored when `status` is given. */
     delivered?: boolean;
+    /**
+     * 'discarded' = the server deliberately sent nothing (the honeypot was
+     * filled). Logged anyway, because a browser autofill trips the honeypot
+     * exactly like a bot does, and a real board member must not vanish without
+     * a trace.
+     */
+    status?: SubmissionStatus;
+    /** Extra context for the footer line (e.g. the honeypot value). */
+    note?: string;
   }
 ): Promise<void> {
   const url = slackUrl(opts);
   if (!url) return;
 
-  const delivered = opts.delivered !== false;
+  const status: SubmissionStatus =
+    opts.status ?? (opts.delivered === false ? 'undelivered' : 'delivered');
   const route = opts.route ?? 'Form';
-  const heading = `${delivered ? '📬' : '⚠️'} ${route} — ${opts.client}`;
+  const icon = status === 'delivered' ? '📬' : status === 'discarded' ? '🪤' : '⚠️';
+  const heading = `${icon} ${route} — ${opts.client}`;
 
-  const rows = (opts.fields ?? [])
+  const lines = (opts.fields ?? [])
     .filter(([, v]) => v)
-    .map(([k, v]) => `*${k}:* ${v.length > 220 ? v.slice(0, 220) + '…' : v}`)
-    .join('\n');
+    .map(([k, v]) => `*${k}:* ${v.length > 220 ? v.slice(0, 220) + '…' : v}`);
 
   const blocks: unknown[] = [
     { type: 'header', text: { type: 'plain_text', text: heading } },
   ];
-  if (rows) {
-    blocks.push({ type: 'section', text: { type: 'mrkdwn', text: rows } });
+  // Every answer goes in; long submissions are split across sections rather
+  // than truncated, so the Slack copy is a complete record.
+  let section = '';
+  for (const line of lines) {
+    if (section && section.length + line.length + 1 > SECTION_LIMIT) {
+      blocks.push({ type: 'section', text: { type: 'mrkdwn', text: section } });
+      section = '';
+    }
+    section += (section ? '\n' : '') + line;
   }
-  blocks.push({
-    type: 'context',
-    elements: [
-      {
-        type: 'mrkdwn',
-        text: delivered
-          ? `${opts.formName ?? 'Website form'} · delivered`
-          : `${opts.formName ?? 'Website form'} · *not delivered* — this message is ` +
-            `the only record of the submission`,
-      },
-    ],
-  });
+  if (section) blocks.push({ type: 'section', text: { type: 'mrkdwn', text: section } });
+
+  const form = opts.formName ?? 'Website form';
+  const footer =
+    status === 'delivered'
+      ? `${form} · delivered`
+      : status === 'discarded'
+        ? `${form} · *discarded — nothing was sent.* The hidden honeypot field was ` +
+          `filled${opts.note ? ` (${opts.note})` : ''}. Bots do this; a browser or ` +
+          `password-manager autofill can too. If this looks like a real person, follow up by hand.`
+        : `${form} · *not delivered* — this message is the only record of the submission` +
+          (opts.note ? ` (${opts.note})` : '');
+  blocks.push({ type: 'context', elements: [{ type: 'mrkdwn', text: footer }] });
 
   try {
     await fetch(url, {
@@ -126,12 +165,12 @@ export async function notifySubmission(
 }
 
 /**
- * Honeypot and machine-only field names, never worth showing in Slack.
- * `website` is the starter's honeypot (see lead.ts); `company_website` is the
- * name some client sites use. `fieldsJson` is the multi-step form's raw payload,
- * which lead.ts unpacks into real labels itself.
+ * Honeypot and machine-only field names, never worth showing in Slack. The
+ * honeypot names come from honeypot.ts (every name the field has had). `fieldsJson`
+ * is the multi-step form's raw payload, which lead.ts unpacks into real labels
+ * itself.
  */
-const NON_CONTENT_FIELDS = ['website', 'company_website', 'fieldsJson', 'audience'];
+const NON_CONTENT_FIELDS = [...HONEYPOT_FIELDS, 'fieldsJson', 'audience'];
 
 /**
  * Turn a raw submission into labelled rows for notifySubmission().

@@ -66,6 +66,42 @@ src/
 - Add env vars to Vercel (copy from `.env`, set `PUBLIC_ENV=production` on prod project)
 - Review widget — create the Pastel project and paste its share link into `PASTEL_BASE` in `src/config/review.ts` (trailing `#` required); add `REVIEW_SLACK_WEBHOOK` + `ZENDESK_*` to the **stg** Vercel project only (never prod). The widget renders only on stg — it's guarded by `PUBLIC_ENV !== 'production'` — and only shows pages flipped to `review:true`. Full reference: `review-widget-guide.html` in this repo.
 - Add `FORM_ALERT_SLACK_URL` to Vercel — the same Slack Incoming Webhook URL the `resend-slack-alerts` project uses, so form send-failure alerts land in the same channel. Leave blank to disable (forms still work). The helper is `src/lib/form-alert.ts`, already wired into all three API routes (contact/lead/subscribe).
+- Add `CRON_SECRET` to Vercel (any long random string) so the daily form health check can run — see "Forms — knowing they work" below.
+
+## Forms — knowing they work
+
+Nobody should have to wonder whether the proposal form is working. Four things make it visible:
+
+1. **Slack is the ledger.** Every submission posts to the forms channel (`FORM_SLACK_WEBHOOK`, falling back
+   to `FORM_ALERT_SLACK_URL`) with *every* answer, split across sections when long:
+   📬 delivered · ⚠️ not delivered (Resend refused the email — the post is the only copy) ·
+   🪤 discarded (the honeypot was filled: a bot, or a browser/password-manager autofill — the answers are
+   included so a real person can be followed up by hand) · 🚨 the Resend send itself failed.
+2. **Daily heartbeat.** `/api/form-health` runs from a Vercel cron at 13:00 UTC (8am Central) and posts one
+   ✅/🚨 line: Resend key + sending-domain verification, Slack webhook, Mailchimp audience, Pipedrive token,
+   and that `PUBLIC_ENV` is production. No line in the morning = the cron is not running. Vercel sends
+   `CRON_SECRET` as a bearer token; the same header works by hand:
+   `curl -H "Authorization: Bearer $CRON_SECRET" https://cmgt.org/api/form-health`
+3. **GA4 funnel events** from the intake form — the list is in `src/lib/track.ts`. Mark `generate_lead` as a
+   key event. Step drop-off = `proposal_step_viewed` by step; validation friction = `proposal_step_blocked`;
+   failed POSTs = `form_submit_failed` (reason `network` or `http_<status>`). On stg/dev the events print to
+   the browser console instead.
+4. **Four ledgers must agree** for any date range: Slack 📬 posts, the newdevelopment@ inbox (including the
+   "Started (incomplete)" partials), Pipedrive deals in Savannah's pipeline, Mailchimp contacts tagged
+   `website-lead`. If Slack shows more than the inbox, mail is being filtered: cmgt.org mail goes through
+   AppRiver (arsmtp.com MX), which quarantines "our own domain from an outside server" by default. Have the
+   client allowlist `notifications@mail.cmgt.org`, `hello@mail.cmgt.org`, and the envelope domain
+   `send.mail.cmgt.org` (Amazon SES), then check the quarantine for past notifications.
+
+Honeypot: the field is `contact_preference_other` (`src/lib/honeypot.ts`), rendered by `<Honeypot>` in
+`IntakeForm.jsx` as read-only until focused, so autofill cannot fill it (it used to be `website`, which
+Safari's contact AutoFill treats as the URL field). The server accepts the old name too. Rename it in
+`honeypot.ts` only — never in one place.
+
+Proposal CTAs link to `/request-a-proposal?intent=proposal`: the page reads the query string server-side and
+renders the wizard directly (no picker, no flash). Generic "contact" links use the bare URL and land on the
+picker. A client-side retry covers a dropped connection: a POST that got no response at all is sent once
+more before the visitor sees an error; HTTP errors are not retried (Slack already has the alert).
 
 ## Pipedrive — proposal leads → Organization + Person + Deal
 

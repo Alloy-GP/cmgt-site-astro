@@ -56,6 +56,10 @@
     {
       "path": "/api/reviews?city=biloxi",
       "schedule": "20 8 * * *"
+    },
+    {
+      "path": "/api/form-health",
+      "schedule": "0 13 * * *"
     }
   ]
 }

@@ -4,8 +4,11 @@
 // identical on every AGP site. Per site, only options/copy/theme change.
 // Floating labels, `if-` CSS prefix, full WhatConverts field capture.
 // Multi-step intent picker → fields → submit → animated receipt. Posts to /api/lead.
+// Funnel events (GA4) are sent via src/lib/track.ts — see that file for the list.
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { BRAND, TRACKING, PROPOSAL_OPTIONS, PROPOSAL_COPY, EXTRA_INTENTS, PROPOSAL_FORM_VERSION, PROPOSAL_V2 } from './intake-form.config.js';
+import { track } from '../lib/track';
+import { HONEYPOT_FIELD } from '../lib/honeypot';
 
 // ── Icons (Lucide-style) ─────────────────────────────────────────
 const I = {
@@ -51,6 +54,66 @@ function genId() {
   const d = new Date();
   const s = `${String(d.getFullYear()).slice(2)}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
   return 'REQ-' + s + '-' + Math.floor(1000 + Math.random() * 9000);
+}
+
+// POST a form body. One retry when the request never got a response at all (a
+// dropped mobile connection, a flaky network). HTTP errors are NOT retried: the
+// server has already alerted Slack, and a second attempt would double the staff
+// email. `err.reason` feeds the form_submit_failed analytics event.
+async function postForm(url, body) {
+  try {
+    return await fetch(url, { method: 'POST', body });
+  } catch {
+    await new Promise((r) => setTimeout(r, 1200));
+    try {
+      return await fetch(url, { method: 'POST', body });
+    } catch (err) {
+      err.reason = 'network';
+      throw err;
+    }
+  }
+}
+function httpError(res, json) {
+  const err = new Error(json.error || 'Something went wrong.');
+  err.reason = `http_${res.status}`;
+  return err;
+}
+// What the visitor sees when a POST fails. A network failure gets a message
+// that says so (the raw "Failed to fetch" helps nobody); a server error shows
+// the server's own message.
+const sendFailureText = (err) =>
+  err.reason === 'network'
+    ? `We couldn’t reach our server — please check your connection and try again, or call ${BRAND.phone}.`
+    : err.message || `Something went wrong. Please try again or call ${BRAND.phone}.`;
+
+// True once React has hydrated. The proposal CTAs deep-link to ?intent=proposal,
+// so the wizard is in the server HTML and visible before hydration; anything
+// typed in that window would be wiped when React took over. Both forms wrap
+// their controls in <fieldset disabled={!hydrated}> so nothing can be typed
+// until it can be kept. The window is well under a second on a normal connection.
+function useHydrated() {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => { setHydrated(true); }, []);
+  return hydrated;
+}
+
+// Honeypot: visually hidden, skipped by the tab order, and read-only until
+// focused — browser and password-manager autofill never focus a field, so they
+// cannot fill it, while a bot that writes .value directly (or focuses it to
+// type) still trips it. /api/lead discards a submission where it is non-empty
+// and logs the discard to Slack. The name is deliberately not "website" (see
+// src/lib/honeypot.ts).
+function Honeypot({ value, onChange }) {
+  const [locked, setLocked] = useState(true);
+  return (
+    <div className="if-hp" aria-hidden="true">
+      <label>Leave this field empty
+        <input type="text" name={HONEYPOT_FIELD} tabIndex={-1} autoComplete="off"
+          readOnly={locked} onFocus={() => setLocked(false)}
+          value={value} onChange={(e) => onChange(e.target.value)} />
+      </label>
+    </div>
+  );
 }
 
 // Call-tracking (e.g. WhatConverts) reads the DOM form on submit and only
@@ -370,6 +433,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   const [sendError, setSendError] = useState('');
   const [submission, setSubmission] = useState(null);
   const partialSent = useRef(false);
+  const hydrated = useHydrated();
 
   const set = (k, v) => { setVals((s) => ({ ...s, [k]: v })); setErrors((e) => ({ ...e, [k]: null })); };
 
@@ -378,6 +442,9 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
     if (typeof window === 'undefined') return;
     window.dispatchEvent(new CustomEvent('intake:step', { detail: submission ? 'done' : step }));
   }, [step, submission]);
+
+  // Funnel: one event per step reached, so GA4 shows where boards stop.
+  useEffect(() => { track('proposal_step_viewed', { step }); }, [step]);
 
   // On completion, scroll back to the top so the success screen isn't stranded at
   // the bottom of the page after submitting from the last step.
@@ -409,13 +476,17 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
       if (!vals.units.trim()) e.units = 'Required';
       if (!vals.type) e.type = 'Required';
       if (!vals.mgmtStatus) e.mgmtStatus = 'Required';
-      if (!vals.dues.trim()) e.dues = 'Required';
+      // Monthly dues are asked for but not required: many board members don't
+      // know the figure offhand, and a required field they can't answer is where
+      // a proposal request dies. The rep asks on the discovery call.
     } else if (s === 3) {
       if (!vals.services.length && !vals.pains.length) e.services = 'Pick at least one';
       if (!vals.timeline) e.timeline = 'Required';
     }
     setErrors(e);
-    return Object.keys(e).length === 0;
+    const blocked = Object.keys(e);
+    if (blocked.length) track('proposal_step_blocked', { step: s, fields: blocked.join(',') });
+    return blocked.length === 0;
   }
 
   // Labeled, ordered answers for the staff email (every answer with its real label).
@@ -456,9 +527,9 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
       fd.set('fieldsJson', JSON.stringify(buildFields()));
       fd.set('message', vals.success.trim());
     }
-    const res = await fetch('/api/lead', { method: 'POST', body: fd });
+    const res = await postForm('/api/lead', fd);
     const json = await res.json().catch(() => ({}));
-    if (!res.ok || json.success === false) throw new Error(json.error || 'Something went wrong.');
+    if (!res.ok || json.success === false) throw httpError(res, json);
   }
 
   function next() {
@@ -467,7 +538,13 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
     // Fire-and-forget so a slow/failed network never blocks the user.
     if (step === 1 && !partialSent.current) {
       partialSent.current = true;
-      postLead('partial').catch((err) => { partialSent.current = false; console.error('partial lead failed:', err); });
+      postLead('partial')
+        .then(() => track('proposal_partial_captured'))
+        .catch((err) => {
+          partialSent.current = false;
+          track('form_submit_failed', { form: 'proposal_partial', reason: err.reason || err.message });
+          console.error('partial lead failed:', err);
+        });
     }
     setSendError('');
     setStep((s) => Math.min(3, s + 1));
@@ -484,9 +561,11 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
     setSending(true); setSendError('');
     try {
       await postLead('complete');
+      track('generate_lead', { form: 'proposal', ref: refId });
       setSubmission({ id: refId, first: vals.name.trim().split(' ')[0] });
     } catch (err) {
-      setSendError(err.message || `Something went wrong. Please try again or call ${BRAND.phone}.`);
+      track('form_submit_failed', { form: 'proposal', reason: err.reason || err.message });
+      setSendError(sendFailureText(err));
     } finally {
       setSending(false);
     }
@@ -537,17 +616,16 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   const showOfframp = !!onSwitchIntent && (V.residentRoles || []).includes(vals.role);
   // Carry what they've already typed into the resident form so they don't
   // re-enter it after being routed out of the proposal.
-  const switchToResident = () => onSwitchIntent({ name: vals.name.trim(), email: vals.email.trim(), phone: vals.phone.trim() });
+  const switchToResident = () => {
+    track('intake_offramp_resident', { role: vals.role });
+    onSwitchIntent({ name: vals.name.trim(), email: vals.email.trim(), phone: vals.phone.trim() });
+  };
   return (
     <form
       id={wcTracked ? TRACKING.formId : 'proposal-wizard'}
       name={wcTracked ? TRACKING.formId : 'proposal-wizard'}
       className="if-stage if-wizard" onSubmit={submit} noValidate>
-      <div className="if-hp" aria-hidden="true">
-        <label>Leave this field empty
-          <input type="text" name="website" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
-        </label>
-      </div>
+      <Honeypot value={hp} onChange={setHp} />
       <div className="if-wc" aria-hidden="true">
         {mirror.map(([n, v]) => <input key={n} type="text" name={n} value={v} readOnly tabIndex={-1} autoComplete="off" />)}
       </div>
@@ -557,6 +635,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
 
       <Steps step={step} />
 
+      <fieldset className="if-fs" disabled={!hydrated}>
       {step === 1 && (
         <div className="if-wstep">
           <div className="if-stephead">
@@ -593,7 +672,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
             <Field def={{ key: 'units', label: 'Number of units', type: 'text', required: true, inputMode: 'numeric', maxLength: 6, noName: true }} value={vals.units} error={errors.units} onChange={set} />
             <Field def={{ key: 'type', label: 'Community type', type: 'select', required: true, options: V.communityType, noName: true }} value={vals.type} error={errors.type} onChange={set} />
             <Field def={{ key: 'mgmtStatus', label: 'Current management status', type: 'select', required: true, options: V.managementStatus, noName: true }} value={vals.mgmtStatus} error={errors.mgmtStatus} onChange={set} />
-            <Field def={{ key: 'dues', label: 'Monthly dues / unit', type: 'text', required: true, inputMode: 'decimal', maxLength: 8, placeholder: 'e.g. 37.50', noName: true }} value={vals.dues} error={errors.dues} onChange={set} />
+            <Field def={{ key: 'dues', label: 'Monthly dues / unit (if known)', type: 'text', inputMode: 'decimal', maxLength: 8, placeholder: 'e.g. 37.50', noName: true }} value={vals.dues} error={errors.dues} onChange={set} />
             <div className="if-field" style={{ gridColumn: '1 / -1' }}>
               <span className="if-grouplabel">Amenities <em>(select all that apply)</em></span>
               <PillMulti options={V.amenities} value={vals.amenities} onChange={(v) => set('amenities', v)} />
@@ -651,13 +730,20 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
           </button>
         )}
       </div>
+      </fieldset>
     </form>
   );
 }
 
-export default function IntakeForm() {
-  const [step, setStep] = useState('intent');
-  const [intentId, setIntentId] = useState(null);
+export default function IntakeForm({ initialIntent }) {
+  // ?intent=<id> arrives as a prop from the page (read server-side, so the right
+  // form is already in the HTML and there is no picker flash before hydration).
+  // Every "Request a proposal" CTA links with ?intent=proposal; the generic
+  // contact links land on the picker. The effect below is the fallback for any
+  // other way of arriving with the query string.
+  const initial = initialIntent && intentById(initialIntent) ? initialIntent : null;
+  const [step, setStep] = useState(initial ? 'form' : 'intent');
+  const [intentId, setIntentId] = useState(initial);
   const [contact, setContact] = useState({ name: '', email: '', phone: '' });
   const [fields, setFields] = useState({});
   const [message, setMessage] = useState('');
@@ -666,6 +752,7 @@ export default function IntakeForm() {
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState('');
   const [hp, setHp] = useState(''); // honeypot — must stay empty for humans
+  const hydrated = useHydrated();
 
   const intent = intentId ? intentById(intentId) : null;
 
@@ -673,7 +760,9 @@ export default function IntakeForm() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const want = new URLSearchParams(window.location.search).get('intent');
-    if (want && intentById(want)) { setIntentId(want); setFields({}); setErrors({}); setStep('form'); }
+    if (!want || !intentById(want)) return;
+    if (want !== initial) { setIntentId(want); setFields({}); setErrors({}); setStep('form'); }
+    track('intake_intent_selected', { intent: want, via: 'link' });
   }, []);
 
   // On completion, scroll back to the top so the success screen isn't stranded at
@@ -691,6 +780,7 @@ export default function IntakeForm() {
   }, [step, intentId]);
 
   const pick = (id, prefill) => {
+    track('intake_intent_selected', { intent: id, via: prefill ? 'offramp' : 'picker' });
     setIntentId(id); setFields({}); setErrors({}); setStep('form');
     if (prefill) setContact((c) => ({ ...c, ...prefill })); // carry name/email/phone across an intent switch
   };
@@ -706,7 +796,9 @@ export default function IntakeForm() {
     (intent.fields || []).forEach((f) => { if (f.required && !fields[f.key]) e[f.key] = 'Required'; });
     if (MSG_REQUIRED.has(intent.id) && !message.trim()) e.message = 'Required';
     setErrors(e);
-    return Object.keys(e).length === 0;
+    const blocked = Object.keys(e);
+    if (blocked.length) track('form_blocked', { form: intent.id, fields: blocked.join(',') });
+    return blocked.length === 0;
   }
 
   async function submit(ev) {
@@ -735,13 +827,15 @@ export default function IntakeForm() {
     fd.set('website', hp); // honeypot — handler rejects if non-empty
 
     try {
-      const res = await fetch('/api/lead', { method: 'POST', body: fd });
+      const res = await postForm('/api/lead', fd);
       const json = await res.json().catch(() => ({}));
-      if (!res.ok || json.success === false) throw new Error(json.error || 'Something went wrong.');
+      if (!res.ok || json.success === false) throw httpError(res, json);
+      track('generate_lead', { form: intent.id, ref: id });
       setSubmission({ id, first: contact.name.trim().split(' ')[0] });
       setStep('done');
     } catch (err) {
-      setSendError(err.message || `Something went wrong. Please try again or call ${BRAND.phone}.`);
+      track('form_submit_failed', { form: intent.id, reason: err.reason || err.message });
+      setSendError(sendFailureText(err));
     } finally {
       setSending(false);
     }
@@ -795,12 +889,7 @@ export default function IntakeForm() {
             id={TRACKING.intents.includes(intent.id) ? TRACKING.formId : 'intake-form'}
             name={TRACKING.intents.includes(intent.id) ? TRACKING.formId : 'intake-form'}
             className="if-stage" onSubmit={submit} noValidate>
-            {/* Honeypot — hidden from humans; bots that fill it get rejected by /api/lead */}
-            <div className="if-hp" aria-hidden="true">
-              <label>Leave this field empty
-                <input type="text" name="website" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
-              </label>
-            </div>
+            <Honeypot value={hp} onChange={setHp} />
             <button type="button" className="if-back" onClick={back}><Ic name="arrowLeft" /> Change request type</button>
             <div className={`if-chosen tone-${intent.tone}`}>
               <span className="if-intent-icon"><Ic name={intent.icon} /></span>
@@ -823,6 +912,7 @@ export default function IntakeForm() {
                 <div className="if-selfhelp-or">Still need a person? Send us a message below.</div>
               </div>
             )}
+            <fieldset className="if-fs" disabled={!hydrated}>
             <div className="if-grid">
               <Field def={{ key: 'name', label: 'Your name', type: 'text', required: true, placeholder: 'First & last', col: 2 }} value={contact.name} error={errors.name} onChange={setC} />
               <Field def={{ key: 'email', label: 'Email', type: 'text', required: true, placeholder: 'you@email.com' }} value={contact.email} error={errors.email} onChange={setC} />
@@ -848,6 +938,7 @@ export default function IntakeForm() {
                 {!sending && <Ic name="arrowRight" />}
               </button>
             </div>
+            </fieldset>
           </form>
         )}
 

@@ -5,7 +5,7 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
-import { sendWithAlert, notifySubmission, fieldsFromFormData } from '~/lib/form-alert';
+import { sendWithAlert, notifySubmission, honeypotValue } from '~/lib/form-alert';
 import { addToPipedrive } from '~/lib/pipedrive';
 import { upsertMailchimpContact } from '~/lib/mailchimp';
 
@@ -17,14 +17,23 @@ const resend = new Resend(import.meta.env.RESEND_API_KEY);
 const SLACK_WEBHOOK =
   import.meta.env.FORM_SLACK_WEBHOOK || import.meta.env.FORM_ALERT_SLACK_URL;
 
+// The form's structured per-intent answers (`fieldsJson`: a labeled, ordered
+// list). Malformed input yields an empty list rather than an error.
+function parseFields(raw: FormDataEntryValue | null): { label: string; value: string }[] {
+  try {
+    const parsed = JSON.parse(raw?.toString() ?? '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((f) => f && typeof f.label === 'string')
+      .map((f) => ({ label: String(f.label), value: String(f.value ?? '').trim() }));
+  } catch {
+    return [];
+  }
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data     = await request.formData();
-    const honeypot = data.get('website')?.toString() ?? '';
-    if (honeypot) {
-      // Bot filled the honeypot field — silently discard
-      return new Response(JSON.stringify({ success: true }), { status: 200 });
-    }
     const name    = data.get('name')?.toString().trim()    ?? '';
     const email   = data.get('email')?.toString().trim()   ?? '';
     const phone   = data.get('phone')?.toString().trim()   ?? '';
@@ -37,6 +46,40 @@ export const POST: APIRoute = async ({ request }) => {
     // isn't finished yet (capture the lead now); 'complete' (default) = full submit.
     const stage     = data.get('stage')?.toString().trim() ?? 'complete';
     const isPartial = stage === 'partial';
+
+    // Per-intent content (subject + submitter confirmation) — see email.config.ts.
+    const intentCfg = EMAIL_CONFIG.intents[intent] ?? EMAIL_CONFIG.intents.default;
+    const detailFields = parseFields(data.get('fieldsJson'));
+
+    // The Slack record: every answer, labelled, in the same order as the email.
+    // Used for the normal log, the "not delivered" fallback, and the honeypot
+    // discard below — so no copy of a submission is ever missing the community
+    // details (it used to log only name/email/phone, because the answers travel
+    // in `fieldsJson` and that key was skipped as machine data).
+    const slackRows: Array<[string, string]> = [
+      ['Name', name], ['Email', email], ['Phone', phone], ['Company', company],
+      ...detailFields.map((f): [string, string] => [f.label, f.value]),
+      ['Message', message], ['Ref', ref], ['Intent', intent], ['Stage', stage], ['Source', source],
+    ];
+
+    // Honeypot filled → a bot, or a browser / password-manager autofill that took
+    // the hidden field for a contact field. Nothing is sent either way (the bot
+    // must not learn it was caught), but the discard is logged to Slack with the
+    // answers, so a real person caught by autofill is visible and recoverable
+    // instead of silently gone while their screen said "You're all set".
+    const honeypot = honeypotValue(data);
+    if (honeypot) {
+      await notifySubmission({
+        client: EMAIL_CONFIG.brand.name,
+        slackWebhookUrl: SLACK_WEBHOOK,
+        route: `${intentCfg.label}${isPartial ? ' (started)' : ''} — discarded`,
+        formName: `${intent || 'lead'} form`,
+        status: 'discarded',
+        note: `value: ${JSON.stringify(honeypot.slice(0, 60))}`,
+        fields: slackRows,
+      });
+      return new Response(JSON.stringify({ success: true }), { status: 200 });
+    }
 
     if (!email || !name) {
       return new Response(JSON.stringify({ error: 'Name and email are required.' }), { status: 400 });
@@ -55,21 +98,8 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
 
-    // Per-intent content (subject + submitter confirmation) — see email.config.ts.
-    const intentCfg = EMAIL_CONFIG.intents[intent] ?? EMAIL_CONFIG.intents.default;
-
-    // Structured per-intent answers, sent by the form as a labeled list. Render
-    // EVERY field with its real label.
+    // Render EVERY structured answer with its real label.
     const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    let detailFields: { label: string; value: string }[] = [];
-    try {
-      const parsed = JSON.parse(data.get('fieldsJson')?.toString() ?? '[]');
-      if (Array.isArray(parsed)) {
-        detailFields = parsed
-          .filter((f) => f && typeof f.label === 'string')
-          .map((f) => ({ label: String(f.label), value: String(f.value ?? '').trim() }));
-      }
-    } catch { /* ignore malformed fieldsJson */ }
     const detailRows = detailFields
       .map((f) =>
         `<tr><td style="padding:4px 14px 4px 0;color:#888;white-space:nowrap;vertical-align:top"><strong>${esc(f.label)}</strong></td><td style="padding:4px 0">${f.value ? esc(f.value) : '—'}</td></tr>`)
@@ -119,7 +149,7 @@ export const POST: APIRoute = async ({ request }) => {
       route: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}`,
       formName: `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`,
       delivered: !notifyError,
-      fields: fieldsFromFormData(data),
+      fields: slackRows,
     });
 
     if (notifyError) throw notifyError;

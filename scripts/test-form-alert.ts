@@ -118,5 +118,34 @@ check('drops both honeypots', !keys.includes('Website') && !keys.includes('Compa
 check('drops machine fields', !keys.includes('Fieldsjson') && !keys.includes('Audience'));
 check('drops whitespace-only values', !keys.includes('Blank'));
 
-console.log(failures ? `\n${failures} FAILED` : '\nall passed');
+
+// 10. A discarded (honeypot) submission is logged with its own marker and the
+//     answers, so a real person caught by autofill is still visible.
+bodies = [];
+await notifySubmission({ client: 'Acme', slackWebhookUrl: SLACK, route: 'Proposal — discarded', status: 'discarded', note: 'value: "x"', fields: [['Name', 'A'], ['Number of units', '120']] });
+check('discarded post is marked 🪤', bodies[0].text.startsWith('🪤'));
+check('discarded post explains the honeypot', JSON.stringify(bodies[0].blocks).includes('honeypot'));
+check('discarded post carries the answers', JSON.stringify(bodies[0].blocks).includes('*Number of units:* 120'));
+
+// 11. Many long answers are split across sections, never truncated as a whole,
+//     and every section stays under Slack's 3000-character limit.
+bodies = [];
+const many: Array<[string, string]> = Array.from({ length: 30 }, (_, i) => [`Answer ${i}`, 'y'.repeat(200)]);
+await notifySubmission({ client: 'Acme', slackWebhookUrl: SLACK, fields: many });
+const sections = bodies[0].blocks.filter((b: any) => b.type === 'section');
+check('long submissions use several sections', sections.length > 1);
+check('every section is under 3000 chars', sections.every((b: any) => b.text.text.length < 3000));
+check('no answer is dropped', sections.map((b: any) => b.text.text).join('\n').includes('*Answer 29:*'));
+
+// 12. The honeypot is recognised under every name it has had.
+const { honeypotValue } = await import('../src/lib/form-alert.ts');
+const hp1 = new FormData(); hp1.set('contact_preference_other', 'http://spam.example');
+const hp2 = new FormData(); hp2.set('website', 'http://spam.example');
+const hp3 = new FormData(); hp3.set('name', 'Dana'); hp3.set('contact_preference_other', '   ');
+check('current honeypot name is detected', honeypotValue(hp1) !== '');
+check('legacy honeypot name is detected', honeypotValue(hp2) !== '');
+check('whitespace-only honeypot is not a hit', honeypotValue(hp3) === '');
+check('current honeypot name is hidden from Slack rows', !fieldsFromFormData(hp1).some(([k]) => /contact preference/i.test(k)));
+
+console.log(failures ? `\n${failures} check(s) FAILED` : '\nall checks passed');
 process.exit(failures ? 1 : 0);
