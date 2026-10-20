@@ -162,6 +162,10 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
       <script is:inline define:vars={{ gaMeasurementId }}>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
+        // define:vars wraps this script in a function scope, so `gtag` was never
+        // global and every window.gtag(...) call on the site (form events,
+        // newsletter sign_up) silently did nothing. Expose it.
+        window.gtag = gtag;
         gtag('js', new Date());
         gtag('config', gaMeasurementId);
         window.addEventListener('load', function() {

@@ -20,15 +20,30 @@
 // as a Lead when the pixel is present.
 type Params = Record<string, string | number | boolean | undefined>;
 
+// gtag.js only processes `arguments` objects pushed to the dataLayer — a plain
+// array is ignored — so build one the same way the official snippet does.
+function gtagArgs(..._args: unknown[]): IArguments {
+  return arguments;
+}
+
 export function track(event: string, params: Params = {}): void {
   if (typeof window === 'undefined') return;
   const w = window as Window & {
     gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
     fbq?: (...args: unknown[]) => void;
   };
   try {
-    if (typeof w.gtag === 'function') w.gtag('event', event, params);
-    else if (import.meta.env.DEV) console.info('[track]', event, params);
+    if (typeof w.gtag === 'function') {
+      w.gtag('event', event, params);
+    } else if (Array.isArray(w.dataLayer)) {
+      // GA is loaded but its gtag() helper is not global (it is declared inside
+      // the layout's define:vars script scope). gtag.js reads `arguments`
+      // objects off the dataLayer, which is all the helper does anyway.
+      w.dataLayer.push(gtagArgs('event', event, params));
+    } else if (import.meta.env.DEV) {
+      console.info('[track]', event, params);
+    }
     if (event === 'generate_lead' && typeof w.fbq === 'function') {
       w.fbq('track', 'Lead', { content_name: params.form });
     }
