@@ -50,6 +50,10 @@ export const POST: APIRoute = async ({ request }) => {
     // Per-intent content (subject + submitter confirmation) — see email.config.ts.
     const intentCfg = EMAIL_CONFIG.intents[intent] ?? EMAIL_CONFIG.intents.default;
     const detailFields = parseFields(data.get('fieldsJson'));
+    // The wizard's step-1 role ("Board President", "Property owner / resident"…).
+    // Shown in the Slack heading for partials so board members and residents can
+    // be told apart at a glance, and used below to keep residents out of Pipedrive.
+    const leadRole = detailFields.find((f) => /role/i.test(f.label))?.value || '';
 
     // The Slack record: every answer, labelled, in the same order as the email.
     // Used for the normal log, the "not delivered" fallback, and the honeypot
@@ -146,7 +150,7 @@ export const POST: APIRoute = async ({ request }) => {
     await notifySubmission({
       client: EMAIL_CONFIG.brand.name,
       slackWebhookUrl: SLACK_WEBHOOK,
-      route: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}`,
+      route: `${intentCfg.label}${isPartial ? ` (started, not submitted${leadRole ? ` · ${leadRole}` : ''})` : ''}`,
       formName: `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`,
       delivered: !notifyError,
       fields: slackRows,
@@ -204,7 +208,6 @@ export const POST: APIRoute = async ({ request }) => {
     // Every answer goes into the deal's note; the ones listed in FIELD_MAP
     // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
     // → "Community Address" — are also written to the matching Pipedrive fields.
-    const leadRole = detailFields.find((f) => /role/i.test(f.label))?.value || '';
     const isResident = /resident/i.test(leadRole);
     if (intent === 'proposal' && !(isPartial && isResident)) {
       const role = leadRole;
