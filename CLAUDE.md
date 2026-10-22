@@ -86,8 +86,9 @@ Nobody should have to wonder whether the proposal form is working. Four things m
    key event. Step drop-off = `proposal_step_viewed` by step; validation friction = `proposal_step_blocked`;
    failed POSTs = `form_submit_failed` (reason `network` or `http_<status>`). On stg/dev the events print to
    the browser console instead.
-4. **Four ledgers must agree** for any date range: Slack 📬 posts, the newdevelopment@ inbox (including the
-   "Started (incomplete)" partials), Pipedrive deals in Savannah's pipeline, Mailchimp contacts tagged
+4. **Four ledgers must agree** for any date range: Slack 📬 posts, the newdevelopment@ inbox (complete
+   proposals; the "Started (incomplete)" partials go to savannahestes@ instead, with no Jeff cc — see
+   `partialRoutes` in `email.config.ts`), Pipedrive deals in Savannah's pipeline, Mailchimp contacts tagged
    `website-lead`. If Slack shows more than the inbox, mail is being filtered: cmgt.org mail goes through
    AppRiver (arsmtp.com MX), which quarantines "our own domain from an outside server" by default. Have the
    client allowlist `notifications@mail.cmgt.org`, `hello@mail.cmgt.org`, and the envelope domain
