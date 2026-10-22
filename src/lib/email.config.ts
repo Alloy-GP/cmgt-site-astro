@@ -96,12 +96,12 @@ export const EMAIL_CONFIG = {
 
   // ── Partial captures ("Started (incomplete)": the wizard's contact step was
   // completed but the form was never submitted). These are chase leads for
-  // sales, not new-business notifications for leadership, so they go to
-  // Savannah alone — not newdevelopment@, and Jeff is not cc'd. The complete
-  // submission that may follow still uses `routes` / `notifyCcByIntent` above.
-  // Intents not listed here are routed exactly like a complete submission. ──
+  // sales, so they go to newdevelopment@ plus Savannah, and Jeff is not cc'd.
+  // The complete submission that may follow still uses `routes` /
+  // `notifyCcByIntent` above. Intents not listed here are routed exactly like
+  // a complete submission. ──
   partialRoutes: (IS_PROD
-    ? { proposal: ['savannahestes@cmgt.org'] }
+    ? { proposal: ['newdevelopment@cmgt.org', 'savannahestes@cmgt.org'] }
     : {}
   ) as Record<string, string[]>,
   partialCcByIntent: (IS_PROD
