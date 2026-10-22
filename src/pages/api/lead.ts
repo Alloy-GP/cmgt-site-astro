@@ -91,9 +91,18 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Route the notification to the right inbox by intent (falls back to default).
-    const notifyTo = EMAIL_CONFIG.routes[intent] ?? EMAIL_CONFIG.notify;
+    // A partial capture may have its own destination (proposal partials go to
+    // Savannah, not newdevelopment@/Jeff — see email.config.ts); otherwise it
+    // is routed like a complete submission.
+    const notifyTo =
+      (isPartial && EMAIL_CONFIG.partialRoutes[intent]) ||
+      EMAIL_CONFIG.routes[intent] ||
+      EMAIL_CONFIG.notify;
     // Visible CC, per intent (vendor/general skip Jeff — see email.config.ts).
-    const notifyCc = EMAIL_CONFIG.notifyCcByIntent[intent] ?? EMAIL_CONFIG.notifyCc;
+    const notifyCc =
+      (isPartial && EMAIL_CONFIG.partialCcByIntent[intent]) ||
+      EMAIL_CONFIG.notifyCcByIntent[intent] ||
+      EMAIL_CONFIG.notifyCc;
 
     // An intent with an explicitly empty route (e.g. `rental`, pending the client's
     // destination inbox) is accepted but intentionally NOT delivered anywhere yet —

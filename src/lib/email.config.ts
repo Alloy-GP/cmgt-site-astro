@@ -94,6 +94,21 @@ export const EMAIL_CONFIG = {
     : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY, resident: NON_PROD_NOTIFY, newsletter: NON_PROD_NOTIFY }
   ) as Record<string, string[]>,
 
+  // ── Partial captures ("Started (incomplete)": the wizard's contact step was
+  // completed but the form was never submitted). These are chase leads for
+  // sales, not new-business notifications for leadership, so they go to
+  // Savannah alone — not newdevelopment@, and Jeff is not cc'd. The complete
+  // submission that may follow still uses `routes` / `notifyCcByIntent` above.
+  // Intents not listed here are routed exactly like a complete submission. ──
+  partialRoutes: (IS_PROD
+    ? { proposal: ['savannahestes@cmgt.org'] }
+    : {}
+  ) as Record<string, string[]>,
+  partialCcByIntent: (IS_PROD
+    ? { proposal: [...ALLOY_MONITORING] }
+    : {}
+  ) as Record<string, string[]>,
+
   mailchimp: {
     enabled:      IS_PROD,   // prod only — never add stg/dev test leads to the real audience
     defaultTags:  ['website-lead'],        // tag applied to proposal form submissions (only intent synced to Mailchimp)
