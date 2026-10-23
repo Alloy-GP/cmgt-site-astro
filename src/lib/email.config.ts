@@ -84,7 +84,7 @@ export const EMAIL_CONFIG = {
   // Mailchimp-only). On non-prod everything goes to the test inbox. ──
   routes: (IS_PROD
     ? {
-        proposal: ['newdevelopment@cmgt.org'], // boards exploring new management
+        proposal: ['newdevelopment@cmgt.org', 'savannahestes@cmgt.org'], // boards exploring new management — Savannah (sales) gets every proposal
         vendor:   ['info@cmgt.org'],           // contractor / vendor bids → general inbox
         general:  ['info@cmgt.org'],           // catch-all general inquiries → general inbox
         rental:   ['christremblay@cmgt.org'], // rental management inquiries → Chris Tremblay
@@ -97,11 +97,12 @@ export const EMAIL_CONFIG = {
   // ── Partial captures ("Started (incomplete)": the wizard's contact step was
   // completed but the form was never submitted). These are chase leads for
   // sales, not new-business notifications for leadership, so they go to
-  // Savannah alone — not newdevelopment@, and Jeff is not cc'd. The complete
-  // submission that may follow still uses `routes` / `notifyCcByIntent` above.
-  // Intents not listed here are routed exactly like a complete submission. ──
+  // newdevelopment@ and Savannah, and Jeff is NOT cc'd. The complete
+  // submission that may follow still uses `routes` / `notifyCcByIntent` above
+  // (same two inboxes, plus Jeff cc'd). Intents not listed here are routed
+  // exactly like a complete submission. ──
   partialRoutes: (IS_PROD
-    ? { proposal: ['savannahestes@cmgt.org'] }
+    ? { proposal: ['newdevelopment@cmgt.org', 'savannahestes@cmgt.org'] }
     : {}
   ) as Record<string, string[]>,
   partialCcByIntent: (IS_PROD
