@@ -25,6 +25,11 @@ const ALLOY_MONITORING: string[] =
     ? ['admin@alloygp.co']
     : [];
 
+// ── New-business inboxes: newdevelopment@ and Savannah (sales) together, on
+// every proposal (complete or partial), on anything unrouted, and on failure
+// alerts. Nobody is cc'd. ──
+const NEW_BUSINESS = IS_PROD ? ['newdevelopment@cmgt.org', 'savannahestes@cmgt.org'] : NON_PROD_NOTIFY;
+
 export const EMAIL_CONFIG = {
 
   // ── Client brand identity. Used in headings, signatures, and links. ──
@@ -47,21 +52,22 @@ export const EMAIL_CONFIG = {
   replyTo: 'info@cmgt.org',
 
   // ── Visible CC on the internal STAFF notification (every recipient there is
-  // internal, so it's safe to show them). Prod only. This is the DEFAULT cc
-  // fallback (Jeff + agency admin); per-intent overrides are below. ──
-  notifyCc: IS_PROD ? ['jharman@cmgt.org', ...ALLOY_MONITORING] : [],
+  // internal, so it's safe to show them). Prod only. Nobody is cc'd on any
+  // form any more (Jeff asked to be taken off everything on 2026-10-23); the
+  // only possible cc is Alloy's monitoring copy, and that is empty while Slack
+  // carries the log. This is the DEFAULT cc fallback; per-intent overrides are
+  // below. ──
+  notifyCc: IS_PROD ? [...ALLOY_MONITORING] : [],
 
-  // ── Per-intent CC override. Vendor bids + general questions route to info@
-  // and deliberately skip Jeff (they're not new-business); only the agency
-  // admin stays cc'd for monitoring. Intents not listed fall back to notifyCc. ──
+  // ── Per-intent CC override. Intents not listed fall back to notifyCc. ──
   notifyCcByIntent: (IS_PROD
     ? {
-        proposal: ['jharman@cmgt.org', ...ALLOY_MONITORING],
-        rental:   [...ALLOY_MONITORING], // rentals go to Chris Tremblay; Jeff not cc'd
+        proposal: [...ALLOY_MONITORING],
+        rental:   [...ALLOY_MONITORING], // rentals go to Chris Tremblay
         vendor:   [...ALLOY_MONITORING],
         general:  [...ALLOY_MONITORING],
-        resident: [...ALLOY_MONITORING], // homeowner help — Jeff not cc'd
-        newsletter: [...ALLOY_MONITORING], // /newsletter questions — Jeff not cc'd
+        resident: [...ALLOY_MONITORING], // homeowner help
+        newsletter: [...ALLOY_MONITORING], // /newsletter questions
       }
     : {}
   ) as Record<string, string[]>,
@@ -72,11 +78,11 @@ export const EMAIL_CONFIG = {
   bcc: ALLOY_MONITORING,
 
   // ── Default inbox — used by unknown/unrouted intents (fallback). ──
-  notify: IS_PROD ? ['newdevelopment@cmgt.org'] : NON_PROD_NOTIFY,
+  notify: NEW_BUSINESS,
 
   // ── Failure-alert inbox. Handlers send the email-fallback alert here
   // when a notification send fails (see form-alert.ts). ──
-  alertsTo: IS_PROD ? ['newdevelopment@cmgt.org'] : NON_PROD_NOTIFY,
+  alertsTo: NEW_BUSINESS,
 
   // ── Per-intent routing. The intake form sends an `intent`; /api/lead
   // routes the staff notification to the matching list (falls back to `notify`).
@@ -84,7 +90,7 @@ export const EMAIL_CONFIG = {
   // Mailchimp-only). On non-prod everything goes to the test inbox. ──
   routes: (IS_PROD
     ? {
-        proposal: ['newdevelopment@cmgt.org'], // boards exploring new management
+        proposal: NEW_BUSINESS,                // boards exploring new management — newdevelopment@ + Savannah, nobody cc'd
         vendor:   ['info@cmgt.org'],           // contractor / vendor bids → general inbox
         general:  ['info@cmgt.org'],           // catch-all general inquiries → general inbox
         rental:   ['christremblay@cmgt.org'], // rental management inquiries → Chris Tremblay
@@ -95,13 +101,11 @@ export const EMAIL_CONFIG = {
   ) as Record<string, string[]>,
 
   // ── Partial captures ("Started (incomplete)": the wizard's contact step was
-  // completed but the form was never submitted). These are chase leads for
-  // sales, not new-business notifications for leadership, so they go to
-  // Savannah alone — not newdevelopment@, and Jeff is not cc'd. The complete
-  // submission that may follow still uses `routes` / `notifyCcByIntent` above.
-  // Intents not listed here are routed exactly like a complete submission. ──
+  // completed but the form was never submitted). Same two inboxes as a complete
+  // proposal, nobody cc'd. Intents not listed here are routed exactly like a
+  // complete submission. ──
   partialRoutes: (IS_PROD
-    ? { proposal: ['savannahestes@cmgt.org'] }
+    ? { proposal: NEW_BUSINESS }
     : {}
   ) as Record<string, string[]>,
   partialCcByIntent: (IS_PROD

@@ -433,6 +433,11 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   const [sendError, setSendError] = useState('');
   const [submission, setSubmission] = useState(null);
   const partialSent = useRef(false);
+  // What the partial capture created in the CRM ({ personId, dealId }), sent
+  // back with the full submission so Pipedrive retires that exact partial deal
+  // and reuses that exact Person (no second record if the search index lags or
+  // the email was corrected on the last step).
+  const partialCrm = useRef(null);
   const hydrated = useHydrated();
 
   const set = (k, v) => { setVals((s) => ({ ...s, [k]: v })); setErrors((e) => ({ ...e, [k]: null })); };
@@ -526,10 +531,14 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
     } else {
       fd.set('fieldsJson', JSON.stringify(buildFields()));
       fd.set('message', vals.success.trim());
+      const crm = partialCrm.current;
+      if (crm?.personId) fd.set('partial_person_id', String(crm.personId));
+      if (crm?.dealId)   fd.set('partial_deal_id', String(crm.dealId));
     }
     const res = await postForm('/api/lead', fd);
     const json = await res.json().catch(() => ({}));
     if (!res.ok || json.success === false) throw httpError(res, json);
+    if (stage === 'partial' && json.crm) partialCrm.current = json.crm;
   }
 
   function next() {
@@ -574,7 +583,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   function reset() {
     setStep(1); setRefId(genId());
     setVals({ name: '', role: '', email: '', phone: '', association: '', location: '', units: '', type: '', mgmtStatus: '', dues: '', amenities: [], services: [], pains: [], success: '', budget: '', timeline: '' });
-    setErrors({}); setSendError(''); setSubmission(null); partialSent.current = false;
+    setErrors({}); setSendError(''); setSubmission(null); partialSent.current = false; partialCrm.current = null;
   }
 
   if (submission) {
