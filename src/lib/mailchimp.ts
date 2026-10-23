@@ -32,6 +32,9 @@ interface MailchimpContact {
   lastName?: string;
   company?: string;
   tags?: string[];
+  // Tags to take OFF the member (e.g. 'proposal-incomplete' once the full
+  // proposal is in). A tag the member doesn't have is ignored by Mailchimp.
+  removeTags?: string[];
   // When true, NEW members are created as 'pending' so Mailchimp sends its
   // double opt-in confirmation email — they only become 'subscribed' after
   // clicking it. Used by the public newsletter to block bots (they can't
@@ -85,9 +88,13 @@ export async function upsertMailchimpContact(contact: MailchimpContact): Promise
     // Tags go through the dedicated endpoint so they apply on both new AND
     // existing members (setListMember ignores tag changes for existing ones).
     const tags = (contact.tags || []).filter(Boolean);
-    if (tags.length) {
+    const removeTags = (contact.removeTags || []).filter((name) => name && !tags.includes(name));
+    if (tags.length || removeTags.length) {
       await mailchimp.lists.updateListMemberTags(id, hash, {
-        tags: tags.map((name) => ({ name, status: 'active' })),
+        tags: [
+          ...tags.map((name) => ({ name, status: 'active' as const })),
+          ...removeTags.map((name) => ({ name, status: 'inactive' as const })),
+        ],
       });
     }
   } catch (err: any) {

@@ -87,9 +87,9 @@ Nobody should have to wonder whether the proposal form is working. Four things m
    failed POSTs = `form_submit_failed` (reason `network` or `http_<status>`). On stg/dev the events print to
    the browser console instead.
 4. **Four ledgers must agree** for any date range: Slack 📬 posts, the newdevelopment@ inbox (every
-   proposal, complete or "Started (incomplete)", goes to newdevelopment@ AND savannahestes@; complete ones
-   also cc Jeff, partials do not — see `routes` / `partialRoutes` in `email.config.ts`), Pipedrive deals in
-   Savannah's pipeline, Mailchimp contacts tagged `website-lead`. If Slack shows more than the inbox, mail is being filtered: cmgt.org mail goes through
+   proposal, complete or "Started (incomplete)", goes to newdevelopment@ AND savannahestes@, nobody cc'd —
+   Jeff is on nothing, by his request on 2026-10-23; see `routes` / `partialRoutes` in `email.config.ts`),
+   Pipedrive deals in Savannah's pipeline, Mailchimp contacts tagged `website-lead`. If Slack shows more than the inbox, mail is being filtered: cmgt.org mail goes through
    AppRiver (arsmtp.com MX), which quarantines "our own domain from an outside server" by default. Have the
    client allowlist `notifications@mail.cmgt.org`, `hello@mail.cmgt.org`, and the envelope domain
    `send.mail.cmgt.org` (Amazon SES), then check the quarantine for past notifications.
@@ -106,9 +106,22 @@ more before the visitor sees an error; HTTP errors are not retried (Slack alread
 
 ## Pipedrive — proposal leads → Organization + Person + Deal
 
-Complete `proposal` submissions (never partials, never vendor/general/rental) are pushed to
-Pipedrive by `src/lib/pipedrive.ts`. It is a no-op unless `PIPEDRIVE_API_TOKEN` is set AND
-`PUBLIC_ENV=production`, and it never throws. Every answer is written into the deal's note.
+Every `proposal` submission — partial AND complete (never vendor/general/rental/resident) — is
+pushed to Pipedrive by `src/lib/pipedrive.ts`. It is a no-op unless `PIPEDRIVE_API_TOKEN` is set
+AND `PUBLIC_ENV=production`, and it never throws. Every answer is written into the deal's note.
+
+**Partial → full handoff.** The wizard's contact step creates a Person and a deal titled
+`Started, not submitted — Name` (owned by Savannah, in her pipeline), so an abandoned form is still
+a deal she can chase. A partial from someone who picked the resident role is skipped (homeowner,
+not a prospect). When the full form comes in, the full deal is created FIRST, then the partial deal
+is deleted (Pipedrive keeps it recoverable for 30 days) — so a failure never leaves the lead with
+nothing. If the full deal cannot be created, the partial stays and Slack shows ⚠️. The handoff does
+not depend on Pipedrive's search index: the partial's Person + Deal ids are returned to the browser
+and echoed back with the full submission (`partial_person_id` / `partial_deal_id`), so the same
+Person is reused even if the index lags or the visitor corrected their email on the last step. A
+deal id from the browser is only ever deleted if it is an open deal with the partial title prefix.
+If a partial cannot be deleted, the Slack post says so (⚠️ "could not be removed — delete it by
+hand"). Offline test of every path: `npm run test:pipedrive`.
 
 **Where deals land, and whose.** Pipeline 12 "Sav - Warm & Closing", first stage ("WIP"), owned
 by Savannah (user 26876223) — `DEAL_PIPELINE_ID` / `DEAL_STAGE_ID` / `DEAL_OWNER_ID` in

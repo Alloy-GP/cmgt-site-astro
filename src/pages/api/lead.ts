@@ -47,6 +47,14 @@ export const POST: APIRoute = async ({ request }) => {
     // isn't finished yet (capture the lead now); 'complete' (default) = full submit.
     const stage     = data.get('stage')?.toString().trim() ?? 'complete';
     const isPartial = stage === 'partial';
+    // The Pipedrive ids the partial capture handed the browser (see the response
+    // at the end), echoed back on the full submit so the CRM reuses the same
+    // Person and retires the same partial deal. Positive integers or nothing.
+    const idOf = (key: string) => {
+      const n = Number(data.get(key)?.toString().trim());
+      return Number.isInteger(n) && n > 0 ? n : undefined;
+    };
+    const partialHint = isPartial ? undefined : { personId: idOf('partial_person_id'), dealId: idOf('partial_deal_id') };
 
     // Per-intent content (subject + submitter confirmation) — see email.config.ts.
     const intentCfg = EMAIL_CONFIG.intents[intent] ?? EMAIL_CONFIG.intents.default;
@@ -207,6 +215,8 @@ export const POST: APIRoute = async ({ request }) => {
         tags: isPartial
           ? [...EMAIL_CONFIG.mailchimp.defaultTags, 'proposal-incomplete']
           : EMAIL_CONFIG.mailchimp.defaultTags,
+        // The full form is in: the contact is no longer "incomplete".
+        ...(isPartial ? {} : { removeTags: ['proposal-incomplete'] }),
       });
     }
 
@@ -217,9 +227,10 @@ export const POST: APIRoute = async ({ request }) => {
     //
     // Partials (contact step done, form not submitted) become a
     // "Started, not submitted — Name" deal so sales can chase them. When the
-    // full form comes in, that partial deal is deleted and replaced by the real
-    // one (see pipedrive.ts). Partials from someone who picked the resident
-    // role are skipped — they're homeowners, not prospects.
+    // full form comes in, the real deal is created first and then the partial
+    // is deleted (see pipedrive.ts); the ids echoed back by the form make that
+    // match exact. Partials from someone who picked the resident role are
+    // skipped — they're homeowners, not prospects.
     // Every answer goes into the deal's note; the ones listed in FIELD_MAP
     // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
     // → "Community Address" — are also written to the matching Pipedrive fields.
@@ -240,6 +251,7 @@ export const POST: APIRoute = async ({ request }) => {
         fields: detailFields,
         source: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}${ref ? ` · ${ref}` : ''}`,
         stage: isPartial ? 'partial' : 'complete',
+        ...(partialHint ? { partial: partialHint } : {}),
       });
     }
 
@@ -249,7 +261,7 @@ export const POST: APIRoute = async ({ request }) => {
     const crmText = !crm
       ? ''
       : crm.status === 'created'
-        ? `Pipedrive: ${crm.detail}`
+        ? `Pipedrive: ${crm.detail}${crm.warning ? ` — ⚠️ ${crm.warning}` : ''}`
         : crm.status === 'skipped'
           ? `Pipedrive: skipped — ${crm.detail}`
           : `Pipedrive FAILED — ${crm.detail}. The email and this channel have the lead; create the deal by hand.`;
@@ -258,12 +270,15 @@ export const POST: APIRoute = async ({ request }) => {
       slackWebhookUrl: SLACK_WEBHOOK,
       route: slackRoute,
       formName: slackForm,
-      status: crm?.status === 'failed' ? 'warning' : 'delivered',
+      status: crm?.status === 'failed' || crm?.warning ? 'warning' : 'delivered',
       ...(crmText ? { note: crmText } : {}),
       fields: slackRows,
     });
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    // A partial capture tells the browser which CRM records it made, so the
+    // full submission can name them (partial_person_id / partial_deal_id).
+    const crmIds = isPartial && crm?.personId ? { crm: { personId: crm.personId, dealId: crm.dealId } } : {};
+    return new Response(JSON.stringify({ success: true, ...crmIds }), { status: 200 });
   } catch (err) {
     console.error('Lead API error:', err);
     return new Response(JSON.stringify({ error: 'Something went wrong. Please try again.' }), { status: 500 });

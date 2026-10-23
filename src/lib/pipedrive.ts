@@ -33,6 +33,13 @@ interface PipedriveLead {
   /** 'partial' = the proposal wizard's contact step was completed but the form
    *  wasn't submitted; 'complete' (default) = full submission. */
   stage?: 'partial' | 'complete';
+  /** On a complete submission: the ids the partial capture returned to the
+   *  browser (PipedriveOutcome.personId / dealId), echoed back by the form.
+   *  They let the full submission find its Person and partial deal directly,
+   *  without depending on Pipedrive's search index — which can lag behind a
+   *  record created minutes earlier — and even if the visitor corrected their
+   *  email on the way to the last step. Never trusted blindly (see below). */
+  partial?: { personId?: number | undefined; dealId?: number | undefined } | undefined;
 }
 
 // Deals created from partial (started, not submitted) proposals get this title
@@ -239,6 +246,54 @@ async function upsertOrganization(
   }
 }
 
+// ── Person lookup ─────────────────────────────────────────────────────────────
+interface PdPerson { id: number; emails: string[]; phones: string[]; orgId?: number }
+const lower = (v: string) => v.trim().toLowerCase();
+const JSON_HEADERS = { 'Content-Type': 'application/json' };
+
+// /persons/search items and GET /persons/{id} records have different shapes;
+// both are reduced to the few fields the partial → full handoff needs.
+function personFromSearchItem(item: any): PdPerson | undefined {
+  if (!item?.id) return undefined;
+  return {
+    id: item.id,
+    emails: ((item.emails ?? []) as string[]).filter(Boolean).map(lower),
+    phones: ((item.phones ?? []) as string[]).filter(Boolean),
+    orgId: item.organization?.id || undefined,
+  };
+}
+function personFromRecord(rec: any): PdPerson | undefined {
+  if (!rec?.id) return undefined;
+  const org = rec.org_id;
+  return {
+    id: rec.id,
+    emails: ((rec.email ?? []) as { value?: string }[]).map((e) => lower(e?.value ?? '')).filter(Boolean),
+    phones: ((rec.phone ?? []) as { value?: string }[]).map((e) => e?.value ?? '').filter(Boolean),
+    orgId: (typeof org === 'object' && org ? org.value : org) || undefined,
+  };
+}
+
+async function findPersonByEmail(base: string, qs: string, email: string): Promise<PdPerson | undefined> {
+  const res = await fetch(
+    `${base}/persons/search?term=${encodeURIComponent(email)}&fields=email&exact_match=true&${qs}`,
+  );
+  if (!res.ok) return undefined;
+  const data = await res.json();
+  return personFromSearchItem(data?.data?.items?.[0]?.item);
+}
+
+async function getPerson(base: string, qs: string, id: number): Promise<PdPerson | undefined> {
+  try {
+    const res = await fetch(`${base}/persons/${id}?${qs}`);
+    if (!res.ok) return undefined;
+    return personFromRecord((await res.json())?.data);
+  } catch {
+    return undefined;
+  }
+}
+
+// Open partial-capture deals on a person (by title prefix). Reads the person's
+// deals directly — not the search index — so a deal created seconds ago counts.
 async function openPartialDeals(base: string, qs: string, personId: number): Promise<number[]> {
   try {
     const res = await fetch(`${base}/persons/${personId}/deals?status=open&limit=100&${qs}`);
@@ -252,11 +307,33 @@ async function openPartialDeals(base: string, qs: string, personId: number): Pro
   }
 }
 
+// The deal, if it is an OPEN PARTIAL-CAPTURE deal — the only kind a full
+// submission may remove. The id comes from the browser, so it is checked
+// against the record before anything is done with it.
+async function openPartialDeal(base: string, qs: string, id: number): Promise<number | undefined> {
+  try {
+    const res = await fetch(`${base}/deals/${id}?${qs}`);
+    if (!res.ok) return undefined;
+    const d = (await res.json())?.data;
+    const isPartial = d?.id && d.status === 'open' && String(d.title ?? '').startsWith(PARTIAL_DEAL_PREFIX);
+    return isPartial ? d.id : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 /** What happened in Pipedrive, so the caller can log a failure where people
  *  will see it (Slack) instead of only in the function log. Never thrown. */
 export interface PipedriveOutcome {
   status: 'created' | 'skipped' | 'failed';
   detail: string;
+  /** Something the deal was created despite — e.g. a partial deal that could
+   *  not be removed. Shown as ⚠️ in Slack so it is cleaned up by hand. */
+  warning?: string | undefined;
+  /** Set when an open partial deal exists for this lead (created now, or found
+   *  already open): the form sends these back with the full submission. */
+  personId?: number | undefined;
+  dealId?: number | undefined;
 }
 
 export async function addToPipedrive(lead: PipedriveLead): Promise<PipedriveOutcome> {
@@ -269,6 +346,7 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<PipedriveOutc
 
   const { email, name, phone, role, org, address, notes, source, fields: answers } = lead;
   const isPartial = lead.stage === 'partial';
+  const hint = isPartial ? undefined : lead.partial;
   const base = 'https://api.pipedrive.com/v1';
   const qs = `api_token=${apiToken}`;
 
@@ -291,19 +369,43 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<PipedriveOutc
     // Partials only have contact info — no org until the full form comes in.
     const orgId = org && !isPartial ? await upsertOrganization(base, qs, org, ownerId, address, orgCustom) : undefined;
 
-    // 1. Upsert Person — search by email first, create if not found.
-    let personId: number | undefined;
-    const searchRes = await fetch(
-      `${base}/persons/search?term=${encodeURIComponent(email)}&fields=email&exact_match=true&${qs}`,
-    );
-    if (searchRes.ok) {
-      const searchData = await searchRes.json();
-      personId = searchData?.data?.items?.[0]?.item?.id;
+    // 1. Find the Person — by email first. On a complete submission, if the
+    //    search index has not caught up with the person the partial capture
+    //    created minutes ago, or the visitor corrected their email on the last
+    //    step, fall back to the id the form echoed back. A hinted person is
+    //    adopted only if it is demonstrably ours: it carries the submitted
+    //    email, or the hinted partial deal is open on it.
+    let person = await findPersonByEmail(base, qs, email);
+    if (!person && hint?.personId) {
+      const hinted = await getPerson(base, qs, hint.personId);
+      if (hinted) {
+        const ours = hinted.emails.includes(lower(email))
+          || (!!hint.dealId && (await openPartialDeals(base, qs, hinted.id)).includes(hint.dealId));
+        if (ours) person = hinted;
+      }
     }
-    if (!personId) {
+
+    let personId = person?.id;
+    if (person) {
+      // Fill in what the earlier record lacks: the partial capture had no org;
+      // a corrected email becomes primary, the old one is kept; a phone is added
+      // only if there is none. Nothing already on the record is overwritten.
+      const patch: Record<string, unknown> = {};
+      if (!person.emails.includes(lower(email))) {
+        patch.email = [{ value: email, primary: true }, ...person.emails.map((value) => ({ value, primary: false }))];
+      }
+      if (phone && !person.phones.length) patch.phone = [{ value: phone, primary: true }];
+      if (orgId && !person.orgId) patch.org_id = orgId;
+      if (Object.keys(patch).length) {
+        const upd = await fetch(`${base}/persons/${person.id}?${qs}`, {
+          method: 'PUT', headers: JSON_HEADERS, body: JSON.stringify(patch),
+        });
+        if (!upd.ok) console.error(`[pipedrive] could not update person ${person.id}:`, upd.status);
+      }
+    } else {
       const personRes = await fetch(`${base}/persons?${qs}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: JSON_HEADERS,
         body: JSON.stringify({
           name: `${firstName}${lastName ? ' ' + lastName : ''}`,
           email: [{ value: email, primary: true }],
@@ -320,14 +422,24 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<PipedriveOutc
       }
     }
 
-    // 2. Create a Deal linked to the Person + Organization.
+    // 2. The partial deal(s) this submission supersedes.
+    const openPartials = await openPartialDeals(base, qs, personId!);
+    // A restarted form shouldn't stack a second partial on the same person.
+    if (isPartial && openPartials.length) {
+      return { status: 'skipped', detail: `open partial deal ${openPartials[0]} already exists`, personId, dealId: openPartials[0] };
+    }
+    // The partial deal the browser named, when it is not on this person (the
+    // email changed and an older record won the search): removed too, but only
+    // if the record really is an open partial-capture deal.
+    let superseded = openPartials;
+    if (hint?.dealId && !openPartials.includes(hint.dealId)) {
+      const extra = await openPartialDeal(base, qs, hint.dealId);
+      if (extra) superseded = [...openPartials, extra];
+    }
+
+    // 3. Create the Deal linked to the Person + Organization.
     //    Title is just the organization / HOA name (per Ken). Falls back to the
     //    submitter's name only when no org was provided.
-    // Open partial deals already on this person (see PARTIAL_DEAL_PREFIX).
-    const openPartials = await openPartialDeals(base, qs, personId);
-    // A restarted form shouldn't stack a second partial on the same person.
-    if (isPartial && openPartials.length) return { status: 'skipped', detail: `open partial deal ${openPartials[0]} already exists` };
-
     const dealTitle = isPartial
       ? `${PARTIAL_DEAL_PREFIX} ${name}`
       : (org && org.trim()) ? org.trim() : name;
@@ -357,7 +469,7 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<PipedriveOutc
     for (const [i, body] of attempts.entries()) {
       const dealRes = await fetch(`${base}/deals?${qs}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: JSON_HEADERS,
         body: JSON.stringify(body),
       });
       const dealData = await dealRes.json();
@@ -369,20 +481,31 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<PipedriveOutc
       console.error(`[pipedrive] create deal error (attempt ${i + 1}/${attempts.length}):`, dealData?.error, dealData?.error_info ?? '');
       lastDealError = `${dealRes.status} ${dealData?.error ?? ''} ${dealData?.error_info ?? ''}`.trim();
     }
-    if (!dealId) return { status: 'failed', detail: `create deal: ${lastDealError}` };
+    if (!dealId) {
+      // The partial deal (if any) is left in place: it is still the lead's only
+      // record in the CRM.
+      return { status: 'failed', detail: `create deal: ${lastDealError}` };
+    }
 
-    // The full proposal is in — remove this person's partial deal(s) so sales
-    // sees one record, not two. Done only AFTER the full deal exists, so a
-    // failure never leaves the lead with nothing. Pipedrive keeps deleted deals
-    // recoverable for 30 days.
+    // 4. The full proposal is in — remove this person's partial deal(s) so sales
+    //    sees one record, not two. Done only AFTER the full deal exists, so a
+    //    failure never leaves the lead with nothing. Pipedrive keeps deleted
+    //    deals recoverable for 30 days. A partial that will not delete is
+    //    reported (⚠️ in Slack) rather than silently left behind.
+    const removed: number[] = [];
+    const stuck: number[] = [];
     if (!isPartial) {
-      for (const partialId of openPartials) {
-        const delRes = await fetch(`${base}/deals/${partialId}?${qs}`, { method: 'DELETE' });
-        if (!delRes.ok) console.error(`[pipedrive] could not delete partial deal ${partialId}:`, delRes.status);
+      for (const partialId of superseded) {
+        let ok = false;
+        try {
+          ok = (await fetch(`${base}/deals/${partialId}?${qs}`, { method: 'DELETE' })).ok;
+        } catch { /* reported below */ }
+        (ok ? removed : stuck).push(partialId);
+        if (!ok) console.error(`[pipedrive] could not delete partial deal ${partialId}`);
       }
     }
 
-    // 3. Add a note to the Deal with the form context / submitted answers.
+    // 5. Add a note to the Deal with the form context / submitted answers.
     const noteLines = [
       `Source: ${source}`,
       role ? `Role: ${role}` : null,
@@ -391,11 +514,20 @@ export async function addToPipedrive(lead: PipedriveLead): Promise<PipedriveOutc
     if (noteLines) {
       await fetch(`${base}/notes?${qs}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: JSON_HEADERS,
         body: JSON.stringify({ content: noteLines.replace(/\n/g, '<br>'), deal_id: dealId }),
       });
     }
-    return { status: 'created', detail: `deal ${dealId}${isPartial ? ' (partial)' : ''}` };
+
+    const detail = isPartial
+      ? `deal ${dealId} (partial)`
+      : `deal ${dealId}${removed.length ? ` (replaced partial ${removed.join(', ')})` : ''}`;
+    return {
+      status: 'created',
+      detail,
+      ...(isPartial ? { personId, dealId } : {}),
+      ...(stuck.length ? { warning: `partial deal ${stuck.join(', ')} could not be removed — delete it by hand` } : {}),
+    };
   } catch (err) {
     console.error('[pipedrive] unexpected error:', err);
     return { status: 'failed', detail: `unexpected: ${err instanceof Error ? err.message : String(err)}` };

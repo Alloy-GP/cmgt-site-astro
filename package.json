@@ -10,6 +10,8 @@
     "astro": "astro",
     "check": "astro check",
     "test:forms": "node scripts/test-form-alert.ts",
+    "test:pipedrive": "node --import ./scripts/lib/register-import-meta-env.mjs scripts/test-pipedrive.ts",
+    "test": "npm run test:forms && npm run test:pipedrive",
     "llms:draft": "node scripts/llms-draft.mjs",
     "llms:check": "node scripts/llms-check.mjs"
   },
