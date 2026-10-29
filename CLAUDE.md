@@ -99,6 +99,15 @@ Honeypot: the field is `contact_preference_other` (`src/lib/honeypot.ts`), rende
 Safari's contact AutoFill treats as the URL field). The server accepts the old name too. Rename it in
 `honeypot.ts` only — never in one place.
 
+**Dues on the proposal form (changed 2026-10-29).** Step 2 asks two optional questions where it used to
+ask one ("Monthly dues / unit"): a **Collection cycle** dropdown (Monthly / Quarterly / Semi-annually /
+Annually — the list is `collectionCycle` in `intake-form.config.js`) and a free-text **Dues per unit**
+box that takes numbers or words. They travel under those two labels everywhere: the staff email, the
+confirmation recap, Slack, the Pipedrive deal note, and as WhatConverts field names (the hidden mirror
+inputs in `IntakeForm.jsx`). The Alloy portal reads the WhatConverts lead by field NAME
+(`src/lib/intakeFields.js` → `dues` / `cycle` in the Alloy-Partner-Portal repo) and prints
+"$185 / unit quarterly" on the proposal — rename either label here and change it there in the same PR.
+
 Proposal CTAs link to `/request-a-proposal?intent=proposal`: the page reads the query string server-side and
 renders the wizard directly (no picker, no flash). Generic "contact" links use the bare URL and land on the
 picker. A client-side retry covers a dropped connection: a POST that got no response at all is sent once
