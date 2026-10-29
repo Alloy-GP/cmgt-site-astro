@@ -78,10 +78,16 @@ Nobody should have to wonder whether the proposal form is working. Four things m
    🪤 discarded (the honeypot was filled: a bot, or a browser/password-manager autofill — the answers are
    included so a real person can be followed up by hand) · 🚨 the Resend send itself failed.
 2. **Daily heartbeat.** `/api/form-health` runs from a Vercel cron at 13:00 UTC (8am Central) and posts one
-   ✅/🚨 line: Resend key + sending-domain verification, Slack webhook, Mailchimp audience, Pipedrive token,
-   and that `PUBLIC_ENV` is production. No line in the morning = the cron is not running. Vercel sends
+   ✅/🚨 line: a real test email through Resend, Slack webhook, Mailchimp audience, Pipedrive token, and that
+   `PUBLIC_ENV` is production. No line in the morning = the cron is not running. Vercel sends
    `CRON_SECRET` as a bearer token; the same header works by hand:
    `curl -H "Authorization: Bearer $CRON_SECRET" https://cmgt.org/api/form-health`
+   The Resend check (`src/lib/resend-probe.ts`) sends from `notifications@mail.cmgt.org` to Resend's
+   simulated-delivery inbox `delivered+form-health@resend.dev` — same key, same endpoint as the forms —
+   so a ✓ means key + verified domain + send path, and nobody receives it (one email a day against the
+   quota; the Resend→Slack relay ignores sent/delivered events). It used to list Resend domains instead,
+   which needs a Full-access key; the production key is Sending-access only (as it should be), so the
+   heartbeat showed ✗ Resend every morning from 2026-10-21 to 2026-10-29 while sends worked fine.
 3. **GA4 funnel events** from the intake form — the list is in `src/lib/track.ts`. Mark `generate_lead` as a
    key event. Step drop-off = `proposal_step_viewed` by step; validation friction = `proposal_step_blocked`;
    failed POSTs = `form_submit_failed` (reason `network` or `http_<status>`). On stg/dev the events print to

@@ -1,11 +1,13 @@
 // src/pages/api/form-health.ts
 // Daily heartbeat for the form pipeline (Vercel cron — see vercel.json), so "is
 // the form working?" is answered in Slack every morning instead of wondered
-// about. It checks the things that break a form silently: the Resend key and
-// sending domain, the Slack webhook, the Mailchimp and Pipedrive credentials, and
-// that production is actually configured as production. One line is posted to
-// the forms channel — ✅ when everything passes, 🚨 with the failures when not.
-// No line on a morning means the cron itself did not run.
+// about. It checks the things that break a form silently: that Resend accepts
+// a real email from the site's notification address (src/lib/resend-probe.ts —
+// sent to Resend's simulated-delivery inbox, so nobody receives it), the Slack
+// webhook, the Mailchimp and Pipedrive credentials, and that production is
+// actually configured as production. One line is posted to the forms channel —
+// ✅ when everything passes, 🚨 with the failures when not. No line on a morning
+// means the cron itself did not run.
 //
 // Auth: Vercel sends `Authorization: Bearer $CRON_SECRET` with every cron request
 // once CRON_SECRET is set on the project (any long random string). The same
@@ -16,6 +18,7 @@
 
 import type { APIRoute } from 'astro';
 import { EMAIL_CONFIG } from '~/lib/email.config';
+import { probeResendSend } from '~/lib/resend-probe';
 
 export const prerender = false;
 
@@ -34,25 +37,17 @@ function authorized(request: Request): boolean {
 const withTimeout = (ms: number) => AbortSignal.timeout(ms);
 
 async function checkResend(): Promise<Check> {
-  const name = 'Resend';
-  const key = import.meta.env.RESEND_API_KEY;
-  if (!key) return { name, ok: false, detail: 'RESEND_API_KEY is not set' };
-  const sender = EMAIL_CONFIG.from.notifications.match(/@([^>\s]+)/)?.[1] ?? '';
-  try {
-    const res = await fetch('https://api.resend.com/domains', {
-      headers: { Authorization: `Bearer ${key}` }, signal: withTimeout(8000),
-    });
-    const body = await res.json().catch(() => ({}));
-    // Resend answers a bad key with 400/401 and a message ("API key is invalid").
-    if (!res.ok) return { name, ok: false, detail: body?.message ? `${body.message} (${res.status})` : `domains endpoint responded ${res.status}` };
-    const domains = (body?.data ?? []) as { name: string; status: string }[];
-    const domain = domains.find((d) => d.name === sender);
-    if (!domain) return { name, ok: false, detail: `sending domain ${sender} is not in this Resend account` };
-    if (domain.status !== 'verified') return { name, ok: false, detail: `${sender} is "${domain.status}", not verified` };
-    return { name, ok: true, detail: `${sender} verified` };
-  } catch (err) {
-    return { name, ok: false, detail: `unreachable: ${(err as Error).message}` };
-  }
+  // A real send, not a domains lookup: a Sending-access key is all production
+  // has, and "would Resend accept a message from notifications@?" is the
+  // question anyway. See resend-probe.ts for why and where the email goes.
+  const result = await probeResendSend({
+    apiKey: import.meta.env.RESEND_API_KEY,
+    from: EMAIL_CONFIG.from.notifications,
+    client: EMAIL_CONFIG.brand.name,
+    site: EMAIL_CONFIG.brand.url,
+    timeoutMs: 8000,
+  });
+  return { name: 'Resend', ...result };
 }
 
 function checkSlack(): Check {
