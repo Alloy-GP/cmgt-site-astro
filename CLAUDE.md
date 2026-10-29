@@ -148,9 +148,15 @@ values are coerced to the field's type (numeric → number, option → option id
 |---|---|---|
 | Number of units | Number of Homes — a Numerical field in CMGT's account (also matches "# of Homes", "Homes", "Number of Units") | Deal |
 | Location | Community Address — an Address field; Pipedrive geocodes the text. The form only collects city + state (Places suggestions are cities-only), so that is what lands here | Deal (and the Organization's standard address) |
+| Collection cycle | Collection Cycle — create it as a Single option field with exactly Monthly / Quarterly / Semi-annually / Annually (also matches "Dues Cycle", "Dues Frequency", "Billing Cycle"). Not yet created in CMGT's account as of 2026-10-29 | Deal |
+| Dues per unit | Dues per Unit — create it as a Text field so worded answers ("varies by lot") land as typed; a Monetary field would keep only the first number (also matches "Dues", "Dues Amount", "Monthly Dues"). Not yet created as of 2026-10-29 | Deal |
 
 - **Field renamed in Pipedrive?** Add the new name to the mapping's `pipedrive` list, or set
-  `PIPEDRIVE_DEAL_FIELD_HOMES` / `PIPEDRIVE_DEAL_FIELD_ADDRESS` to the field's API key.
+  `PIPEDRIVE_DEAL_FIELD_HOMES` / `PIPEDRIVE_DEAL_FIELD_ADDRESS` / `PIPEDRIVE_DEAL_FIELD_CYCLE` /
+  `PIPEDRIVE_DEAL_FIELD_DUES` to the field's API key.
+- **Field missing in Pipedrive?** Nothing breaks: the deal is created, the answer stays in the note,
+  and the production function log says `[pipedrive] no deal field named …` on every lead until the
+  field exists. Fields are listed by name at runtime (cached 10 minutes), so creating one needs no deploy.
 - **Mapping another answer?** Add a `FIELD_MAP` entry. `form` must equal the label the form
   sends (IntakeForm.jsx `buildFields`). Nothing else changes.
 - **Unresolved?** The deal is still created; the value stays in the note and the function logs

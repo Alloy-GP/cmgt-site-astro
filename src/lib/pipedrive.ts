@@ -13,8 +13,10 @@
 //   PIPEDRIVE_STAGE_ID     — stage for new deals (optional; the pipeline's first stage if unset)
 //   PIPEDRIVE_OWNER_ID     — Pipedrive user id to own new Org/Person/Deal (optional;
 //                            DEAL_OWNER_ID below if unset).
-//   PIPEDRIVE_DEAL_FIELD_HOMES, PIPEDRIVE_DEAL_FIELD_ADDRESS — optional. API keys of the
-//                            Deal's "Number of Homes" / "Community Address" custom fields.
+//   PIPEDRIVE_DEAL_FIELD_HOMES, PIPEDRIVE_DEAL_FIELD_ADDRESS,
+//   PIPEDRIVE_DEAL_FIELD_CYCLE, PIPEDRIVE_DEAL_FIELD_DUES — optional. API keys of the
+//                            Deal's "Number of Homes" / "Community Address" /
+//                            "Collection Cycle" / "Dues per Unit" custom fields.
 //                            Only needed if a field is ever renamed in Pipedrive — by
 //                            default they're found by name (see FIELD_MAP).
 
@@ -119,6 +121,30 @@ const FIELD_MAP: FieldMapping[] = [
     pipedrive: ['Community Address', 'Property Address', 'Address'],
     keyEnv: 'PIPEDRIVE_DEAL_FIELD_ADDRESS',
     key: import.meta.env.PIPEDRIVE_DEAL_FIELD_ADDRESS || undefined,
+  },
+  // "Collection cycle" (Monthly / Quarterly / Semi-annually / Annually) →
+  // "Collection Cycle" on the Deal. Meant for a Single-option field whose
+  // options carry those four labels exactly (matching is case- and
+  // punctuation-insensitive, so "Semi-Annually" is fine, "Semi-annual" is not);
+  // a Text field takes the word as typed. Until the field exists in Pipedrive
+  // the answer stays in the note and every lead logs "no deal field named …".
+  {
+    form: 'Collection cycle',
+    entity: 'deal',
+    pipedrive: ['Collection Cycle', 'Dues Cycle', 'Dues Frequency', 'Billing Cycle', 'Assessment Frequency', 'Collection Frequency'],
+    keyEnv: 'PIPEDRIVE_DEAL_FIELD_CYCLE',
+    key: import.meta.env.PIPEDRIVE_DEAL_FIELD_CYCLE || undefined,
+  },
+  // "Dues per unit" → "Dues per Unit" on the Deal. The form box takes words as
+  // well as numbers ("$450", "varies by lot type"), so make this a TEXT field:
+  // it then lands as typed. A Monetary / Numerical field would keep only the
+  // first number and skip a worded answer (which then stays in the note).
+  {
+    form: 'Dues per unit',
+    entity: 'deal',
+    pipedrive: ['Dues per Unit', 'Dues / Unit', 'Dues Amount', 'Dues', 'Assessment Amount', 'Assessment per Unit', 'Monthly Dues'],
+    keyEnv: 'PIPEDRIVE_DEAL_FIELD_DUES',
+    key: import.meta.env.PIPEDRIVE_DEAL_FIELD_DUES || undefined,
   },
 ];
 
