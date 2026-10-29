@@ -16,6 +16,8 @@ delete process.env.PIPEDRIVE_PIPELINE_ID;
 delete process.env.PIPEDRIVE_STAGE_ID;
 delete process.env.PIPEDRIVE_DEAL_FIELD_HOMES;
 delete process.env.PIPEDRIVE_DEAL_FIELD_ADDRESS;
+delete process.env.PIPEDRIVE_DEAL_FIELD_CYCLE;
+delete process.env.PIPEDRIVE_DEAL_FIELD_DUES;
 
 const { addToPipedrive, PARTIAL_DEAL_PREFIX } = await import('../src/lib/pipedrive.ts');
 
@@ -44,7 +46,14 @@ function reset() {
   let m: RegExpMatchArray | null;
 
   if (method === 'GET' && path === '/dealFields')
-    return reply([{ key: 'homes_key', name: 'Number of Homes', field_type: 'double' }, { key: 'addr_key', name: 'Community Address', field_type: 'address' }]);
+    return reply([
+      { key: 'homes_key', name: 'Number of Homes', field_type: 'double' },
+      { key: 'addr_key', name: 'Community Address', field_type: 'address' },
+      // The dues pair, as CMGT is asked to create them: a Single option field
+      // (its option labels are what the form sends) and a Text field.
+      { key: 'cycle_key', name: 'Collection Cycle', field_type: 'enum', options: [{ id: 11, label: 'Monthly' }, { id: 12, label: 'Quarterly' }, { id: 13, label: 'Semi-annually' }, { id: 14, label: 'Annually' }] },
+      { key: 'dues_key', name: 'Dues per Unit', field_type: 'varchar' },
+    ]);
   if (method === 'GET' && path === '/organizationFields') return reply([]);
   if (method === 'GET' && path === '/organizations/search') {
     const o = pd.orgs.find((o) => o.name === url.searchParams.get('term'));
@@ -92,7 +101,10 @@ const PARTIAL = { email: 'jane@oakhoa.org', name: 'Jane Doe', phone: '555-0100',
 const FULL = {
   email: 'jane@oakhoa.org', name: 'Jane Doe', phone: '555-0100', role: 'Board President', org: 'Oak HOA',
   address: 'Baton Rouge, LA', notes: 'Number of units: 120', source: 'Proposal Request · R1', stage: 'complete' as const,
-  fields: [{ label: 'Number of units', value: '120 units' }, { label: 'Location', value: 'Baton Rouge, LA' }],
+  fields: [
+    { label: 'Number of units', value: '120 units' }, { label: 'Location', value: 'Baton Rouge, LA' },
+    { label: 'Collection cycle', value: 'Semi-annually' }, { label: 'Dues per unit', value: 'about $450, varies by lot' },
+  ],
 };
 
 // 0. Not production → nothing touches Pipedrive.
@@ -129,6 +141,8 @@ check('full → Person now linked to the Organization', pd.persons[0].org_id ===
 check('full → real deal: org title, org linked, Savannah, pipeline 12', !!fullDeal && fullDeal.org_id === pd.orgs[0].id && fullDeal.user_id === SAVANNAH && fullDeal.pipeline_id === PIPELINE);
 check('full → "Number of units" lands in Number of Homes as 120', fullDeal?.homes_key === 120);
 check('full → "Location" lands in Community Address', fullDeal?.addr_key === 'Baton Rouge, LA');
+check('full → "Collection cycle" lands in Collection Cycle as the option id', fullDeal?.cycle_key === 13);
+check('full → "Dues per unit" lands in Dues per Unit as typed, words and all', fullDeal?.dues_key === 'about $450, varies by lot');
 check('full → partial deal deleted', partialDeal.status === 'deleted');
 check('full → exactly one open deal remains', openDeals().length === 1 && openDeals()[0].id === fullDeal?.id);
 check('full → partial deleted only AFTER the full deal was created', idx('POST /deals') !== -1 && idx('POST /deals') < idx(`DELETE /deals/${partialDeal.id}`));

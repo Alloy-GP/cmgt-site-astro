@@ -56,6 +56,11 @@ export const PROPOSAL_V2 = {
   residentRoles: ['Property owner / resident'],
   communityType: ['Single-family', 'Townhomes', 'Condos', 'Mixed — townhomes & single-family', 'Master / mixed-use'],
   managementStatus: ['Self-managed by board', 'Looking to switch from current provider', 'New construction / developer-controlled', 'Other'],
+  // How often the association bills its dues. Pairs with the free-text "Dues per
+  // unit" box (which used to be "Monthly dues / unit" — one number, monthly
+  // assumed). The portal reads both by field NAME ("Collection cycle", "Dues per
+  // unit") out of the WhatConverts lead, so keep these as plain cadence words.
+  collectionCycle: ['Monthly', 'Quarterly', 'Semi-annually', 'Annually'],
   amenities: ['Community pool', 'Clubhouse', 'Walking trails', 'Pier & boat slips', 'Tot lot', 'Tennis / pickleball', 'Gated entry', 'Marina', 'Beach access', 'Common landscaping'],
   // 'On-site staff' is the only option here that points at a DIFFERENT tier: the
   // portal recommends On-Site Management when a board ticks it (see the portal's

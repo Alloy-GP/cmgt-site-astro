@@ -413,6 +413,19 @@ function Steps({ step }) {
   );
 }
 
+// The "Dues per unit" answer as it is reported (email, Slack, Pipedrive note,
+// confirmation). The box takes numbers OR words — "450", "$450", "1,200",
+// "varies by lot type", "about $300 for lots, $450 for villas" — so a dollar
+// sign is only added when the whole answer is one plain amount. Anything else
+// is passed through as typed; the cadence lives in the "Collection cycle"
+// answer next to it. (It used to be "Monthly dues / unit", digits only, always
+// prefixed with "$".)
+function duesText(raw) {
+  const t = String(raw || '').trim();
+  if (!t) return '';
+  return /^\$?\s*\d[\d,]*(\.\d+)?$/.test(t) ? '$' + t.replace(/^\$\s*/, '') : t;
+}
+
 // ── CANONICAL PROPOSAL v2 — guided 3-step wizard with partial-lead capture ──
 // Field SET + step order are fixed here (identical on every AGP site running v2).
 // Options come from PROPOSAL_V2, copy from PROPOSAL_COPY. Step 1 (contact) fires
@@ -424,7 +437,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   const [refId, setRefId] = useState(genId);
   const [vals, setVals] = useState({
     name: '', role: '', email: '', phone: '',
-    association: '', location: '', units: '', type: '', mgmtStatus: '', dues: '',
+    association: '', location: '', units: '', type: '', mgmtStatus: '', cycle: '', dues: '',
     amenities: [], services: [], pains: [], success: '', budget: '', timeline: '',
   });
   const [errors, setErrors] = useState({});
@@ -481,9 +494,10 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
       if (!vals.units.trim()) e.units = 'Required';
       if (!vals.type) e.type = 'Required';
       if (!vals.mgmtStatus) e.mgmtStatus = 'Required';
-      // Monthly dues are asked for but not required: many board members don't
-      // know the figure offhand, and a required field they can't answer is where
-      // a proposal request dies. The rep asks on the discovery call.
+      // Collection cycle + dues per unit are asked for but not required: many
+      // board members don't know the figure offhand, and a required field they
+      // can't answer is where a proposal request dies. The rep asks on the
+      // discovery call.
     } else if (s === 3) {
       if (!vals.services.length && !vals.pains.length) e.services = 'Pick at least one';
       if (!vals.timeline) e.timeline = 'Required';
@@ -504,7 +518,8 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
       { label: 'Number of units', value: vals.units },
       { label: 'Community type', value: vals.type },
       { label: 'Current management status', value: vals.mgmtStatus },
-      { label: 'Monthly dues / unit', value: vals.dues ? '$' + vals.dues : '' },
+      { label: 'Collection cycle', value: vals.cycle },
+      { label: 'Dues per unit', value: duesText(vals.dues) },
       { label: 'Amenities', value: j(vals.amenities) },
       { label: 'Services needed', value: j(vals.services) },
       { label: 'Frustrations', value: j(vals.pains) },
@@ -582,7 +597,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
 
   function reset() {
     setStep(1); setRefId(genId());
-    setVals({ name: '', role: '', email: '', phone: '', association: '', location: '', units: '', type: '', mgmtStatus: '', dues: '', amenities: [], services: [], pains: [], success: '', budget: '', timeline: '' });
+    setVals({ name: '', role: '', email: '', phone: '', association: '', location: '', units: '', type: '', mgmtStatus: '', cycle: '', dues: '', amenities: [], services: [], pains: [], success: '', budget: '', timeline: '' });
     setErrors({}); setSendError(''); setSubmission(null); partialSent.current = false; partialCrm.current = null;
   }
 
@@ -609,7 +624,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
     ['name', vals.name], ['email', vals.email], ['phone', vals.phone], ['company', vals.association],
     ['Role', vals.role], ['Location', vals.location], ['Number of units', vals.units],
     ['Community type', vals.type], ['Current management status', vals.mgmtStatus],
-    ['Monthly dues / unit', vals.dues], ['Amenities', vals.amenities.join(', ')],
+    ['Collection cycle', vals.cycle], ['Dues per unit', vals.dues], ['Amenities', vals.amenities.join(', ')],
     ['Services needed', vals.services.join(', ')], ['Frustrations', vals.pains.join(', ')],
   ];
 
@@ -681,7 +696,8 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
             <Field def={{ key: 'units', label: 'Number of units', type: 'text', required: true, inputMode: 'numeric', maxLength: 6, noName: true }} value={vals.units} error={errors.units} onChange={set} />
             <Field def={{ key: 'type', label: 'Community type', type: 'select', required: true, options: V.communityType, noName: true }} value={vals.type} error={errors.type} onChange={set} />
             <Field def={{ key: 'mgmtStatus', label: 'Current management status', type: 'select', required: true, options: V.managementStatus, noName: true }} value={vals.mgmtStatus} error={errors.mgmtStatus} onChange={set} />
-            <Field def={{ key: 'dues', label: 'Monthly dues / unit (if known)', type: 'text', inputMode: 'decimal', maxLength: 8, placeholder: 'e.g. 37.50', noName: true }} value={vals.dues} error={errors.dues} onChange={set} />
+            <Field def={{ key: 'cycle', label: 'Collection cycle', type: 'select', options: V.collectionCycle, noName: true }} value={vals.cycle} error={errors.cycle} onChange={set} />
+            <Field def={{ key: 'dues', label: 'Dues per unit (if known)', type: 'text', maxLength: 60, noName: true }} value={vals.dues} error={errors.dues} onChange={set} />
             <div className="if-field" style={{ gridColumn: '1 / -1' }}>
               <span className="if-grouplabel">Amenities <em>(select all that apply)</em></span>
               <PillMulti options={V.amenities} value={vals.amenities} onChange={(v) => set('amenities', v)} />
