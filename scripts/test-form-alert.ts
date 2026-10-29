@@ -155,5 +155,65 @@ check('"Board President" is NOT a resident', !isResidentRole('Board President'))
 check('"Vice President" is NOT a resident', !isResidentRole('Vice President'));
 check('empty role is NOT a resident', !isResidentRole(''));
 
+
+// 14. The Resend probe: a real send to Resend's test inbox, reported as the
+//     form routes would experience it. No domains lookup (needs a Full-access
+//     key; production keys are Sending-access only).
+const { probeResendSend, RESEND_TEST_INBOX } = await import('../src/lib/resend-probe.ts');
+type Stub = { status: number; body: unknown } | Error;
+let probeCalls: { url: string; init: any }[] = [];
+function stubResend(...responses: Stub[]) {
+  probeCalls = [];
+  const queue = [...responses];
+  (globalThis as any).fetch = async (url: string, init: any) => {
+    probeCalls.push({ url: String(url), init });
+    const next = queue.shift() ?? { status: 500, body: {} };
+    if (next instanceof Error) throw next;
+    return { ok: next.status < 300, status: next.status, json: async () => next.body } as any;
+  };
+}
+const PROBE = { apiKey: 're_test', from: 'CMGT <notifications@mail.cmgt.org>', client: 'CMGT', site: 'https://cmgt.org', retryDelayMs: 0 };
+
+stubResend({ status: 200, body: { id: 're_abc123' } });
+let probe = await probeResendSend(PROBE);
+const sent = JSON.parse(probeCalls[0].init.body);
+check('probe: 200 → ok, names the sender and the Resend id', probe.ok && probe.detail.includes('notifications@mail.cmgt.org') && probe.detail.includes('re_abc123'));
+check('probe: POSTs to /emails with the key', probeCalls[0].url === 'https://api.resend.com/emails' && probeCalls[0].init.method === 'POST' && probeCalls[0].init.headers.Authorization === 'Bearer re_test');
+check('probe: FROM the notification address, TO the test inbox only', sent.from === PROBE.from && JSON.stringify(sent.to) === JSON.stringify([RESEND_TEST_INBOX]));
+check("probe: the test inbox is Resend's simulated-delivery address", /^delivered(\+[\w-]+)?@resend\.dev$/.test(RESEND_TEST_INBOX));
+check('probe: subject and body say what it is', /health check/i.test(sent.subject) && sent.subject.includes('CMGT') && /nobody receives/i.test(sent.text));
+
+stubResend({ status: 401, body: { statusCode: 401, name: 'validation_error', message: 'API key is invalid' } });
+probe = await probeResendSend(PROBE);
+check("probe: bad key → ✗ with Resend's message and status", !probe.ok && probe.detail === 'API key is invalid (401)');
+
+stubResend({ status: 403, body: { statusCode: 403, name: 'validation_error', message: 'The mail.cmgt.org domain is not verified. Please, add and verify your domain on https://resend.com/domains' } });
+probe = await probeResendSend(PROBE);
+check('probe: unverified domain → ✗ naming the domain', !probe.ok && probe.detail.includes('mail.cmgt.org domain is not verified') && probe.detail.endsWith('(403)'));
+
+stubResend({ status: 429, body: { message: 'Too many requests' } }, { status: 200, body: { id: 're_retry' } });
+probe = await probeResendSend(PROBE);
+check('probe: one 429 is retried once, not reported', probe.ok && probeCalls.length === 2 && probe.detail.includes('re_retry'));
+
+stubResend({ status: 429, body: { message: 'Too many requests. You can only make 2 requests per second.' } }, { status: 429, body: { message: 'Too many requests. You can only make 2 requests per second.' } });
+probe = await probeResendSend(PROBE);
+check('probe: two 429s → ✗, no endless retry', !probe.ok && probeCalls.length === 2 && probe.detail.endsWith('(429)'));
+
+stubResend(new Error('fetch failed'));
+probe = await probeResendSend(PROBE);
+check('probe: network error → ✗ unreachable', !probe.ok && probe.detail === 'unreachable: fetch failed');
+
+stubResend({ status: 200, body: { id: 'never' } });
+probe = await probeResendSend({ ...PROBE, apiKey: undefined });
+check('probe: no key → ✗ without calling Resend', !probe.ok && probe.detail === 'RESEND_API_KEY is not set' && probeCalls.length === 0);
+
+stubResend({ status: 200, body: {} });
+probe = await probeResendSend(PROBE);
+check('probe: a 200 with no id is still a pass', probe.ok);
+
+stubResend({ status: 500, body: 'not json' });
+probe = await probeResendSend(PROBE);
+check('probe: a 5xx with an unreadable body still reports the status', !probe.ok && probe.detail.endsWith('(500)'));
+
 console.log(failures ? `\n${failures} check(s) FAILED` : '\nall checks passed');
 process.exit(failures ? 1 : 0);
