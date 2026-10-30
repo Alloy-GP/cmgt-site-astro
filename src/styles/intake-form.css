@@ -69,6 +69,12 @@
 .if-offramp { background: #FFF6E9; border: 1px solid #F0D9A8; border-radius: var(--if-radius); padding: 13px 15px; margin-top: 16px; }
 .if-offramp p { margin: 0; font-size: 13px; line-height: 1.5; color: #6b5320; }
 .if-offramp strong { color: #4a3a12; }
+
+/* --- Locked contact fields: step 1 of the proposal wizard locks name/email/phone
+   once a resident role is picked (Continue → resident form). Visibly read-only,
+   still in the layout, so the visitor sees nothing is expected here. --- */
+.if-float.is-locked .if-control { background: #f3f4f6; color: #9aa0a6; cursor: not-allowed; border-style: dashed; }
+.if-float.is-locked .if-flabel { color: #9aa0a6; }
 .if-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 14px; }
 .if-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .if-label { font-family: var(--if-font-heading); font-weight: 600; font-size: 12.5px; color: var(--if-ink); }

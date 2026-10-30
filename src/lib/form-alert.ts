@@ -91,7 +91,13 @@ interface SendAlertOptions {
  * Never throws: notification must not be able to break a submission that has
  * already been delivered.
  */
-export type SubmissionStatus = 'delivered' | 'undelivered' | 'discarded' | 'warning';
+/**
+ * 'held' = nothing has been sent YET, on purpose: a started-but-unfinished
+ * proposal waits out a hold (src/lib/partials.ts) so a visitor who finishes the
+ * form a minute later does not produce two notifications; `note` says when the
+ * hold ends and where the email goes if they never finish.
+ */
+export type SubmissionStatus = 'delivered' | 'undelivered' | 'discarded' | 'warning' | 'held';
 
 // Slack caps a section's text at 3000 characters; stay under it per section.
 const SECTION_LIMIT = 2800;
@@ -123,7 +129,7 @@ export async function notifySubmission(
   const status: SubmissionStatus =
     opts.status ?? (opts.delivered === false ? 'undelivered' : 'delivered');
   const route = opts.route ?? 'Form';
-  const icon = status === 'delivered' ? '📬' : status === 'discarded' ? '🪤' : '⚠️';
+  const icon = status === 'delivered' ? '📬' : status === 'discarded' ? '🪤' : status === 'held' ? '⏳' : '⚠️';
   const heading = `${icon} ${route} — ${opts.client}`;
 
   const lines = (opts.fields ?? [])
@@ -151,6 +157,8 @@ export async function notifySubmission(
       ? `${form} · delivered${opts.note ? ` · ${opts.note}` : ''}`
       : status === 'warning'
         ? `${form} · *${opts.note ?? 'a later step failed'}*`
+        : status === 'held'
+        ? `${form} · *held — nothing sent yet.* ${opts.note ?? 'Sent to support if the form is not finished in time; replaced silently if it is.'}`
         : status === 'discarded'
         ? `${form} · *discarded — nothing was sent.* The hidden honeypot field was ` +
           `filled${opts.note ? ` (${opts.note})` : ''}. Bots do this; a browser or ` +

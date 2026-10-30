@@ -74,7 +74,8 @@ Nobody should have to wonder whether the proposal form is working. Four things m
 
 1. **Slack is the ledger.** Every submission posts to the forms channel (`FORM_SLACK_WEBHOOK`, falling back
    to `FORM_ALERT_SLACK_URL`) with *every* answer, split across sections when long:
-   📬 delivered · ⚠️ not delivered (Resend refused the email — the post is the only copy) ·
+   📬 delivered · ⏳ held (a started-but-unfinished proposal waiting out its hold — see "Started, not
+   finished" below) · ⚠️ not delivered (Resend refused the email — the post is the only copy) ·
    🪤 discarded (the honeypot was filled: a bot, or a browser/password-manager autofill — the answers are
    included so a real person can be followed up by hand) · 🚨 the Resend send itself failed.
 2. **Daily heartbeat.** `/api/form-health` runs from a Vercel cron at 13:00 UTC (8am Central) and posts one
@@ -93,9 +94,10 @@ Nobody should have to wonder whether the proposal form is working. Four things m
    failed POSTs = `form_submit_failed` (reason `network` or `http_<status>`). On stg/dev the events print to
    the browser console instead.
 4. **Four ledgers must agree** for any date range: Slack 📬 posts, the newdevelopment@ inbox (every
-   proposal, complete or "Started (incomplete)", goes to newdevelopment@ AND savannahestes@, nobody cc'd —
-   Jeff is on nothing, by his request on 2026-10-23; see `routes` / `partialRoutes` in `email.config.ts`),
-   Pipedrive deals in Savannah's pipeline, Mailchimp contacts tagged `website-lead`. If Slack shows more than the inbox, mail is being filtered: cmgt.org mail goes through
+   COMPLETE proposal goes to newdevelopment@ AND savannahestes@, nobody cc'd — Jeff is on nothing, by his
+   request on 2026-10-23; a "Started (incomplete)" proposal goes to info@cmgt.org instead, after its hold —
+   see `routes` / `partialRoutes` in `email.config.ts`), Pipedrive deals in Savannah's pipeline, Mailchimp
+   contacts tagged `website-lead`. If Slack shows more than the inbox, mail is being filtered: cmgt.org mail goes through
    AppRiver (arsmtp.com MX), which quarantines "our own domain from an outside server" by default. Have the
    client allowlist `notifications@mail.cmgt.org`, `hello@mail.cmgt.org`, and the envelope domain
    `send.mail.cmgt.org` (Amazon SES), then check the quarantine for past notifications.
@@ -125,18 +127,12 @@ Every `proposal` submission — partial AND complete (never vendor/general/renta
 pushed to Pipedrive by `src/lib/pipedrive.ts`. It is a no-op unless `PIPEDRIVE_API_TOKEN` is set
 AND `PUBLIC_ENV=production`, and it never throws. Every answer is written into the deal's note.
 
-**Partial → full handoff.** The wizard's contact step creates a Person and a deal titled
-`Started, not submitted — Name` (owned by Savannah, in her pipeline), so an abandoned form is still
-a deal she can chase. A partial from someone who picked the resident role is skipped (homeowner,
-not a prospect). When the full form comes in, the full deal is created FIRST, then the partial deal
-is deleted (Pipedrive keeps it recoverable for 30 days) — so a failure never leaves the lead with
-nothing. If the full deal cannot be created, the partial stays and Slack shows ⚠️. The handoff does
-not depend on Pipedrive's search index: the partial's Person + Deal ids are returned to the browser
-and echoed back with the full submission (`partial_person_id` / `partial_deal_id`), so the same
-Person is reused even if the index lags or the visitor corrected their email on the last step. A
-deal id from the browser is only ever deleted if it is an open deal with the partial title prefix.
-If a partial cannot be deleted, the Slack post says so (⚠️ "could not be removed — delete it by
-hand"). Offline test of every path: `npm run test:pipedrive`.
+**Started, not finished → no deal.** Since 2026-10-30 the wizard's contact step does NOT create a
+Pipedrive deal (see "Started, not finished" below). Only the complete form does. `pipedrive.ts`
+still looks for an open `Started, not submitted —` deal on the person and retires it after the
+real deal is created, so leads captured before this change are cleaned up when they finish; the
+`partial_person_id` / `partial_deal_id` plumbing is accepted but no longer sent by the form.
+Offline test of every path: `npm run test:pipedrive`.
 
 **Where deals land, and whose.** Pipeline 12 "Sav - Warm & Closing", first stage ("WIP"), owned
 by Savannah (user 26876223) — `DEAL_PIPELINE_ID` / `DEAL_STAGE_ID` / `DEAL_OWNER_ID` in
@@ -170,6 +166,36 @@ values are coerced to the field's type (numeric → number, option → option id
 - Only `PUBLIC_*` env vars are inlined at build time. Secrets such as the Pipedrive token are
   read from the environment at runtime (the compiled function uses `process.env`), so adding or
   rotating one on Vercel takes effect on the next invocation without a rebuild.
+
+## Started, not finished — the hold on partial proposals
+
+CMGT's count on 2026-10-30: every proposal form that was started and never finished was a current
+homeowner who had picked the wrong form, and every real prospect who paused produced two emails and two
+deals. Two changes, both in this repo:
+
+1. **Role first.** Step 1 of the wizard opens with "Your role" (required), and "Property owner /
+   resident" is the first option. Picking it locks name/email/phone and turns **Continue** into the exit
+   to the resident form — a homeowner never types a thing into the proposal. Any other role → the usual
+   contact fields. Config: `PROPOSAL_V2.roles` / `residentRoles` in `intake-form.config.js`.
+2. **The hold.** When the contact step is completed, `/api/lead` (stage=partial) does not email anyone:
+   `holdPartial()` in `src/lib/partials.ts` writes the answers to a PRIVATE Vercel Blob
+   (`partials/<email-hash>-<ref>.json`, store `cmgt-form-partials`, token `BLOB_READ_WRITE_TOKEN`) and
+   Slack gets a ⏳ line saying when the hold ends. Then one of two things happens:
+   - The full form arrives (same email, any case, or the same ref): `/api/lead` releases the held partial
+     after the staff email is out. One 📬 post, one email to newdevelopment@ + Savannah, one deal. The
+     📬 footer says "replaced the started form".
+   - Nothing arrives: `/api/partial-sweep` (Vercel cron, every 5 minutes, same `CRON_SECRET` auth as
+     `/api/form-health`) emails everything older than `PARTIAL_HOLD_MINUTES` (default 10) to
+     `partialRoutes.proposal` = **info@cmgt.org** (customer support, not sales), tags the contact
+     `proposal-incomplete` in Mailchimp, posts 📬 to Slack, deletes the blob. No Pipedrive. The email
+     tells support what it usually is and that sales hears separately if the form is ever finished.
+   A send that fails stays for the next sweep; after 24 hours it is dropped with a ⚠️ post. Without a
+   store (no `BLOB_READ_WRITE_TOKEN` — local dev), the partial is sent at once to info@, still no deal.
+
+Testing on stg: preview deployments have `PARTIAL_HOLD_MINUTES=2`, and Vercel crons run only on
+production, so run the sweep by hand:
+`curl -H "Authorization: Bearer $CRON_SECRET" https://<preview>/api/partial-sweep`. Offline test of the
+hold, release, sweep timing and the support email: `npm run test:partials`.
 
 ## LLM traffic — `/llms.txt`, `/llms-full.txt`, AI crawler policy
 
