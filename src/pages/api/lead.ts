@@ -176,7 +176,9 @@ export const POST: APIRoute = async ({ request }) => {
         formName: `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`,
         status: 'delivered', note: `sent at once — hold unavailable (${hold.reason})`, fields: partialSlackRows(partial),
       });
-      return new Response(JSON.stringify({ success: true, held: false }), { status: 200 });
+      // `reason` says why the hold did not happen (no store, store error). It
+      // carries no secret and makes a mis-set deployment diagnosable from a curl.
+      return new Response(JSON.stringify({ success: true, held: false, reason: hold.reason }), { status: 200 });
     }
 
     // Render EVERY structured answer with its real label.
