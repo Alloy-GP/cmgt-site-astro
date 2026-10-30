@@ -75,6 +75,11 @@
    still in the layout, so the visitor sees nothing is expected here. --- */
 .if-float.is-locked .if-control { background: #f3f4f6; color: #9aa0a6; cursor: not-allowed; border-style: dashed; }
 .if-float.is-locked .if-flabel { color: #9aa0a6; }
+
+/* --- Context note: what the visitor was looking at when they clicked through
+   (?context= on the link). Step 1 of the proposal wizard only. --- */
+.if-context { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 9px 12px; border-radius: var(--if-radius-sm); background: var(--if-brand-tint); color: var(--if-ink); font-size: 13px; line-height: 1.4; }
+.if-context .if-ic { flex: none; color: var(--if-accent); }
 .if-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 14px; }
 .if-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .if-label { font-family: var(--if-font-heading); font-weight: 600; font-size: 12.5px; color: var(--if-ink); }

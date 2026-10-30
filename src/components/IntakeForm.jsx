@@ -1,4 +1,6 @@
-// Adaptive multi-intent intake form.
+// Adaptive multi-intent intake form. CANONICAL — the source of truth is
+// alloygp/agp-astro-starter; client sites copy this file verbatim (see "Syncing
+// the proposal form" in CLAUDE.md) and customise only intake-form.config.js.
 // Config-driven: brand/options/extra-intents live in ./intake-form.config.js.
 // The PROPOSAL intent's field SET is CANONICAL and defined here — it must stay
 // identical on every AGP site. Per site, only options/copy/theme change.
@@ -455,6 +457,18 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   const [submission, setSubmission] = useState(null);
   const partialSent = useRef(false);
   const hydrated = useHydrated();
+  // Optional context from the link that brought the visitor here, e.g. a
+  // service-levels page linking with ?context=Service%20level%3A%20Portfolio.
+  // Shown as a note on step 1 and sent with every post as a labelled answer
+  // ("Context"), so the request says what they were looking at. Generic: any
+  // page on any site may set it; nothing shows when it is absent. Read after
+  // mount so the server HTML and the first client render agree.
+  const [context, setContext] = useState('');
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const c = new URLSearchParams(window.location.search).get('context');
+    if (c) setContext(c.trim().slice(0, 160));
+  }, []);
 
   const set = (k, v) => { setVals((s) => ({ ...s, [k]: v })); setErrors((e) => ({ ...e, [k]: null })); };
 
@@ -520,6 +534,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
     const j = (a) => (Array.isArray(a) ? a.join(', ') : a);
     return [
       { label: 'Role', value: vals.role },
+      ...(context ? [{ label: 'Context', value: context }] : []),
       { label: 'Association / community name', value: vals.association },
       { label: 'Location', value: vals.location },
       { label: 'Number of units', value: vals.units },
@@ -548,7 +563,10 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
     fd.set('source', typeof window !== 'undefined' ? window.location.pathname : '');
     fd.set('website', hp); // honeypot
     if (stage === 'partial') {
-      fd.set('fieldsJson', JSON.stringify([{ label: 'Role', value: vals.role }]));
+      fd.set('fieldsJson', JSON.stringify([
+        { label: 'Role', value: vals.role },
+        ...(context ? [{ label: 'Context', value: context }] : []),
+      ]));
       fd.set('message', '');
     } else {
       fd.set('fieldsJson', JSON.stringify(buildFields()));
@@ -626,7 +644,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   // (keeping them would duplicate the field in the lead).
   const mirror = [
     ['name', vals.name], ['email', vals.email], ['phone', vals.phone], ['company', vals.association],
-    ['Role', vals.role], ['Location', vals.location], ['Number of units', vals.units],
+    ['Role', vals.role], ['Context', context], ['Location', vals.location], ['Number of units', vals.units],
     ['Community type', vals.type], ['Current management status', vals.mgmtStatus],
     ['Collection cycle', vals.cycle], ['Dues per unit', vals.dues], ['Amenities', vals.amenities.join(', ')],
     ['Services needed', vals.services.join(', ')], ['Frustrations', vals.pains.join(', ')],
@@ -670,6 +688,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
             <span className="if-eyebrow">Step 1</span>
             <h2 className="if-title">About you</h2>
             <p className="if-sub">Your role, and where to send the proposal.</p>
+            {context && <div className="if-context" role="note"><Ic name="zap" /><span>Noted: <strong>{context}</strong></span></div>}
           </div>
           <div className="if-grid">
             {/* Role FIRST, full width: it decides whether this is a proposal at all.
@@ -768,7 +787,11 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   );
 }
 
-export default function IntakeForm({ initialIntent }) {
+/**
+ * @param {{ initialIntent?: string | null | undefined }} props — `initialIntent` is the ?intent=
+ *   value the page read server-side (optional; without it the picker shows first).
+ */
+export default function IntakeForm({ initialIntent = null }) {
   // ?intent=<id> arrives as a prop from the page (read server-side, so the right
   // form is already in the HTML and there is no picker flash before hydration).
   // Every "Request a proposal" CTA links with ?intent=proposal; the generic
@@ -788,6 +811,10 @@ export default function IntakeForm({ initialIntent }) {
   const hydrated = useHydrated();
 
   const intent = intentId ? intentById(intentId) : null;
+  // Where the wizard's resident off-ramp sends people: the site's resident /
+  // homeowner intent (PROPOSAL_V2.residentIntent, default 'resident'), else the
+  // general one, else nowhere (the off-ramp stays hidden).
+  const residentTarget = intentById(PROPOSAL_V2?.residentIntent || 'resident') || intentById('general');
 
   // Deep-link: ?intent=proposal opens straight to that intent's fields.
   useEffect(() => {
@@ -908,7 +935,7 @@ export default function IntakeForm({ initialIntent }) {
         {step === 'form' && intent && PROPOSAL_FORM_VERSION === 2 && intent.id === 'proposal' && (
           <ProposalWizard
             onBack={back}
-            onSwitchIntent={intentById('resident') ? (prefill) => pick('resident', prefill) : intentById('general') ? (prefill) => pick('general', prefill) : undefined}
+            onSwitchIntent={residentTarget ? (prefill) => pick(residentTarget.id, prefill) : undefined}
           />
         )}
 
