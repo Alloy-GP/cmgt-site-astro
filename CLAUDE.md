@@ -180,7 +180,10 @@ deals. Two changes, both in this repo:
 2. **The hold.** When the contact step is completed, `/api/lead` (stage=partial) does not email anyone:
    `holdPartial()` in `src/lib/partials.ts` writes the answers to a PRIVATE Vercel Blob
    (`partials/<email-hash>-<ref>.json`, store `cmgt-form-partials`, token `BLOB_READ_WRITE_TOKEN`) and
-   Slack gets a ⏳ line saying when the hold ends. Then one of two things happens:
+   Slack gets a ⏳ line saying when the hold ends. The store itself must be created as **private**
+   (Vercel → Storage → Blob → "Private"): the SDK refuses `access: 'private'` writes on a public store
+   ("Cannot use private access on a public store"), and the hold then falls back to send-now — the
+   lead API's response says so (`held: false, reason: …`). Then one of two things happens:
    - The full form arrives (same email, any case, or the same ref): `/api/lead` releases the held partial
      after the staff email is out. One 📬 post, one email to newdevelopment@ + Savannah, one deal. The
      📬 footer says "replaced the started form".

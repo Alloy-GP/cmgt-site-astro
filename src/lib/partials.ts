@@ -23,7 +23,10 @@
 //
 // Store: Vercel Blob (store "cmgt-form-partials", connected to the Vercel
 // project, which sets BLOB_READ_WRITE_TOKEN). Blobs are private — readable only
-// with the token — and hold name/email/phone/role, nothing else. No token (local
+// with the token — and hold name/email/phone/role, nothing else. The STORE must
+// be created as private too: a public store rejects access:'private' writes
+// ("Cannot use private access on a public store"), which surfaces as
+// { held: false, reason } below and send-now in /api/lead. No token (local
 // dev, a site that has not connected a store) → holdPartial() reports
 // { held: false } and /api/lead sends the partial at once, still to info@ and
 // still without Pipedrive: the hold is a progressive enhancement, never a
