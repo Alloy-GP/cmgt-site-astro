@@ -788,7 +788,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
 }
 
 /**
- * @param {{ initialIntent?: string | null }} props — `initialIntent` is the ?intent=
+ * @param {{ initialIntent?: string | null | undefined }} props — `initialIntent` is the ?intent=
  *   value the page read server-side (optional; without it the picker shows first).
  */
 export default function IntakeForm({ initialIntent = null }) {
