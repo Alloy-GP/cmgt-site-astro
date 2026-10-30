@@ -26,8 +26,8 @@ const ALLOY_MONITORING: string[] =
     : [];
 
 // ── New-business inboxes: newdevelopment@ and Savannah (sales) together, on
-// every proposal (complete or partial), on anything unrouted, and on failure
-// alerts. Nobody is cc'd. ──
+// every COMPLETE proposal, on anything unrouted, and on failure alerts. Nobody
+// is cc'd. Started-but-unfinished proposals go to info@ instead (partialRoutes). ──
 const NEW_BUSINESS = IS_PROD ? ['newdevelopment@cmgt.org', 'savannahestes@cmgt.org'] : NON_PROD_NOTIFY;
 
 export const EMAIL_CONFIG = {
@@ -101,12 +101,16 @@ export const EMAIL_CONFIG = {
   ) as Record<string, string[]>,
 
   // ── Partial captures ("Started (incomplete)": the wizard's contact step was
-  // completed but the form was never submitted). Same two inboxes as a complete
-  // proposal, nobody cc'd. Intents not listed here are routed exactly like a
-  // complete submission. ──
+  // completed but the form was never submitted). These are HELD for
+  // PARTIAL_HOLD_MINUTES (src/lib/partials.ts); one that is still unfinished
+  // when the hold ends goes to customer support at info@cmgt.org — not to new
+  // business and not to Pipedrive. CMGT's own count (2026-10-30): every started
+  // form that was never finished was a current homeowner who had picked the
+  // wrong form. A form finished inside the hold replaces its partial silently.
+  // Intents not listed here are routed exactly like a complete submission. ──
   partialRoutes: (IS_PROD
-    ? { proposal: NEW_BUSINESS }
-    : {}
+    ? { proposal: ['info@cmgt.org'] }
+    : { proposal: NON_PROD_NOTIFY }
   ) as Record<string, string[]>,
   partialCcByIntent: (IS_PROD
     ? { proposal: [...ALLOY_MONITORING] }

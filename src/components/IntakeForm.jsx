@@ -135,6 +135,10 @@ function Field({ def, value, error, onChange }) {
   // instead, to avoid duplicate-named controls across unmounted steps).
   const name = def.noName ? undefined : wcName(def);
   const filled = value != null && String(value) !== '';
+  // locked: rendered read-only (greyed) — the wizard locks the contact fields
+  // once a resident role is picked, so the only way forward is Continue → the
+  // resident form (or changing the role back).
+  const locked = !!def.locked;
 
   // Radio (segmented) has no placeholder slot — keep a static label.
   if (def.type === 'radio') {
@@ -157,15 +161,15 @@ function Field({ def, value, error, onChange }) {
   // Floating label: sits inside the field, shrinks to the top border on focus/fill.
   return (
     <div className="if-field" style={{ gridColumn: span }}>
-      <div className={'if-float' + (filled ? ' has-value' : '') + (error ? ' is-err' : '')}>
+      <div className={'if-float' + (filled ? ' has-value' : '') + (error ? ' is-err' : '') + (locked ? ' is-locked' : '')}>
         {def.type === 'text' && (
           <input id={fid} name={name} aria-label={def.label} className="if-control" type="text" placeholder=" "
-            inputMode={def.inputMode} maxLength={def.maxLength}
+            inputMode={def.inputMode} maxLength={def.maxLength} disabled={locked}
             value={value || ''} onChange={(e) => onChange(def.key, e.target.value)} />
         )}
         {def.type === 'select' && (
           <>
-            <select id={fid} name={name} aria-label={def.label} className="if-control if-select" value={value || ''} onChange={(e) => onChange(def.key, e.target.value)}>
+            <select id={fid} name={name} aria-label={def.label} className="if-control if-select" value={value || ''} disabled={locked} onChange={(e) => onChange(def.key, e.target.value)}>
               <option value="" disabled></option>
               {def.options.map((o) => <option key={o} value={o}>{o}</option>)}
             </select>
@@ -428,9 +432,13 @@ function duesText(raw) {
 
 // ── CANONICAL PROPOSAL v2 — guided 3-step wizard with partial-lead capture ──
 // Field SET + step order are fixed here (identical on every AGP site running v2).
-// Options come from PROPOSAL_V2, copy from PROPOSAL_COPY. Step 1 (contact) fires
-// a `stage=partial` lead the moment it's completed, so abandoned forms are still
-// captured; the final submit sends `stage=complete` with the same `ref`.
+// Options come from PROPOSAL_V2, copy from PROPOSAL_COPY. Step 1 opens with the
+// visitor's ROLE: a resident role locks the contact fields and Continue leads to
+// the resident form, so a homeowner who picked the wrong form never types a
+// thing here. Any other role → name/email/phone, and Continue fires a
+// `stage=partial` lead (the server HOLDS it — see src/lib/partials.ts — so a form
+// finished a minute later produces one notification, not two); the final submit
+// sends `stage=complete` with the same `ref`.
 function ProposalWizard({ onBack, onSwitchIntent }) {
   const V = PROPOSAL_V2;
   const [step, setStep] = useState(1);
@@ -446,11 +454,6 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   const [sendError, setSendError] = useState('');
   const [submission, setSubmission] = useState(null);
   const partialSent = useRef(false);
-  // What the partial capture created in the CRM ({ personId, dealId }), sent
-  // back with the full submission so Pipedrive retires that exact partial deal
-  // and reuses that exact Person (no second record if the search index lags or
-  // the email was corrected on the last step).
-  const partialCrm = useRef(null);
   const hydrated = useHydrated();
 
   const set = (k, v) => { setVals((s) => ({ ...s, [k]: v })); setErrors((e) => ({ ...e, [k]: null })); };
@@ -473,6 +476,10 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   function validateStep(s) {
     const e = {};
     if (s === 1) {
+      // Role first: it decides whether this is a proposal at all (see the
+      // resident off-ramp). Validation only runs for non-resident roles — a
+      // resident's Continue goes to the resident form without it.
+      if (!vals.role) e.role = 'Required';
       if (!vals.name.trim()) e.name = 'Required';
       if (!vals.email.trim()) e.email = 'Required';
       else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(vals.email)) e.email = 'Enter a valid email';
@@ -546,19 +553,16 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
     } else {
       fd.set('fieldsJson', JSON.stringify(buildFields()));
       fd.set('message', vals.success.trim());
-      const crm = partialCrm.current;
-      if (crm?.personId) fd.set('partial_person_id', String(crm.personId));
-      if (crm?.dealId)   fd.set('partial_deal_id', String(crm.dealId));
     }
     const res = await postForm('/api/lead', fd);
     const json = await res.json().catch(() => ({}));
     if (!res.ok || json.success === false) throw httpError(res, json);
-    if (stage === 'partial' && json.crm) partialCrm.current = json.crm;
   }
 
   function next() {
     if (!validateStep(step)) return;
-    // Partial-lead capture: fire once when the contact step is completed.
+    // Partial-lead capture: fire once when the contact step is completed. The
+    // server holds it (src/lib/partials.ts); finishing the form replaces it.
     // Fire-and-forget so a slow/failed network never blocks the user.
     if (step === 1 && !partialSent.current) {
       partialSent.current = true;
@@ -598,7 +602,7 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
   function reset() {
     setStep(1); setRefId(genId());
     setVals({ name: '', role: '', email: '', phone: '', association: '', location: '', units: '', type: '', mgmtStatus: '', cycle: '', dues: '', amenities: [], services: [], pains: [], success: '', budget: '', timeline: '' });
-    setErrors({}); setSendError(''); setSubmission(null); partialSent.current = false; partialCrm.current = null;
+    setErrors({}); setSendError(''); setSubmission(null); partialSent.current = false;
   }
 
   if (submission) {
@@ -664,18 +668,22 @@ function ProposalWizard({ onBack, onSwitchIntent }) {
         <div className="if-wstep">
           <div className="if-stephead">
             <span className="if-eyebrow">Step 1</span>
-            <h2 className="if-title">How to reach you</h2>
-            <p className="if-sub">So we can send the proposal.</p>
+            <h2 className="if-title">About you</h2>
+            <p className="if-sub">Your role, and where to send the proposal.</p>
           </div>
           <div className="if-grid">
-            <Field def={{ key: 'name', label: 'Your name', type: 'text', required: true, noName: true }} value={vals.name} error={errors.name} onChange={set} />
-            <Field def={{ key: 'role', label: 'Your role', type: 'select', options: V.roles, noName: true }} value={vals.role} error={errors.role} onChange={set} />
-            <Field def={{ key: 'email', label: 'Email', type: 'text', required: true, noName: true }} value={vals.email} error={errors.email} onChange={set} />
-            <Field def={{ key: 'phone', label: 'Phone', type: 'text', required: true, noName: true }} value={vals.phone} error={errors.phone} onChange={set} />
+            {/* Role FIRST, full width: it decides whether this is a proposal at all.
+                A resident role locks the three contact fields below and turns
+                Continue into the way out — the resident form — so a homeowner on
+                the wrong form never has to type a thing here. */}
+            <Field def={{ key: 'role', label: 'Your role', type: 'select', required: true, options: V.roles, noName: true, col: 2 }} value={vals.role} error={errors.role} onChange={set} />
+            <Field def={{ key: 'name', label: 'Your name', type: 'text', required: true, noName: true, col: 2, locked: showOfframp }} value={vals.name} error={errors.name} onChange={set} />
+            <Field def={{ key: 'email', label: 'Email', type: 'text', required: true, noName: true, locked: showOfframp }} value={vals.email} error={errors.email} onChange={set} />
+            <Field def={{ key: 'phone', label: 'Phone', type: 'text', required: true, noName: true, locked: showOfframp }} value={vals.phone} error={errors.phone} onChange={set} />
           </div>
           {showOfframp && (
             <div className="if-offramp" role="note">
-              <p><strong>You’re a resident — this is the wrong form.</strong> Proposals are for boards choosing a new management company. <strong>Continue</strong> takes you to resident help instead — dues, documents, and account questions. Your name and email come with you.</p>
+              <p><strong>You’re a homeowner or resident — this form is for boards</strong> choosing a new management company. Press <strong>Continue</strong> and we’ll take you to resident help instead: dues, documents, your account, or a maintenance issue. Picked the wrong role? Just change it above.</p>
             </div>
           )}
         </div>

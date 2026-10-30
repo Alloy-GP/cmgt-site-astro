@@ -7,8 +7,8 @@ import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
 import { sendWithAlert, notifySubmission, honeypotValue } from '~/lib/form-alert';
 import { addToPipedrive, type PipedriveOutcome } from '~/lib/pipedrive';
-import { isResidentRole } from '~/lib/roles';
 import { upsertMailchimpContact } from '~/lib/mailchimp';
+import { holdPartial, releaseHeldFor, renderPartialEmail, partialSlackRows, formatCentral, type HeldPartial } from '~/lib/partials';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 // Astro reads env via import.meta.env, so pass the Slack URL explicitly.
@@ -43,25 +43,18 @@ export const POST: APIRoute = async ({ request }) => {
     const intent  = data.get('intent')?.toString().trim()  ?? '';
     const ref     = data.get('ref')?.toString().trim()     ?? '';
     const message = data.get('message')?.toString().trim() ?? '';
-    // stage: 'partial' = multi-step form's contact step was completed but the form
-    // isn't finished yet (capture the lead now); 'complete' (default) = full submit.
+    // stage: 'partial' = the wizard's contact step was completed but the form isn't
+    // finished yet — HELD, see below and src/lib/partials.ts; 'complete' (default)
+    // = full submit.
     const stage     = data.get('stage')?.toString().trim() ?? 'complete';
     const isPartial = stage === 'partial';
-    // The Pipedrive ids the partial capture handed the browser (see the response
-    // at the end), echoed back on the full submit so the CRM reuses the same
-    // Person and retires the same partial deal. Positive integers or nothing.
-    const idOf = (key: string) => {
-      const n = Number(data.get(key)?.toString().trim());
-      return Number.isInteger(n) && n > 0 ? n : undefined;
-    };
-    const partialHint = isPartial ? undefined : { personId: idOf('partial_person_id'), dealId: idOf('partial_deal_id') };
 
     // Per-intent content (subject + submitter confirmation) — see email.config.ts.
     const intentCfg = EMAIL_CONFIG.intents[intent] ?? EMAIL_CONFIG.intents.default;
     const detailFields = parseFields(data.get('fieldsJson'));
     // The wizard's step-1 role ("Board President", "Property owner / resident"…).
     // Shown in the Slack heading for partials so board members and residents can
-    // be told apart at a glance, and used below to keep residents out of Pipedrive.
+    // be told apart at a glance.
     const leadRole = detailFields.find((f) => /role/i.test(f.label))?.value || '';
 
     // The Slack record: every answer, labelled, in the same order as the email.
@@ -99,9 +92,9 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Route the notification to the right inbox by intent (falls back to default).
-    // A partial capture may have its own destination (proposal partials go to
-    // Savannah, not newdevelopment@/Jeff — see email.config.ts); otherwise it
-    // is routed like a complete submission.
+    // A partial capture has its own destination (proposal partials go to customer
+    // support at info@, not new business — see email.config.ts); intents without
+    // one are routed like a complete submission.
     const notifyTo =
       (isPartial && EMAIL_CONFIG.partialRoutes[intent]) ||
       EMAIL_CONFIG.routes[intent] ||
@@ -120,6 +113,74 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
 
+    // ── Started, not finished ─────────────────────────────────────────────
+    // Held for HOLD_MINUTES (src/lib/partials.ts) instead of sent. If the full
+    // form arrives inside the hold, the complete path below releases it and
+    // nobody hears about it twice; if it never arrives, /api/partial-sweep emails
+    // customer support. No Pipedrive deal, no Mailchimp tag until then: CMGT found
+    // that every started-and-abandoned form was a homeowner on the wrong form.
+    // Without a store (no BLOB_READ_WRITE_TOKEN) the partial is sent at once,
+    // still to the partial route and still without Pipedrive.
+    if (isPartial) {
+      const partial: HeldPartial = {
+        ref, name, email, phone, company, role: leadRole, source, intent,
+        createdAt: new Date().toISOString(),
+      };
+      const hold = intent === 'proposal' ? await holdPartial(partial) : { held: false as const, reason: 'only proposals are held' };
+      const slackRoute = `${intentCfg.label} started, not finished${leadRole ? ` · ${leadRole}` : ''}`;
+      if (hold.held) {
+        await notifySubmission({
+          client: EMAIL_CONFIG.brand.name,
+          slackWebhookUrl: SLACK_WEBHOOK,
+          route: slackRoute,
+          formName: `${intent || 'lead'} form`,
+          status: 'held',
+          note: `If the form is not finished by ${formatCentral(hold.releaseAt)}, ${[notifyTo].flat().join(', ')} gets it; a finished form replaces it silently.`,
+          fields: slackRows,
+        });
+        return new Response(JSON.stringify({ success: true, held: true, releaseAt: hold.releaseAt.toISOString() }), { status: 200 });
+      }
+
+      const { subject, html } = renderPartialEmail(partial, {
+        held: false, label: intentCfg.label,
+        completeTo: EMAIL_CONFIG.routes[intent] ?? EMAIL_CONFIG.notify,
+      });
+      try {
+        await sendWithAlert(
+          {
+            client: EMAIL_CONFIG.brand.name,
+            formName: `${intentCfg.label}${intent ? ` (${intent})` : ''} — partial`,
+            slackWebhookUrl: SLACK_WEBHOOK,
+            alertEmail: { apiKey: import.meta.env.RESEND_API_KEY, to: EMAIL_CONFIG.alertsTo, from: EMAIL_CONFIG.from.notifications },
+          },
+          () => resend.emails.send({
+            from: EMAIL_CONFIG.from.notifications, replyTo: EMAIL_CONFIG.replyTo,
+            to: notifyTo, ...(notifyCc.length ? { cc: notifyCc } : {}), subject, html,
+          })
+        );
+      } catch (err) {
+        await notifySubmission({
+          client: EMAIL_CONFIG.brand.name, slackWebhookUrl: SLACK_WEBHOOK, route: slackRoute,
+          formName: `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`, delivered: false, fields: slackRows,
+        });
+        throw err;
+      }
+      if (intent === 'proposal') {
+        await upsertMailchimpContact({
+          email, firstName: name.split(' ')[0], lastName: name.split(' ').slice(1).join(' '), company,
+          tags: [...EMAIL_CONFIG.mailchimp.defaultTags, 'proposal-incomplete'],
+        });
+      }
+      await notifySubmission({
+        client: EMAIL_CONFIG.brand.name, slackWebhookUrl: SLACK_WEBHOOK, route: slackRoute,
+        formName: `${intent || 'lead'} form → ${[notifyTo].flat().join(', ')}`,
+        status: 'delivered', note: `sent at once — hold unavailable (${hold.reason})`, fields: partialSlackRows(partial),
+      });
+      // `reason` says why the hold did not happen (no store, store error). It
+      // carries no secret and makes a mis-set deployment diagnosable from a curl.
+      return new Response(JSON.stringify({ success: true, held: false, reason: hold.reason }), { status: 200 });
+    }
+
     // Render EVERY structured answer with its real label.
     const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const detailRows = detailFields
@@ -128,7 +189,6 @@ export const POST: APIRoute = async ({ request }) => {
       .join('');
 
     // Internal notification — alerts Slack + email if the send fails (then re-throws → 500).
-    // Partial leads get a distinct subject + banner so staff can chase abandoned forms.
     // The error is held rather than thrown so the Slack log below still runs;
     // it is re-thrown straight after, so the form still gets its 500.
     let notifyError: unknown = null;
@@ -181,6 +241,12 @@ export const POST: APIRoute = async ({ request }) => {
       throw notifyError;
     }
 
+    // The complete form is the notification: drop any held partial for this
+    // person (same email, any case, or the same ref) so support never hears about
+    // a form that was finished. After the staff email, so a failed send never
+    // loses the only copy.
+    const superseded = intent === 'proposal' ? await releaseHeldFor(email, ref) : [];
+
     // Confirmation to submitter — only on a COMPLETE submit (don't confirm a half-finished form).
     if (!isPartial) {
       const firstName = name.split(' ')[0] || name;
@@ -220,23 +286,20 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Push PROPOSAL submissions into Pipedrive (Organization + Person + Deal).
-    // Proposals only — vendor bids / general questions / rentals are not sales
-    // deals, so they don't create Pipedrive records. No-op on stg/dev or until
-    // PIPEDRIVE_API_TOKEN is set; never throws.
+    // Push COMPLETE PROPOSAL submissions into Pipedrive (Organization + Person +
+    // Deal). Proposals only — vendor bids / general questions / rentals are not
+    // sales deals, so they don't create Pipedrive records. No-op on stg/dev or
+    // until PIPEDRIVE_API_TOKEN is set; never throws.
     //
-    // Partials (contact step done, form not submitted) become a
-    // "Started, not submitted — Name" deal so sales can chase them. When the
-    // full form comes in, the real deal is created first and then the partial
-    // is deleted (see pipedrive.ts); the ids echoed back by the form make that
-    // match exact. Partials from someone who picked the resident role are
-    // skipped — they're homeowners, not prospects.
+    // Started-but-unfinished forms no longer create a deal (they are held, then
+    // go to support — see above). pipedrive.ts still retires any old
+    // "Started, not submitted —" deal it finds on the person, so leads from
+    // before this change are cleaned up when they finish.
     // Every answer goes into the deal's note; the ones listed in FIELD_MAP
     // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
     // → "Community Address" — are also written to the matching Pipedrive fields.
-    const isResident = isResidentRole(leadRole);
     let crm: PipedriveOutcome | undefined;
-    if (intent === 'proposal' && !(isPartial && isResident)) {
+    if (intent === 'proposal' && !isPartial) {
       const role = leadRole;
       // Property/community address (wizard "Location" or contact form "address")
       // → attached to the Pipedrive Organization so it shows on the Deal card.
@@ -249,9 +312,8 @@ export const POST: APIRoute = async ({ request }) => {
         email, name, phone, role, org: company, address,
         notes: notesText,
         fields: detailFields,
-        source: `${intentCfg.label}${isPartial ? ' (started, not submitted)' : ''}${ref ? ` · ${ref}` : ''}`,
-        stage: isPartial ? 'partial' : 'complete',
-        ...(partialHint ? { partial: partialHint } : {}),
+        source: `${intentCfg.label}${ref ? ` · ${ref}` : ''}`,
+        stage: 'complete',
       });
     }
 
@@ -265,20 +327,21 @@ export const POST: APIRoute = async ({ request }) => {
         : crm.status === 'skipped'
           ? `Pipedrive: skipped — ${crm.detail}`
           : `Pipedrive FAILED — ${crm.detail}. The email and this channel have the lead; create the deal by hand.`;
+    const supersededText = superseded.length
+      ? `replaced the started form held since earlier (${superseded.join(', ')}) — support was not emailed`
+      : '';
+    const note = [crmText, supersededText].filter(Boolean).join(' · ');
     await notifySubmission({
       client: EMAIL_CONFIG.brand.name,
       slackWebhookUrl: SLACK_WEBHOOK,
       route: slackRoute,
       formName: slackForm,
       status: crm?.status === 'failed' || crm?.warning ? 'warning' : 'delivered',
-      ...(crmText ? { note: crmText } : {}),
+      ...(note ? { note } : {}),
       fields: slackRows,
     });
 
-    // A partial capture tells the browser which CRM records it made, so the
-    // full submission can name them (partial_person_id / partial_deal_id).
-    const crmIds = isPartial && crm?.personId ? { crm: { personId: crm.personId, dealId: crm.dealId } } : {};
-    return new Response(JSON.stringify({ success: true, ...crmIds }), { status: 200 });
+    return new Response(JSON.stringify({ success: true, superseded }), { status: 200 });
   } catch (err) {
     console.error('Lead API error:', err);
     return new Response(JSON.stringify({ error: 'Something went wrong. Please try again.' }), { status: 500 });

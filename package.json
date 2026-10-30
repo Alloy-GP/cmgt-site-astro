@@ -2,7 +2,7 @@
   "name": "cmgt-site",
   "type": "module",
   "version": "1.0.0",
-  "description": "AGP client site \u2014 replace with client name",
+  "description": "AGP client site — replace with client name",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -11,7 +11,8 @@
     "check": "astro check",
     "test:forms": "node scripts/test-form-alert.ts",
     "test:pipedrive": "node --import ./scripts/lib/register-import-meta-env.mjs scripts/test-pipedrive.ts",
-    "test": "npm run test:forms && npm run test:pipedrive",
+    "test:partials": "node --import ./scripts/lib/register-import-meta-env.mjs scripts/test-partials.ts",
+    "test": "npm run test:forms && npm run test:pipedrive && npm run test:partials",
     "llms:draft": "node scripts/llms-draft.mjs",
     "llms:check": "node scripts/llms-check.mjs"
   },
@@ -21,6 +22,7 @@
     "@astrojs/sitemap": "^3.0.0",
     "@astrojs/vercel": "^8.2.11",
     "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "@vercel/blob": "^2.8.2",
     "@vercel/speed-insights": "^2.0.0",
     "astro": "^5.1.1",
     "react": "^18.3.1",

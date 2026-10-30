@@ -48,7 +48,11 @@ export const PROPOSAL_FORM_VERSION = 2;
 // The v2 field SET + step order are canonical (locked in IntakeForm.jsx).
 // Only these choice lists + multi-select chips change per site.
 export const PROPOSAL_V2 = {
-  roles: ['Board President', 'Vice President', 'Treasurer', 'Secretary', 'Board Member', 'Property owner / resident', 'Other'],
+  // 'Property owner / resident' comes FIRST: step 1 now opens with this question so a
+  // homeowner who picked the proposal form by mistake is offered the resident form
+  // before typing anything (the rest of step 1 locks until they Continue or change
+  // role). Most false "Started (incomplete)" proposals were exactly these people.
+  roles: ['Property owner / resident', 'Board President', 'Vice President', 'Treasurer', 'Secretary', 'Board Member', 'Other'],
   // Roles that mean "I'm not a board decision-maker." When step 1's role is one
   // of these, the wizard shows a soft off-ramp to the resident intent (proposals
   // are for boards). Optional + config-gated: sites without this key never show
