@@ -200,6 +200,49 @@ production, so run the sweep by hand:
 `curl -H "Authorization: Bearer $CRON_SECRET" https://<preview>/api/partial-sweep`. Offline test of the
 hold, release, sweep timing and the support email: `npm run test:partials`.
 
+## Meet CMGT postcard landing page — `/meet` (moved here from meet.cmgt.org on 2026-11-02)
+
+The "Meet CMGT" postcard campaign used to live on its own Vercel project and repo
+(`Alloy-GP/meet-cmgt-website`: one static HTML page plus a serverless function with its own
+copies of Resend, Slack, Mailchimp and Pipedrive). It fired a separate GA4 property
+(G-C4Y4D67W87) and a separate WhatConverts account (168448), and its form handler had drifted
+from this site's. It is now one page here, on the site's plumbing, and the subdomain is a 301.
+
+```
+src/pages/meet.astro          ← the page. BaseLayout chrome="landing": NO site nav/footer on purpose —
+                                 the page exists to get a postcard visitor to the form, not to browse.
+                                 Slim header = logo · campaign phone · "Request a Proposal" (scrolls to #say-hi).
+src/components/MeetForm.jsx   ← the six-field "say hi" form. Posts to /api/lead as intent=meet.
+src/styles/meet.css           ← meet-* classes only; fonts/tokens/.btn come from global.css.
+vercel.json                   ← redirects: host meet.cmgt.org → https://cmgt.org/meet?utm_source=meet.cmgt.org…
+scripts/test-meet.ts          ← `npm run test:meet`: the meet intent through the REAL lead route, offline.
+```
+
+- **Where a meet lead goes.** `routes.meet` in `email.config.ts` = newdevelopment@ + Savannah (same as
+  a complete proposal), nobody cc'd. Slack heading "Meet CMGT lead"; email subject
+  `Meet CMGT lead — <community>`; ref `MEET-yymmdd-nnnn`. Confirmation: "Thanks — talk soon." from
+  hello@mail.cmgt.org. Mailchimp tags `website-lead` + `meet-cmgt-landing`. Pipedrive: Organization +
+  Person + Deal in Savannah's pipeline, note "Meet CMGT lead · MEET-…". Single-step form, so it is never
+  held and never partial.
+- **`salesIntents`** (`email.config.ts`) = `['proposal', 'meet']`: the intents `/api/lead` syncs to Mailchimp
+  and pushes to Pipedrive. Add an intent there (plus `routes`, `intents`, optionally
+  `mailchimp.tagsByIntent`) and nothing in `lead.ts` changes.
+- **Tracking.** `source` = `/meet` automatically; GA4 `generate_lead {form: 'meet'}` (same key event as the
+  wizard); WhatConverts sees `id="meet-form"` on the production account 169722. Old QR scans arrive with
+  `utm_source=meet.cmgt.org&utm_medium=redirect&utm_campaign=meet-cmgt`; print `cmgt.org/meet` with
+  `utm_source=postcard&utm_medium=qr` on the next run.
+- **The phone number on the page, (225) 425-5622,** is the campaign number from the postcards, not the main
+  office line; it was provisioned under WhatConverts 168448. Change it in `meet.astro` (two constants),
+  `MeetForm.jsx` and `intents.meet.confirmBody` together.
+- **Landing-page chrome for other campaigns:** `<BaseLayout chrome="landing">` plus `slot="header"` /
+  `slot="footer"` elements. The head (SEO, GA, WhatConverts, pixel) is unchanged; `nav.js` is not loaded.
+
+Dashboard steps that were NOT in the repo (do once, then archive the old project): move the
+`meet.cmgt.org` domain from the meet-cmgt-website Vercel project to this one (the CNAME already points
+at Vercel; re-point only if Vercel asks), watch the 301 for a week, then archive the old repo + project.
+Decide what happens to WhatConverts 168448 and the tracking number. The old GA4 property keeps the
+campaign's history read-only.
+
 ## LLM traffic — `/llms.txt`, `/llms-full.txt`, AI crawler policy
 
 Every AI assistant gets a curated site guide, the whole site's text in one file, and an

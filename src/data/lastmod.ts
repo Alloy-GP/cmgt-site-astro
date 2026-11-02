@@ -29,6 +29,8 @@ export const LASTMOD: Record<string, string> = {
   // Board newsletter landing page. Issue content rebuilds itself on every
   // Mailchimp send; bump this only when the page itself changes.
   '/newsletter':                                '2026-09-22',
+  // Meet CMGT postcard landing page, moved here from meet.cmgt.org.
+  '/meet':                                      '2026-11-02',
 
   // Service and solution pages touched in the 2026-W39 SEO pass
   '/hoa-financial-management':                  '2026-09-22',

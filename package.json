@@ -12,7 +12,8 @@
     "test:forms": "node scripts/test-form-alert.ts",
     "test:pipedrive": "node --import ./scripts/lib/register-import-meta-env.mjs scripts/test-pipedrive.ts",
     "test:partials": "node --import ./scripts/lib/register-import-meta-env.mjs scripts/test-partials.ts",
-    "test": "npm run test:forms && npm run test:pipedrive && npm run test:partials",
+    "test:meet": "node --import ./scripts/lib/register-import-meta-env.mjs scripts/test-meet.ts",
+    "test": "npm run test:forms && npm run test:pipedrive && npm run test:partials && npm run test:meet",
     "llms:draft": "node scripts/llms-draft.mjs",
     "llms:check": "node scripts/llms-check.mjs"
   },

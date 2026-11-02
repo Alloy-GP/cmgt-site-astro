@@ -130,6 +130,7 @@ export const LLMS: LlmsRegistry = {
     { path: '/privacy', title: 'Privacy policy', description: 'What information CMGT collects through this website, how it is used and shared, and your choices.' },
     { path: '/terms', title: 'Terms of service', description: 'Terms governing use of the website.' },
     { path: '/cookies', title: 'Cookie policy', description: 'Essential and analytics cookies used on the site and how to decline them.' },
+    { path: '/meet', title: 'Meet CMGT (postcard landing page)', description: 'The short introduction CMGT mails to boards: the three C\'s, the numbers, and a "say hi" form answered by a community manager within one business day.' },
   ],
 };
 
