@@ -41,6 +41,15 @@ interface Props {
   robots?: string;
   /** Page-specific JSON-LD schema. Pass a single object or array. */
   pageSchema?: Record<string, unknown> | Record<string, unknown>[];
+  /**
+   * Page chrome. 'site' (default) wraps the page in the shared Nav and Footer.
+   * 'landing' renders neither: a campaign landing page brings its own slim
+   * header and footer through the `header` and `footer` slots, so a visitor is
+   * pointed at the page's form rather than handed the main navigation. The
+   * head (SEO, GA, WhatConverts, pixel) is identical either way. nav.js is not
+   * loaded on a landing page — it only wires the shared Nav / Footer.
+   */
+  chrome?: 'site' | 'landing';
 }
 
 const {
@@ -51,6 +60,7 @@ const {
   ogImageAlt,
   robots,
   pageSchema,
+  chrome = 'site',
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
@@ -220,21 +230,22 @@ const isProduction    = import.meta.env.PUBLIC_ENV === 'production';
   </head>
   <body>
     <!-- Shared CMGT chrome — server-rendered Astro components.
-         Interactivity is wired by /scripts/nav.js (behavior-only). -->
-    <Nav />
+         Interactivity is wired by /scripts/nav.js (behavior-only).
+         A landing page (chrome="landing") supplies its own via the named slots. -->
+    {chrome === 'landing' ? <slot name="header" /> : <Nav />}
 
     <main>
       <slot />
     </main>
 
-    <Footer />
+    {chrome === 'landing' ? <slot name="footer" /> : <Footer />}
 
     <!-- Shared behavior:
          nav.js  — renders header + footer + breadcrumbs, wires dropdowns / mega menu /
                    scroll-hide / glass / scrim / mobile drawer / newsletter, rewrites chrome links.
          shared.js — .reveal scroll-ins, [data-count-to] count-ups, [data-year].
          is:inline keeps Astro from bundling them so they serve as-is from /public. -->
-    <script src="/scripts/nav.js" defer is:inline></script>
+    {chrome !== 'landing' && <script src="/scripts/nav.js" defer is:inline></script>}
     <script src="/scripts/shared.js" defer is:inline></script>
 
     <!-- ── Alloy Preview Review Widget (stg only) ───────────────────────────

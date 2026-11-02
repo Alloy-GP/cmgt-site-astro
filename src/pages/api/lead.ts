@@ -56,6 +56,11 @@ export const POST: APIRoute = async ({ request }) => {
     // Shown in the Slack heading for partials so board members and residents can
     // be told apart at a glance.
     const leadRole = detailFields.find((f) => /role/i.test(f.label))?.value || '';
+    // A sales lead (the proposal wizard, the /meet landing-page form — see
+    // salesIntents in email.config.ts) is synced to Mailchimp and, once complete,
+    // pushed to Pipedrive. Every other intent is a question, a bid or a resident.
+    const isSales  = EMAIL_CONFIG.salesIntents.includes(intent);
+    const leadTags = [...EMAIL_CONFIG.mailchimp.defaultTags, ...(EMAIL_CONFIG.mailchimp.tagsByIntent[intent] ?? [])];
 
     // The Slack record: every answer, labelled, in the same order as the email.
     // Used for the normal log, the "not delivered" fallback, and the honeypot
@@ -268,28 +273,29 @@ export const POST: APIRoute = async ({ request }) => {
       if (confirmError) console.error('Resend confirm error:', confirmError);
     }
 
-    // Add / update the lead in Mailchimp — PROPOSAL submissions only (including
-    // partial proposal captures). Vendor bids / general questions / rentals are
-    // deliberately NOT synced to the audience. Upsert so a returning contact is
-    // refreshed (name/company/tags) instead of erroring.
-    if (intent === 'proposal') {
+    // Add / update the lead in Mailchimp — SALES submissions only (the proposal
+    // wizard, including partial captures, and the /meet form). Vendor bids /
+    // general questions / rentals are deliberately NOT synced to the audience.
+    // Upsert so a returning contact is refreshed (name/company/tags) instead of
+    // erroring.
+    if (isSales) {
       await upsertMailchimpContact({
         email,
         firstName: name.split(' ')[0],
         lastName:  name.split(' ').slice(1).join(' '),
         company,
         tags: isPartial
-          ? [...EMAIL_CONFIG.mailchimp.defaultTags, 'proposal-incomplete']
-          : EMAIL_CONFIG.mailchimp.defaultTags,
+          ? [...leadTags, 'proposal-incomplete']
+          : leadTags,
         // The full form is in: the contact is no longer "incomplete".
         ...(isPartial ? {} : { removeTags: ['proposal-incomplete'] }),
       });
     }
 
-    // Push COMPLETE PROPOSAL submissions into Pipedrive (Organization + Person +
-    // Deal). Proposals only — vendor bids / general questions / rentals are not
-    // sales deals, so they don't create Pipedrive records. No-op on stg/dev or
-    // until PIPEDRIVE_API_TOKEN is set; never throws.
+    // Push COMPLETE SALES submissions (proposal, meet) into Pipedrive
+    // (Organization + Person + Deal). Vendor bids / general questions / rentals
+    // are not sales deals, so they don't create Pipedrive records. No-op on
+    // stg/dev or until PIPEDRIVE_API_TOKEN is set; never throws.
     //
     // Started-but-unfinished forms no longer create a deal (they are held, then
     // go to support — see above). pipedrive.ts still retires any old
@@ -299,7 +305,7 @@ export const POST: APIRoute = async ({ request }) => {
     // (src/lib/pipedrive.ts) — "Number of units" → "Number of Homes", "Location"
     // → "Community Address" — are also written to the matching Pipedrive fields.
     let crm: PipedriveOutcome | undefined;
-    if (intent === 'proposal' && !isPartial) {
+    if (isSales && !isPartial) {
       const role = leadRole;
       // Property/community address (wizard "Location" or contact form "address")
       // → attached to the Pipedrive Organization so it shows on the Deal card.

@@ -68,6 +68,7 @@ export const EMAIL_CONFIG = {
         general:  [...ALLOY_MONITORING],
         resident: [...ALLOY_MONITORING], // homeowner help
         newsletter: [...ALLOY_MONITORING], // /newsletter questions
+        meet:     [...ALLOY_MONITORING], // /meet landing page ("say hi" form)
       }
     : {}
   ) as Record<string, string[]>,
@@ -91,14 +92,23 @@ export const EMAIL_CONFIG = {
   routes: (IS_PROD
     ? {
         proposal: NEW_BUSINESS,                // boards exploring new management — newdevelopment@ + Savannah, nobody cc'd
+        meet:     NEW_BUSINESS,                // /meet landing page (postcard campaign) → the same new-business desk
         vendor:   ['info@cmgt.org'],           // contractor / vendor bids → general inbox
         general:  ['info@cmgt.org'],           // catch-all general inquiries → general inbox
         rental:   ['christremblay@cmgt.org'], // rental management inquiries → Chris Tremblay
         resident: ['info@cmgt.org'],           // homeowner help → general office inbox (never new development)
         newsletter: ['info@cmgt.org'],         // /newsletter "Ask CMGT" questions → general inbox (not new-business)
       }
-    : { proposal: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY, resident: NON_PROD_NOTIFY, newsletter: NON_PROD_NOTIFY }
+    : { proposal: NON_PROD_NOTIFY, meet: NON_PROD_NOTIFY, vendor: NON_PROD_NOTIFY, general: NON_PROD_NOTIFY, rental: NON_PROD_NOTIFY, resident: NON_PROD_NOTIFY, newsletter: NON_PROD_NOTIFY }
   ) as Record<string, string[]>,
+
+  // ── Sales leads: the intents that are a prospective community rather than a
+  // vendor, a resident, or a question. A COMPLETE submission with one of these
+  // intents is synced to Mailchimp (tags below) and pushed to Pipedrive as a
+  // deal in Savannah's pipeline (src/lib/pipedrive.ts). The proposal wizard and
+  // the /meet landing-page form both qualify; the meet form is single-step, so
+  // it never produces a partial and is never held. ──
+  salesIntents: ['proposal', 'meet'],
 
   // ── Partial captures ("Started (incomplete)": the wizard's contact step was
   // completed but the form was never submitted). These are HELD for
@@ -119,7 +129,13 @@ export const EMAIL_CONFIG = {
 
   mailchimp: {
     enabled:      IS_PROD,   // prod only — never add stg/dev test leads to the real audience
-    defaultTags:  ['website-lead'],        // tag applied to proposal form submissions (only intent synced to Mailchimp)
+    defaultTags:  ['website-lead'],        // tag applied to every sales lead (salesIntents above) — the only intents synced
+    // Extra tags per sales intent, on top of defaultTags. The /meet landing page
+    // keeps the tag its own site used, so the postcard campaign stays separable
+    // in Mailchimp reporting.
+    tagsByIntent: {
+      meet: ['meet-cmgt-landing'],
+    } as Record<string, string[]>,
     subscribeTags: ['newsletter-footer'],  // tag applied to footer newsletter opt-ins (default)
     // /api/subscribe picks the tag from the form's `source` field; a source not
     // listed here falls back to subscribeTags. Keeps footer vs. /newsletter
@@ -151,6 +167,19 @@ export const EMAIL_CONFIG = {
         <p>From here, we'll take a close look at what your association needs and reach out personally to walk you through what management with CMGT would look like — no generic pitch, just a straight answer on how we'd serve your community.</p>
         <p>We've got it from here.</p>
         <p>— The CMGT Team<br>We Manage. You Live.</p>`,
+    },
+    // /meet landing page (postcard campaign): a short "say hi" form, not the
+    // proposal wizard. Routed, tagged and pushed to Pipedrive like a proposal.
+    // The reply is the one the standalone meet.cmgt.org site sent.
+    meet: {
+      label: 'Meet CMGT lead',
+      notifySubject: (who: string) => `Meet CMGT lead — ${who}`,
+      confirmSubject: 'Thanks — talk soon.',
+      confirmBody: (firstName: string) =>
+        `<p>Hi ${firstName},</p>
+        <p>We got your message and one of our Community Association Managers will reach out within one business day.</p>
+        <p>No pitch, no pressure — promise. In the meantime, if you have any questions you can reply directly to this email or call us at <a href="tel:2254255622">(225) 425-5622</a>.</p>
+        <p>— The CMGT Team<br>Commit. Communicate. Care.</p>`,
     },
     rental: {
       label: 'Rental Management Inquiry',

@@ -1,0 +1,208 @@
+---
+// src/pages/meet.astro — the "Meet CMGT" postcard landing page.
+//
+// Moved here from the standalone meet.cmgt.org site (Alloy-GP/meet-cmgt-website)
+// on 2026-11-02; that host now 301s to this page (see vercel.json), so printed QR
+// codes keep working and new print runs can point straight at cmgt.org/meet.
+//
+// No site nav on purpose: the page exists to get a postcard visitor to the form,
+// not to browse. The header carries the logo, the campaign phone number, and one
+// button that scrolls to the form. The form posts to /api/lead as intent=meet —
+// see src/components/MeetForm.jsx and `meet` in src/lib/email.config.ts.
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import MeetForm from '~/components/MeetForm.jsx';
+import '~/styles/meet.css';
+
+// The campaign phone number printed on the postcards (not the main office line).
+const PHONE_DISPLAY = '(225) 425-5622';
+const PHONE_TEL = 'tel:2254255622';
+---
+<BaseLayout
+  chrome="landing"
+  title="Meet CMGT — Gulf South HOA Management"
+  description="Hello, neighbor. CMGT is the best communication company that just happens to do community management. 19 years in Louisiana, 96% client retention."
+>
+  <header class="meet-header" slot="header">
+    <div class="container">
+      <a href="/" class="meet-brand" aria-label="CMGT home">
+        <img src="/assets/logo-1C-white.svg" alt="CMGT" height="30">
+      </a>
+      <div class="meet-header-right">
+        <a href={PHONE_TEL} class="meet-phone"><span class="o">Call</span>{PHONE_DISPLAY}</a>
+        <a href="#say-hi" class="btn btn-green meet-header-cta">Request a Proposal</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="meet">
+    <!-- HERO ─────────────────────────────────────────────────────── -->
+    <section class="meet-hero">
+      <div class="meet-hero-leaf" aria-hidden="true">
+        <img src="/assets/leaf-mark.svg" alt="">
+      </div>
+      <div class="container meet-hero-inner">
+        <div class="meet-eyebrow">Hello, neighbor —</div>
+        <h1 class="meet-display">Meet<br>CMGT<span class="dot">.</span></h1>
+        <div class="meet-rule"></div>
+        <p class="meet-lede">
+          The best communication company that just happens to do <span class="accent">community management.</span>
+        </p>
+        <p class="meet-body">
+          We’re a Gulf South HOA management company built on three things:
+          <strong>commit, communicate, care.</strong> Already have a manager you love?
+          Great — we’d still love to say hi.
+        </p>
+
+        <div class="meet-stats">
+          <div>
+            <div class="meet-stat-num" data-count-to="19" data-duration="1400">0</div>
+            <div class="meet-stat-label">years in Louisiana</div>
+          </div>
+          <div>
+            <div class="meet-stat-num" data-count-to="96" data-suffix="%" data-duration="1600">0%</div>
+            <div class="meet-stat-label">client retention</div>
+          </div>
+          <div class="meet-scan">
+            <a href="#say-hi">
+              <div class="meet-scan-label">Let’s have a conversation <span class="arrow">↓</span></div>
+              <div class="meet-scan-sub">Scroll down to say hi</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PILLARS ──────────────────────────────────────────────────── -->
+    <section class="meet-pillars">
+      <div class="container">
+        <div class="meet-pillars-eyebrow">What you can expect</div>
+        <h2 class="meet-pillars-h">
+          Three words you’ll hear us say a lot. They’re not slogans — they’re the standard.
+        </h2>
+
+        <div class="meet-pillars-grid">
+          <article class="meet-pillar">
+            <span class="meet-pillar-num">01 · COMMIT</span>
+            <h3 class="meet-pillar-title">Show up like an owner.</h3>
+            <p class="meet-pillar-body">
+              Your manager treats your community like it’s their own. That means
+              proactive planning, owning the hard calls, and seeing follow-through
+              as table stakes — not a value-add.
+            </p>
+          </article>
+
+          <article class="meet-pillar">
+            <span class="meet-pillar-num">02 · COMMUNICATE</span>
+            <h3 class="meet-pillar-title">Answer the question.</h3>
+            <p class="meet-pillar-body">
+              Same-day responses. Clear language, not industry-speak. When something
+              breaks, you’ll hear from us first — with the issue and the answer in
+              the same email.
+            </p>
+          </article>
+
+          <article class="meet-pillar">
+            <span class="meet-pillar-num">03 · CARE</span>
+            <h3 class="meet-pillar-title">Treat people like people.</h3>
+            <p class="meet-pillar-body">
+              Your homeowners aren’t tickets in a queue. Our team learns names,
+              remembers context, and handles the human side as carefully as the
+              financial side.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF ────────────────────────────────────────────────────── -->
+    <section class="meet-proof">
+      <div class="container">
+        <div class="meet-proof-headline">
+          <div class="meet-proof-eyebrow">By the numbers</div>
+          <h2 class="meet-proof-h">
+            The largest HOA management company in the Gulf South —
+            and the only one that’s stayed independent.
+          </h2>
+          <p class="meet-proof-sub">
+            <strong>#1 in Louisiana since 2014.</strong> <strong>#1 on the Mississippi Gulf Coast since 2021.</strong>
+            100% organic growth since 2007 — every community won through sales, referrals, and reputation. No PE, no acquisitions, no outside investors.
+          </p>
+        </div>
+
+        <div class="meet-proof-grid">
+          <div class="meet-proof-stat">
+            <div class="meet-proof-stat-num" data-count-to="400" data-suffix="+" data-duration="1500">0+</div>
+            <div class="meet-proof-stat-label">community associations managed</div>
+          </div>
+          <div class="meet-proof-stat">
+            <div class="meet-proof-stat-num" data-count-to="60" data-suffix="k+" data-duration="1300">0k+</div>
+            <div class="meet-proof-stat-label">homes under management</div>
+          </div>
+          <div class="meet-proof-stat">
+            <div class="meet-proof-stat-num" data-count-to="5" data-duration="900">0</div>
+            <div class="meet-proof-stat-label">states served across the Gulf South</div>
+          </div>
+          <div class="meet-proof-stat">
+            <div class="meet-proof-stat-num" data-count-to="24" data-prefix="&lt;" data-suffix="h" data-duration="1200">&lt;0h</div>
+            <div class="meet-proof-stat-label">average response time on owner inquiries</div>
+          </div>
+          <div class="meet-proof-stat">
+            <div class="meet-proof-stat-num" data-count-to="100" data-suffix="%" data-duration="1400">0%</div>
+            <div class="meet-proof-stat-label">organic growth — no acquisitions, no PE backing</div>
+          </div>
+          <div class="meet-proof-stat">
+            {/* data-plain: a year, so the shared count-up must not print "2,007". */}
+            <div class="meet-proof-stat-num" data-count-to="2007" data-plain data-duration="1800">0</div>
+            <div class="meet-proof-stat-label">founded in Denham Springs, LA. Independently owned ever since.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM ─────────────────────────────────────────────────────── -->
+    <section id="say-hi" class="meet-form-band">
+      <div class="meet-form-leaf" aria-hidden="true">
+        <img src="/assets/leaf-mark.svg" alt="">
+      </div>
+      <div class="container meet-form-band-inner">
+        <div class="meet-form-side">
+          <h2>Let’s have a <span class="accent">conversation.</span></h2>
+          <p>
+            No pitch deck, no pressure. Tell us a little about your community
+            and one of our Community Association Managers will reach out within
+            one business day — even if it’s just to say hi.
+          </p>
+
+          <div class="meet-form-meta">
+            <div class="meet-form-meta-row">
+              <span class="meet-form-meta-k">Call</span>
+              <span><a href={PHONE_TEL}>{PHONE_DISPLAY}</a> · Mon–Fri, 8a–5p CT</span>
+            </div>
+            <div class="meet-form-meta-row">
+              <span class="meet-form-meta-k">Markets</span>
+              <span>Louisiana · Mississippi · Alabama · Florida · Texas</span>
+            </div>
+            <div class="meet-form-meta-row">
+              <span class="meet-form-meta-k">HQ</span>
+              <span>Denham Springs, LA · by appointment</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <MeetForm client:load />
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="meet-footer" slot="footer">
+    <div class="container">
+      <div class="meet-footer-brand">
+        <a href="/" aria-label="CMGT home"><img src="/assets/logo-1C-white.svg" alt="CMGT" height="22"></a>
+        <span class="meet-footer-copy">© <span data-year>2026</span> CMGT, Inc.</span>
+      </div>
+      <span class="meet-footer-tagline">Commit. Communicate. Care.</span>
+    </div>
+  </footer>
+</BaseLayout>

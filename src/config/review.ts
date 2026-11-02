@@ -76,6 +76,7 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'Testimonials',                   path: '/testimonials',                                 review: false },
   { label: 'The Fix-It Squad',               path: '/fix-it-squad',                                 review: false },
   { label: 'Request a Proposal',             path: '/request-a-proposal',                           review: false },
+  { label: 'Meet CMGT (postcard landing)',   path: '/meet',                                         review: false },
   { label: 'Homeowner Hub',                  path: '/homeowner-hub',                                        review: false },
 
   // Legal

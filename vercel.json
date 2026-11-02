@@ -36,6 +36,19 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "meet.cmgt.org"
+        }
+      ],
+      "destination": "https://cmgt.org/meet?utm_source=meet.cmgt.org&utm_medium=redirect&utm_campaign=meet-cmgt",
+      "permanent": true
+    }
+  ],
   "crons": [
     {
       "path": "/api/reviews?city=baton-rouge",
