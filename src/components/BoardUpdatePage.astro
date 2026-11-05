@@ -1,0 +1,54 @@
+---
+// src/components/BoardUpdatePage.astro
+// The Board Update page body shared by /board-update (the latest issue) and
+// /board-update/[slug] (one issue): the strip of issues, Print, and the document
+// fragment the portal rendered, in CMGT's own type and palette.
+import type { BoardUpdateFeed, BoardUpdateIssue } from '~/lib/boardUpdate';
+import { publishedLabel } from '~/lib/boardUpdate';
+import '../styles/board-update.css';
+
+interface Props { feed: BoardUpdateFeed; issue: BoardUpdateIssue | null; }
+const { feed, issue } = Astro.props;
+const issues = feed.issues;
+const recent = issues.slice(0, 4);
+---
+<div class="bu-page">
+  <div class="container">
+    <header class="bu-strip">
+      <div class="bu-brand"><span class="bu-brand-name">CMGT</span><span class="bu-brand-sub">Board Update</span></div>
+      <nav class="bu-months" aria-label="Issues">
+        {recent.map((i) => (
+          <a class:list={['bu-pill', { on: issue && i.slug === issue.slug }]} href={`/board-update/${i.slug}`} aria-current={issue && i.slug === issue.slug ? 'page' : undefined}>{i.label.replace(/^(\w{3})\w* /, '$1 ')}</a>
+        ))}
+        {issues.length > recent.length && <a class="bu-pill" href="#bu-archive">All issues</a>}
+        {issue && <button type="button" class="bu-pill bu-print" onclick="window.print()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>Print / PDF</button>}
+      </nav>
+    </header>
+  </div>
+
+  {issue ? (
+    <Fragment>
+      <style is:global set:html={feed.css} />
+      <Fragment set:html={issue.html} />
+    </Fragment>
+  ) : (
+    <div class="container bu-empty">
+      <div class="eyebrow">Board Update</div>
+      <h1>The first issue is on its way.</h1>
+      <p>Each month CMGT publishes a one-page update for the boards we serve: service numbers by department, collections, insurance, and the notices every board should know. It will live at this address.</p>
+    </div>
+  )}
+
+  {issues.length > 1 && (
+    <div class="container" id="bu-archive">
+      <section class="bu-archive">
+        <h2>Past updates</h2>
+        <ul>
+          {issues.map((i) => (
+            <li><a href={`/board-update/${i.slug}`}><span class="bu-arch-t">{i.label}</span><span class="bu-arch-m">Reporting {i.period}{i.publishedAt ? ` · published ${publishedLabel(i.publishedAt)}` : ''}</span></a></li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  )}
+</div>
