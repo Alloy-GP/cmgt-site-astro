@@ -1,0 +1,30 @@
+---
+// src/pages/board-update/index.astro
+// CMGT's monthly Board Update, the latest issue. The content is published by
+// CMGT from the Alloy Growth Portal and read from its public feed
+// (src/lib/boardUpdate.ts). Rendered on request with a short CDN cache, so a
+// newly published issue shows within minutes and nothing has to be redeployed.
+// The link boards keep is this one; every issue also has /board-update/<slug>.
+export const prerender = false;
+
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import BoardUpdatePage from '~/components/BoardUpdatePage.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+import { getBoardUpdates } from '~/lib/boardUpdate';
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
+
+const feed = await getBoardUpdates();
+const issue = feed.issues[0] ?? null;
+const PAGE_URL = SITE.url + '/board-update';
+const title = issue ? `${issue.label} Board Update | CMGT` : 'Board Update | CMGT';
+const description = issue
+  ? `CMGT's ${issue.label} update for the boards we serve: ${issue.period} service numbers by department, collections, insurance and notices.`
+  : 'CMGT publishes a one-page monthly update for the boards we serve: service numbers by department, collections, insurance and notices.';
+const pageSchema = [breadcrumbSchema([{ name: 'Home', url: SITE.url + '/' }, { name: 'Board Update', url: PAGE_URL }])];
+---
+<BaseLayout title={title} description={description} pageSchema={pageSchema}>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs='[{"t":"Home","href":"/"},{"t":"Board Update"}]'></nav>
+  <BoardUpdatePage feed={feed} issue={issue} />
+</BaseLayout>

@@ -1,0 +1,30 @@
+---
+// src/pages/board-update/[slug].astro
+// One Board Update issue by its month slug (/board-update/2026-10). Same feed,
+// same page body as the index; an unknown slug is a 404.
+export const prerender = false;
+
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import BoardUpdatePage from '~/components/BoardUpdatePage.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbSchema } from '~/lib/schema';
+import { getBoardUpdates } from '~/lib/boardUpdate';
+
+const slug = String(Astro.params.slug || '');
+if (!/^\d{4}-\d{2}$/.test(slug)) return new Response(null, { status: 404 });
+
+const feed = await getBoardUpdates();
+const issue = feed.issues.find((i) => i.slug === slug) ?? null;
+if (!issue) return new Response(null, { status: 404 });
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
+
+const PAGE_URL = `${SITE.url}/board-update/${issue.slug}`;
+const title = `${issue.label} Board Update | CMGT`;
+const description = `CMGT's ${issue.label} update for the boards we serve: ${issue.period} service numbers by department, collections, insurance and notices.`;
+const pageSchema = [breadcrumbSchema([{ name: 'Home', url: SITE.url + '/' }, { name: 'Board Update', url: SITE.url + '/board-update' }, { name: issue.label, url: PAGE_URL }])];
+---
+<BaseLayout title={title} description={description} pageSchema={pageSchema}>
+  <nav id="site-breadcrumbs" aria-label="Breadcrumb" data-crumbs={JSON.stringify([{ t: 'Home', href: '/' }, { t: 'Board Update', href: '/board-update' }, { t: issue.label }])}></nav>
+  <BoardUpdatePage feed={feed} issue={issue} />
+</BaseLayout>
